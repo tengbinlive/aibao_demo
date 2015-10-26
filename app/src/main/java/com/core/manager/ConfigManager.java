@@ -6,12 +6,12 @@ import com.bin.kndle.App;
 import com.core.util.CommonUtil;
 import com.bin.kndle.Constant;
 import com.core.util.DeviceUtil;
-import com.core.util.Log;
 import com.core.util.StringUtil;
 import com.core.enums.ConfigKeyEnum;
 import com.dao.ConfigDO;
 import com.dao.ConfigDao;
 import com.dao.DaoSession;
+import com.orhanobut.logger.Logger;
 
 import java.util.HashMap;
 import java.util.List;
@@ -65,7 +65,7 @@ public class ConfigManager {
 		String lastAppVersionName = (String) map.get(ConfigKeyEnum.APP_VERSION_NAME.name());
 
 		map.put(ConfigKeyEnum.DEVICE_ID.name(), DeviceUtil.getDeviceId(context));
-		map.put(ConfigKeyEnum.IMEI.name(), DeviceUtil.getIMEI(context));
+//		map.put(ConfigKeyEnum.IMEI.name(), DeviceUtil.getIMEI(context));
 		map.put(ConfigKeyEnum.MOBILE_TYPE.name(), DeviceUtil.getMobileType());
 		map.put(ConfigKeyEnum.SCREEN_WIDTH.name(), screenInfo[0]);
 		map.put(ConfigKeyEnum.SCREEN_HEIGHT.name(), screenInfo[1]);
@@ -73,20 +73,20 @@ public class ConfigManager {
 
 		//	判断数据库中保存的版本号和当前的是否一致, 如果不一致, 需要更新到数据库中, 并标记本次启动为首次启动
 		if (StringUtil.isBlank(lastAppVersionName) || !currentAppVersionName.equals(lastAppVersionName)) {
-			Log.i(TAG, "判断为首次启动");
+			Logger.i("判断为首次启动");
 			map.put(ConfigKeyEnum.IS_FIRST_LUNCH.name(), true);
 			ConfigDO record = new ConfigDO(null, ConfigKeyEnum.APP_VERSION_NAME.name(), currentAppVersionName);
 			Long id = configDao.insertOrReplace(record);
-			Log.i(TAG, "更新数据库中的版本号,  记录ID=" + id + ",版本号=" + currentAppVersionName);
+			Logger.i("更新数据库中的版本号,  记录ID=" + id + ",版本号=" + currentAppVersionName);
 		} else {
 			map.put(ConfigKeyEnum.IS_FIRST_LUNCH.name(), false);
-			Log.i(TAG, "判断为非首次启动");
+			Logger.i( "判断为非首次启动");
 		}
 
 		if (Constant.DEBUG) {
-			Log.i(TAG, "初始化系统配置");
+			Logger.i("初始化系统配置");
 			for (ConfigKeyEnum item : ConfigKeyEnum.values()) {
-				Log.i(TAG, item.name() + "=" + map.get(item.name()));
+				Logger.i(item.name() + "=" + map.get(item.name()));
 			}
 		}
 	}

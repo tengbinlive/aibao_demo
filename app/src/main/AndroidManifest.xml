@@ -1,6 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     android:installLocation="auto"
-    package="com.bin.kndle">
+    package="com.bin.kndle"
+    android:versionCode="1"
+    android:versionName="v1.0">
+
+    <!-- 获取设备信息 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
     <supports-screens
         android:anyDensity="true"
@@ -37,9 +42,6 @@
     <!-- 允许应用去呼叫killBackgroundProcesses()方法 -->
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
 
-    <!-- 获取设备信息 -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-
     <!-- 写入设备外部存储空间（内置SDcard和外置SDCard）的文件 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
@@ -62,6 +64,13 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <!--主界面-->
+        <activity
+            android:name=".activity.MainActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/AppThemeWTN">
         </activity>
 
     </application>

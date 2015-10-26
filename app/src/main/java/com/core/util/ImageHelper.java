@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import com.bin.kndle.Constant;
+import com.orhanobut.logger.Logger;
 
 public class ImageHelper {
 
@@ -61,7 +62,7 @@ public class ImageHelper {
 			BitmapUtils.bitmapToFile(bitmap, targetPath);
 		} catch (Exception e) {
 			bitmap = null;
-			Log.i(TAG, e.getLocalizedMessage());
+			Logger.e(e.getLocalizedMessage());
 		}
 		return bitmap;
 	}

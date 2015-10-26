@@ -26,28 +26,21 @@ repositories {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.1.0'
-    compile 'de.greenrobot:eventbus:2.4.0'
-    //事件派发
-    compile 'com.squareup.okhttp:okhttp:2.5.0'
-    // okhttp 网络处理
-    compile 'com.jakewharton:butterknife:7.0.1'
-    //布局id绑定生成 butterknife
-    compile 'de.greenrobot:greendao:2.0.0'
-    //greendao 数据库
-    compile 'me.imid.swipebacklayout.lib:library:1.0.0'
-    //滑动返回
-    compile 'com.joooonho:selectableroundedimageview:1.0.1'
-    //圆角 imageview
-    compile 'com.pnikosis:materialish-progress:1.5'
-    //material进度条
-    compile 'com.mcxiaoke.volley:library:1.0.19'
-    //volley
+    compile 'de.greenrobot:eventbus:2.4.0'//事件派发
+    compile 'com.squareup.okhttp:okhttp:2.5.0'// okhttp 网络处理
+    compile 'com.jakewharton:butterknife:7.0.1'//布局id绑定生成 butterknife
+    compile 'de.greenrobot:greendao:2.0.0'//greendao 数据库
+    compile 'me.imid.swipebacklayout.lib:library:1.0.0'//滑动返回
+    compile 'com.joooonho:selectableroundedimageview:1.0.1'//圆角 imageview
+    compile 'com.pnikosis:materialish-progress:1.5'//material进度条
+    compile 'com.mcxiaoke.volley:library:1.0.19'//volley
+    compile(name: 'logger-debug', ext: 'aar')//日志
     compile(name: 'niftymodaldialog-release', ext: 'aar')
     compile(name: 'pulltorefresh-release', ext: 'aar')
     compile(name: 'smarttablayout-release', ext: 'aar')
-    compile files('libs/okhttp-urlconnection-2.0.0.jar')
-    compile files('libs/fastjson-1.1.43.android.jar')
+    compile(name: 'alertview-release', ext: 'aar')
+
 }

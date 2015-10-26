@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_height="match_parent">
+
+    <ImageView android:id="@+id/menu_icon"
+               android:layout_marginTop="@dimen/content_1dp"
+               android:layout_width="wrap_content"
+               android:scaleType="centerInside"
+               android:src="@mipmap/main_investment_press"
+               android:layout_height="wrap_content"/>
+
+    <TextView android:id="@+id/menu_title"
+              android:layout_width="wrap_content"
+              android:textSize="@dimen/font_least"
+              android:layout_marginTop="@dimen/content_1dp"
+              android:layout_gravity="center"
+              android:textColor="@color/theme"
+              android:layout_height="wrap_content"/>
+
+</LinearLayout>

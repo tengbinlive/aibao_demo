@@ -12,6 +12,8 @@ import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
 
+import com.orhanobut.logger.Logger;
+
 /**
  * 设备相关数据获取工具类.
  * 
@@ -55,9 +57,9 @@ public class DeviceUtil {
 		WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
 		if (wifiManager.isWifiEnabled()) {
 			enable = true;
-			Log.i(TAG, "isWifiEnabled");
+			Logger.i("isWifiEnabled");
 		}
-		Log.i(TAG, "isWifiDisabled");
+		Logger.i("isWifiDisabled");
 		return enable;
 	}
 
@@ -86,7 +88,7 @@ public class DeviceUtil {
 		if (telephonyManager != null) {
 			if (telephonyManager.getNetworkType() != TelephonyManager.NETWORK_TYPE_UNKNOWN) {
 				enable = true;
-				Log.i(TAG, "isNetEnabled");
+				Logger.i("isNetEnabled");
 			}
 		}
 		return enable;
@@ -102,10 +104,10 @@ public class DeviceUtil {
 		ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo mobileNetworkInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
 		if (mobileNetworkInfo.isConnected()) {
-			Log.i(TAG, "isNetContected");
+			Logger.i("isNetContected");
 			return true;
 		}
-		Log.i(TAG, "isNetDisconnected");
+		Logger.i("isNetDisconnected");
 		return false;
 	}
 

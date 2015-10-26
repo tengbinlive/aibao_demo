@@ -14,13 +14,14 @@ import com.core.manager.ConfigManager;
 import com.core.openapi.OpenApi;
 import com.core.util.CommonUtil;
 import com.core.util.FileDataHelper;
-import com.core.util.Log;
 import com.core.util.NetworkUtil;
 import com.core.util.NetworkUtil.NetworkClassEnum;
 import com.core.util.ProcessUtil;
 import com.dao.DaoMaster;
 import com.dao.DaoMaster.OpenHelper;
 import com.dao.DaoSession;
+import com.orhanobut.logger.LogLevel;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 
@@ -172,23 +173,27 @@ public class App extends Application {
             }
 
             // 初始化日志类,如果不是调试状态则不输出日志
-            Log.init(Constant.DEBUG);
-            Log.i(TAG, "成功初始化LOG日志.");
+            Logger.init("bin.teng")               // default PRETTYLOGGER or use just init()
+                    .setMethodCount(3)            // default 2
+                    .hideThreadInfo()             // default shown
+                    .setMethodOffset(2)        // default 0
+                    .setLogLevel(LogLevel.FULL);  // default LogLevel.FULL
+            Logger.i(TAG, "成功初始化LOG日志.");
 
             // 注册crashHandler
             if (!Constant.DEBUG) {
                 CrashHandler crashHandler = CrashHandler.getInstance();
                 crashHandler.init(this);
-                Log.i(TAG, "成功初始化CrashHandler.");
+                Logger.i(TAG, "成功初始化CrashHandler.");
             }
 
             // 初始化APP相关目录
             FileDataHelper.initDirectory();
-            Log.i(TAG, "成功初始化APP相关目录.");
+            Logger.i(TAG, "成功初始化APP相关目录.");
 
             // 保存当前网络状态(在每次网络通信时可能需要判断当前网络状态)
             setCurrentNetworkStatus(NetworkUtil.getCurrentNextworkState(this));
-            Log.i(TAG, "保存当前网络状态:" + getCurrentNetworkStatus());
+            Logger.i(TAG, "保存当前网络状态:" + getCurrentNetworkStatus());
             //注册网络状态监听广播
             newConnectionReceiver();
 

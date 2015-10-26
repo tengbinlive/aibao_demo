@@ -34,4 +34,37 @@
     <style name="AppThemeTN" parent="AppTheme">
     </style>
 
+    <style name="menu_layout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:paddingTop">@dimen/drawerlayout_menu_gap</item>
+        <item name="android:paddingBottom">@dimen/drawerlayout_menu_gap</item>
+        <item name="android:paddingLeft">40dp</item>
+    </style>
+
+    <style name="drawer_ly_tv" >
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_marginLeft">35dp</item>
+    </style>
+
+    <style name="drawer_tv" >
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/font_medium</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="drawer_value_tv" >
+        <item name="android:textColor">@color/theme</item>
+        <item name="android:textSize">@dimen/font_small</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
 </resources>

@@ -3,7 +3,8 @@ package com.core;
 import android.content.Context;
 import android.os.Looper;
 import android.widget.Toast;
-import com.core.util.Log;
+
+import com.orhanobut.logger.Logger;
 
 /**
  * 通用异常处理类.
@@ -50,7 +51,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
 	@Override
 	public void uncaughtException(Thread thread, Throwable ex) {
 		// 如果用户没有处理则让系统默认的异常处理器来处理
-		Log.e("Exception", ex.toString());
+		Logger.e(ex.toString());
 		if (!handleException(ex) && defaultHandler != null) {
 			defaultHandler.uncaughtException(thread, ex);
 		}

@@ -5,8 +5,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.core.CommonResponse;
 import com.core.enums.CodeEnum;
-import com.core.util.Log;
 import com.core.util.StringUtil;
+import com.orhanobut.logger.Logger;
 
 
 /**
@@ -61,13 +61,13 @@ public class OpenApiParser {
 				response.setData(null);
 				response.setCode(CodeEnum.EXCEPTION.getCode());
 				response.setMsg(e.getLocalizedMessage());
-				Log.i(TAG, str);
+				Logger.d(str);
 			} catch (OutOfMemoryError e) {
 				System.gc();
 				response.setData(null);
 				response.setCode(CodeEnum.EXCEPTION.getCode());
 				response.setMsg(e.getLocalizedMessage());
-				Log.i(TAG, str);
+				Logger.d(str);
 			}
 		}
 		return obj;

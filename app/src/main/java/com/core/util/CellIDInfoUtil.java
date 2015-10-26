@@ -6,6 +6,8 @@ import android.telephony.TelephonyManager;
 import android.telephony.cdma.CdmaCellLocation;
 import android.telephony.gsm.GsmCellLocation;
 
+import com.orhanobut.logger.Logger;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +52,7 @@ public class CellIDInfoUtil {
 
 				if (!readSignalState) return null;
 			} catch (Exception e) {
-				Log.i("manager.getNetworkOperator()", manager.getNetworkOperator());
+				Logger.i(manager.getNetworkOperator());
 				return null;
 			}
 			currentCell.cellId = gsm.getCid();

@@ -18,6 +18,7 @@ import android.os.Message;
 import android.widget.Toast;
 
 import com.bin.kndle.App;
+import com.orhanobut.logger.Logger;
 
 import junit.framework.Assert;
 
@@ -238,7 +239,7 @@ public class CommonUtil {
 
         File file = new File(fileName);
         if (!file.exists()) {
-            Log.i(TAG, "readFromFile: file not found");
+            Logger.i( "readFromFile: file not found");
             return null;
         }
 
@@ -246,18 +247,18 @@ public class CommonUtil {
             len = (int) file.length();
         }
 
-        Log.d(TAG, "readFromFile : offset = " + offset + " len = " + len + " offset + len = " + (offset + len));
+        Logger.d("readFromFile : offset = " + offset + " len = " + len + " offset + len = " + (offset + len));
 
         if (offset < 0) {
-            Log.e(TAG, "readFromFile invalid offset:" + offset);
+            Logger.e( "readFromFile invalid offset:" + offset);
             return null;
         }
         if (len <= 0) {
-            Log.e(TAG, "readFromFile invalid len:" + len);
+            Logger.e( "readFromFile invalid len:" + len);
             return null;
         }
         if (offset + len > (int) file.length()) {
-            Log.e(TAG, "readFromFile invalid file len:" + file.length());
+            Logger.e( "readFromFile invalid file len:" + file.length());
             return null;
         }
 
@@ -270,7 +271,7 @@ public class CommonUtil {
             in.close();
 
         } catch (Exception e) {
-            Log.e(TAG, "readFromFile : errMsg = " + e.getMessage());
+            Logger.e( "readFromFile : errMsg = " + e.getMessage());
             e.printStackTrace();
         }
         return b;
@@ -287,10 +288,10 @@ public class CommonUtil {
                 tmp = null;
             }
 
-            Log.d(TAG, "extractThumbNail: round=" + width + "x" + height + ", crop=" + crop);
+            Logger.d("extractThumbNail: round=" + width + "x" + height + ", crop=" + crop);
             final double beY = options.outHeight * 1.0 / height;
             final double beX = options.outWidth * 1.0 / width;
-            Log.d(TAG, "extractThumbNail: extract beX = " + beX + ", beY = " + beY);
+            Logger.d("extractThumbNail: extract beX = " + beX + ", beY = " + beY);
             options.inSampleSize = (int) (crop ? (beY > beX ? beX : beY) : (beY < beX ? beX : beY));
             if (options.inSampleSize <= 1) {
                 options.inSampleSize = 1;
@@ -319,15 +320,15 @@ public class CommonUtil {
 
             options.inJustDecodeBounds = false;
 
-            Log.i(TAG, "bitmap required size=" + newWidth + "x" + newHeight + ", orig=" + options.outWidth + "x"
+            Logger.i( "bitmap required size=" + newWidth + "x" + newHeight + ", orig=" + options.outWidth + "x"
                     + options.outHeight + ", sample=" + options.inSampleSize);
             Bitmap bm = BitmapFactory.decodeFile(path, options);
             if (bm == null) {
-                Log.e(TAG, "bitmap decode failed");
+                Logger.e( "bitmap decode failed");
                 return null;
             }
 
-            Log.i(TAG, "bitmap decoded size=" + bm.getWidth() + "x" + bm.getHeight());
+            Logger.i( "bitmap decoded size=" + bm.getWidth() + "x" + bm.getHeight());
             final Bitmap scale = Bitmap.createScaledBitmap(bm, newWidth, newHeight, true);
             if (scale != null) {
                 bm.recycle();
@@ -343,12 +344,12 @@ public class CommonUtil {
 
                 bm.recycle();
                 bm = cropped;
-                Log.i(TAG, "bitmap croped size=" + bm.getWidth() + "x" + bm.getHeight());
+                Logger.i( "bitmap croped size=" + bm.getWidth() + "x" + bm.getHeight());
             }
             return bm;
 
         } catch (final OutOfMemoryError e) {
-            Log.e(TAG, "decode bitmap failed: " + e.getMessage());
+            Logger.e( "decode bitmap failed: " + e.getMessage());
             options = null;
         }
 
@@ -358,7 +359,6 @@ public class CommonUtil {
     private static void showToast(Context context, String msg, int time) {
         mToast = Toast.makeText(context, msg, time);
 //		toast.setGravity(Gravity.CENTER, 0, 0);
-        Log.e("BIN.TENG", "msg = " + msg);
         mToast.show();
     }
 

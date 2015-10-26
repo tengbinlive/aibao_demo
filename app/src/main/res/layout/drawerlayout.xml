@@ -1,0 +1,221 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/theme"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/statusBar_height"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/content_gap"
+        android:paddingTop="@dimen/content_gap">
+
+        <com.bin.kndle.mview.CircleNetworkImageView
+            android:id="@+id/menu_user_icon"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="@dimen/content_gap_big"
+            android:layout_marginTop="@dimen/content_gap"
+            android:src="@mipmap/default_head" />
+
+        <TextView
+            android:id="@+id/menu_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/content_gap"
+            android:layout_marginLeft="@dimen/content_gap_big"
+            android:layout_marginTop="@dimen/content_gap"
+            android:gravity="center"
+            android:minWidth="60dp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_medium"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/content_gap">
+
+            <LinearLayout
+                android:id="@+id/me_plate"
+                style="@style/menu_layout">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/me_seting" />
+
+                <LinearLayout style="@style/drawer_ly_tv">
+
+                    <TextView
+                        style="@style/drawer_tv"
+                        android:text="@string/test_text" />
+
+                    <TextView
+                        android:id="@+id/me_plate_value"
+                        style="@style/drawer_value_tv" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/me_wallet"
+                style="@style/menu_layout">
+
+                <ImageView
+                    android:id="@+id/menu_home_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/me_seting" />
+
+                <LinearLayout style="@style/drawer_ly_tv">
+
+                    <TextView
+                        style="@style/drawer_tv"
+                        android:text="@string/test_text" />
+
+                    <TextView
+                        android:id="@+id/me_wallet_value"
+                        style="@style/drawer_value_tv" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/me_msg"
+                style="@style/menu_layout">
+
+
+                <ImageView
+                    android:id="@+id/menu_partner_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/me_seting" />
+
+                <LinearLayout style="@style/drawer_ly_tv">
+
+                    <TextView
+                        android:id="@+id/me_msg_title"
+                        style="@style/drawer_tv"
+                        android:drawablePadding="@dimen/content_gap_small"
+                        android:text="@string/test_text" />
+
+                    <TextView
+                        android:id="@+id/me_msg_value"
+                        style="@style/drawer_value_tv" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/me_order"
+                style="@style/menu_layout">
+
+                <ImageView
+                    android:id="@+id/menu_me_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/me_seting" />
+
+                <LinearLayout style="@style/drawer_ly_tv">
+
+                    <TextView
+                        style="@style/drawer_tv"
+                        android:text="@string/test_text" />
+
+                    <TextView
+                        android:id="@+id/me_order_value"
+                        style="@style/drawer_value_tv" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/me_coupon"
+                style="@style/menu_layout">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/me_seting" />
+
+                <LinearLayout style="@style/drawer_ly_tv">
+
+                    <TextView
+                        style="@style/drawer_tv"
+                        android:text="@string/test_text" />
+
+                    <TextView
+                        android:id="@+id/me_coupon_value"
+                        style="@style/drawer_value_tv" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/me_share"
+                style="@style/menu_layout">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/me_seting" />
+
+                <LinearLayout style="@style/drawer_ly_tv">
+
+                    <TextView
+                        style="@style/drawer_tv"
+                        android:text="@string/test_text" />
+
+                    <TextView
+                        android:id="@+id/me_share_value"
+                        style="@style/drawer_value_tv" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/content_10dp"
+                android:background="@color/black" />
+
+            <LinearLayout
+                android:id="@+id/me_setting"
+                style="@style/menu_layout">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/me_seting" />
+
+                <LinearLayout style="@style/drawer_ly_tv">
+
+                    <TextView
+                        style="@style/drawer_tv"
+                        android:text="@string/test_text" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+</LinearLayout>

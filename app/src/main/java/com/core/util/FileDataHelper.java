@@ -3,6 +3,7 @@ package com.core.util;
 import android.os.Environment;
 
 import com.bin.kndle.Constant;
+import com.orhanobut.logger.Logger;
 
 import java.io.File;
 
@@ -28,9 +29,9 @@ public final class FileDataHelper {
                 rootFile = Environment.getExternalStorageDirectory();
                 if (rootFile.exists()) {
                     root = rootFile.toString();
-                    Log.i(TAG, "sdcard is using!");
+                    Logger.i("sdcard is using!");
                 } else {
-                    Log.i(TAG, "sdcard not use!");
+                    Logger.i("sdcard not use!");
                 }
             }
 
@@ -39,9 +40,9 @@ public final class FileDataHelper {
                 rootFile = new File("/touyanshe");
                 if (rootFile.exists()) {
                     root = rootFile.toString();
-                    Log.i(TAG, "/flase is using!");
+                    Logger.i("/flase is using!");
                 } else {
-                    Log.i(TAG, "/flase not use!");
+                    Logger.i("/flase not use!");
                 }
             }
 
@@ -53,26 +54,26 @@ public final class FileDataHelper {
 
                 if (!rootDir.exists()) {
                     rootDir.mkdirs();
-                    Log.i(TAG, rootDir + " is not exist, created succeed!");
+                    Logger.i(rootDir + " is not exist, created succeed!");
                 }
                 if (!downloadDir.exists()) {
                     downloadDir.mkdirs();
-                    Log.i(TAG, downloadDir + " is not exist, created succeed!");
+                    Logger.i(downloadDir + " is not exist, created succeed!");
                 }
                 if (!imageDir.exists()) {
                     imageDir.mkdirs();
-                    Log.i(TAG, imageDir + " is not exist, created succeed!");
+                    Logger.i(imageDir + " is not exist, created succeed!");
                 }
                 if (!cacheDir.exists()) {
                     cacheDir.mkdirs();
-                    Log.i(TAG, cacheDir + " is not exist, created succeed!");
+                    Logger.i(cacheDir + " is not exist, created succeed!");
                 }
                 result = true;
             } else {
-                Log.e(TAG, "rootFile is null, created failed");
+                Logger.e( "rootFile is null, created failed");
             }
         } catch (Exception e) {
-            Log.e(TAG, "create directory Exception, " + e);
+            Logger.e( "create directory Exception, " + e);
         }
         return result;
     }

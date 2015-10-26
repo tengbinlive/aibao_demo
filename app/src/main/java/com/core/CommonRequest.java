@@ -12,7 +12,8 @@ import com.core.openapi.OpenApiParamHelper;
 import com.core.openapi.OpenApiParser;
 import com.core.openapi.OpenApiRequestInterface;
 import com.core.util.CommonUtil;
-import com.core.util.Log;
+import com.orhanobut.logger.Logger;
+
 import org.apache.http.conn.ConnectTimeoutException;
 
 import java.io.IOException;
@@ -159,8 +160,8 @@ public class CommonRequest extends Request<CommonResponse> {
                 buf.append(key).append("=").append(mParam.get(key)).append("\n");
                 buf2.append(key).append("=").append(mParam.get(key)).append("&");
             }
-            Log.i(TAG, buf.toString());
-            Log.i(TAG, buf2.toString());
+            Logger.d(buf.toString());
+            Logger.d(buf2.toString());
         }
 
         // 设置该Request正确创建
@@ -216,8 +217,8 @@ public class CommonRequest extends Request<CommonResponse> {
                 buf.append(key).append("=").append(mParam.get(key)).append("\n");
                 buf2.append(key).append("=").append(mParam.get(key)).append("&");
             }
-            Log.i(TAG, buf.toString());
-            Log.i(TAG, buf2.toString());
+            Logger.d(buf.toString());
+            Logger.d(buf2.toString());
         }
 
         // 设置该Request正确创建
@@ -253,7 +254,7 @@ public class CommonRequest extends Request<CommonResponse> {
         String str;
         try {
             str = new String(networkResponse.data, HttpHeaderParser.parseCharset(networkResponse.headers));
-            Log.d(TAG, "return data=" + str);
+            Logger.json(str);
             // 转换返回结果为指定对象
             this.doParse(str, mFormat, mTypeToken, response, mRawData);
         } catch (UnsupportedEncodingException e) {
