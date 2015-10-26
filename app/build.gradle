@@ -1,0 +1,53 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.1"
+
+    defaultConfig {
+        applicationId "com.bin.kndle"
+        minSdkVersion 15
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+repositories {
+    flatDir {
+        dirs 'libs' //this way we can find the .aar file in libs folder
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.1.0'
+    compile 'de.greenrobot:eventbus:2.4.0'
+    //事件派发
+    compile 'com.squareup.okhttp:okhttp:2.5.0'
+    // okhttp 网络处理
+    compile 'com.jakewharton:butterknife:7.0.1'
+    //布局id绑定生成 butterknife
+    compile 'de.greenrobot:greendao:2.0.0'
+    //greendao 数据库
+    compile 'me.imid.swipebacklayout.lib:library:1.0.0'
+    //滑动返回
+    compile 'com.joooonho:selectableroundedimageview:1.0.1'
+    //圆角 imageview
+    compile 'com.pnikosis:materialish-progress:1.5'
+    //material进度条
+    compile 'com.mcxiaoke.volley:library:1.0.19'
+    //volley
+    compile(name: 'niftymodaldialog-release', ext: 'aar')
+    compile(name: 'pulltorefresh-release', ext: 'aar')
+    compile(name: 'smarttablayout-release', ext: 'aar')
+    compile files('libs/okhttp-urlconnection-2.0.0.jar')
+    compile files('libs/fastjson-1.1.43.android.jar')
+}

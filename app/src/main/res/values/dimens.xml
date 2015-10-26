@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--actionbar-->
+    <dimen name="statusBar_height">0dip</dimen>
+    <dimen name="actionbar_statusBar_height">0dip</dimen>
+    <dimen name="actionbar_height">45dp</dimen>
+
+    <!--layout-->
+    <dimen name="content_gap">16dp</dimen>
+    <dimen name="content_gap_small">5dp</dimen>
+    <dimen name="content_left_margin">16dp</dimen>
+    <dimen name="content_right_margin">16dp</dimen>
+
+
+    <!--font-->
+    <dimen name="font_actionbar">15sp</dimen>
+    <dimen name="font_actionbar_title">17sp</dimen>
+    <dimen name="font_medium">14sp</dimen>
+
+</resources>

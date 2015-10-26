@@ -1,0 +1,4 @@
+<resources>
+    <string name="error_network">服务器繁忙。</string>
+    <string name="network_unavailable">网络连接不可用，请检查网络</string>
+</resources>
