@@ -1,0 +1,7 @@
+<resources>
+
+    <array name="edittext">
+        <item>@style/DarkEditText</item>
+    </array>
+
+</resources>

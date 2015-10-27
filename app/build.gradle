@@ -38,6 +38,8 @@ dependencies {
     compile 'com.pnikosis:materialish-progress:1.5'//material进度条
     compile 'com.mcxiaoke.volley:library:1.0.19'//volley
     compile(name: 'logger-debug', ext: 'aar')//日志
+    compile 'com.flaviofaria:kenburnsview:1.0.6'
+    compile 'com.github.rey5137:material:1.2.1'
     compile(name: 'niftymodaldialog-release', ext: 'aar')
     compile(name: 'pulltorefresh-release', ext: 'aar')
     compile(name: 'smarttablayout-release', ext: 'aar')

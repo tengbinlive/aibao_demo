@@ -1,0 +1,39 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.flaviofaria.kenburnsview.KenBurnsView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@mipmap/imgbg" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <com.rey.material.widget.EditText
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/textfield_et_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:hint="Input with label"
+            app:et_inputId="@+id/textfield_et_label_input"
+            app:et_supportMode="none"/>
+
+        <com.rey.material.widget.EditText
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/textfield_et_helper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:inputType="textPassword"
+            android:hint="Input with helper"
+            app:et_inputId="@+id/textfield_et_helper_input"
+            app:et_supportMode="helper"
+            app:et_helper="Enter password"/>
+    </LinearLayout>
+
+</RelativeLayout>

@@ -73,6 +73,14 @@
             android:theme="@style/AppThemeWTN">
         </activity>
 
+        <!--登录-->
+        <activity
+            android:name=".activity.LoginActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:launchMode="singleTop"
+            android:theme="@style/AppThemeWTN">
+        </activity>
+
     </application>
 
 </manifest>

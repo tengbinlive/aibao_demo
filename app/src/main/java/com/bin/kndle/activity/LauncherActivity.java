@@ -31,7 +31,7 @@ public class LauncherActivity extends AbsActivity {
 
     private void toLogining() {
         isTo = true;
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();
         overridePendingTransition(R.anim.fade, R.anim.launcher_out);
