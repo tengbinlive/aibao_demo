@@ -5,10 +5,10 @@
     android:layout_height="match_parent"
     android:background="@drawable/dialog_bg"
     android:orientation="vertical"
-    android:paddingBottom="15dp"
+    android:paddingBottom="20dp"
     android:paddingLeft="35dp"
     android:paddingRight="35dp"
-    android:paddingTop="15dp">
+    android:paddingTop="20dp">
 
     <com.wang.avi.AVLoadingIndicatorView
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -23,8 +23,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/content_gap"
-        android:text="正在加载中"
+        android:layout_marginTop="@dimen/content_gap_small"
+        android:text="@string/loading"
         android:textColor="@color/white"
         android:textSize="@dimen/font_medium" />
 

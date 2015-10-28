@@ -101,13 +101,13 @@ public class RegisterActivity extends AbsActivity {
      * 登录
      */
     private void Login(String phone, String password) {
-        dialogShow("正在登录");
+        dialogShow(R.string.logining);
         activityHandler.sendEmptyMessageDelayed(LOGIN_DATA, 4000);
     }
 
     @OnClick(R.id.register_bt)
     void register() {
-        dialogShow(getString(R.string.register_ing));
+        dialogShow(R.string.register_ing);
         activityHandler.sendEmptyMessageDelayed(REGISTER, 4000);
     }
 
