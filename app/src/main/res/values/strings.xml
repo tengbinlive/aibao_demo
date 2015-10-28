@@ -6,7 +6,18 @@
 
     <string name="press_more_times_for_exit">再按一次退出客户端</string>
 
+
     <!--test-->
     <string name="test_text">test</string>
+    <string name="username">手机</string>
+    <string name="password">密码</string>
+    <string name="hint_username">请输入手机号码</string>
+    <string name="hint_password">请输入密码</string>
+    <string name="hint_verification">请输入验证码</string>
+    <string name="login">登录</string>
+    <string name="register">注册</string>
+    <string name="get_verification">获取验证码</string>
+    <string name="reget_verification">重新获取</string>
+    <string name="register_ing">正在注册</string>
 
 </resources>

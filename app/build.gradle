@@ -38,9 +38,12 @@ dependencies {
     compile 'com.pnikosis:materialish-progress:1.5'//material进度条
     compile 'com.mcxiaoke.volley:library:1.0.19'//volley
     compile 'com.ogaclejapan.smarttablayout:library:1.4.2@aar'
+    compile 'com.nineoldandroids:library:2.4.0'
+    compile 'com.wang.avi:library:1.0.0'
     compile(name: 'logger-debug', ext: 'aar')//日志
+    compile 'com.flaviofaria:kenburnsview:1.0.6'
     compile(name: 'niftymodaldialog-release', ext: 'aar')
     compile(name: 'pulltorefresh-release', ext: 'aar')
     compile(name: 'alertview-release', ext: 'aar')
-
+    compile(name: 'matchview-release', ext: 'aar')
 }

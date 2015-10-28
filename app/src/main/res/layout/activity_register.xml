@@ -1,0 +1,108 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <include layout="@layout/action_toolbar"/>
+
+    <LinearLayout
+        android:id="@+id/login_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="40dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/editheight"
+            android:layout_marginTop="@dimen/content_10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/content_left_margin"
+            android:paddingRight="@dimen/content_right_margin">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/username"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_medium" />
+
+            <com.bin.kndle.mview.EditTextWithDelete
+                android:id="@+id/phone_et"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/content_10dp"
+                android:layout_marginRight="@dimen/content_10dp"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="@string/hint_username"
+                android:inputType="phone"
+                android:textColor="@color/textcolor_222"
+                android:textColorHint="@color/gray_hint"
+                android:textCursorDrawable="@null"
+                android:textSize="@dimen/font_medium" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/login_light_divide" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/editheight"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/content_left_margin"
+            android:paddingRight="@dimen/content_right_margin">
+
+            <com.bin.kndle.mview.EditTextWithDelete
+                android:id="@+id/register_et"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignRight="@+id/verification_bt"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="@string/hint_verification"
+                android:password="true"
+                android:textColor="@color/textcolor_222"
+                android:textColorHint="@color/gray_hint"
+                android:textCursorDrawable="@null"
+                android:textSize="@dimen/font_medium" />
+
+            <Button
+                android:id="@+id/verification_bt"
+                android:layout_width="80dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_height="33dp"
+                android:text="@string/get_verification"
+                android:textSize="@dimen/font_medium"
+                android:textColor="@color/white"
+                android:background="@drawable/login_bg"/>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/login_light_divide" />
+
+        <Button
+            android:id="@+id/register_bt"
+            android:layout_marginTop="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/button_height"
+            android:layout_marginLeft="@dimen/content_left_margin"
+            android:layout_marginRight="@dimen/content_right_margin"
+            android:layout_marginBottom="@dimen/content_right_margin"
+            android:text="@string/register"
+            android:textSize="@dimen/font_btn"
+            android:textColor="@color/white"
+            android:background="@drawable/login_bg"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

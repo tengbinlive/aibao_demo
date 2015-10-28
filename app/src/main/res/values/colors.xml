@@ -12,6 +12,7 @@
 
     <!--font -->
     <color name="gray_hint">#bdbdbd</color>
+    <color name="textcolor_222">#222</color>
 
     <!-- dialog -->
     <color name="dialog_bg">#dd000000</color>

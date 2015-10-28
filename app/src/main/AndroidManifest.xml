@@ -73,6 +73,22 @@
             android:theme="@style/AppThemeWTN">
         </activity>
 
+        <!--登录-->
+        <activity
+            android:name=".activity.LoginActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:launchMode="singleTop"
+            android:theme="@style/AppThemeN">
+        </activity>
+
+        <!--注册-->
+        <activity
+            android:name=".activity.RegisterActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:launchMode="singleTop"
+            android:theme="@style/AppThemeN">
+        </activity>
+
     </application>
 
 </manifest>
