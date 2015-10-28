@@ -11,14 +11,14 @@ import com.bin.kndle.R;
 public enum BottomMenu {
 
     //    主界面
-    //test1
-    INVESTMENT(R.string.test_text,R.string.test_text, R.mipmap.main_investment_press, R.mipmap.main_investment_normal, 0xfff12e40, 0xff808080),
-    //test2
-    RECOMMEND(R.string.test_text,R.string.test_text, R.mipmap.main_recommend_press, R.mipmap.main_recommend_normal, 0xfff12e40, 0xff808080),
-    //test3
-    GUNG(R.string.test_text,R.string.test_text, R.mipmap.main_gung_press, R.mipmap.main_gung_normal, 0xfff12e40, 0xff808080),
-    //test4
-    ME(R.string.test_text, R.string.test_text,R.mipmap.main_me_press, R.mipmap.main_me_normal, 0xfff12e40, 0xff808080);
+    //动态
+    DYNAMIC(R.string.menu_dynamic,R.string.menu_dynamic, R.mipmap.main_investment_press, R.mipmap.main_investment_normal, 0xfff12e40, 0xff808080),
+    //爱的约定
+    AGREEMENT(R.string.menu_agreement,R.string.menu_agreement, R.mipmap.main_recommend_press, R.mipmap.main_recommend_normal, 0xfff12e40, 0xff808080),
+    //习惯记录
+    HABIT(R.string.menu_habit,R.string.menu_habit, R.mipmap.main_gung_press, R.mipmap.main_gung_normal, 0xfff12e40, 0xff808080),
+    //kindle
+    KINDLE(R.string.menu_kindle, R.string.menu_kindle,R.mipmap.main_me_press, R.mipmap.main_me_normal, 0xfff12e40, 0xff808080);
 
     private int title;
     private int title_press;

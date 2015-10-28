@@ -30,7 +30,7 @@ public class MainViewPagerAdapter extends FragmentPagerAdapter {
     }
 
     public void refresh(int position) {
-        fragments.get(position).resetInit();
+        fragments.get(position).EResetInit();
     }
 
     @Override

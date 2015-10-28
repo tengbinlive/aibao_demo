@@ -21,5 +21,9 @@
     <string name="register_ing">正在注册</string>
     <string name="loading">正在加载中</string>
     <string name="logining">正在登录</string>
+    <string name="menu_kindle">kindle</string>
+    <string name="menu_dynamic">动态</string>
+    <string name="menu_agreement">爱的约定</string>
+    <string name="menu_habit">习惯记录</string>
 
 </resources>

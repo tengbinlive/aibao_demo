@@ -67,4 +67,6 @@
         <item name="android:singleLine">true</item>
     </style>
 
+    <style name="CheckBoxDrawable" parent="Material.Drawable.CheckBox"/>
+
 </resources>

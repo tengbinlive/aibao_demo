@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/content_10dp"
+    android:paddingBottom="@dimen/content_10dp"
+    android:paddingRight="@dimen/content_10dp"
+    android:paddingLeft="@dimen/content_10dp"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/content_gap"
+        android:background="@drawable/item_bg">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/head"
+            android:layout_width="@dimen/item_head_size"
+            android:layout_height="@dimen/item_head_size"
+            android:scaleType="centerInside"
+            android:src="@mipmap/default_head"
+            app:riv_border_width="0dip"
+            app:riv_corner_radius="4dip"
+            app:riv_mutate_background="true"
+            app:riv_oval="false"
+            app:riv_tile_mode="repeat" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/content_gap_small"
+            android:layout_marginLeft="@dimen/content_left_margin"
+            android:layout_toRightOf="@+id/head"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="user name"
+                android:textColor="@color/textcolor_222"
+                android:textSize="@dimen/font_btn" />
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_below="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5分钟前"
+                android:layout_marginTop="@dimen/content_gap_small"
+                android:textColor="@color/gray_hint"
+                android:textSize="@dimen/font_least" />
+
+            <TextView
+                android:id="@+id/desc"
+                android:layout_below="@+id/name"
+                android:layout_toRightOf="@+id/date"
+                android:layout_marginLeft="@dimen/content_left_margin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="麦宝客户端"
+                android:layout_marginTop="@dimen/content_gap_small"
+                android:textColor="@color/gray_hint"
+                android:textSize="@dimen/font_least" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:src="@mipmap/share"
+                android:scaleType="centerInside"
+                android:layout_alignParentRight="true"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/content"
+            android:layout_below="@+id/head"
+            android:paddingTop="@dimen/content_gap_small"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textcolor_222"
+            android:lineSpacingMultiplier="1.3"
+            android:textSize="@dimen/font_small" />
+    </RelativeLayout>
+
+</LinearLayout>
+

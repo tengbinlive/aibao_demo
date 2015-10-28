@@ -19,6 +19,7 @@ import com.bin.kndle.activityexpand.activity.AnimatedRectActivity;
 import com.gitonway.lee.niftymodaldialogeffects.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.NiftyDialogBuilder;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -26,6 +27,10 @@ public class LoginActivity extends AnimatedRectActivity {
 
     public NiftyDialogBuilder dialogBuilder;
     public LayoutInflater mInflater;
+    @Bind(R.id.toolbar_left_btn)
+    TextView toolbarLeftBtn;
+    @Bind(R.id.toolbar_intermediate_tv)
+    TextView toolbarIntermediateTv;
 
     @Override
     public int getContentView() {
@@ -53,8 +58,8 @@ public class LoginActivity extends AnimatedRectActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mInflater = LayoutInflater.from(this);
-        setStatusBar();
         ButterKnife.bind(this);
+        setStatusBar();
     }
 
     /**
@@ -69,6 +74,14 @@ public class LoginActivity extends AnimatedRectActivity {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(Color.TRANSPARENT);
         }
+        toolbarIntermediateTv.setText(R.string.login);
+        toolbarLeftBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                onBackPressed();
+            }
+        });
     }
 
     public void dialogShow(int title) {
@@ -91,9 +104,9 @@ public class LoginActivity extends AnimatedRectActivity {
         }
     }
 
-    private final  static int DIALOGSHOW = 1;
-    private final  static int DIALOGDISMISS = 0;
-    private final  static int TO_MAIN_ACTIVITY = 2;
+    private final static int DIALOGSHOW = 1;
+    private final static int DIALOGDISMISS = 0;
+    private final static int TO_MAIN_ACTIVITY = 2;
 
     private Handler activityHandler = new Handler() {
         public void handleMessage(Message msg) {

@@ -3,20 +3,24 @@ package com.bin.kndle;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bin.kndle.event.AnyEventType;
+import com.bin.kndle.imp.EInitFragmentDate;
 import com.gitonway.lee.niftymodaldialogeffects.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.NiftyDialogBuilder;
 
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 
-public abstract class AbsFragment extends Fragment {
+public abstract class AbsFragment extends Fragment implements EInitFragmentDate {
 
     protected final String TAG = AbsFragment.class.getSimpleName();
 
@@ -25,6 +29,8 @@ public abstract class AbsFragment extends Fragment {
     public final static String KEY = "KEY";
 
     public NiftyDialogBuilder dialogBuilder;
+
+    public LayoutInflater mInflater;
 
     public abstract boolean onBackPressed();
 
@@ -66,15 +72,37 @@ public abstract class AbsFragment extends Fragment {
 
     }
 
+    @Nullable
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(this, view);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mInflater = inflater;
+        View rootView = mInflater.inflate(getContentView(), container, false);
+        ButterKnife.bind(this, rootView);
+        EInit();
+        return rootView;
+    }
+
+    public abstract int getContentView();
+
+    @Override
+    public void EInit() {
+
+    }
+
+    @Override
+    public void EDestroy() {
+
+    }
+
+    @Override
+    public void EResetInit() {
+
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        EDestroy();
         ButterKnife.unbind(this);
     }
 
@@ -101,8 +129,6 @@ public abstract class AbsFragment extends Fragment {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         return false;
     }
-
-    public abstract void resetInit();
 
     private final static int DIALOGSHOW = 1;
     private final static int DIALOGDISMISS = 0;

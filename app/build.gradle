@@ -34,12 +34,17 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'//布局id绑定生成 butterknife
     compile 'de.greenrobot:greendao:2.0.0'//greendao 数据库
     compile 'me.imid.swipebacklayout.lib:library:1.0.0'//滑动返回
-    compile 'com.joooonho:selectableroundedimageview:1.0.1'//圆角 imageview
+    compile 'com.makeramen:roundedimageview:2.2.1'//圆角 imageview
     compile 'com.pnikosis:materialish-progress:1.5'//material进度条
     compile 'com.mcxiaoke.volley:library:1.0.19'//volley
     compile 'com.ogaclejapan.smarttablayout:library:1.4.2@aar'
     compile 'com.nineoldandroids:library:2.4.0'
+    compile 'com.github.rey5137:material:1.2.1'
     compile 'com.wang.avi:library:1.0.0'
+    compile 'com.github.bumptech.glide:glide:3.6.1'
+    compile 'com.nhaarman.listviewanimations:lib-core:3.1.0@aar'
+    compile 'com.nhaarman.listviewanimations:lib-manipulation:3.1.0@aar'
+    compile 'com.nhaarman.listviewanimations:lib-core-slh:3.1.0@aar'
     compile(name: 'logger-debug', ext: 'aar')//日志
     compile 'com.flaviofaria:kenburnsview:1.0.6'
     compile(name: 'niftymodaldialog-release', ext: 'aar')

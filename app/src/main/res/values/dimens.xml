@@ -32,5 +32,6 @@
     <dimen name="drawerlayout_menu_gap">10dp</dimen>
     <dimen name="editheight">45dp</dimen>
     <dimen name="button_height">40dp</dimen>
+    <dimen name="item_head_size">60dp</dimen>
 
 </resources>

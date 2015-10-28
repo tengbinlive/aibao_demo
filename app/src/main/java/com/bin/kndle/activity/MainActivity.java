@@ -98,6 +98,12 @@ public class MainActivity extends AbsActivity {
 
     private void initLayout() {
         contentFragment = new ContentFragment();
+        contentFragment.setActionbarSet(new ContentFragment.ActionbarSet() {
+            @Override
+            public void OnTitleSet(int title) {
+                setToolbarIntermediateStrID(title);
+            }
+        });
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.contentlayout, contentFragment)
                 .commit();

@@ -90,9 +90,63 @@
             android:layout_height="1dp"
             android:background="@drawable/login_light_divide" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/editheight"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/content_left_margin"
+            android:paddingRight="@dimen/content_right_margin">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/password"
+                android:textColor="@color/textcolor_222"
+                android:textSize="@dimen/font_medium" />
+
+            <com.bin.kndle.mview.EditTextWithDelete
+                android:id="@+id/password_et"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/content_10dp"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="@string/hint_password"
+                android:password="true"
+                android:textColor="@color/textcolor_222"
+                android:textColorHint="@color/gray_hint"
+                android:textCursorDrawable="@null"
+                android:textSize="@dimen/font_medium" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/login_light_divide" />
+
+        <com.rey.material.widget.CheckBox
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            style="@style/CheckBoxDrawable"
+            android:id="@+id/agree_cb"
+            android:layout_marginTop="@dimen/content_10dp"
+            android:layout_marginLeft="@dimen/content_left_margin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="25dp"
+            android:padding="@dimen/content_gap_small"
+            android:text="我已阅读并同意《用户使用协议》"
+            android:textColor="@color/textcolor_222"
+            android:textSize="@dimen/font_small"
+            android:checked="true"
+            app:cbd_strokeColor="@color/theme"
+            app:cbd_tickColor="@color/white"
+            android:gravity="center_vertical"/>
+
         <Button
             android:id="@+id/register_bt"
-            android:layout_marginTop="25dp"
             android:layout_width="match_parent"
             android:layout_height="@dimen/button_height"
             android:layout_marginLeft="@dimen/content_left_margin"
