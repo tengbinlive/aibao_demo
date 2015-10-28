@@ -37,10 +37,10 @@ dependencies {
     compile 'com.joooonho:selectableroundedimageview:1.0.1'//圆角 imageview
     compile 'com.pnikosis:materialish-progress:1.5'//material进度条
     compile 'com.mcxiaoke.volley:library:1.0.19'//volley
+    compile 'com.ogaclejapan.smarttablayout:library:1.4.2@aar'
     compile(name: 'logger-debug', ext: 'aar')//日志
     compile(name: 'niftymodaldialog-release', ext: 'aar')
     compile(name: 'pulltorefresh-release', ext: 'aar')
-    compile(name: 'smarttablayout-release', ext: 'aar')
     compile(name: 'alertview-release', ext: 'aar')
 
 }

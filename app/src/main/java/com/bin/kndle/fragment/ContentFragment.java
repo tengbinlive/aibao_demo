@@ -26,6 +26,7 @@ public class ContentFragment extends AbsFragment {
     private LayoutInflater mInflater;
 
     private SmartTabLayout viewPagerTab;
+    private SmartTabLayout.TabProvider tabProvider;
     private ArrayList<AbsFragment> fragments;
 
     @Override
@@ -82,12 +83,7 @@ public class ContentFragment extends AbsFragment {
                 return custom_ly;
             }
         });
-        viewPagerTab.setTabClickSelectListener(new SmartTabLayout.TabClickSelectListener() {
-            @Override
-            public void onSelect(View view, boolean isSelect, int position) {
-                setSelectedBackground((ViewGroup) view, isSelect);
-            }
-        });
+
         viewPagerTab.setViewPager(viewPager);
 
         viewPagerTab.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -99,6 +95,7 @@ public class ContentFragment extends AbsFragment {
             @Override
             public void onPageSelected(int position) {
                 fragments.get(position).resetInit();
+                setSelectedTabBg(position);
             }
 
             @Override
@@ -127,7 +124,15 @@ public class ContentFragment extends AbsFragment {
         setIconInfo(custom_ly, menu, false);
     }
 
-    private void setSelectedBackground(ViewGroup custom_ly, boolean isSelect) {
+    private void setSelectedTabBg(int position) {
+        int count = fragments.size();
+        for (int i = 0; i < count; i++) {
+            ViewGroup view = (ViewGroup) viewPagerTab.getTabAt(i);
+            setTabViewBackground(view, i == position);
+        }
+    }
+
+    private void setTabViewBackground(ViewGroup custom_ly, boolean isSelect) {
         BottomMenu menu = (BottomMenu) custom_ly.getTag(R.id.main_tab_menu);
         ImageView icon = (ImageView) custom_ly.findViewById(R.id.menu_icon);
         TextView title = (TextView) custom_ly.findViewById(R.id.menu_title);
