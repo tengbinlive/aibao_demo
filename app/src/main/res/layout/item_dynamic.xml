@@ -4,15 +4,13 @@
     android:layout_height="wrap_content"
     android:paddingTop="@dimen/content_10dp"
     android:paddingBottom="@dimen/content_10dp"
-    android:paddingRight="@dimen/content_10dp"
-    android:paddingLeft="@dimen/content_10dp"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/content_gap"
-        android:background="@drawable/item_bg">
+        android:background="@color/white">
 
         <com.makeramen.roundedimageview.RoundedImageView
             xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -22,7 +20,7 @@
             android:scaleType="centerInside"
             android:src="@mipmap/default_head"
             app:riv_border_width="0dip"
-            app:riv_corner_radius="4dip"
+            app:riv_corner_radius="30dip"
             app:riv_mutate_background="true"
             app:riv_oval="false"
             app:riv_tile_mode="repeat" />
