@@ -101,7 +101,7 @@ public class MainActivity extends AbsActivity {
         contentFragment.setActionbarSet(new ContentFragment.ActionbarSet() {
             @Override
             public void OnTitleSet(int title) {
-                setToolbarIntermediateStrID(title);
+                setToolbarLeftStrID(title);
             }
         });
         getSupportFragmentManager().beginTransaction()
@@ -111,8 +111,7 @@ public class MainActivity extends AbsActivity {
     }
 
     private void setActionBar() {
-        setToolbarIntermediateStrID(R.string.test_text);
-        setToolbarLeft(R.mipmap.menu_normal);
+        setToolbarLeft(0);
         setToolbarLeftOnClick(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -8,7 +8,9 @@ import android.widget.ListView;
 import com.bin.kndle.AbsFragment;
 import com.bin.kndle.R;
 import com.bin.kndle.adapter.DynamicAdapter;
+import com.bin.kndle.adapter.HabitAdapter;
 import com.bin.kndle.bean.DynamicResult;
+import com.bin.kndle.bean.HabitResult;
 import com.core.CommonResponse;
 import com.handmark.pulltorefresh.PullToRefreshBase;
 import com.handmark.pulltorefresh.PullToRefreshListView;
@@ -18,7 +20,7 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 
-public class DtnameicFragment extends AbsFragment {
+public class HabitFragment extends AbsFragment {
 
     @Bind(R.id.listview)
     PullToRefreshListView listview;
@@ -26,9 +28,9 @@ public class DtnameicFragment extends AbsFragment {
     LinearLayout llListEmpty;
 
     private ListView mActualListView;
-    private DynamicAdapter mAdapter;
+    private HabitAdapter mAdapter;
 
-    private ArrayList<DynamicResult> arrayList = new ArrayList<>();
+    private ArrayList<HabitResult> arrayList = new ArrayList<>();
 
     private void initListView() {
 
@@ -50,7 +52,7 @@ public class DtnameicFragment extends AbsFragment {
         // Need to use the Actual ListView when registering for Context Menu
         registerForContextMenu(mActualListView);
 
-        mAdapter = new DynamicAdapter(getActivity(), arrayList);
+        mAdapter = new HabitAdapter(getActivity(), arrayList);
 
         SwingBottomInAnimationAdapter animationAdapter = new SwingBottomInAnimationAdapter(mAdapter);
 
@@ -106,7 +108,7 @@ public class DtnameicFragment extends AbsFragment {
                 if(arrayList==null){
                     arrayList = new ArrayList<>();
                 }
-                arrayList.add(DynamicResult.testData());
+                arrayList.add(HabitResult.testData());
             }
             mAdapter.refresh(arrayList);
         } else {

@@ -26,6 +26,11 @@ public class OpenApiSimpleResult implements Serializable {
     private String result;
 
     /**
+     * 描述
+     */
+    private String description;
+
+    /**
      * 扩展属性
      */
     private String MESG;
@@ -35,6 +40,46 @@ public class OpenApiSimpleResult implements Serializable {
      */
     private String CAUSE;
 
+    public String getCODE() {
+        return CODE;
+    }
+
+    public void setCODE(String CODE) {
+        this.CODE = CODE;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getMESG() {
+        return MESG;
+    }
+
+    public void setMESG(String MESG) {
+        this.MESG = MESG;
+    }
+
     public String getCAUSE() {
         return CAUSE;
     }
@@ -43,68 +88,13 @@ public class OpenApiSimpleResult implements Serializable {
         this.CAUSE = CAUSE;
     }
 
-    /**
-     * @return 返回代码
-     */
-    public String getCode() {
-        return CODE;
-    }
-
-    /**
-     * @param code 返回代码
-     */
-    public void setCode(String code) {
-        this.CODE = code;
-    }
-
-    /**
-     * @return 返回错误结果
-     */
-    public String getError() {
-        return error;
-    }
-
-    /**
-     * @param error 错误结果
-     */
-    public void setError(String error) {
-        this.error = error;
-    }
-
-    /**
-     * @return 返回结果
-     */
-    public String getResult() {
-        return result;
-    }
-
-    /**
-     * @param result 返回结果
-     */
-    public void setResult(String result) {
-        this.result = result;
-    }
-
-    /**
-     * @return 返回扩展属性
-     */
-    public String getExtMsg() {
-        return MESG;
-    }
-
-    /**
-     * @param extMsg 扩展属性
-     */
-    public void setExtMsg(String extMsg) {
-        this.MESG = extMsg;
-    }
-
     @Override
     public String toString() {
         return "OpenApiSimpleResult{" +
                 "CODE='" + CODE + '\'' +
                 ", error='" + error + '\'' +
                 ", result='" + result + '\'' +
+                ", description='" + description + '\'' +
                 ", MESG='" + MESG + '\'' +
                 ", CAUSE='" + CAUSE + '\'' +
                 '}';

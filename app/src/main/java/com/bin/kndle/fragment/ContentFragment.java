@@ -55,9 +55,9 @@ public class ContentFragment extends AbsFragment {
 
     // 初始化资源
     private void init() {
-        fragments = new ArrayList<AbsFragment>();
+        fragments = new ArrayList<>();
         fragments.add(new DtnameicFragment());
-        fragments.add(new DtnameicFragment());
+        fragments.add(new HabitFragment());
         fragments.add(new DtnameicFragment());
         fragments.add(new DtnameicFragment());
         MainViewPagerAdapter adapter = new MainViewPagerAdapter(getFragmentManager(), fragments);

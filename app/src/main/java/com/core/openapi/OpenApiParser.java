@@ -18,11 +18,10 @@ public class OpenApiParser {
 
 	private static final String TAG = OpenApiParser.class.getSimpleName();
 
-	private static final String JSON_ELEMENT_CODE = "CODE";
-	private static final String JSON_ELEMENT_MESG = "MESG";
-	private static final String JSON_ELEMENT_CAUSE = "CAUSE";
+	private static final String JSON_ELEMENT_CODE = "result";
+	private static final String JSON_ELEMENT_MESG = "description";
 
-	private static final String JSON_VALUE_SUCCESS_CODE = "1000";
+	private static final String JSON_VALUE_SUCCESS_CODE = "1";
 
 	/**
 	 * 从JSON数据中解析为指定对象.
@@ -42,19 +41,18 @@ public class OpenApiParser {
 
 				String code = jsonObject.getString(JSON_ELEMENT_CODE);
 				String mesg = jsonObject.getString(JSON_ELEMENT_MESG);
-				String cause = jsonObject.getString(JSON_ELEMENT_CAUSE);
 
 				// 先判断code
 				if (StringUtil.isBlank(code) || !JSON_VALUE_SUCCESS_CODE.equals(code)) {
 					response.setData(null);
 					response.setCode(code);
-					response.setMsg(StringUtil.isBlank(cause)?mesg:cause);
+					response.setMsg(StringUtil.isBlank(mesg)?mesg:mesg);
 				}
 				// 返回的结果为成功数据
 				else {
 					obj = JSON.parseObject(str, typeToken);
 					response.setData(obj);
-					response.setMsg(StringUtil.isBlank(cause) ? mesg : cause);
+					response.setMsg(StringUtil.isBlank(mesg) ? mesg : mesg);
 					response.setCodeEnum(CodeEnum.SUCCESS);
 				}
 			} catch (Exception e) {
