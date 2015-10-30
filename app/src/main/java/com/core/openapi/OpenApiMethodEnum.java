@@ -13,6 +13,11 @@ public enum OpenApiMethodEnum {
     /**
      * 登录
      */
+    LOAD_REGISTER("myt_parent/parentAction_regist.do", "openapi_json", OpenApi.URL_TYPE_DATA),
+
+    /**
+     * 登录
+     */
     LOAD_LOGIN("myt_parent/parentAction_login.do", "openapi_json", OpenApi.URL_TYPE_DATA),
 
     /**

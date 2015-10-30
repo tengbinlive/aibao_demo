@@ -1,8 +1,8 @@
 package com.core;
 
 
-import com.bin.kndle.App;
-import com.bin.kndle.R;
+import com.mytian.lb.App;
+import com.mytian.lb.R;
 import com.core.enums.CodeEnum;
 import com.core.util.StringUtil;
 

@@ -22,10 +22,10 @@
 
     <!-- The navigation drawer -->
 
-    <com.bin.kndle.mview.MDrawerView
+    <com.mytian.lb.mview.MDrawerView
         android:id="@+id/left_drawer"
         android:layout_width="@dimen/drawerlayout_width"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@color/white"></com.bin.kndle.mview.MDrawerView>
+        android:background="@color/white"></com.mytian.lb.mview.MDrawerView>
 </android.support.v4.widget.DrawerLayout>

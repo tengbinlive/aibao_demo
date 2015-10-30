@@ -5,7 +5,7 @@ import com.alibaba.fastjson.TypeReference;
 import com.android.volley.*;
 import com.android.volley.Response.Listener;
 import com.android.volley.toolbox.HttpHeaderParser;
-import com.bin.kndle.Constant;
+import com.mytian.lb.Constant;
 import com.core.enums.CodeEnum;
 import com.core.openapi.OpenApi;
 import com.core.openapi.OpenApiParamHelper;
@@ -251,12 +251,12 @@ public class CommonRequest extends Request<CommonResponse> {
     protected Response<CommonResponse> parseNetworkResponse(NetworkResponse networkResponse) {
         CommonResponse response = new CommonResponse();
         // 获得字符串返回结果
-        String str;
+        String jsonString;
         try {
-            str = new String(networkResponse.data, HttpHeaderParser.parseCharset(networkResponse.headers));
-            Logger.json(str);
+            jsonString = new String(networkResponse.data, HttpHeaderParser.parseCharset(networkResponse.headers,"UTF-8"));
+            Logger.d(jsonString);
             // 转换返回结果为指定对象
-            this.doParse(str, mFormat, mTypeToken, response, mRawData);
+            this.doParse(jsonString, mFormat, mTypeToken, response, mRawData);
         } catch (UnsupportedEncodingException e) {
             response.setCodeEnum(CodeEnum.DATA_PARSE_ERROR);
         }

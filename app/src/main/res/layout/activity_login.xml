@@ -33,7 +33,7 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/font_medium" />
 
-            <com.bin.kndle.mview.EditTextWithDelete
+            <com.mytian.lb.mview.EditTextWithDelete
                 android:id="@+id/phone_et"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -68,7 +68,7 @@
                 android:textColor="@color/textcolor_222"
                 android:textSize="@dimen/font_medium" />
 
-            <com.bin.kndle.mview.EditTextWithDelete
+            <com.mytian.lb.mview.EditTextWithDelete
                 android:id="@+id/password_et"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

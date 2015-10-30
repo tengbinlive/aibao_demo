@@ -7,7 +7,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.RequestQueue.RequestFilter;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
-import com.bin.kndle.App;
+import com.mytian.lb.App;
 import com.core.enums.CodeEnum;
 import com.core.util.CommonUtil;
 

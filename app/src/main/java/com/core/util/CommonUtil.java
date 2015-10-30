@@ -17,7 +17,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.widget.Toast;
 
-import com.bin.kndle.App;
+import com.mytian.lb.App;
 import com.orhanobut.logger.Logger;
 
 import junit.framework.Assert;

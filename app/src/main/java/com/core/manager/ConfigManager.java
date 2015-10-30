@@ -2,9 +2,9 @@ package com.core.manager;
 
 import android.content.Context;
 
-import com.bin.kndle.App;
+import com.mytian.lb.App;
 import com.core.util.CommonUtil;
-import com.bin.kndle.Constant;
+import com.mytian.lb.Constant;
 import com.core.util.DeviceUtil;
 import com.core.util.StringUtil;
 import com.core.enums.ConfigKeyEnum;

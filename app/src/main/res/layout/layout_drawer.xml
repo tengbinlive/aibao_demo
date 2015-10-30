@@ -13,7 +13,7 @@
         android:paddingLeft="@dimen/content_gap"
         android:paddingTop="@dimen/content_gap">
 
-        <com.bin.kndle.mview.CircleNetworkImageView
+        <com.mytian.lb.mview.CircleNetworkImageView
             android:id="@+id/menu_user_icon"
             android:layout_width="60dp"
             android:layout_height="60dp"

@@ -2,7 +2,7 @@ package com.core.util;
 
 import android.os.Environment;
 
-import com.bin.kndle.Constant;
+import com.mytian.lb.Constant;
 import com.orhanobut.logger.Logger;
 
 import java.io.File;

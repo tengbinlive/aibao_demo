@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     android:installLocation="auto"
-    package="com.bin.kndle"
+    package="com.mytian.lb"
     android:versionCode="1"
     android:versionName="v1.0">
 
@@ -45,8 +45,11 @@
     <!-- 写入设备外部存储空间（内置SDcard和外置SDCard）的文件 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
+    <!--短信-->
+    <uses-permission android:name="android.permission.READ_SMS"/>
+
     <application
-        android:name=".App"
+        android:name="com.mytian.lb.App"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:screenOrientation="portrait"
