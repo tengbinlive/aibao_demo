@@ -14,8 +14,18 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bin.kndle.App;
+import com.bin.kndle.Constant;
 import com.bin.kndle.R;
 import com.bin.kndle.activityexpand.activity.AnimatedRectActivity;
+import com.bin.kndle.bean.UserResult;
+import com.bin.kndle.helper.AnimationHelper;
+import com.bin.kndle.helper.SharedPreferencesHelper;
+import com.bin.kndle.manager.LoginManager;
+import com.bin.kndle.mview.EditTextWithDelete;
+import com.core.CommonResponse;
+import com.core.util.CommonUtil;
+import com.core.util.StringUtil;
 import com.gitonway.lee.niftymodaldialogeffects.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.NiftyDialogBuilder;
 
@@ -27,10 +37,18 @@ public class LoginActivity extends AnimatedRectActivity {
 
     public NiftyDialogBuilder dialogBuilder;
     public LayoutInflater mInflater;
+    private LoginManager loginManager = new LoginManager();
     @Bind(R.id.toolbar_left_btn)
     TextView toolbarLeftBtn;
     @Bind(R.id.toolbar_intermediate_tv)
     TextView toolbarIntermediateTv;
+    @Bind(R.id.phone_et)
+    EditTextWithDelete phoneEt;
+    @Bind(R.id.password_et)
+    EditTextWithDelete passwordEt;
+
+    private String phone;
+    private String password;
 
     @Override
     public int getContentView() {
@@ -49,9 +67,23 @@ public class LoginActivity extends AnimatedRectActivity {
     }
 
     @OnClick(R.id.login_bt)
-    void toMain() {
-        dialogShow(R.string.loading);
-        activityHandler.sendEmptyMessageDelayed(TO_MAIN_ACTIVITY, 4000);
+    void login() {
+        phone = phoneEt.getText().toString();
+        if (StringUtil.isBlank(phone) || !StringUtil.checkMobile(phone)) {
+            AnimationHelper.getInstance().viewAnimationQuiver(phoneEt);
+            return;
+        }
+        password = passwordEt.getText().toString();
+        if (StringUtil.isBlank(password)) {
+            AnimationHelper.getInstance().viewAnimationQuiver(passwordEt);
+            return;
+        }
+        dialogShow(R.string.logining);
+        loginManager.login(this, phone, password, activityHandler, LOGIN_ING);
+    }
+
+    private void toMain() {
+        activityHandler.sendEmptyMessage(TO_MAIN_ACTIVITY);
     }
 
     @Override
@@ -60,6 +92,13 @@ public class LoginActivity extends AnimatedRectActivity {
         mInflater = LayoutInflater.from(this);
         ButterKnife.bind(this);
         setStatusBar();
+        String phone = SharedPreferencesHelper.getString(this, Constant.LoginUser.SHARED_PREFERENCES_PHONE, "");
+        String password = SharedPreferencesHelper.getString(this, Constant.LoginUser.SHARED_PREFERENCES_PASSWORD, "");
+        phoneEt.setText(phone);
+        passwordEt.setText(password);
+        if (StringUtil.isNotBlank(phone) && StringUtil.isNotBlank(password)) {
+            login();
+        }
     }
 
     /**
@@ -104,6 +143,18 @@ public class LoginActivity extends AnimatedRectActivity {
         }
     }
 
+    private void loadLogin(CommonResponse resposne) {
+        if (resposne.isSuccess()) {
+            SharedPreferencesHelper.setString(this, Constant.LoginUser.SHARED_PREFERENCES_PHONE, phone);
+            SharedPreferencesHelper.setString(this, Constant.LoginUser.SHARED_PREFERENCES_PASSWORD, password);
+            App.getInstance().userResult = (UserResult) resposne.getData();
+            toMain();
+        } else {
+            CommonUtil.showToast(resposne.getMsg());
+        }
+    }
+
+    private final static int LOGIN_ING = 3;
     private final static int DIALOGSHOW = 1;
     private final static int DIALOGDISMISS = 0;
     private final static int TO_MAIN_ACTIVITY = 2;
@@ -122,6 +173,9 @@ public class LoginActivity extends AnimatedRectActivity {
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
+                    break;
+                case LOGIN_ING:
+                    loadLogin((CommonResponse) msg.obj);
                     break;
                 default:
                     break;

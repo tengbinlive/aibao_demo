@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 
+import com.bin.kndle.bean.UserResult;
 import com.core.CrashHandler;
 import com.core.enums.ConfigKeyEnum;
 import com.core.manager.ConfigManager;
@@ -48,6 +49,8 @@ public class App extends Application {
     private static DaoSession daoSession;
 
     private BroadcastReceiver connectionReceiver;
+
+    public UserResult userResult;
 
     /**
      * 获得本类的一个实例

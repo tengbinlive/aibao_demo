@@ -47,7 +47,7 @@ public class SMSContentObserver extends ContentObserver {
 
     }
 
-    private final static String SMS_MARK = "Test";
+    private final static String SMS_MARK = "麦田映像";
     private final static String SMS_MARK_START = "您的验证码是";
     private final static String SMS_MARK_END = "，";
 

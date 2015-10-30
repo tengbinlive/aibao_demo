@@ -31,6 +31,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.0'
     compile 'de.greenrobot:eventbus:2.4.0'//事件派发
     compile 'com.squareup.okhttp:okhttp:2.5.0'// okhttp 网络处理
+    compile 'com.squareup.okhttp:okhttp-urlconnection:2.5.0'
     compile 'com.jakewharton:butterknife:7.0.1'//布局id绑定生成 butterknife
     compile 'de.greenrobot:greendao:2.0.0'//greendao 数据库
     compile 'me.imid.swipebacklayout.lib:library:1.0.0'//滑动返回

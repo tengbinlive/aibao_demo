@@ -15,15 +15,17 @@ public class Constant {
 	/** 调试模式(将会输出日志,自动解析到对应的测试环境API) */
 	public static final boolean DEBUG = true;
 
-	public static final String DB_NAME = "kndle_db";
+	public static final String DB_NAME = "mytian_db";
 
 	public static final int SOCKET_TIMEOUT = 5000;
+
+	public static final String SHARED_PREFERENCES_FILE_NAME = "mytian";
 
 
 	/** 存储目录/文件 **/
 	public static class Dir {
 		/** 根目录 */
-		public static final String ROOT_DIR = "/kndle";
+		public static final String ROOT_DIR = "/mytian";
 		/** 下载目录 */
 		public static final String DOWNLOAD_DIR = ROOT_DIR + "/download";
 		/** 缓存目录 */
@@ -34,6 +36,22 @@ public class Constant {
 		public static final String IMAGE_TEMP = ROOT_DIR + "/images/temp.jpg";
 		/** 临时拍照文件位置 */
 		public static final String CAMERA_TEMP = ROOT_DIR + "/images/camera_temp.jpg";
+	}
+
+	/**
+	 * 登陆信息
+	 */
+	public static class LoginUser{
+		/**
+		 * 手机号码
+		 */
+		public final static String SHARED_PREFERENCES_PHONE = "phone";
+
+		/**
+		 * 用户密码
+		 */
+		public final static String SHARED_PREFERENCES_PASSWORD= "password";
+
 	}
 
 }

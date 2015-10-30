@@ -1,0 +1,38 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/theme"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/content_gap"
+        android:paddingTop="@dimen/content_gap">
+
+        <com.bin.kndle.mview.CircleNetworkImageView
+            android:id="@+id/menu_user_icon"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="@dimen/content_gap_big"
+            android:layout_marginTop="@dimen/content_gap"
+            android:src="@mipmap/default_head" />
+
+        <TextView
+            android:id="@+id/menu_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/content_gap"
+            android:layout_marginLeft="@dimen/content_gap_big"
+            android:layout_marginTop="@dimen/content_gap"
+            android:gravity="center"
+            android:minWidth="60dp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_medium"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</LinearLayout>

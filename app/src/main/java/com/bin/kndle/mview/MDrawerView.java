@@ -52,7 +52,7 @@ public class MDrawerView extends LinearLayout {
 
     private void init(Context context) {
         mInflater = LayoutInflater.from(context);
-        mInflater.inflate(R.layout.drawerlayout, this);
+        mInflater.inflate(R.layout.layout_drawer, this);
 
         mHead = (CircleNetworkImageView) findViewById(R.id.menu_user_icon);
         mName = (TextView) findViewById(R.id.menu_user_name);

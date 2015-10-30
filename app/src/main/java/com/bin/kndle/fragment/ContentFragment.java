@@ -58,7 +58,7 @@ public class ContentFragment extends AbsFragment {
         fragments = new ArrayList<>();
         fragments.add(new DtnameicFragment());
         fragments.add(new HabitFragment());
-        fragments.add(new DtnameicFragment());
+        fragments.add(new UserFragment());
         fragments.add(new DtnameicFragment());
         MainViewPagerAdapter adapter = new MainViewPagerAdapter(getFragmentManager(), fragments);
         viewPager.setAdapter(adapter);

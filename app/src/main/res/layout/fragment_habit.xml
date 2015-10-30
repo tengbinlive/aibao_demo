@@ -3,15 +3,15 @@
     android:layout_height="match_parent"
     android:background="@color/white_light">
 
-    <com.handmark.pulltorefresh.PullToRefreshListView xmlns:ptr="http://schemas.android.com/apk/res-auto"
+    <com.handmark.pulltorefresh.PullToRefreshListView
+        xmlns:ptr="http://schemas.android.com/apk/res-auto"
         android:id="@+id/listview"
-        android:layout_marginTop="@dimen/content_10dp"
+        android:layout_marginTop="@dimen/actionbar_statusBar_height"
         android:clipChildren="false"
         android:clipToPadding="false"
-        android:paddingTop="@dimen/actionbar_statusBar_height"
+        android:paddingTop="@dimen/content_gap_small"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar"
         android:cacheColorHint="@color/transparent"
         android:divider="@null"
         android:fadingEdge="none"
@@ -24,5 +24,21 @@
         ptr:ptrMode="both" />
 
     <include layout="@layout/list_empty" />
+
+    <com.rey.material.widget.FloatingActionButton
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/add_bt"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/content_gap_big"
+        android:layout_marginRight="@dimen/content_gap_big"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:rd_rippleColor ="#33000000"
+        app:fab_radius ="@dimen/foatingbt_size"
+        app:fab_elevation ="2dp"
+        app:rd_delayClick ="untilRelease"
+        app:fab_iconLineMorphing ="@style/FloatingActionButtonIcon"
+        app:fab_backgroundColor="@color/theme"/>
 
 </RelativeLayout>

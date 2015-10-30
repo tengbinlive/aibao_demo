@@ -11,9 +11,14 @@ package com.core.openapi;
 public enum OpenApiMethodEnum {
 
     /**
-     * 置顶消息详情查询
+     * 登录
      */
-    TOP_MESSAGE_DEATAIL("/topMessage/queryDetail.action", "openapi_json", OpenApi.URL_TYPE_DATA);
+    LOAD_LOGIN("myt_parent/parentAction_login.do", "openapi_json", OpenApi.URL_TYPE_DATA),
+
+    /**
+     * 获取验证码
+     */
+    LOAD_GET_CODE("myt_parent/verificationAction_getVerificationCode.do", "openapi_json", OpenApi.URL_TYPE_DATA);
 
 
     private String code;

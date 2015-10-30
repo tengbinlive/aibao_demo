@@ -1,36 +1,31 @@
 package com.bin.kndle.fragment;
 
-import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.bin.kndle.AbsFragment;
 import com.bin.kndle.R;
-import com.bin.kndle.adapter.DynamicAdapter;
 import com.bin.kndle.adapter.HabitAdapter;
-import com.bin.kndle.bean.DynamicResult;
 import com.bin.kndle.bean.HabitResult;
 import com.core.CommonResponse;
 import com.handmark.pulltorefresh.PullToRefreshBase;
 import com.handmark.pulltorefresh.PullToRefreshListView;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
-import com.rey.material.widget.FloatingActionButton;
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
 
-public class HabitFragment extends AbsFragment {
+public class UserFragment extends AbsFragment {
 
     @Bind(R.id.listview)
     PullToRefreshListView listview;
     @Bind(R.id.ll_listEmpty)
     LinearLayout llListEmpty;
-    @Bind(R.id.add_bt)
-    FloatingActionButton add_bt;
 
     private ListView mActualListView;
     private HabitAdapter mAdapter;
@@ -52,10 +47,14 @@ public class HabitFragment extends AbsFragment {
             }
         });
 
+        View headView = mInflater.inflate(R.layout.layout_user,null);
+
         mActualListView = listview.getRefreshableView();
 
         // Need to use the Actual ListView when registering for Context Menu
         registerForContextMenu(mActualListView);
+
+        mActualListView.addHeaderView(headView);
 
         mAdapter = new HabitAdapter(getActivity(), arrayList);
 
@@ -66,6 +65,18 @@ public class HabitFragment extends AbsFragment {
         mActualListView.setAdapter(animationAdapter);
 
         listview.setEmptyView(llListEmpty);
+
+        mActualListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+            }
+        });
     }
 
     private void getListData() {
@@ -80,18 +91,12 @@ public class HabitFragment extends AbsFragment {
 
     @Override
     public int getContentView() {
-        return R.layout.fragment_habit;
+        return R.layout.fragment_user;
     }
 
     @Override
     public void EInit() {
         initListView();
-        add_bt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                add_bt.setLineMorphingState((add_bt.getLineMorphingState() + 1) % 2, true);
-            }
-        });
         activityHandler.sendEmptyMessageDelayed(INIT_LIST, 500);
     }
 

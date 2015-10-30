@@ -64,14 +64,14 @@
             android:paddingRight="@dimen/content_right_margin">
 
             <com.bin.kndle.mview.EditTextWithDelete
-                android:id="@+id/register_et"
+                android:id="@+id/verification_et"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignRight="@+id/verification_bt"
                 android:background="@null"
                 android:gravity="center_vertical"
                 android:hint="@string/hint_verification"
-                android:password="true"
+                android:inputType="number"
                 android:textColor="@color/textcolor_222"
                 android:textColorHint="@color/gray_hint"
                 android:textCursorDrawable="@null"

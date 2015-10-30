@@ -3,12 +3,11 @@
     android:layout_height="match_parent"
     android:background="@color/white_light">
 
-    <com.handmark.pulltorefresh.PullToRefreshListView
-        xmlns:ptr="http://schemas.android.com/apk/res-auto"
+    <com.handmark.pulltorefresh.PullToRefreshListView xmlns:ptr="http://schemas.android.com/apk/res-auto"
         android:id="@+id/listview"
+        android:layout_marginTop="@dimen/actionbar_statusBar_height"
         android:clipChildren="false"
         android:clipToPadding="false"
-        android:layout_marginTop="@dimen/actionbar_statusBar_height"
         android:paddingTop="@dimen/content_gap_small"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

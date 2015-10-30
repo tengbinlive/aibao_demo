@@ -8,11 +8,17 @@ import android.os.Message;
 import android.widget.Button;
 
 import com.bin.kndle.AbsActivity;
+import com.bin.kndle.App;
 import com.bin.kndle.R;
+import com.bin.kndle.bean.UserResult;
+import com.bin.kndle.helper.AnimationHelper;
 import com.bin.kndle.helper.SMSContentObserver;
+import com.bin.kndle.manager.LoginManager;
 import com.bin.kndle.mview.EditTextWithDelete;
 import com.core.CommonResponse;
 import com.core.util.CommonUtil;
+import com.core.util.StringUtil;
+import com.rey.material.widget.CheckBox;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -34,6 +40,8 @@ public class RegisterActivity extends AbsActivity {
 
     private boolean isVer = false;
 
+    private LoginManager loginManager = new LoginManager();
+
     /**
      * 填写验证码
      */
@@ -51,10 +59,16 @@ public class RegisterActivity extends AbsActivity {
     String login_verification_title;
     @BindString(R.string.reget_verification)
     String reget_verification;
-    @Bind(R.id.register_et)
-    EditTextWithDelete register_et;
+    @Bind(R.id.password_et)
+    EditTextWithDelete password_et;
+    @Bind(R.id.verification_et)
+    EditTextWithDelete verification_et;
+    @Bind(R.id.phone_et)
+    EditTextWithDelete phone_et;
     @Bind(R.id.verification_bt)
     Button verification_bt;
+    @Bind(R.id.agree_cb)
+    CheckBox agree_cb;
 
     private Handler activityHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -71,8 +85,8 @@ public class RegisterActivity extends AbsActivity {
                     break;
                 case LOAD_AUTHCODE_FILL:
                     String securityCode = msg.obj.toString();
-                    register_et.setText(securityCode);
-                    register_et.setSelection(securityCode.length());
+                    verification_et.setText(securityCode);
+                    verification_et.setSelection(securityCode.length());
                     break;
                 default:
                     break;
@@ -80,18 +94,29 @@ public class RegisterActivity extends AbsActivity {
         }
     };
 
+    private void loadLogin(CommonResponse resposne) {
+        if (resposne.isSuccess()) {
+            App.getInstance().userResult = (UserResult) resposne.getData();
+            toMainActivity();
+        } else {
+            CommonUtil.showToast(resposne.getMsg());
+        }
+    }
+
     private void loadAuthCode(CommonResponse resposne) {
-        if (true) {
+        if (resposne.isSuccess()) {
             CommonUtil.showToast("验证码已发送，请注意查收。");
         } else {
-            CommonUtil.showToast(resposne.getErrorTip());
+            CommonUtil.showToast(resposne.getMsg());
         }
     }
 
     private void loadRegister(CommonResponse resposne) {
         dialogDismiss();
-        if (true) {
-            Login(null, null);
+        if (resposne.isSuccess()) {
+            String phone = phone_et.getText().toString();
+            String password = password_et.getText().toString();
+            Login(phone, password);
         } else {
             CommonUtil.showToast(resposne.getErrorTip());
         }
@@ -102,11 +127,34 @@ public class RegisterActivity extends AbsActivity {
      */
     private void Login(String phone, String password) {
         dialogShow(R.string.logining);
-        activityHandler.sendEmptyMessageDelayed(LOGIN_DATA, 4000);
+        loginManager.login(this, phone, password, activityHandler, LOGIN_DATA);
     }
 
     @OnClick(R.id.register_bt)
     void register() {
+        String phone = phone_et.getText().toString();
+        if (StringUtil.isBlank(phone) || !StringUtil.checkMobile(phone)) {
+            AnimationHelper.getInstance().viewAnimationQuiver(phone_et);
+            return;
+        }
+
+        String verificationCode = verification_et.getText().toString();
+        if (StringUtil.isBlank(verificationCode)) {
+            AnimationHelper.getInstance().viewAnimationQuiver(verification_et);
+            return;
+        }
+
+        String password = password_et.getText().toString();
+        if (StringUtil.isBlank(password)) {
+            AnimationHelper.getInstance().viewAnimationQuiver(password_et);
+            return;
+        }
+
+        if (!agree_cb.isChecked()) {
+            AnimationHelper.getInstance().viewAnimationQuiver(agree_cb);
+            return;
+        }
+
         dialogShow(R.string.register_ing);
         activityHandler.sendEmptyMessageDelayed(REGISTER, 4000);
     }
@@ -119,12 +167,18 @@ public class RegisterActivity extends AbsActivity {
 
     @OnClick(R.id.verification_bt)
     void getAuthCode() {
+        String phone = phone_et.getText().toString();
+        if (StringUtil.isBlank(phone) || !StringUtil.checkMobile(phone)) {
+            AnimationHelper.getInstance().viewAnimationQuiver(phone_et);
+            return;
+        }
         if (!isVer && System.currentTimeMillis() - DKEY_START_TIME > DKEY_TIME) {
             isVer = true;
-            activityHandler.sendEmptyMessageDelayed(AUTH_CODE, 4000);
+            loginManager.authCode(this, phone, activityHandler, AUTH_CODE);
             DKEY_START_TIME = System.currentTimeMillis();
         }
     }
+
 
     private void initSMSContentObserver() {
         smsContentObserver = new SMSContentObserver(this, activityHandler);
