@@ -144,6 +144,7 @@ public class LoginActivity extends AnimatedRectActivity {
     }
 
     private void loadLogin(CommonResponse resposne) {
+        dialogDismiss();
         if (resposne.isSuccess()) {
             SharedPreferencesHelper.setString(this, Constant.LoginUser.SHARED_PREFERENCES_PHONE, phone);
             SharedPreferencesHelper.setString(this, Constant.LoginUser.SHARED_PREFERENCES_PASSWORD, password);

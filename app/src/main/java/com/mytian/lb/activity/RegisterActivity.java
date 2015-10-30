@@ -112,7 +112,6 @@ public class RegisterActivity extends AbsActivity {
     }
 
     private void loadRegister(CommonResponse resposne) {
-        dialogDismiss();
         if (resposne.isSuccess()) {
             String phone = phone_et.getText().toString();
             String password = password_et.getText().toString();
