@@ -57,9 +57,10 @@ public class ContentFragment extends AbsFragment {
     private void init() {
         fragments = new ArrayList<>();
         fragments.add(new DtnameicFragment());
+        fragments.add(new DtnameicFragment());
+        fragments.add(new HabitFragment());
         fragments.add(new HabitFragment());
         fragments.add(new UserFragment());
-        fragments.add(new DtnameicFragment());
         MainViewPagerAdapter adapter = new MainViewPagerAdapter(getFragmentManager(), fragments);
         viewPager.setAdapter(adapter);
         viewPagerTab.setCustomTabView(new SmartTabLayout.TabProvider() {
@@ -78,6 +79,9 @@ public class ContentFragment extends AbsFragment {
                         break;
                     case 3:
                         setIconInfo(custom_ly, BottomMenu.KINDLE);
+                        break;
+                    case 4:
+                        setIconInfo(custom_ly, BottomMenu.USER);
                         break;
                     default:
                         throw new IllegalStateException("Invalid position: " + position);

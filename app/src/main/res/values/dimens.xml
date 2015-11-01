@@ -3,7 +3,7 @@
 
     <!--actionbar-->
     <dimen name="statusBar_height">0dip</dimen>
-    <dimen name="actionbar_statusBar_height">0dip</dimen>
+    <dimen name="actionbar_statusBar_height">45dip</dimen>
     <dimen name="actionbar_height">45dp</dimen>
 
     <dimen name="sliding_menu_width">80dp</dimen>
@@ -34,5 +34,6 @@
     <dimen name="button_height">40dp</dimen>
     <dimen name="item_head_size">60dp</dimen>
     <dimen name="foatingbt_size">30dp</dimen>
+    <dimen name="item_head_size_small">50dp</dimen>
 
 </resources>

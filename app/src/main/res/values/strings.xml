@@ -16,6 +16,7 @@
     <string name="hint_verification">请输入验证码</string>
     <string name="login">登录</string>
     <string name="register">注册</string>
+    <string name="reset_password">重置密码</string>
     <string name="get_verification">获取验证码</string>
     <string name="reget_verification">重新获取</string>
     <string name="register_ing">正在注册</string>
@@ -25,5 +26,8 @@
     <string name="menu_dynamic">动态</string>
     <string name="menu_agreement">爱的约定</string>
     <string name="menu_habit">习惯记录</string>
+    <string name="menu_user">帐号管理</string>
+    <string name="new_follow">新的关注</string>
+    <string name="follow_me_user">我关注的人</string>
 
 </resources>

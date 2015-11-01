@@ -11,6 +11,16 @@ package com.core.openapi;
 public enum OpenApiMethodEnum {
 
     /**
+     * 获取关注列表
+     */
+    LOAD_FOLLOW_LIST("myt_focus/babyParentFocusAction_getParentFocusBabyList.do", "openapi_json", OpenApi.URL_TYPE_DATA),
+
+    /**
+     * 重置密码
+     */
+    LOAD_RESET_PASSWORD("myt_parent/parentAction_resetPwd.do", "openapi_json", OpenApi.URL_TYPE_DATA),
+
+    /**
      * 登录
      */
     LOAD_REGISTER("myt_parent/parentAction_regist.do", "openapi_json", OpenApi.URL_TYPE_DATA),

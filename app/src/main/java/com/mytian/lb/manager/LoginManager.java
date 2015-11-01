@@ -13,6 +13,8 @@ import com.core.CommonDataLoader;
 import com.core.CommonRequest;
 import com.core.openapi.OpenApiMethodEnum;
 import com.core.openapi.OpenApiSimpleResult;
+import com.mytian.lb.bean.login.ResetPassWordParam;
+import com.mytian.lb.bean.login.ResetPassWordResult;
 
 /**
  * 用户中心业务类.
@@ -93,5 +95,29 @@ public class LoginManager {
         CommonDataLoader.getInstance(context).load(request);
     }
 
+    /**
+     * 注册
+     * @param context
+     * @param phone 手机号码
+     * @param verification 验证码
+     * @param password 密码
+     * @param handler
+     * @param handlerMsgCode
+     */
+    public void resetpassword(Context context, String phone,String verification,String password, final Handler handler, final int handlerMsgCode) {
+
+        ResetPassWordParam param = new ResetPassWordParam();
+        param.setPhone(phone);
+        param.setVerification(verification);
+        param.setPassword(password);
+        // 接口参数
+        param.setMethod(OpenApiMethodEnum.LOAD_RESET_PASSWORD);
+        param.setParseTokenType(new TypeReference<ResetPassWordResult>() {
+        });
+        // 请求对象
+        CommonRequest request = new CommonRequest(param, handler, handlerMsgCode);
+        // 开始执行加载
+        CommonDataLoader.getInstance(context).load(request);
+    }
 
 }

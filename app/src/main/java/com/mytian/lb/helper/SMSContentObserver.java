@@ -44,7 +44,6 @@ public class SMSContentObserver extends ContentObserver {
                             c.moveToPosition(0);
                             String smsBody = c.getString(c.getColumnIndex("body"));
                             setSms(smsBody);
-                            c.close();
                         }
                     }catch (Exception e){
                         handler.sendEmptyMessage(SMS);

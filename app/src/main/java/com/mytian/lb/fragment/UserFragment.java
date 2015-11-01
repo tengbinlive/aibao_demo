@@ -10,6 +10,7 @@ import android.widget.ListView;
 import com.mytian.lb.AbsFragment;
 import com.mytian.lb.R;
 import com.mytian.lb.adapter.HabitAdapter;
+import com.mytian.lb.adapter.UserAdapter;
 import com.mytian.lb.bean.HabitResult;
 import com.core.CommonResponse;
 import com.handmark.pulltorefresh.PullToRefreshBase;
@@ -28,7 +29,7 @@ public class UserFragment extends AbsFragment {
     LinearLayout llListEmpty;
 
     private ListView mActualListView;
-    private HabitAdapter mAdapter;
+    private UserAdapter mAdapter;
 
     private ArrayList<HabitResult> arrayList = new ArrayList<>();
 
@@ -56,7 +57,7 @@ public class UserFragment extends AbsFragment {
 
         mActualListView.addHeaderView(headView);
 
-        mAdapter = new HabitAdapter(getActivity(), arrayList);
+        mAdapter = new UserAdapter(getActivity(), arrayList);
 
         SwingBottomInAnimationAdapter animationAdapter = new SwingBottomInAnimationAdapter(mAdapter);
 

@@ -18,6 +18,7 @@
         android:fastScrollEnabled="false"
         android:footerDividersEnabled="false"
         android:headerDividersEnabled="false"
+        android:listSelector="@color/transparent"
         android:scrollbars="none"
         android:smoothScrollbar="true"
         ptr:ptrAnimationStyle="flip"

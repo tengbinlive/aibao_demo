@@ -51,7 +51,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@drawable/login_light_divide" />
+            android:background="@drawable/light_divide" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -86,7 +86,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@drawable/login_light_divide" />
+            android:background="@drawable/light_divide" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -117,6 +117,17 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/font_btn" />
         </LinearLayout>
+
+        <Button
+            android:id="@+id/reset_password_bt"
+            android:layout_width="wrap_content"
+            android:layout_gravity="right"
+            android:layout_height="@dimen/button_height"
+            android:background="@color/transparent"
+            android:text="忘记密码？"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/font_btn" />
+
     </LinearLayout>
 
 </RelativeLayout>
