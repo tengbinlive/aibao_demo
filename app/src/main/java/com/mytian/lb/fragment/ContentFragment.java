@@ -30,12 +30,19 @@ public class ContentFragment extends AbsFragment {
 
     private ActionbarSet actionbarSet;
 
+    private int index;
+
+
     public void setActionbarSet(ActionbarSet actionbarSet) {
         this.actionbarSet = actionbarSet;
     }
 
-    public interface ActionbarSet{
+    public interface ActionbarSet {
         void OnTitleSet(int title);
+
+        void OnIndexSet(int position);
+
+        void OnChanger();
     }
 
     @Override
@@ -95,7 +102,6 @@ public class ContentFragment extends AbsFragment {
         viewPagerTab.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
 
             @Override
@@ -106,7 +112,11 @@ public class ContentFragment extends AbsFragment {
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
+                if(state==2){
+                    if (actionbarSet != null) {
+                        actionbarSet.OnChanger();
+                    }
+                }
             }
         });
 
@@ -123,7 +133,7 @@ public class ContentFragment extends AbsFragment {
         } else {
             icon.setImageResource(menu.getResid_press());
             title.setTextColor(menu.getTitle_colos_press());
-            if(actionbarSet!=null){
+            if (actionbarSet != null) {
                 actionbarSet.OnTitleSet(titleStr);
             }
         }
@@ -138,11 +148,11 @@ public class ContentFragment extends AbsFragment {
         int count = fragments.size();
         for (int i = 0; i < count; i++) {
             ViewGroup view = (ViewGroup) viewPagerTab.getTabAt(i);
-            setTabViewBackground(view, i == position);
+            setTabViewBackground(view, i == position, position);
         }
     }
 
-    private void setTabViewBackground(ViewGroup custom_ly, boolean isSelect) {
+    private void setTabViewBackground(ViewGroup custom_ly, boolean isSelect, int position) {
         BottomMenu menu = (BottomMenu) custom_ly.getTag(R.id.main_tab_menu);
         ImageView icon = (ImageView) custom_ly.findViewById(R.id.menu_icon);
         TextView title = (TextView) custom_ly.findViewById(R.id.menu_title);
@@ -154,8 +164,9 @@ public class ContentFragment extends AbsFragment {
         } else {
             icon.setImageResource(menu.getResid_press());
             title.setTextColor(menu.getTitle_colos_press());
-            if(actionbarSet!=null){
+            if (actionbarSet != null) {
                 actionbarSet.OnTitleSet(titleStr);
+                actionbarSet.OnIndexSet(position);
             }
         }
     }

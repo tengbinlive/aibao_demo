@@ -52,6 +52,8 @@ public class App extends Application {
 
     public UserResult userResult;
 
+    public String cookie;
+
     /**
      * 获得本类的一个实例
      */

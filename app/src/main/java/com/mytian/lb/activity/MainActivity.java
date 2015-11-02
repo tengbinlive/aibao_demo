@@ -1,19 +1,26 @@
 package com.mytian.lb.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.Process;
 import android.support.v4.widget.DrawerLayout;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.animation.OvershootInterpolator;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
+import com.core.util.CommonUtil;
 import com.mytian.lb.AbsActivity;
 import com.mytian.lb.App;
 import com.mytian.lb.R;
 import com.mytian.lb.fragment.ContentFragment;
 import com.mytian.lb.mview.MDrawerView;
-import com.core.util.CommonUtil;
+import com.nineoldandroids.animation.ValueAnimator;
 
 import butterknife.Bind;
+import butterknife.BindDimen;
 import butterknife.ButterKnife;
 
 
@@ -27,6 +34,14 @@ public class MainActivity extends AbsActivity {
     MDrawerView leftDrawer;
     @Bind(R.id.drawer_layout)
     DrawerLayout drawerLayout;
+
+    @Bind(R.id.layout_user)
+    LinearLayout layout_user;
+    @BindDimen(R.dimen.actionbar_user_height)
+    float EDITEXT_OFFER;
+    private final OvershootInterpolator mInterpolator = new OvershootInterpolator();
+
+    private boolean isOpenUser;
 
     private ContentFragment contentFragment;
 
@@ -99,9 +114,25 @@ public class MainActivity extends AbsActivity {
         contentFragment = new ContentFragment();
         contentFragment.setActionbarSet(new ContentFragment.ActionbarSet() {
             @Override
+            public void OnIndexSet(int position) {
+                if ((position == 4||position == 1)) {
+                    if(!isOpenUser)
+                    sendActionBarAnim(true);
+                } else if(isOpenUser){
+                    sendActionBarAnim(false);
+                }
+            }
+
+            @Override
+            public void OnChanger() {
+                activityHandler.removeMessages(ANIMATION);
+            }
+
+            @Override
             public void OnTitleSet(int title) {
                 setToolbarLeftStrID(title);
             }
+
         });
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.contentlayout, contentFragment)
@@ -109,7 +140,18 @@ public class MainActivity extends AbsActivity {
 
     }
 
+    private void sendActionBarAnim(boolean is){
+        Message message = new Message();
+        message.what = ANIMATION;
+        message.obj = is;
+        activityHandler.sendMessageDelayed(message, 800);
+    }
+
     private void setActionBar() {
+        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) layout_user.getLayoutParams();
+        lp.height = 0;
+        layout_user.setLayoutParams(lp);
+        layout_user.setVisibility(View.VISIBLE);
         setToolbarLeft(R.mipmap.menu_normal);
         setToolbarLeftOnClick(new View.OnClickListener() {
             @Override
@@ -118,6 +160,45 @@ public class MainActivity extends AbsActivity {
             }
         });
     }
+
+    /**
+     * actionbar user info animation
+     */
+    private void userAnimation(boolean is) {
+        ValueAnimator animation = ValueAnimator.ofFloat(is ? 0 : EDITEXT_OFFER, is ? EDITEXT_OFFER : 0);
+        isOpenUser = is;
+        if(is){
+            animation.setInterpolator(mInterpolator);
+            animation.setDuration(450);
+        }else {
+            animation.setDuration(300);
+        }
+        animation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float value = (Float) animation.getAnimatedValue();
+                RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) layout_user.getLayoutParams();
+                lp.height = (int) value;
+                layout_user.setLayoutParams(lp);
+            }
+        });
+        animation.start();
+    }
+
+    private final static int ANIMATION = 1;
+
+    private Handler activityHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case ANIMATION:
+                    userAnimation((Boolean) msg.obj);
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
 
     @Override
     public void onDestroy() {

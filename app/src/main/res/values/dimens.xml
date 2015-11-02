@@ -7,6 +7,7 @@
     <dimen name="actionbar_height">45dp</dimen>
 
     <dimen name="sliding_menu_width">80dp</dimen>
+    <dimen name="actionbar_user_height">97dp</dimen>
 
     <!--layout-->
     <dimen name="content_gap">16dp</dimen>

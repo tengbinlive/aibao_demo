@@ -5,6 +5,7 @@ import com.alibaba.fastjson.TypeReference;
 import com.android.volley.*;
 import com.android.volley.Response.Listener;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.mytian.lb.App;
 import com.mytian.lb.Constant;
 import com.core.enums.CodeEnum;
 import com.core.openapi.OpenApi;
@@ -20,6 +21,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.UnknownHostException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.TimeoutException;
 
@@ -253,6 +255,7 @@ public class CommonRequest extends Request<CommonResponse> {
         // 获得字符串返回结果
         String jsonString;
         try {
+            App.getInstance().cookie  = networkResponse.headers.get(SET_COOKIE_KEY);
             jsonString = new String(networkResponse.data, HttpHeaderParser.parseCharset(networkResponse.headers,"UTF-8"));
             Logger.d(jsonString);
             // 转换返回结果为指定对象
@@ -297,4 +300,26 @@ public class CommonRequest extends Request<CommonResponse> {
         RetryPolicy retryPolicy = new DefaultRetryPolicy(Constant.SOCKET_TIMEOUT, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
         return retryPolicy;
     }
+
+    private static final String SET_COOKIE_KEY = "Set-Cookie";
+
+    @Override
+    public Map<String, String> getHeaders() throws AuthFailureError {
+        Map<String,String> headers = super.getHeaders();
+        if (headers == null) {
+            headers = new HashMap<>();
+        }
+        String sessionId = App.getInstance().cookie;
+        if(sessionId!=null&&!sessionId.equals("")&&sessionId.length()>0){
+            Iterator<Map.Entry<String, String>> it = headers.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry<String, String> pairs = it.next();
+                if(pairs.getValue()==null){
+                    headers.put(SET_COOKIE_KEY, sessionId);                }
+            }
+        }
+        return headers;
+    }
+
+
 }

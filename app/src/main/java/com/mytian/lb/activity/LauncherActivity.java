@@ -42,7 +42,7 @@ public class LauncherActivity extends AbsActivity {
 
     private void toLogining() {
         isTo = true;
-        Intent intent = new Intent(this, LoginActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("animation_type", AnimatedRectLayout.ANIMATION_WAVE_TR);
         startActivity(intent);
         overridePendingTransition(0, 0);

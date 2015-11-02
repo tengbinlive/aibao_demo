@@ -48,7 +48,7 @@ public class UserFragment extends AbsFragment {
             }
         });
 
-        View headView = mInflater.inflate(R.layout.layout_user,null);
+        View headView = mInflater.inflate(R.layout.item_user_new_messge,null);
 
         mActualListView = listview.getRefreshableView();
 

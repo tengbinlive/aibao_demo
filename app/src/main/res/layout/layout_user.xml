@@ -1,53 +1,45 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_height="@dimen/actionbar_user_height"
+    android:id="@+id/layout_user"
+    android:background="@color/theme"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/content_gap"
+    android:paddingLeft="@dimen/content_gap"
+    android:paddingTop="@dimen/content_gap_big">
 
-    <LinearLayout
+    <com.mytian.lb.mview.CircleNetworkImageView
+        android:id="@+id/menu_user_icon"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@mipmap/default_head" />
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:background="@color/theme"
+        android:orientation="vertical"
         android:paddingLeft="@dimen/content_gap"
-        android:paddingBottom="@dimen/content_gap"
-        android:paddingTop="@dimen/content_gap_big">
+        android:paddingRight="@dimen/content_gap">
 
-        <com.mytian.lb.mview.CircleNetworkImageView
-            android:id="@+id/menu_user_icon"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@mipmap/default_head" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/content_gap"
-            android:paddingRight="@dimen/content_gap"
-            android:orientation="vertical">
+            android:singleLine="true"
+            android:text="user name"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_btn" />
 
-            <TextView
-                android:id="@+id/name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="user name"
-                android:singleLine="true"
-                android:textColor="@color/white"
-                android:textSize="@dimen/font_btn" />
+        <TextView
+            android:id="@+id/phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/name"
+            android:layout_marginTop="@dimen/content_10dp"
+            android:text="18888888888"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_least" />
 
-            <TextView
-                android:id="@+id/phone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/name"
-                android:layout_marginTop="@dimen/content_10dp"
-                android:text="18888888888"
-                android:textColor="@color/white"
-                android:textSize="@dimen/font_least" />
-
-        </RelativeLayout>
-    </LinearLayout>
-
-    <include layout="@layout/item_user_new_messge"/>
-
+    </RelativeLayout>
 </LinearLayout>

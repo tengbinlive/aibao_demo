@@ -154,7 +154,7 @@ public class RegisterActivity extends AbsActivity {
             return;
         }
         dialogShow(R.string.register_ing);
-        loginManager.register(this,phone,password,verificationCode,activityHandler,REGISTER);
+        loginManager.register(this,phone,verificationCode,password,activityHandler,REGISTER);
     }
 
     private void toMainActivity() {

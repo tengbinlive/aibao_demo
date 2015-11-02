@@ -1,22 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/toolbar"
-        android:layout_height="@dimen/actionbar_statusBar_height"
-        android:layout_width="match_parent"
-        android:background="@color/theme"
-        android:contentInsetStart="0dp"
-        android:contentInsetLeft="0dp"
-        app:contentInsetLeft="0dp"
-        app:contentInsetStart="0dp"
-        android:minHeight="@dimen/actionbar_height">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/theme"
+    android:contentInsetLeft="0dp"
+    android:contentInsetStart="0dp"
+    android:minHeight="@dimen/actionbar_height"
+    app:contentInsetLeft="0dp"
+    app:contentInsetStart="0dp">
 
     <include
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/statusBar_height"
-            layout="@layout/action_bar_title">
-    </include>
+        android:id="@+id/action_bar"
+        layout="@layout/action_bar_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/statusBar_height" />
+
+    <include
+        layout="@layout/layout_user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/action_bar" />
 
 </RelativeLayout>

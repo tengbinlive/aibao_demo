@@ -8,7 +8,6 @@
         android:id="@+id/listview"
         android:clipChildren="false"
         android:clipToPadding="false"
-        android:layout_marginTop="@dimen/actionbar_statusBar_height"
         android:paddingTop="@dimen/content_gap_small"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
