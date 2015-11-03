@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class UserAdapter extends BaseAdapter {
+public class FollowAddAdapter extends BaseAdapter {
 
     private LayoutInflater mInflater;
 
@@ -25,7 +25,7 @@ public class UserAdapter extends BaseAdapter {
 
     private Context mContext;
 
-    public UserAdapter(Context context, ArrayList<FollowUser> _list) {
+    public FollowAddAdapter(Context context, ArrayList<FollowUser> _list) {
         this.list = _list;
         mContext = context;
         mInflater = LayoutInflater.from(context);
@@ -55,7 +55,7 @@ public class UserAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.item_follow, null);
+            convertView = mInflater.inflate(R.layout.item_follow_add, null);
             viewHolder = new ViewHolder(convertView);
             convertView.setTag(viewHolder);
         } else {
@@ -72,7 +72,6 @@ public class UserAdapter extends BaseAdapter {
 
         Glide.with(mContext).load(bean.getHead_thumb()).centerCrop().crossFade().into(viewHolder.head);
         viewHolder.name.setText(bean.getName());
-        viewHolder.phone.setText(bean.getPhone());
         return convertView;
     }
 
@@ -87,8 +86,6 @@ public class UserAdapter extends BaseAdapter {
         RoundedImageView head;
         @Bind(R.id.name)
         TextView name;
-        @Bind(R.id.phone)
-        TextView phone;
         @Bind(R.id.title)
         TextView title;
 

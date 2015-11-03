@@ -12,10 +12,12 @@ import com.core.util.CommonUtil;
 import com.core.util.StringUtil;
 import com.mytian.lb.AbsActivity;
 import com.mytian.lb.App;
+import com.mytian.lb.Constant;
 import com.mytian.lb.R;
 import com.mytian.lb.bean.UserResult;
 import com.mytian.lb.helper.AnimationHelper;
 import com.mytian.lb.helper.SMSContentObserver;
+import com.mytian.lb.helper.SharedPreferencesHelper;
 import com.mytian.lb.manager.LoginManager;
 import com.mytian.lb.mview.EditTextWithDelete;
 import com.rey.material.widget.CheckBox;
@@ -68,6 +70,9 @@ public class ResetPassWordActivity extends AbsActivity {
     @Bind(R.id.verification_bt)
     Button verification_bt;
 
+    private String phone;
+    private String password;
+
     private Handler activityHandler = new Handler() {
         public void handleMessage(Message msg) {
             dialogDismiss();
@@ -79,7 +84,7 @@ public class ResetPassWordActivity extends AbsActivity {
                     loadResetPassword((CommonResponse) msg.obj);
                     break;
                 case LOGIN_DATA:
-                    toMainActivity();
+                    loadLogin((CommonResponse) msg.obj);
                     break;
                 case LOAD_AUTHCODE_FILL:
                     String securityCode = msg.obj.toString();
@@ -91,15 +96,6 @@ public class ResetPassWordActivity extends AbsActivity {
             }
         }
     };
-
-    private void loadLogin(CommonResponse resposne) {
-        if (resposne.isSuccess()) {
-            App.getInstance().userResult = (UserResult) resposne.getData();
-            toMainActivity();
-        } else {
-            CommonUtil.showToast(resposne.getMsg());
-        }
-    }
 
     private void loadAuthCode(CommonResponse resposne) {
         if (resposne.isSuccess()) {
@@ -118,6 +114,18 @@ public class ResetPassWordActivity extends AbsActivity {
             CommonUtil.showToast(resposne.getErrorTip());
         }
     }
+
+    private void loadLogin(CommonResponse resposne) {
+        if (resposne.isSuccess()) {
+            SharedPreferencesHelper.setString(this, Constant.LoginUser.SHARED_PREFERENCES_PHONE, phone);
+            SharedPreferencesHelper.setString(this, Constant.LoginUser.SHARED_PREFERENCES_PASSWORD, password);
+            App.getInstance().userResult = (UserResult) resposne.getData();
+            toMainActivity();
+        } else {
+            CommonUtil.showToast(resposne.getMsg());
+        }
+    }
+
 
     /**
      * 登录

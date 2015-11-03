@@ -26,19 +26,19 @@ public class FollowManager {
      * @param context        上下文
      * @param client_type    0 MB端, 1 LB端
      * @param currentPage    分页，请求第N页数据
-     * @param parentId       爱宝uid
+     * @param isFocus        0 获取待处理列表,1 获取好友的列表
      * @param handler        在Activity中处理返回结果的Handler
      * @param handlerMsgCode 返回结果的Handler的Msg代码
      */
-    public void followList(Context context, String client_type, String currentPage, String parentId, final Handler handler, final int handlerMsgCode) {
+    public void followList(Context context, String client_type, String currentPage,String isFocus ,final Handler handler, final int handlerMsgCode) {
 
         FollowListParam param = new FollowListParam();
         param.setUid(App.getInstance().userResult.getUid());
         param.setToken(App.getInstance().userResult.getToken());
         param.setClient_type(client_type);
         param.setCurrentPage(currentPage);
-        param.setParentId(parentId);
-        param.setIsFocus("1");//0 获取待处理列表,1 获取好友的列表.
+        param.setParentId(App.getInstance().userResult.getUid());
+        param.setIsFocus(isFocus);
         // 接口参数
         param.setMethod(OpenApiMethodEnum.LOAD_FOLLOW_LIST);
         param.setParseTokenType(new TypeReference<FollowListResult>() {

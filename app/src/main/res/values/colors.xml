@@ -6,6 +6,7 @@
 
     <color name="theme">#ffca0d</color>
     <color name="theme_bg">#808080</color>
+    <color name="theme_bg_layout">#fafafa</color>
     <color name="white">#FFFFFFFF</color>
     <color name="white_light">#dedede</color>
     <color name="black">#000</color>

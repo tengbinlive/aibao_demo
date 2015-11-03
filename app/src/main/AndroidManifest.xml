@@ -96,6 +96,13 @@
             android:theme="@style/AppThemeN"
             android:windowSoftInputMode="adjustPan"></activity>
 
+        <!--添加关注-->
+        <activity
+            android:name=".activity.AddFollowActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/AppThemeN"
+            android:windowSoftInputMode="adjustPan"></activity>
+
     </application>
 
 </manifest>

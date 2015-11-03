@@ -29,5 +29,15 @@
     <string name="menu_user">帐号管理</string>
     <string name="new_follow">新的关注</string>
     <string name="follow_me_user">我关注的人</string>
-
+    <string name="hint_name">昵称</string>
+    <string name="hint_phone">手机号</string>
+    <string name="hint_birthday">生日</string>
+    <string name="hint_gender">性别</string>
+    <string name="hint_integral">积分</string>
+    <string name="cancel">取消</string>
+    <string name="follow_add">添加关注</string>
+    <string name="follow_new">新的关注</string>
+    <string name="hint_messge">验证消息</string>
+    <string name="accept">接受</string>
+    <string name="already_attention">已关注</string>
 </resources>

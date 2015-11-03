@@ -9,10 +9,12 @@ import android.widget.Button;
 
 import com.mytian.lb.AbsActivity;
 import com.mytian.lb.App;
+import com.mytian.lb.Constant;
 import com.mytian.lb.R;
 import com.mytian.lb.bean.UserResult;
 import com.mytian.lb.helper.AnimationHelper;
 import com.mytian.lb.helper.SMSContentObserver;
+import com.mytian.lb.helper.SharedPreferencesHelper;
 import com.mytian.lb.manager.LoginManager;
 import com.mytian.lb.mview.EditTextWithDelete;
 import com.core.CommonResponse;
@@ -70,6 +72,9 @@ public class RegisterActivity extends AbsActivity {
     @Bind(R.id.agree_cb)
     CheckBox agree_cb;
 
+    private String phone;
+    private String password;
+
     private Handler activityHandler = new Handler() {
         public void handleMessage(Message msg) {
             dialogDismiss();
@@ -81,7 +86,7 @@ public class RegisterActivity extends AbsActivity {
                     loadRegister((CommonResponse) msg.obj);
                     break;
                 case LOGIN_DATA:
-                    toMainActivity();
+                    loadLogin((CommonResponse) msg.obj);
                     break;
                 case LOAD_AUTHCODE_FILL:
                     String securityCode = msg.obj.toString();
@@ -94,15 +99,6 @@ public class RegisterActivity extends AbsActivity {
         }
     };
 
-    private void loadLogin(CommonResponse resposne) {
-        if (resposne.isSuccess()) {
-            App.getInstance().userResult = (UserResult) resposne.getData();
-            toMainActivity();
-        } else {
-            CommonUtil.showToast(resposne.getMsg());
-        }
-    }
-
     private void loadAuthCode(CommonResponse resposne) {
         if (resposne.isSuccess()) {
             CommonUtil.showToast("验证码已发送，请注意查收。");
@@ -113,11 +109,22 @@ public class RegisterActivity extends AbsActivity {
 
     private void loadRegister(CommonResponse resposne) {
         if (resposne.isSuccess()) {
-            String phone = phone_et.getText().toString();
-            String password = password_et.getText().toString();
+            phone = phone_et.getText().toString();
+            password = password_et.getText().toString();
             Login(phone, password);
         } else {
             CommonUtil.showToast(resposne.getErrorTip());
+        }
+    }
+
+    private void loadLogin(CommonResponse resposne) {
+        if (resposne.isSuccess()) {
+            SharedPreferencesHelper.setString(this, Constant.LoginUser.SHARED_PREFERENCES_PHONE, phone);
+            SharedPreferencesHelper.setString(this, Constant.LoginUser.SHARED_PREFERENCES_PASSWORD, password);
+            App.getInstance().userResult = (UserResult) resposne.getData();
+            toMainActivity();
+        } else {
+            CommonUtil.showToast(resposne.getMsg());
         }
     }
 

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingBottom="20dp"
+    android:paddingLeft="35dp"
+    android:paddingRight="35dp"
+    android:paddingTop="20dp">
+
+    <RelativeLayout
+        android:layout_width="280dp"
+        android:background="@color/theme"
+        android:layout_height="280dp">
+
+        <ImageView
+            android:id="@+id/background"
+            android:layout_width="match_parent"
+            android:scaleType="centerCrop"
+            android:layout_height="match_parent" />
+
+            <TextView
+                android:id="@+id/name"
+                android:singleLine="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="user name"
+                android:layout_above="@+id/phone"
+                android:textColor="@color/white"
+                android:layout_marginLeft="@dimen/content_10dp"
+                android:textSize="@dimen/font_btn" />
+
+            <TextView
+                android:id="@+id/phone"
+                android:layout_alignParentBottom="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/content_gap_small"
+                android:layout_marginBottom="@dimen/content_10dp"
+                android:layout_marginLeft="@dimen/content_10dp"
+                android:text="18888888888"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_small" />
+
+    </RelativeLayout>
+
+     <LinearLayout
+         android:layout_alignBottom="@+id/background"
+         android:layout_width="280dp"
+         android:gravity="center_vertical|right"
+         android:background="@drawable/bg_dialog_follow"
+         android:orientation="horizontal"
+         android:layout_height="45dp">
+
+         <TextView
+             android:id="@+id/cancel"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="@string/cancel"
+             android:layout_marginRight="@dimen/content_10dp"
+             android:textColor="@color/theme"
+             android:textSize="@dimen/font_actionbar" />
+
+         <TextView
+             android:id="@+id/addfollow"
+             android:layout_alignParentBottom="true"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginLeft="@dimen/content_10dp"
+             android:layout_marginRight="@dimen/content_10dp"
+             android:text="@string/follow_add"
+             android:textColor="@color/theme"
+             android:textSize="@dimen/font_actionbar" />
+
+     </LinearLayout>
+
+</LinearLayout>
+

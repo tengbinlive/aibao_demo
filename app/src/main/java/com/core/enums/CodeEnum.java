@@ -43,7 +43,7 @@ public enum CodeEnum {
 	/** 自定义异常(描述一般为Exception的getLocalizedMessage()) */
 	EXCEPTION("9999", "未知错误"),
 	/** 成功 */
-	SUCCESS("0", "成功");
+	SUCCESS("1", "成功");
 
 	private String code;
 	private String desc;

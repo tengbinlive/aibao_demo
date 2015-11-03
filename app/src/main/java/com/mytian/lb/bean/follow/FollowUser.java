@@ -150,6 +150,14 @@ public class FollowUser {
         this.other_relation = other_relation;
     }
 
+    public static FollowUser testData() {
+        FollowUser result = new FollowUser();
+        result.name = "宝宝";
+        result.phone = "18888888888";
+        result.head_thumb = "http://img1.pcgames.com.cn/pcgames/1101/30/2125889_1.gif";
+        return result;
+    }
+
     @Override
     public String toString() {
         return "FollowUser{" +

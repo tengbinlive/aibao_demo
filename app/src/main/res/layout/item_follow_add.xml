@@ -50,15 +50,27 @@
                 android:textSize="@dimen/font_btn" />
 
             <TextView
-                android:id="@+id/phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/name"
                 android:layout_marginTop="@dimen/content_gap_small"
+                android:text="@string/hint_messge"
                 android:textColor="@color/gray_hint"
                 android:textSize="@dimen/font_least" />
 
         </RelativeLayout>
+
+        <Button
+            android:id="@+id/accept_bt"
+            android:layout_width="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_height="@dimen/button_height"
+            android:layout_marginRight="@dimen/content_gap"
+            android:background="@drawable/login_bg"
+            android:text="@string/accept"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_btn" />
 
     </RelativeLayout>
 

@@ -10,7 +10,7 @@
         android:layout_marginTop="@dimen/content_10dp"
         android:layout_marginBottom="@dimen/content_10dp"
         android:padding="@dimen/content_gap"
-        android:background="@color/white">
+        android:background="@color/theme_bg_layout">
 
         <com.makeramen.roundedimageview.RoundedImageView
             xmlns:app="http://schemas.android.com/apk/res-auto"

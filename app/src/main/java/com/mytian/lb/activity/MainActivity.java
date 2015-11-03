@@ -1,5 +1,6 @@
 package com.mytian.lb.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,6 +15,7 @@ import com.core.util.CommonUtil;
 import com.mytian.lb.AbsActivity;
 import com.mytian.lb.App;
 import com.mytian.lb.R;
+import com.mytian.lb.event.SettingEventType;
 import com.mytian.lb.fragment.ContentFragment;
 import com.mytian.lb.mview.MDrawerView;
 import com.nineoldandroids.animation.ValueAnimator;
@@ -21,6 +23,7 @@ import com.nineoldandroids.animation.ValueAnimator;
 import butterknife.Bind;
 import butterknife.BindDimen;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 
 
 public class MainActivity extends AbsActivity {
@@ -114,12 +117,8 @@ public class MainActivity extends AbsActivity {
         contentFragment.setActionbarSet(new ContentFragment.ActionbarSet() {
             @Override
             public void OnIndexSet(int position) {
-                if ((position == 4 || position == 1)) {
-                    if (!isOpenUser)
-                        sendActionBarAnim(true);
-                } else if (isOpenUser) {
-                    sendActionBarAnim(false);
-                }
+                actionbarAnim(position);
+                actionbarIcon(position);
             }
 
             @Override
@@ -139,6 +138,23 @@ public class MainActivity extends AbsActivity {
 
     }
 
+    private void actionbarAnim(int position) {
+        if ((position == ContentFragment.USER || position == ContentFragment.AGREEMENT)) {
+            if (!isOpenUser)
+                sendActionBarAnim(true);
+        } else if (isOpenUser) {
+            sendActionBarAnim(false);
+        }
+    }
+
+    private void actionbarIcon(int position) {
+        if (position == ContentFragment.USER) {
+            setToolbarRightVisbility(View.VISIBLE, View.VISIBLE);
+        } else {
+            setToolbarRightVisbility(View.INVISIBLE, View.VISIBLE);
+        }
+    }
+
     private void sendActionBarAnim(boolean is) {
         Message message = new Message();
         message.what = ANIMATION;
@@ -146,18 +162,32 @@ public class MainActivity extends AbsActivity {
         activityHandler.sendMessageDelayed(message, 800);
     }
 
+    private SettingEventType settingEventType;
     private void setActionBar() {
         LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) layout_user.getLayoutParams();
         lp.height = 0;
         layout_user.setLayoutParams(lp);
         layout_user.setVisibility(View.VISIBLE);
         setToolbarLeft(R.mipmap.menu_normal);
+        setToolbarRight(R.mipmap.icon_settings);
         setToolbarLeftOnClick(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 toggerDrawer();
             }
         });
+
+        setToolbarRightOnClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(null==settingEventType) {
+                    View settingView = getToolbar().findViewById(R.id.toolbar_right_tv);
+                    settingEventType =  new SettingEventType(settingView);
+                }
+                EventBus.getDefault().post(settingEventType);
+            }
+        });
+
     }
 
     /**

@@ -21,17 +21,20 @@ import butterknife.Bind;
 
 public class ContentFragment extends AbsFragment {
 
+    public final static int DYNAMIC = 0;
+    public final static int AGREEMENT = DYNAMIC+1;
+    public final static int HABIT = AGREEMENT+1;
+    public final static int KINDLE = HABIT+1;
+    public final static int USER = KINDLE+1;
+
     @Bind(R.id.view_pager)
     ViewPager viewPager;
     @Bind(R.id.viewpager_tab)
     SmartTabLayout viewPagerTab;
 
-    private ArrayList<AbsFragment> fragments;
+    public ArrayList<AbsFragment> fragments;
 
     private ActionbarSet actionbarSet;
-
-    private int index;
-
 
     public void setActionbarSet(ActionbarSet actionbarSet) {
         this.actionbarSet = actionbarSet;
@@ -75,19 +78,19 @@ public class ContentFragment extends AbsFragment {
             public View createTabView(ViewGroup container, int position, PagerAdapter adapter) {
                 LinearLayout custom_ly = (LinearLayout) mInflater.inflate(R.layout.tab_main_icon, container, false);
                 switch (position) {
-                    case 0:
+                    case DYNAMIC:
                         setIconInfo(custom_ly, BottomMenu.DYNAMIC, true);
                         break;
-                    case 1:
+                    case AGREEMENT:
                         setIconInfo(custom_ly, BottomMenu.AGREEMENT);
                         break;
-                    case 2:
+                    case HABIT:
                         setIconInfo(custom_ly, BottomMenu.HABIT);
                         break;
-                    case 3:
+                    case KINDLE:
                         setIconInfo(custom_ly, BottomMenu.KINDLE);
                         break;
-                    case 4:
+                    case USER:
                         setIconInfo(custom_ly, BottomMenu.USER);
                         break;
                     default:
