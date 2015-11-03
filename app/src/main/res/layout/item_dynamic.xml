@@ -66,7 +66,7 @@
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:src="@mipmap/share"
+                android:src="@mipmap/icon_share"
                 android:scaleType="centerInside"
                 android:layout_alignParentRight="true"
                 android:layout_height="wrap_content" />

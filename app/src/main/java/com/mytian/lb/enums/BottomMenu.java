@@ -12,15 +12,15 @@ public enum BottomMenu {
 
     //    主界面
     //动态
-    DYNAMIC(R.string.menu_dynamic,R.string.menu_dynamic, R.mipmap.main_investment_press, R.mipmap.main_investment_normal, 0xfff12e40, 0xff808080),
+    DYNAMIC(R.string.menu_dynamic,R.string.menu_dynamic, R.mipmap.main_tab_news_down, R.mipmap.main_tab_news_normal, 0xffffca0d, 0xff808080),
     //爱的约定
-    AGREEMENT(R.string.menu_agreement,R.string.menu_agreement, R.mipmap.main_recommend_press, R.mipmap.main_recommend_normal, 0xfff12e40, 0xff808080),
+    AGREEMENT(R.string.menu_agreement,R.string.menu_agreement, R.mipmap.main_tab_love_down, R.mipmap.main_tab_love_normal, 0xffffca0d, 0xff808080),
     //习惯记录
-    HABIT(R.string.menu_habit,R.string.menu_habit, R.mipmap.main_gung_press, R.mipmap.main_gung_normal, 0xfff12e40, 0xff808080),
+    HABIT(R.string.menu_habit,R.string.menu_habit, R.mipmap.main_tab_bh_down, R.mipmap.main_tab_bh_normal, 0xffffca0d, 0xff808080),
     //kindle
-    KINDLE(R.string.menu_kindle, R.string.menu_kindle,R.mipmap.main_me_press, R.mipmap.main_me_normal, 0xfff12e40, 0xff808080),
+    KINDLE(R.string.menu_kindle, R.string.menu_kindle,R.mipmap.main_tab_kindle_normal, R.mipmap.main_tab_kindle_normal, 0xffffca0d, 0xff808080),
     //帐号管理
-    USER(R.string.menu_user, R.string.menu_user,R.mipmap.main_me_press, R.mipmap.main_me_normal, 0xfff12e40, 0xff808080);
+    USER(R.string.menu_user, R.string.menu_user,R.mipmap.main_tab_me_down, R.mipmap.main_tab_me_normal, 0xffffca0d, 0xff808080);
 
 
     private int title;

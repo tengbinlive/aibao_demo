@@ -14,12 +14,12 @@
 
         <ImageView
             android:id="@+id/icon"
-            android:layout_width="@dimen/item_head_size_small"
-            android:layout_height="@dimen/item_head_size_small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/content_gap"
             android:scaleType="centerInside"
-            android:src="@mipmap/default_head" />
+            android:src="@mipmap/icon_newfriends" />
 
         <TextView
             android:id="@+id/title"

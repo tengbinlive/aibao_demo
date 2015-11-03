@@ -5,7 +5,6 @@
               android:orientation="horizontal"
               android:weightSum="4"
               android:minHeight="@dimen/actionbar_height"
-              android:background="@color/theme"
               android:layout_height="@dimen/actionbar_height">
     <TextView
             android:id="@+id/toolbar_left_btn"
@@ -19,7 +18,7 @@
             android:padding="@dimen/content_left_margin"
             android:textColor="@color/white"
             android:textSize="@dimen/font_actionbar"
-            android:drawableLeft="@mipmap/back_normal"/>
+            android:drawableLeft="@mipmap/icon_back"/>
 
     <RelativeLayout
             android:id="@+id/toolbar_intermediate_btn"

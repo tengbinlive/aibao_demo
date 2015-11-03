@@ -2,9 +2,9 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/actionbar_user_height"
     android:id="@+id/layout_user"
-    android:background="@color/theme"
     android:gravity="center_vertical"
     android:orientation="horizontal"
+    android:visibility="gone"
     android:paddingBottom="@dimen/content_gap"
     android:paddingLeft="@dimen/content_gap"
     android:paddingTop="@dimen/content_gap_big">

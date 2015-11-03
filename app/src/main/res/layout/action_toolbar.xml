@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/theme"
     android:contentInsetLeft="0dp"
+    android:elevation="@dimen/elevation_height"
     android:contentInsetStart="0dp"
     android:minHeight="@dimen/actionbar_height"
+    android:orientation="vertical"
     app:contentInsetLeft="0dp"
     app:contentInsetStart="0dp">
 
@@ -18,10 +20,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/statusBar_height" />
 
-    <include
-        layout="@layout/layout_user"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/action_bar" />
+    <include layout="@layout/layout_user" />
 
-</RelativeLayout>
+</LinearLayout>

@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageButton;
@@ -43,7 +44,7 @@ public abstract class AbsActivity extends SwipeBackActivity implements EInitDate
     public LayoutInflater mInflater;
 
     //actionbar
-    private RelativeLayout viewTitleBar;
+    private ViewGroup viewTitleBar;
     private TextView menuLeft;
     private RelativeLayout toolbar_intermediate_btn;
     private RelativeLayout toolbar_right_btn;
@@ -65,7 +66,7 @@ public abstract class AbsActivity extends SwipeBackActivity implements EInitDate
         this.isBackAnim = isBackAnim;
     }
 
-    public RelativeLayout getToolbar() {
+    public ViewGroup getToolbar() {
         return viewTitleBar;
     }
 
@@ -111,7 +112,7 @@ public abstract class AbsActivity extends SwipeBackActivity implements EInitDate
     }
 
     private void initAbsActionBar() {
-        viewTitleBar = (RelativeLayout) findViewById(R.id.toolbar);
+        viewTitleBar = (LinearLayout) findViewById(R.id.toolbar);
         if (null == viewTitleBar) {
             return;
         }
@@ -132,7 +133,7 @@ public abstract class AbsActivity extends SwipeBackActivity implements EInitDate
         });
     }
 
-    public void initAbsActionBar(RelativeLayout _viewTitleBar) {
+    public void initAbsActionBar(ViewGroup _viewTitleBar) {
         viewTitleBar = _viewTitleBar;
         if (null == viewTitleBar) {
             return;

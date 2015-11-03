@@ -9,7 +9,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.core.util.CommonUtil;
 import com.mytian.lb.AbsActivity;
@@ -115,10 +114,10 @@ public class MainActivity extends AbsActivity {
         contentFragment.setActionbarSet(new ContentFragment.ActionbarSet() {
             @Override
             public void OnIndexSet(int position) {
-                if ((position == 4||position == 1)) {
-                    if(!isOpenUser)
-                    sendActionBarAnim(true);
-                } else if(isOpenUser){
+                if ((position == 4 || position == 1)) {
+                    if (!isOpenUser)
+                        sendActionBarAnim(true);
+                } else if (isOpenUser) {
                     sendActionBarAnim(false);
                 }
             }
@@ -140,7 +139,7 @@ public class MainActivity extends AbsActivity {
 
     }
 
-    private void sendActionBarAnim(boolean is){
+    private void sendActionBarAnim(boolean is) {
         Message message = new Message();
         message.what = ANIMATION;
         message.obj = is;
@@ -148,7 +147,7 @@ public class MainActivity extends AbsActivity {
     }
 
     private void setActionBar() {
-        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) layout_user.getLayoutParams();
+        LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) layout_user.getLayoutParams();
         lp.height = 0;
         layout_user.setLayoutParams(lp);
         layout_user.setVisibility(View.VISIBLE);
@@ -167,17 +166,17 @@ public class MainActivity extends AbsActivity {
     private void userAnimation(boolean is) {
         ValueAnimator animation = ValueAnimator.ofFloat(is ? 0 : EDITEXT_OFFER, is ? EDITEXT_OFFER : 0);
         isOpenUser = is;
-        if(is){
+        if (is) {
             animation.setInterpolator(mInterpolator);
             animation.setDuration(450);
-        }else {
+        } else {
             animation.setDuration(300);
         }
         animation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 float value = (Float) animation.getAnimatedValue();
-                RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) layout_user.getLayoutParams();
+                LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) layout_user.getLayoutParams();
                 lp.height = (int) value;
                 layout_user.setLayoutParams(lp);
             }
