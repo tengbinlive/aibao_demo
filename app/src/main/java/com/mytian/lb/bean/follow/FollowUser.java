@@ -21,6 +21,15 @@ public class FollowUser {
     private String relation_id;
     private String relation_name;
     private String other_relation;
+    private String searchKey;
+
+    public String getSearchKey() {
+        return searchKey;
+    }
+
+    public void setSearchKey(String searchKey) {
+        this.searchKey = searchKey;
+    }
 
     public String getUid() {
         return uid;
@@ -177,6 +186,7 @@ public class FollowUser {
                 ", relation_id='" + relation_id + '\'' +
                 ", relation_name='" + relation_name + '\'' +
                 ", other_relation='" + other_relation + '\'' +
+                ", searchKey='" + searchKey + '\'' +
                 '}';
     }
 }

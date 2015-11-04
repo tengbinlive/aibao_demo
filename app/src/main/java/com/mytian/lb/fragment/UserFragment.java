@@ -17,12 +17,12 @@ import android.widget.TextView;
 import com.core.CommonResponse;
 import com.handmark.pulltorefresh.PullToRefreshBase;
 import com.handmark.pulltorefresh.PullToRefreshListView;
+import com.mytian.lb.AbsActivity;
 import com.mytian.lb.AbsFragment;
 import com.mytian.lb.Constant;
 import com.mytian.lb.R;
 import com.mytian.lb.activity.AddFollowActivity;
 import com.mytian.lb.activity.LoginActivity;
-import com.mytian.lb.activity.MainActivity;
 import com.mytian.lb.activityexpand.activity.AnimatedRectLayout;
 import com.mytian.lb.adapter.UserAdapter;
 import com.mytian.lb.bean.follow.FollowListResult;
@@ -99,7 +99,7 @@ public class UserFragment extends AbsFragment {
         // Need to use the Actual ListView when registering for Context Menu
         registerForContextMenu(mActualListView);
 
-        mAdapter = new UserAdapter(getActivity(), arrayList);
+        mAdapter = new UserAdapter((AbsActivity) getActivity(), arrayList);
 
         SwingBottomInAnimationAdapter animationAdapter = new SwingBottomInAnimationAdapter(mAdapter);
 
@@ -148,7 +148,7 @@ public class UserFragment extends AbsFragment {
     }
 
     @OnClick(R.id.exit_bt)
-    void exit() {
+    void exitAccount() {
         SharedPreferencesHelper.setString(getActivity(), Constant.LoginUser.SHARED_PREFERENCES_PHONE, "");
         SharedPreferencesHelper.setString(getActivity(), Constant.LoginUser.SHARED_PREFERENCES_PASSWORD, "");
         Intent intent = new Intent(getActivity(), LoginActivity.class);

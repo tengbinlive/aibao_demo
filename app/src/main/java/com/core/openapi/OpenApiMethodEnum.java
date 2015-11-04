@@ -11,12 +11,22 @@ package com.core.openapi;
 public enum OpenApiMethodEnum {
 
     /**
-     * 添加关注
+     * 爱宝解除关注麦宝
+     */
+    LOAD_FOLLOW_CANCEL("myt_focus/babyParentFocusAction_parentReleaseFocusBaby.do", "openapi_json", OpenApi.URL_TYPE_DATA),
+
+      /**
+     * 查找麦宝账户信息
+     */
+    LOAD_FOLLOW_BABY("myt_baby/babyAction_getBabyByPhone.do", "openapi_json", OpenApi.URL_TYPE_DATA),
+
+    /**
+     * 爱宝关注列表
      */
     LOAD_FOLLOW_ADD("myt_focus/babyParentFocusAction_parentFocusBaby.do", "openapi_json", OpenApi.URL_TYPE_DATA),
 
     /**
-     * 同意关注
+     * 爱宝同意麦宝关注
      */
     LOAD_FOLLOW_AGREE("myt_focus/babyParentFocusAction_parentConfirmBabyFocus.do", "openapi_json", OpenApi.URL_TYPE_DATA),
 
