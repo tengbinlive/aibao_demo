@@ -189,6 +189,17 @@
                     android:textSize="@dimen/font_btn" />
 
             </RelativeLayout>
+
+            <Button
+                android:id="@+id/exit_bt"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/button_height"
+                android:layout_margin="@dimen/content_gap_big"
+                android:background="@drawable/login_bg"
+                android:text="@string/exit"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_btn" />
+
         </LinearLayout>
     </ScrollView>
 </com.mytian.lb.mview.ClipRevealFrame>

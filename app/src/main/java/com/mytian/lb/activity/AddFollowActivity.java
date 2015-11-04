@@ -1,7 +1,6 @@
 package com.mytian.lb.activity;
 
 
-import android.content.DialogInterface;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
@@ -22,14 +21,12 @@ import com.mytian.lb.R;
 import com.mytian.lb.adapter.UserAdapter;
 import com.mytian.lb.bean.follow.FollowListResult;
 import com.mytian.lb.bean.follow.FollowUser;
-import com.mytian.lb.event.SettingEventType;
 import com.mytian.lb.manager.FollowManager;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
-import de.greenrobot.event.EventBus;
 
 public class AddFollowActivity extends AbsActivity {
 
@@ -87,7 +84,7 @@ public class AddFollowActivity extends AbsActivity {
             currentPager = 1;
             arrayList = null;
         }
-        manager.followList(this, "1", "" + currentPager, "1", activityHandler, state);
+        manager.followList(this, "" + currentPager, "0", activityHandler, state);
     }
 
     @Override

@@ -49,27 +49,43 @@
      <LinearLayout
          android:layout_alignBottom="@+id/background"
          android:layout_width="280dp"
-         android:gravity="center_vertical|right"
+         android:paddingRight="@dimen/content_gap"
+         android:paddingLeft="@dimen/content_gap"
+         android:gravity="center_vertical"
          android:background="@drawable/bg_dialog_follow"
          android:orientation="horizontal"
-         android:layout_height="45dp">
+         android:layout_height="wrap_content">
+
+         <EditText
+             android:id="@+id/desc_et"
+             android:layout_width="0dp"
+             android:layout_weight="2"
+             android:layout_height="50dp"
+             android:background="@null"
+             android:gravity="center_vertical"
+             android:hint="@string/hint_addfollow"
+             android:inputType="phone"
+             android:textColor="@color/textcolor_222"
+             android:textColorHint="@color/gray_hint"
+             android:textCursorDrawable="@null"
+             android:textSize="@dimen/font_medium" />
 
          <TextView
              android:id="@+id/cancel"
-             android:layout_width="wrap_content"
+             android:layout_width="0dp"
+             android:layout_weight="1"
+             android:gravity="center"
              android:layout_height="wrap_content"
              android:text="@string/cancel"
-             android:layout_marginRight="@dimen/content_10dp"
              android:textColor="@color/theme"
              android:textSize="@dimen/font_actionbar" />
 
          <TextView
              android:id="@+id/addfollow"
-             android:layout_alignParentBottom="true"
-             android:layout_width="wrap_content"
+             android:layout_width="0dp"
+             android:gravity="right"
+             android:layout_weight="1"
              android:layout_height="wrap_content"
-             android:layout_marginLeft="@dimen/content_10dp"
-             android:layout_marginRight="@dimen/content_10dp"
              android:text="@string/follow_add"
              android:textColor="@color/theme"
              android:textSize="@dimen/font_actionbar" />

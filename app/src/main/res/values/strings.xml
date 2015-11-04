@@ -40,4 +40,6 @@
     <string name="hint_messge">验证消息</string>
     <string name="accept">接受</string>
     <string name="already_attention">已关注</string>
+    <string name="exit">切换帐号</string>
+    <string name="hint_addfollow">说些什么吧.</string>
 </resources>

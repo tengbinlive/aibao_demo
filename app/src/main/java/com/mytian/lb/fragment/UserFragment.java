@@ -18,12 +18,17 @@ import com.core.CommonResponse;
 import com.handmark.pulltorefresh.PullToRefreshBase;
 import com.handmark.pulltorefresh.PullToRefreshListView;
 import com.mytian.lb.AbsFragment;
+import com.mytian.lb.Constant;
 import com.mytian.lb.R;
 import com.mytian.lb.activity.AddFollowActivity;
+import com.mytian.lb.activity.LoginActivity;
+import com.mytian.lb.activity.MainActivity;
+import com.mytian.lb.activityexpand.activity.AnimatedRectLayout;
 import com.mytian.lb.adapter.UserAdapter;
 import com.mytian.lb.bean.follow.FollowListResult;
 import com.mytian.lb.bean.follow.FollowUser;
 import com.mytian.lb.event.SettingEventType;
+import com.mytian.lb.helper.SharedPreferencesHelper;
 import com.mytian.lb.manager.FollowManager;
 import com.mytian.lb.mview.ClipRevealFrame;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
@@ -31,6 +36,7 @@ import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationA
 import java.util.ArrayList;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 public class UserFragment extends AbsFragment {
 
@@ -57,7 +63,7 @@ public class UserFragment extends AbsFragment {
     @Bind(R.id.layout_setting)
     ClipRevealFrame layoutSetting;
 
-    private static boolean  isSettingShow;
+    private static boolean isSettingShow;
 
     @Bind(R.id.listview)
     PullToRefreshListView listview;
@@ -117,7 +123,7 @@ public class UserFragment extends AbsFragment {
             currentPager = 1;
             arrayList = null;
         }
-        manager.followList(getActivity(), "1", "" + currentPager,"1", activityHandler, state);
+        manager.followList(getActivity(), "" + currentPager, "1", activityHandler, state);
     }
 
     private void toAddFollowActivity() {
@@ -139,6 +145,17 @@ public class UserFragment extends AbsFragment {
     public void onEvent(SettingEventType event) {
         settingAchor = event.mView;
         toggleShowSetting(event.mView);
+    }
+
+    @OnClick(R.id.exit_bt)
+    void exit() {
+        SharedPreferencesHelper.setString(getActivity(), Constant.LoginUser.SHARED_PREFERENCES_PHONE, "");
+        SharedPreferencesHelper.setString(getActivity(), Constant.LoginUser.SHARED_PREFERENCES_PASSWORD, "");
+        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        intent.putExtra("animation_type", AnimatedRectLayout.ANIMATION_WAVE_TL);
+        getActivity().startActivity(intent);
+        getActivity().overridePendingTransition(0, 0);
+        getActivity().finish();
     }
 
     /**
@@ -255,9 +272,9 @@ public class UserFragment extends AbsFragment {
             //避免第一次应用启动时 创建fragment加载数据多次提示
         }
         listview.onRefreshComplete();
-        if(arrayList==null||arrayList.size()<=0){
+        if (arrayList == null || arrayList.size() <= 0) {
             llListEmpty.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             llListEmpty.setVisibility(View.GONE);
         }
     }
