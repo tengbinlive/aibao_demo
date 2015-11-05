@@ -39,4 +39,7 @@
     <dimen name="item_head_size_small">50dp</dimen>
     <dimen name="elevation_height">2dp</dimen>
 
+    <!--progress-->
+    <dimen name="progress_radius">30dp</dimen>
+    <dimen name="progress_thickness">3dp</dimen>
 </resources>

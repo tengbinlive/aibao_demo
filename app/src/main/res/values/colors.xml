@@ -22,4 +22,7 @@
     <!-- dialog -->
     <color name="dialog_bg">#dd000000</color>
 
+    <!--progress-->
+    <color name="theme_progress">#f12e40</color>
+
 </resources>

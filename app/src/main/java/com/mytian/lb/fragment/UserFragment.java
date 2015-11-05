@@ -10,15 +10,19 @@ import android.os.Message;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.OvershootInterpolator;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.core.CommonResponse;
+import com.core.util.StringUtil;
 import com.handmark.pulltorefresh.PullToRefreshBase;
 import com.handmark.pulltorefresh.PullToRefreshListView;
 import com.mytian.lb.AbsActivity;
 import com.mytian.lb.AbsFragment;
+import com.mytian.lb.App;
 import com.mytian.lb.Constant;
 import com.mytian.lb.R;
 import com.mytian.lb.activity.AddFollowActivity;
@@ -28,14 +32,18 @@ import com.mytian.lb.adapter.UserAdapter;
 import com.mytian.lb.bean.follow.FollowListResult;
 import com.mytian.lb.bean.follow.FollowUser;
 import com.mytian.lb.event.SettingEventType;
+import com.mytian.lb.event.UserEventType;
 import com.mytian.lb.helper.SharedPreferencesHelper;
 import com.mytian.lb.manager.FollowManager;
+import com.mytian.lb.mview.CircleNetworkImageView;
 import com.mytian.lb.mview.ClipRevealFrame;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
+import com.nineoldandroids.animation.ValueAnimator;
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
+import butterknife.BindDimen;
 import butterknife.OnClick;
 
 public class UserFragment extends AbsFragment {
@@ -78,6 +86,20 @@ public class UserFragment extends AbsFragment {
     private int currentPager = 1;
     private View settingAchor;
 
+    //user
+    private static boolean isOpenUser;//只执行一次动画
+    @Bind(R.id.user_phone)
+    TextView user_phone;
+    @Bind(R.id.user_icon)
+    CircleNetworkImageView user_icon;
+    @Bind(R.id.user_name)
+    TextView user_name;
+    @Bind(R.id.layout_user)
+    LinearLayout layout_user;
+    @BindDimen(R.dimen.actionbar_user_height)
+    float EDITEXT_OFFER;
+    private final OvershootInterpolator mInterpolator = new OvershootInterpolator();
+
     private void initListView() {
 
         listview.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
@@ -92,7 +114,7 @@ public class UserFragment extends AbsFragment {
             }
         });
 
-        View headView = mInflater.inflate(R.layout.item_user_new_messge, null);
+        View headView = mInflater.inflate(R.layout.layout_user_new_messge, null);
 
         mActualListView = listview.getRefreshableView();
 
@@ -139,12 +161,39 @@ public class UserFragment extends AbsFragment {
     @Override
     public void EInit() {
         initListView();
+        setUserInfo();
         getListData(INIT_LIST);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            sendActionBarAnim();
+            //相当于Fragment的onResume
+        } else {
+            //相当于Fragment的onPause
+        }
+    }
+
+    private void setUserInfo() {
+        String name = App.getInstance().userResult.getName();
+        name = StringUtil.isNotBlank(name) ? name : "你猜.";
+        String head = App.getInstance().userResult.getHead();
+        head = StringUtil.isNotBlank(head) ? head : "";
+        String phone = App.getInstance().userResult.getPhone();
+        phone = StringUtil.isNotBlank(phone) ? phone : "...";
+        user_name.setText(name);
+        user_phone.setText(phone);
+        Glide.with(this).load(head).placeholder(R.mipmap.default_head).centerCrop().crossFade().into(user_icon);
     }
 
     public void onEvent(SettingEventType event) {
         settingAchor = event.mView;
         toggleShowSetting(event.mView);
+    }
+
+    public void onEvent(UserEventType event) {
     }
 
     @OnClick(R.id.exit_bt)
@@ -176,6 +225,36 @@ public class UserFragment extends AbsFragment {
             isSettingShow = false;
             hideMenu(x, y, radiusFromToRoot, radiusOf);
         }
+    }
+
+    private void sendActionBarAnim() {
+        if (!isOpenUser) {
+            isOpenUser = true;
+            activityHandler.sendEmptyMessageDelayed(ANIMATION, 1000);
+        }
+    }
+
+    /**
+     * actionbar user info animation
+     */
+    private void userAnimation(boolean is) {
+        ValueAnimator animation = ValueAnimator.ofFloat(is ? 0 : EDITEXT_OFFER, is ? EDITEXT_OFFER : 0);
+        if (is) {
+            animation.setInterpolator(mInterpolator);
+            animation.setDuration(450);
+        } else {
+            animation.setDuration(300);
+        }
+        animation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float value = (Float) animation.getAnimatedValue();
+                LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) layout_user.getLayoutParams();
+                lp.height = (int) value;
+                layout_user.setLayoutParams(lp);
+            }
+        });
+        animation.start();
     }
 
     private void showMenu(int cx, int cy, float startRadius, float endRadius) {
@@ -237,6 +316,7 @@ public class UserFragment extends AbsFragment {
     private static final int INIT_LIST = 0x01;//初始化数据处理
     private static final int LOAD_DATA = 0x02;//加载数据处理
     private static final int COUNT_MAX = 15;//加载数据最大值
+    private static final int ANIMATION = 0x03;//user layout
     private Handler activityHandler = new Handler() {
         public void handleMessage(Message msg) {
             int what = msg.what;
@@ -244,6 +324,9 @@ public class UserFragment extends AbsFragment {
                 case INIT_LIST:
                 case LOAD_DATA:
                     loadData((CommonResponse) msg.obj);
+                    break;
+                case ANIMATION:
+                    userAnimation(true);
                     break;
                 default:
                     break;

@@ -1,10 +1,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/actionbar_user_height"
+    android:layout_height="0dp"
     android:id="@+id/layout_user"
     android:gravity="center_vertical"
+    android:elevation="@dimen/elevation_height"
+    android:background="@color/theme"
     android:orientation="horizontal"
-    android:visibility="gone"
     android:paddingBottom="@dimen/content_gap"
     android:paddingLeft="@dimen/content_gap"
     android:paddingTop="@dimen/content_gap_big">

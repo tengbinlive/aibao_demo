@@ -1,14 +1,9 @@
 package com.mytian.lb.activity;
 
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.os.Process;
 import android.support.v4.widget.DrawerLayout;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.animation.OvershootInterpolator;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -21,11 +16,8 @@ import com.mytian.lb.event.SettingEventType;
 import com.mytian.lb.fragment.ContentFragment;
 import com.mytian.lb.mview.CircleNetworkImageView;
 import com.mytian.lb.mview.MDrawerView;
-import com.nineoldandroids.animation.ValueAnimator;
 
 import butterknife.Bind;
-import butterknife.BindDimen;
-import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 
 
@@ -39,20 +31,6 @@ public class MainActivity extends AbsActivity {
     MDrawerView leftDrawer;
     @Bind(R.id.drawer_layout)
     DrawerLayout drawerLayout;
-
-    @Bind(R.id.user_phone)
-    TextView user_phone;
-    @Bind(R.id.user_icon)
-    CircleNetworkImageView user_icon;
-    @Bind(R.id.user_name)
-    TextView user_name;
-    @Bind(R.id.layout_user)
-    LinearLayout layout_user;
-    @BindDimen(R.dimen.actionbar_user_height)
-    float EDITEXT_OFFER;
-    private final OvershootInterpolator mInterpolator = new OvershootInterpolator();
-
-    private boolean isOpenUser;
 
     private ContentFragment contentFragment;
 
@@ -100,7 +78,6 @@ public class MainActivity extends AbsActivity {
         initLayout();
         setActionBar();
         initDrawerLayout();
-        setUserInfo();
     }
 
     private void initDrawerLayout() {
@@ -127,13 +104,11 @@ public class MainActivity extends AbsActivity {
         contentFragment.setActionbarSet(new ContentFragment.ActionbarSet() {
             @Override
             public void OnIndexSet(int position) {
-                actionbarAnim(position);
                 actionbarIcon(position);
             }
 
             @Override
             public void OnChanger() {
-                activityHandler.removeMessages(ANIMATION);
             }
 
             @Override
@@ -148,27 +123,6 @@ public class MainActivity extends AbsActivity {
 
     }
 
-    private void actionbarAnim(int position) {
-        if ((position == ContentFragment.USER)) {
-            if (!isOpenUser)
-                sendActionBarAnim(true);
-        } else if (isOpenUser) {
-            sendActionBarAnim(false);
-        }
-    }
-
-    private void setUserInfo(){
-        String name = App.getInstance().userResult.getName();
-        name = StringUtil.isNotBlank(name)?name:"你猜";
-        String head = App.getInstance().userResult.getHead();
-        head = StringUtil.isNotBlank(head)?head:"";
-        String phone = App.getInstance().userResult.getPhone();
-        phone = StringUtil.isNotBlank(phone)?phone:"...";
-        user_name.setText(name);
-        user_phone.setText(phone);
-        Glide.with(this).load(head).placeholder(R.mipmap.default_head).centerCrop().crossFade().into(user_icon);
-    }
-
     private void actionbarIcon(int position) {
         if (position == ContentFragment.USER) {
             setToolbarRightVisbility(View.VISIBLE, View.VISIBLE);
@@ -177,20 +131,10 @@ public class MainActivity extends AbsActivity {
         }
     }
 
-    private void sendActionBarAnim(boolean is) {
-        Message message = new Message();
-        message.what = ANIMATION;
-        message.obj = is;
-        activityHandler.sendMessageDelayed(message, 800);
-    }
 
     private SettingEventType settingEventType;
 
     private void setActionBar() {
-        LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) layout_user.getLayoutParams();
-        lp.height = 0;
-        layout_user.setLayoutParams(lp);
-        layout_user.setVisibility(View.VISIBLE);
         setToolbarLeft(R.mipmap.menu_normal);
         setToolbarRight(R.mipmap.icon_settings);
         setToolbarLeftOnClick(new View.OnClickListener() {
@@ -213,56 +157,10 @@ public class MainActivity extends AbsActivity {
 
     }
 
-    /**
-     * actionbar user info animation
-     */
-    private void userAnimation(boolean is) {
-        ValueAnimator animation = ValueAnimator.ofFloat(is ? 0 : EDITEXT_OFFER, is ? EDITEXT_OFFER : 0);
-        isOpenUser = is;
-        if (is) {
-            animation.setInterpolator(mInterpolator);
-            animation.setDuration(450);
-        } else {
-            animation.setDuration(300);
-        }
-        animation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                float value = (Float) animation.getAnimatedValue();
-                LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) layout_user.getLayoutParams();
-                lp.height = (int) value;
-                layout_user.setLayoutParams(lp);
-            }
-        });
-        animation.start();
-    }
-
-    private final static int ANIMATION = 1;
-
-    private Handler activityHandler = new Handler() {
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case ANIMATION:
-                    userAnimation((Boolean) msg.obj);
-                    break;
-                default:
-                    break;
-            }
-        }
-    };
-
-
     @Override
     public void onDestroy() {
         super.onDestroy();
         Process.killProcess(Process.myPid());
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
     }
 
     /**
