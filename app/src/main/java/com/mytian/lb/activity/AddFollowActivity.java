@@ -213,7 +213,7 @@ public class AddFollowActivity extends AbsActivity {
         final EditText desc_et = (EditText) convertView.findViewById(R.id.desc_et);
         ImageView background = (ImageView) convertView.findViewById(R.id.background);
 
-        Glide.with(this).load(followUser.getBaby().getHead_thumb()).crossFade().into(background);
+        Glide.with(this).load(followUser.getBaby().getHeadThumb()).crossFade().into(background);
         String nameStr = followUser.getBaby().getName();
         String phoneStr = followUser.getBaby().getPhone();
         if (StringUtil.isNotBlank(nameStr)) {
@@ -232,7 +232,7 @@ public class AddFollowActivity extends AbsActivity {
             @Override
             public void onClick(View v) {
                 dialogShow(R.string.hint_add);
-                manager.followAdd(AddFollowActivity.this, followUser.getBaby().getUid(), desc_et.getText().toString(),activityHandler, FOLLOW_GETBABY);
+                manager.followAdd(AddFollowActivity.this, ""+followUser.getBaby().getUid(),""+followUser.getBaby().getRelationId(),desc_et.getText().toString(),activityHandler, FOLLOW_GETBABY);
             }
         });
         dialogBuilder = NiftyDialogBuilder.getInstance(this);
@@ -273,7 +273,7 @@ public class AddFollowActivity extends AbsActivity {
     private static final int FOLLOW_ADD = 0x04;//添加关注
     private static final int LOAD_DATA = 0x02;//加载数据处理
     private static final int COUNT_MAX = 15;//加载数据最大值
-    private static final int SHWO_DIALOG = 0X03;//添加dialog显示
+    private static final int SHOW_DIALOG = 0X05;//添加dialog显示
     private Handler activityHandler = new Handler() {
         public void handleMessage(Message msg) {
             int what = msg.what;
@@ -287,6 +287,9 @@ public class AddFollowActivity extends AbsActivity {
                     break;
                 case FOLLOW_ADD:
                     loadAdd((CommonResponse) msg.obj);
+                    break;
+                case SHOW_DIALOG:
+                    dialogAddFollow((FollowBabyResult) msg.obj);
                     break;
                 default:
                     break;
@@ -336,7 +339,10 @@ public class AddFollowActivity extends AbsActivity {
         dialogDismiss();
         if (resposne.isSuccess()) {
             FollowBabyResult result = (FollowBabyResult) resposne.getData();
-            dialogAddFollow(result);
+            Message message = new Message();
+            message.what = SHOW_DIALOG;
+            message.obj = result;
+            activityHandler.sendMessage(message);
         } else {
             CommonUtil.showToast(resposne.getMsg());
         }

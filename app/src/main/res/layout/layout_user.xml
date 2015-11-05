@@ -10,7 +10,7 @@
     android:paddingTop="@dimen/content_gap_big">
 
     <com.mytian.lb.mview.CircleNetworkImageView
-        android:id="@+id/menu_user_icon"
+        android:id="@+id/user_icon"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:src="@mipmap/default_head" />
@@ -23,7 +23,7 @@
         android:paddingRight="@dimen/content_gap">
 
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:singleLine="true"
@@ -32,12 +32,12 @@
             android:textSize="@dimen/font_btn" />
 
         <TextView
-            android:id="@+id/phone"
+            android:id="@+id/user_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/name"
+            android:layout_below="@+id/user_name"
             android:layout_marginTop="@dimen/content_10dp"
-            android:text="18888888888"
+            android:text=""
             android:textColor="@color/white"
             android:textSize="@dimen/font_least" />
 

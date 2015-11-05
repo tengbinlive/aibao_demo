@@ -85,7 +85,6 @@ public class FollowAddParam extends OpenApiBaseRequest implements OpenApiRequest
         if (StringUtil.isBlank(this.client_type)) return false;
         if (StringUtil.isBlank(this.babyId)) return false;
         if (StringUtil.isBlank(this.parentId)) return false;
-        if (StringUtil.isBlank(this.relationId)) return false;
         return true;
     }
 

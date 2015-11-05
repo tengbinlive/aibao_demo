@@ -149,6 +149,7 @@ public class LoginActivity extends AnimatedRectActivity {
             SharedPreferencesHelper.setString(this, Constant.LoginUser.SHARED_PREFERENCES_PHONE, phone);
             SharedPreferencesHelper.setString(this, Constant.LoginUser.SHARED_PREFERENCES_PASSWORD, password);
             App.getInstance().userResult = (UserResult) resposne.getData();
+            App.getInstance().userResult.setPhone(phone);
             toMain();
         } else {
             CommonUtil.showToast(resposne.getMsg());

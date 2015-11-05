@@ -8,6 +8,33 @@ import com.core.openapi.OpenApiSimpleResult;
 public class UserResult extends OpenApiSimpleResult {
     private String uid;
     private String token;
+    private String phone;
+    private String name;
+    private String head;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getHead() {
+        return head;
+    }
+
+    public void setHead(String head) {
+        this.head = head;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
     public String getUid() {
         return uid;
@@ -30,6 +57,9 @@ public class UserResult extends OpenApiSimpleResult {
         return "UserResult{" +
                 "uid='" + uid + '\'' +
                 ", token='" + token + '\'' +
+                ", phone='" + phone + '\'' +
+                ", name='" + name + '\'' +
+                ", head='" + head + '\'' +
                 '}';
     }
 }

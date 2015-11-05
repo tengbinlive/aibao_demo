@@ -90,13 +90,14 @@ public class FollowManager {
      * @param handler        在Activity中处理返回结果的Handler
      * @param handlerMsgCode 返回结果的Handler的Msg代码
      */
-    public void followAdd(Context context, String babyId, String other_relation, final Handler handler, final int handlerMsgCode) {
+    public void followAdd(Context context, String babyId, String other_relation, String relationId,final Handler handler, final int handlerMsgCode) {
 
         FollowAddParam param = new FollowAddParam();
         param.setUid(App.getInstance().userResult.getUid());
         param.setToken(App.getInstance().userResult.getToken());
         param.setClient_type("1");//0 MB端, 1 LB端
         param.setBabyId(babyId);
+        param.setRelationId(relationId);
         if(StringUtil.isNotBlank(other_relation)) {
             param.setOther_relation(other_relation);
         }

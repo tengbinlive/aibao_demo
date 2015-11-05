@@ -9,13 +9,17 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.core.util.CommonUtil;
+import com.core.util.StringUtil;
 import com.mytian.lb.AbsActivity;
 import com.mytian.lb.App;
 import com.mytian.lb.R;
 import com.mytian.lb.event.SettingEventType;
 import com.mytian.lb.fragment.ContentFragment;
+import com.mytian.lb.mview.CircleNetworkImageView;
 import com.mytian.lb.mview.MDrawerView;
 import com.nineoldandroids.animation.ValueAnimator;
 
@@ -36,6 +40,12 @@ public class MainActivity extends AbsActivity {
     @Bind(R.id.drawer_layout)
     DrawerLayout drawerLayout;
 
+    @Bind(R.id.user_phone)
+    TextView user_phone;
+    @Bind(R.id.user_icon)
+    CircleNetworkImageView user_icon;
+    @Bind(R.id.user_name)
+    TextView user_name;
     @Bind(R.id.layout_user)
     LinearLayout layout_user;
     @BindDimen(R.dimen.actionbar_user_height)
@@ -90,6 +100,7 @@ public class MainActivity extends AbsActivity {
         initLayout();
         setActionBar();
         initDrawerLayout();
+        setUserInfo();
     }
 
     private void initDrawerLayout() {
@@ -144,6 +155,18 @@ public class MainActivity extends AbsActivity {
         } else if (isOpenUser) {
             sendActionBarAnim(false);
         }
+    }
+
+    private void setUserInfo(){
+        String name = App.getInstance().userResult.getName();
+        name = StringUtil.isNotBlank(name)?name:"你猜";
+        String head = App.getInstance().userResult.getHead();
+        head = StringUtil.isNotBlank(head)?head:"";
+        String phone = App.getInstance().userResult.getPhone();
+        phone = StringUtil.isNotBlank(phone)?phone:"...";
+        user_name.setText(name);
+        user_phone.setText(phone);
+        Glide.with(this).load(head).placeholder(R.mipmap.default_head).centerCrop().crossFade().into(user_icon);
     }
 
     private void actionbarIcon(int position) {
