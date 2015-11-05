@@ -139,7 +139,7 @@ public class MainActivity extends AbsActivity {
     }
 
     private void actionbarAnim(int position) {
-        if ((position == ContentFragment.USER || position == ContentFragment.AGREEMENT)) {
+        if ((position == ContentFragment.USER)) {
             if (!isOpenUser)
                 sendActionBarAnim(true);
         } else if (isOpenUser) {

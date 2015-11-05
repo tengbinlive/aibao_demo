@@ -146,6 +146,7 @@ public class AddFollowActivity extends AbsActivity {
     private static final int INIT_LIST = 0x01;//初始化数据处理
     private static final int LOAD_DATA = 0x02;//加载数据处理
     private static final int COUNT_MAX = 15;//加载数据最大值
+    private static final int SHWO_DIALOG = 0X03;//添加dialog显示
     private Handler activityHandler = new Handler() {
         public void handleMessage(Message msg) {
             int what = msg.what;
