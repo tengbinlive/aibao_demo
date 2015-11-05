@@ -6,7 +6,7 @@ import com.core.util.StringUtil;
 
 import java.util.HashMap;
 
-public class FollowAgreeParam extends OpenApiBaseRequest implements OpenApiRequestInterface {
+public class FollowBabyInfoParam extends OpenApiBaseRequest implements OpenApiRequestInterface {
 
     private String token;
 
@@ -14,9 +14,7 @@ public class FollowAgreeParam extends OpenApiBaseRequest implements OpenApiReque
 
     private String client_type;
 
-    private String babyId;
-
-    private String parentId;
+    private String phone;
 
     public String getToken() {
         return token;
@@ -42,20 +40,12 @@ public class FollowAgreeParam extends OpenApiBaseRequest implements OpenApiReque
         this.client_type = client_type;
     }
 
-    public String getBabyId() {
-        return babyId;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setBabyId(String babyId) {
-        this.babyId = babyId;
-    }
-
-    public String getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(String parentId) {
-        this.parentId = parentId;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     @Override
@@ -63,8 +53,7 @@ public class FollowAgreeParam extends OpenApiBaseRequest implements OpenApiReque
         if (StringUtil.isBlank(this.token)) return false;
         if (StringUtil.isBlank(this.uid)) return false;
         if (StringUtil.isBlank(this.client_type)) return false;
-        if (StringUtil.isBlank(this.babyId)) return false;
-        if (StringUtil.isBlank(this.parentId)) return false;
+        if (StringUtil.isBlank(this.phone)) return false;
         return true;
     }
 
@@ -76,20 +65,17 @@ public class FollowAgreeParam extends OpenApiBaseRequest implements OpenApiReque
             param.put("uid", uid);
         if (includeEmptyAttr || (!includeEmptyAttr && StringUtil.isNotBlank(client_type)))
             param.put("client_type", client_type);
-        if (includeEmptyAttr || (!includeEmptyAttr && StringUtil.isNotBlank(babyId)))
-            param.put("babyParentFocus.babyId", babyId);
-        if (includeEmptyAttr || (!includeEmptyAttr && StringUtil.isNotBlank(parentId)))
-            param.put("babyParentFocus.parentId", parentId);
+        if (includeEmptyAttr || (!includeEmptyAttr && StringUtil.isNotBlank(phone)))
+            param.put("baby.phone", phone);
     }
 
     @Override
     public String toString() {
-        return "FollowAgreeParam{" +
+        return "FollowBabyInfoParam{" +
                 "token='" + token + '\'' +
                 ", uid='" + uid + '\'' +
                 ", client_type='" + client_type + '\'' +
-                ", babyId='" + babyId + '\'' +
-                ", parentId='" + parentId + '\'' +
+                ", phone='" + phone + '\'' +
                 '}';
     }
 }

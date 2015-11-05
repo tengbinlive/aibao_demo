@@ -15,6 +15,31 @@
         android:layout_marginRight="@dimen/content_gap"
         android:background="@drawable/light_divide" />
 
+    <com.daimajia.swipe.SwipeLayout
+        xmlns:swipe="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:id="@+id/swipe"
+        swipe:leftEdgeSwipeOffset="0dp"
+        swipe:rightEdgeSwipeOffset="0dp"
+        android:layout_height="match_parent">
+
+        <RelativeLayout android:layout_width="90dp"
+            android:id="@+id/delete_layout"
+            android:background="@color/red"
+            android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/back_text"
+            android:layout_width="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/cancel_attention"
+            android:gravity="center"
+            android:textSize="@dimen/font_medium"
+            android:textColor="@color/white"
+            android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -59,8 +84,8 @@
                 android:textSize="@dimen/font_least" />
 
         </RelativeLayout>
-
     </RelativeLayout>
+    </com.daimajia.swipe.SwipeLayout>
 
 </LinearLayout>
 

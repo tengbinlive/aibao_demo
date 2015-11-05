@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_follow_search"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/actionbar_search_height"
+    android:background="@color/white"
+    android:visibility="gone"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/content_gap"
+        android:layout_marginRight="@dimen/content_gap"
+        android:background="@drawable/light_divide" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/content_gap"
+        android:id="@+id/search_layout_aibao"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerInside"
+            android:background="@mipmap/icon_search" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/content_gap"
+            android:singleLine="true"
+            android:text="@string/seach_aibao"
+            android:textColor="@color/textcolor_222"
+            android:textSize="@dimen/font_btn" />
+
+        <TextView
+            android:id="@+id/search_key_aibao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/content_gap"
+            android:singleLine="true"
+            android:text=""
+            android:textColor="@color/textcolor_222"
+            android:textSize="@dimen/font_btn" />
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/content_gap"
+        android:layout_marginRight="@dimen/content_gap"
+        android:background="@drawable/light_divide" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/content_gap"
+        android:id="@+id/search_layout_maibao"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerInside"
+            android:background="@mipmap/icon_search" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/content_gap"
+            android:singleLine="true"
+            android:text="@string/seach_maibao"
+            android:textColor="@color/textcolor_222"
+            android:textSize="@dimen/font_btn" />
+
+        <TextView
+            android:id="@+id/search_key_maibao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/content_gap"
+            android:singleLine="true"
+            android:text=""
+            android:textColor="@color/textcolor_222"
+            android:textSize="@dimen/font_btn" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/content_gap"
+        android:layout_marginRight="@dimen/content_gap"
+        android:background="@drawable/light_divide" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/theme"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/search_key"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@null"
+            android:gravity="center"
+            android:inputType="phone"
+            android:maxLength="11"
+            android:hint="@string/hint_seach"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textCursorDrawable="@null"
+            android:textSize="@dimen/font_btn" />
+
+    </LinearLayout>
+
+</LinearLayout>
+

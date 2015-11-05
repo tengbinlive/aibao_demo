@@ -12,6 +12,8 @@
     <color name="black">#000</color>
     <color name="transparent">#00000000</color>
     <color name="gray">#808080</color>
+    <color name="red">#f12e40</color>
+
 
     <!--font -->
     <color name="gray_hint">#bdbdbd</color>

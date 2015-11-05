@@ -1,6 +1,5 @@
 package com.mytian.lb.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -163,6 +162,7 @@ public class MainActivity extends AbsActivity {
     }
 
     private SettingEventType settingEventType;
+
     private void setActionBar() {
         LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) layout_user.getLayoutParams();
         lp.height = 0;
@@ -180,9 +180,9 @@ public class MainActivity extends AbsActivity {
         setToolbarRightOnClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(null==settingEventType) {
+                if (null == settingEventType) {
                     View settingView = getToolbar().findViewById(R.id.toolbar_right_tv);
-                    settingEventType =  new SettingEventType(settingView);
+                    settingEventType = new SettingEventType(settingView);
                 }
                 EventBus.getDefault().post(settingEventType);
             }
