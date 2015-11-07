@@ -22,6 +22,15 @@ public class FollowUser {
     private String relation_name;
     private String other_relation;
     private String searchKey;
+    private boolean focus;
+
+    public boolean isFocus() {
+        return focus;
+    }
+
+    public void setFocus(boolean focus) {
+        this.focus = focus;
+    }
 
     public String getSearchKey() {
         return searchKey;
@@ -185,6 +194,7 @@ public class FollowUser {
                 ", focus_time='" + focus_time + '\'' +
                 ", relation_id='" + relation_id + '\'' +
                 ", relation_name='" + relation_name + '\'' +
+                ", focus='" + focus + '\'' +
                 ", other_relation='" + other_relation + '\'' +
                 ", searchKey='" + searchKey + '\'' +
                 '}';

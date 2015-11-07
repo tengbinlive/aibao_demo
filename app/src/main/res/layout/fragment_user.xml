@@ -10,6 +10,8 @@
         android:layout_height="wrap_content"
         android:background="@color/white_light">
 
+        <include layout="@layout/list_empty" />
+
         <com.handmark.pulltorefresh.PullToRefreshListView xmlns:ptr="http://schemas.android.com/apk/res-auto"
             android:id="@+id/listview"
             android:layout_width="match_parent"
@@ -28,8 +30,6 @@
             android:smoothScrollbar="true"
             ptr:ptrAnimationStyle="flip"
             ptr:ptrMode="both" />
-
-        <include layout="@layout/list_empty" />
 
         <include
             layout="@layout/layout_setting_menu"

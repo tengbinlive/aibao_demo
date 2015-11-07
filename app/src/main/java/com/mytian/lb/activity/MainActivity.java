@@ -4,17 +4,13 @@ import android.os.Process;
 import android.support.v4.widget.DrawerLayout;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.core.util.CommonUtil;
-import com.core.util.StringUtil;
 import com.mytian.lb.AbsActivity;
 import com.mytian.lb.App;
 import com.mytian.lb.R;
 import com.mytian.lb.event.SettingEventType;
 import com.mytian.lb.fragment.ContentFragment;
-import com.mytian.lb.mview.CircleNetworkImageView;
 import com.mytian.lb.mview.MDrawerView;
 
 import butterknife.Bind;

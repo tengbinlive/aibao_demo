@@ -177,11 +177,11 @@ public class UserFragment extends AbsFragment {
     }
 
     private void setUserInfo() {
-        String name = App.getInstance().userResult.getName();
+        String name = App.getInstance().userResult.getParent().getName();
         name = StringUtil.isNotBlank(name) ? name : "你猜.";
-        String head = App.getInstance().userResult.getHead();
+        String head = App.getInstance().userResult.getParent().getHeadThumb();
         head = StringUtil.isNotBlank(head) ? head : "";
-        String phone = App.getInstance().userResult.getPhone();
+        String phone = App.getInstance().userResult.getParent().getPhone();
         phone = StringUtil.isNotBlank(phone) ? phone : "...";
         user_name.setText(name);
         user_phone.setText(phone);
@@ -348,8 +348,6 @@ public class UserFragment extends AbsFragment {
             }
             if (size >= COUNT_MAX) {
                 currentPager++;
-            } else {
-                listview.enablePullLoad();
             }
         } else {
             //避免第一次应用启动时 创建fragment加载数据多次提示
