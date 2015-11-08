@@ -47,7 +47,6 @@
                     android:layout_centerVertical="true"
                     android:layout_margin="@dimen/content_gap"
                     android:singleLine="true"
-                    android:text="name"
                     android:textColor="@color/gray_hint"
                     android:textSize="@dimen/font_btn" />
 

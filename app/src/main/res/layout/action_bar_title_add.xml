@@ -59,6 +59,7 @@
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/add_bt"
             android:layout_width="50dp"
+            android:elevation="@dimen/elevation_height"
             android:layout_centerVertical="true"
             android:layout_height="50dp"
             android:layout_alignParentRight="true"

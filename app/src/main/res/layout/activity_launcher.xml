@@ -1,15 +1,22 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/launcher_ly"
-                android:layout_width="match_parent"
-                android:background="@color/theme"
-                android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/launcher_ly"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/theme"
+    android:gravity="center"
+    android:orientation="vertical">
 
-    <com.roger.match.library.MatchTextView
-        xmlns:match="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/mMatchTextView"
-        android:layout_centerInParent="true"
-        match:text="WELCOME USE"
+    <com.roger.match.library.MatchTextView xmlns:match="http://schemas.android.com/apk/res-auto"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        match:text="WELCOME USE"
+        match:textColor="#ffffff" />
 
-</RelativeLayout>
+    <com.roger.match.library.MatchTextView xmlns:match="http://schemas.android.com/apk/res-auto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/content_gap"
+        match:text="AIBAO"
+        match:textColor="#ffffff" />
+
+</LinearLayout>

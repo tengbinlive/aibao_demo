@@ -226,6 +226,11 @@ public class RegisterActivity extends AbsActivity {
     @Override
     public void EInit() {
         super.EInit();
+        phone = getIntent().getStringExtra("phone");
+        if(StringUtil.isNotBlank(phone)) {
+            phone_et.setText(phone);
+            phone_et.setSelection(phone.length());
+        }
         StartThread();
         initSMSContentObserver();
     }

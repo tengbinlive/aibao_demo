@@ -1,14 +1,10 @@
 <resources>
 
+    <string name="default_text">_text</string>
+
     <string name="app_name">爱宝</string>
-
     <string name="list_empty">不用看了. 什么都没有</string>
-
     <string name="press_more_times_for_exit">再按一次退出客户端</string>
-
-
-    <!--test-->
-    <string name="test_text">test</string>
     <string name="username">手机</string>
     <string name="password">密码</string>
     <string name="hint_username">请输入手机号码</string>
@@ -48,6 +44,7 @@
     <string name="error_hint_phone">请输入正确的手机号码</string>
     <string name="hint_add">正在添加中</string>
     <string name="cancel_attention">取消关注</string>
+    <string name="accepat_ing">正在同意</string>
     <string name="cancel_ing">正在取消</string>
 
 </resources>

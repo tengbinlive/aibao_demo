@@ -1,16 +1,22 @@
 package com.mytian.lb.adapter;
 
-import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.core.CommonResponse;
+import com.core.util.CommonUtil;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.mytian.lb.AbsActivity;
 import com.mytian.lb.R;
 import com.mytian.lb.bean.follow.FollowUser;
+import com.mytian.lb.manager.FollowManager;
 
 import java.util.ArrayList;
 
@@ -23,9 +29,11 @@ public class FollowAddAdapter extends BaseAdapter {
 
     private ArrayList<FollowUser> list;
 
-    private Context mContext;
+    private AbsActivity mContext;
 
-    public FollowAddAdapter(Context context, ArrayList<FollowUser> _list) {
+    private FollowManager manager = new FollowManager();
+
+    public FollowAddAdapter(AbsActivity context, ArrayList<FollowUser> _list) {
         this.list = _list;
         mContext = context;
         mInflater = LayoutInflater.from(context);
@@ -69,10 +77,40 @@ public class FollowAddAdapter extends BaseAdapter {
         }
 
         FollowUser bean = list.get(position);
-
         Glide.with(mContext).load(bean.getHead_thumb()).centerCrop().crossFade().into(viewHolder.head);
         viewHolder.name.setText(bean.getName());
+        if(bean.isFocus()){
+            setAccepatView(viewHolder.accept_bt, false);
+            viewHolder.accept_bt.setText(R.string.already_attention);
+        }else {
+            viewHolder.accept_bt.setTag(position);
+            setAccepatView(viewHolder.accept_bt, true);
+            viewHolder.accept_bt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int index = (Integer) view.getTag();
+                    FollowUser user = list.get(index);
+                    mContext.dialogShow(R.string.accepat_ing);
+                    ((Button) view).setText(R.string.already_attention);
+                    list.get(index).setFocus(true);
+                    setAccepatView((Button) view,false);
+                    view.setEnabled(false);
+                    manager.followAgree(mContext, user.getUid(), handler, ACCEPAT);
+                }
+            });
+        }
         return convertView;
+    }
+
+    private void setAccepatView(Button button,boolean is){
+        if(!is){
+            button.setBackgroundResource(0);
+            button.setTextColor(0xffbdbdbd);
+        }else{
+            button.setBackgroundResource(R.drawable.login_bg);
+            button.setTextColor(0xffffffff);
+        }
+
     }
 
     /**
@@ -88,9 +126,27 @@ public class FollowAddAdapter extends BaseAdapter {
         TextView name;
         @Bind(R.id.title)
         TextView title;
+        @Bind(R.id.accept_bt)
+        Button accept_bt;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
         }
     }
+
+    private static final int ACCEPAT = 1;//同意关注
+    private Handler handler = new Handler() {
+        public void handleMessage(Message msg) {
+            int what = msg.what;
+            switch (what) {
+                case ACCEPAT:
+                    mContext.dialogDismiss();
+                    CommonResponse resposne = (CommonResponse) msg.obj;
+                    CommonUtil.showToast(resposne.getMsg());
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 }

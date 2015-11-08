@@ -189,6 +189,12 @@ public class AddFollowActivity extends AbsActivity {
         layout_follow_search.setLayoutParams(lp);
         layout_follow_search.setVisibility(View.VISIBLE);
         toolbarLeftBtn.setText(R.string.follow_new);
+        setToolbarLeftOnClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         addBt.setOnClickListener(mCrossViewClickListener);
     }
 
@@ -312,8 +318,6 @@ public class AddFollowActivity extends AbsActivity {
             }
             if (size >= COUNT_MAX) {
                 currentPager++;
-            } else {
-                listview.enablePullLoad();
             }
         } else {
             CommonUtil.showToast(resposne.getMsg());

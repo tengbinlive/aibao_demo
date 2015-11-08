@@ -63,6 +63,10 @@ public class LoginActivity extends AnimatedRectActivity {
     @OnClick(R.id.register_bt)
     void toRegister() {
         Intent intent = new Intent(this, RegisterActivity.class);
+        String phone = phoneEt.getText().toString();
+        if (StringUtil.isNotBlank(phone)&&StringUtil.checkMobile(phone)) {
+            intent.putExtra("phone", phone);
+        }
         startActivity(intent);
     }
 
@@ -149,7 +153,7 @@ public class LoginActivity extends AnimatedRectActivity {
             SharedPreferencesHelper.setString(this, Constant.LoginUser.SHARED_PREFERENCES_PHONE, phone);
             SharedPreferencesHelper.setString(this, Constant.LoginUser.SHARED_PREFERENCES_PASSWORD, password);
             App.getInstance().userResult = (UserResult) resposne.getData();
-            App.getInstance().userResult.setPhone(phone);
+            App.getInstance().userResult.getParent().setPhone(phone);
             toMain();
         } else {
             CommonUtil.showToast(resposne.getMsg());

@@ -20,6 +20,4 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/statusBar_height" />
 
-    <include layout="@layout/layout_user" />
-
 </LinearLayout>
