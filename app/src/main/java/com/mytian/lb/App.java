@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 
+import com.baidu.android.pushservice.PushConstants;
+import com.baidu.android.pushservice.PushManager;
 import com.mytian.lb.bean.UserResult;
 import com.core.CrashHandler;
 import com.core.enums.ConfigKeyEnum;
@@ -208,6 +210,8 @@ public class App extends Application {
             // 系统配置业务.
             ConfigManager.init(this);
 
+            //push
+            PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY, "XqXiOUPbeYEAGaOz1IfDIpKK");
         }
     }
 
