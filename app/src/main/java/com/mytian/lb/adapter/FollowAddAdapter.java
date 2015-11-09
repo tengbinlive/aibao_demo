@@ -77,7 +77,7 @@ public class FollowAddAdapter extends BaseAdapter {
         }
 
         FollowUser bean = list.get(position);
-        Glide.with(mContext).load(bean.getHead_thumb()).centerCrop().crossFade().into(viewHolder.head);
+        Glide.with(mContext).load(bean.getHead_thumb()).placeholder(R.mipmap.icon_contact).centerCrop().crossFade().into(viewHolder.head);
         viewHolder.name.setText(bean.getName());
         if(bean.isFocus()){
             setAccepatView(viewHolder.accept_bt, false);

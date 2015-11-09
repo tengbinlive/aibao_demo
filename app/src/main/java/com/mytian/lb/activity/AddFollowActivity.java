@@ -238,7 +238,7 @@ public class AddFollowActivity extends AbsActivity {
             @Override
             public void onClick(View v) {
                 dialogShow(R.string.hint_add);
-                manager.followAdd(AddFollowActivity.this, ""+followUser.getBaby().getUid(),""+followUser.getBaby().getRelationId(),desc_et.getText().toString(),activityHandler, FOLLOW_GETBABY);
+                manager.followAdd(AddFollowActivity.this, ""+followUser.getBaby().getUid(),""+followUser.getBaby().getRelationId(),desc_et.getText().toString(),activityHandler, FOLLOW_ADD);
             }
         });
         dialogBuilder = NiftyDialogBuilder.getInstance(this);
