@@ -18,7 +18,7 @@ public enum BottomMenu {
     //习惯记录
     HABIT(R.string.menu_habit,R.string.menu_habit, R.mipmap.main_tab_bh_down, R.mipmap.main_tab_bh_normal, 0xffffca0d, 0xff808080),
     //kindle
-    KINDLE(R.string.menu_kindle, R.string.menu_kindle,R.mipmap.main_tab_kindle_normal, R.mipmap.main_tab_kindle_normal, 0xffffca0d, 0xff808080),
+    KINDLE(R.string.menu_kindle, R.string.menu_kindle,R.mipmap.main_tab_kindle_down, R.mipmap.main_tab_kindle_normal, 0xffffca0d, 0xff808080),
     //帐号管理
     USER(R.string.menu_user, R.string.menu_user,R.mipmap.main_tab_me_down, R.mipmap.main_tab_me_normal, 0xffffca0d, 0xff808080);
 

@@ -63,7 +63,7 @@ public class HabitAdapter extends BaseAdapter {
         }
         HabitResult bean = list.get(position);
 
-        Glide.with(mContext).load(bean.getHead()).centerCrop().crossFade().into(viewHolder.head);
+        Glide.with(mContext).load(bean.getHead()).placeholder(R.mipmap.icon_contact).centerCrop().crossFade().into(viewHolder.head);
         viewHolder.name.setText(bean.getName());
         viewHolder.date.setText(bean.getDate());
         return convertView;

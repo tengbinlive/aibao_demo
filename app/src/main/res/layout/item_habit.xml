@@ -19,7 +19,7 @@
             android:layout_marginLeft="@dimen/content_gap"
             android:layout_marginRight="@dimen/content_gap"
             android:scaleType="centerInside"
-            android:src="@mipmap/default_head"
+            android:src="@mipmap/icon_contact"
             app:riv_border_width="0dip"
             app:riv_corner_radius="4dip"
             app:riv_mutate_background="true"

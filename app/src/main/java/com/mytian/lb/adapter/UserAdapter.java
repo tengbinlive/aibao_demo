@@ -87,7 +87,7 @@ public class UserAdapter extends BaseSwipeAdapter {
     public void fillValues(int position, View convertView) {
         ViewHolder holder = (ViewHolder) convertView.getTag();
         FollowUser bean = list.get(position);
-        Glide.with(mContext).load(bean.getHead_thumb()).centerCrop().crossFade().into(holder.head);
+        Glide.with(mContext).load(bean.getHead_thumb()).placeholder(R.mipmap.icon_contact).centerCrop().crossFade().into(holder.head);
         holder.name.setText(bean.getName());
         holder.phone.setText(bean.getPhone());
         holder.deleteLayout.setTag(position);

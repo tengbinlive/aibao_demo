@@ -18,7 +18,7 @@
             android:layout_width="@dimen/item_head_size"
             android:layout_height="@dimen/item_head_size"
             android:scaleType="centerInside"
-            android:src="@mipmap/default_head"
+            android:src="@mipmap/icon_contact"
             app:riv_border_width="0dip"
             app:riv_corner_radius="30dip"
             app:riv_mutate_background="true"
