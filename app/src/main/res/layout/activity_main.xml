@@ -28,5 +28,5 @@
         android:layout_width="@dimen/drawerlayout_width"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@color/white"></com.mytian.lb.mview.MDrawerView>
+        android:background="@color/theme_bg_layout"></com.mytian.lb.mview.MDrawerView>
 </android.support.v4.widget.DrawerLayout>

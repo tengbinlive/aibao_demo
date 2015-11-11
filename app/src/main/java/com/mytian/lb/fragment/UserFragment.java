@@ -143,6 +143,7 @@ public class UserFragment extends AbsFragment {
     private void getListData(int state) {
         if (state == INIT_LIST) {
             currentPager = 1;
+            listview.setMode(PullToRefreshBase.Mode.BOTH);
             arrayList = null;
         }
         manager.followList(getActivity(), "" + currentPager, "1", activityHandler, state);
@@ -348,6 +349,8 @@ public class UserFragment extends AbsFragment {
             }
             if (size >= COUNT_MAX) {
                 currentPager++;
+            }else{
+                listview.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
             }
         } else {
             //避免第一次应用启动时 创建fragment加载数据多次提示

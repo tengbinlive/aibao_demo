@@ -5,14 +5,19 @@ import android.os.Message;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.core.util.StringUtil;
 import com.mytian.lb.AbsFragment;
+import com.mytian.lb.App;
 import com.mytian.lb.R;
 import com.mytian.lb.adapter.HabitAdapter;
 import com.mytian.lb.bean.habitUser.HabitResult;
 import com.core.CommonResponse;
 import com.handmark.pulltorefresh.PullToRefreshBase;
 import com.handmark.pulltorefresh.PullToRefreshListView;
+import com.mytian.lb.mview.CircleNetworkImageView;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
 import com.rey.material.widget.FloatingActionButton;
 
@@ -62,6 +67,12 @@ public class HabitFragment extends AbsFragment {
 
         mActualListView.setAdapter(animationAdapter);
 
+        View headView = mInflater.inflate(R.layout.layout_user_inter,null);
+
+        setUserInfo(headView);
+
+        mActualListView.addHeaderView(headView);
+
         listview.setEmptyView(llListEmpty);
     }
 
@@ -90,6 +101,21 @@ public class HabitFragment extends AbsFragment {
             }
         });
         activityHandler.sendEmptyMessageDelayed(INIT_LIST, 500);
+    }
+
+    private void setUserInfo(View headView) {
+        TextView user_name = (TextView) headView.findViewById(R.id.user_name);
+        TextView user_phone = (TextView) headView.findViewById(R.id.user_phone);
+        CircleNetworkImageView user_icon = (CircleNetworkImageView) headView.findViewById(R.id.user_icon);
+        String name = App.getInstance().userResult.getParent().getName();
+        name = StringUtil.isNotBlank(name) ? name : "你猜.";
+        String head = App.getInstance().userResult.getParent().getHeadThumb();
+        head = StringUtil.isNotBlank(head) ? head : "";
+        String phone = App.getInstance().userResult.getParent().getPhone();
+        phone = StringUtil.isNotBlank(phone) ? phone : "...";
+        user_name.setText(name);
+        user_phone.setText(phone);
+        Glide.with(this).load(head).placeholder(R.mipmap.default_head).centerCrop().crossFade().into(user_icon);
     }
 
     private static final int INIT_LIST = 0x01;//初始化数据处理

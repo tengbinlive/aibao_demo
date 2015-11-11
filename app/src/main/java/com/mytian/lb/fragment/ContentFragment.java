@@ -67,7 +67,7 @@ public class ContentFragment extends AbsFragment {
     private void init() {
         fragments = new ArrayList<>();
         fragments.add(new DtnameicFragment());
-        fragments.add(new DtnameicFragment());
+        fragments.add(new AgreementFragment());
         fragments.add(new HabitFragment());
         fragments.add(new KindleFragment());
         fragments.add(new UserFragment());

@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class HabitAdapter extends BaseAdapter implements View.OnClickListener {
+public class HabitAdapter extends BaseAdapter {
 
     private LayoutInflater mInflater;
 
@@ -61,8 +61,6 @@ public class HabitAdapter extends BaseAdapter implements View.OnClickListener {
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.item_habit, null);
             viewHolder = new ViewHolder(convertView);
-            viewHolder.like.setOnClickListener(this);
-            viewHolder.dislike.setOnClickListener(this);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -70,32 +68,55 @@ public class HabitAdapter extends BaseAdapter implements View.OnClickListener {
         HabitResult bean = list.get(position);
         Glide.with(mContext).load(bean.getHead()).placeholder(R.mipmap.icon_contact).centerCrop().crossFade().into(viewHolder.head);
         viewHolder.name.setText(bean.getName());
+
+        int record = bean.getRecord();
+        if(record == HabitResult.GREAT){
+            setIconInfo(viewHolder.like, ItemButton.RECORD_LIKE, true);
+            setIconInfo(viewHolder.dislike, ItemButton.RECORD_DISLIKE, false);
+        }else  if(record == HabitResult.BAD){
+            setIconInfo(viewHolder.like, ItemButton.RECORD_LIKE, false);
+            setIconInfo(viewHolder.dislike, ItemButton.RECORD_DISLIKE, true);
+        }else{
+            setIconInfo(viewHolder.like, ItemButton.RECORD_LIKE, false);
+            setIconInfo(viewHolder.dislike, ItemButton.RECORD_DISLIKE, false);
+        }
+        viewHolder.like.setTag(R.id.item_habit_index,position);
+        viewHolder.like.setTag(R.id.item_habit_view, viewHolder.dislike);
+        viewHolder.like.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AnimationHelper.getInstance().viewAnimationScal(v);
+                CommonUtil.showToast("记录成功");
+                int index = (int) v.getTag(R.id.item_habit_index);
+                ImageView dislike = (ImageView) v.getTag(R.id.item_habit_view);
+                list.get(index).setRecord(HabitResult.GREAT);
+                setIconInfo((ImageView) v, ItemButton.RECORD_LIKE, true);
+                setIconInfo(dislike, ItemButton.RECORD_DISLIKE, false);
+            }
+        });
+        viewHolder.dislike.setTag(R.id.item_habit_index,position);
+        viewHolder.dislike.setTag(R.id.item_habit_view, viewHolder.like);
+        viewHolder.dislike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AnimationHelper.getInstance().viewAnimationScal(v);
+                CommonUtil.showToast("记录成功");
+                int index = (int) v.getTag(R.id.item_habit_index);
+                ImageView like = (ImageView) v.getTag(R.id.item_habit_view);
+                list.get(index).setRecord(HabitResult.BAD);
+                setIconInfo((ImageView) v, ItemButton.RECORD_DISLIKE, true);
+                setIconInfo(like, ItemButton.RECORD_LIKE, false);
+            }
+        });
+
         return convertView;
     }
 
-    @Override
-    public void onClick(View v) {
-        int id = v.getId();
-        if (id == R.id.like) {
-            AnimationHelper.getInstance().viewAnimationScal(v);
-            CommonUtil.showToast("记录成功");
-            setIconInfo((ImageView) v, ItemButton.RECORD_LIKE);
-        } else if (id == R.id.dislike) {
-            AnimationHelper.getInstance().viewAnimationScal(v);
-            CommonUtil.showToast("已取消");
-            setIconInfo((ImageView) v, ItemButton.RECORD_DISLIKE);
-        }
-    }
-
-    private void setIconInfo(ImageView imageView, ItemButton menu) {
-        boolean isClick;
-        isClick = (boolean) imageView.getTag();
-        if (!isClick) {
+    private void setIconInfo(ImageView imageView, ItemButton menu, boolean is) {
+        if (is) {
             imageView.setImageResource(menu.getResid_press());
-            imageView.setTag(true);
         } else {
             imageView.setImageResource(menu.getResid_normal());
-            imageView.setTag(false);
         }
     }
 

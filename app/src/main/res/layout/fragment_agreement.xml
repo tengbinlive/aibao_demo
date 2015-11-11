@@ -1,0 +1,44 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/theme_bg_layout">
+
+    <include
+        android:id="@+id/layout_user"
+        layout="@layout/layout_user_inter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_user"
+        android:paddingBottom="@dimen/content_10dp"
+        android:paddingLeft="@dimen/content_gap"
+        android:paddingRight="@dimen/content_gap"
+        android:paddingTop="@dimen/content_10dp"
+        android:text="@string/habit_executive"
+        android:textColor="@color/textcolor_222"
+        android:textSize="@dimen/font_btn" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/title">
+
+        <GridView
+            android:id="@+id/gridview"
+            android:layout_width="match_parent"
+            android:numColumns="3"
+            android:scrollbars="none"
+            android:stretchMode="columnWidth"
+            android:listSelector="@color/transparent"
+            android:layout_height="match_parent"/>
+
+        <include layout="@layout/list_empty" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

@@ -1,5 +1,6 @@
 package com.mytian.lb.activity;
 
+import android.content.Intent;
 import android.os.Process;
 import android.support.v4.widget.DrawerLayout;
 import android.view.KeyEvent;
@@ -121,8 +122,30 @@ public class MainActivity extends AbsActivity {
 
     private void actionbarIcon(int position) {
         if (position == ContentFragment.USER) {
+            setToolbarRight(R.mipmap.icon_settings);
             setToolbarRightVisbility(View.VISIBLE, View.VISIBLE);
-        } else {
+            setToolbarRightOnClick(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (null == settingEventType) {
+                        View settingView = getToolbar().findViewById(R.id.toolbar_right_tv);
+                        settingEventType = new SettingEventType(settingView);
+                    }
+                    EventBus.getDefault().post(settingEventType);
+                }
+            });
+        } else if (position == ContentFragment.AGREEMENT) {
+            setToolbarRight(R.mipmap.icon_friendslist);
+            setToolbarRightVisbility(View.VISIBLE, View.VISIBLE);
+            setToolbarRightOnClick(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MainActivity.this, FriendslistActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
+        else {
             setToolbarRightVisbility(View.INVISIBLE, View.VISIBLE);
         }
     }
@@ -132,22 +155,10 @@ public class MainActivity extends AbsActivity {
 
     private void setActionBar() {
         setToolbarLeft(R.mipmap.menu_normal);
-        setToolbarRight(R.mipmap.icon_settings);
         setToolbarLeftOnClick(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 toggerDrawer();
-            }
-        });
-
-        setToolbarRightOnClick(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null == settingEventType) {
-                    View settingView = getToolbar().findViewById(R.id.toolbar_right_tv);
-                    settingEventType = new SettingEventType(settingView);
-                }
-                EventBus.getDefault().post(settingEventType);
             }
         });
 

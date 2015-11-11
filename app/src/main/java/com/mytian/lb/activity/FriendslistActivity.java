@@ -8,13 +8,11 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.core.CommonResponse;
-import com.core.util.CommonUtil;
 import com.handmark.pulltorefresh.PullToRefreshBase;
 import com.handmark.pulltorefresh.PullToRefreshListView;
 import com.mytian.lb.AbsActivity;
 import com.mytian.lb.R;
 import com.mytian.lb.adapter.HabitAdapter;
-import com.mytian.lb.bean.follow.FollowBabyResult;
 import com.mytian.lb.bean.habitUser.HabitResult;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
 
@@ -22,7 +20,7 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 
-public class HabitActivity extends AbsActivity {
+public class FriendslistActivity extends AbsActivity {
 
     @Bind(R.id.listview)
     PullToRefreshListView listview;
@@ -88,6 +86,7 @@ public class HabitActivity extends AbsActivity {
     @Override
     public void initActionBar() {
         setToolbarLeft(0, R.string.behavior);
+        setToolbarRightVisbility(View.GONE,View.GONE);
     }
 
 

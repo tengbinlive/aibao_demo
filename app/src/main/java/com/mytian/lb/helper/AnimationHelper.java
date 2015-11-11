@@ -56,11 +56,11 @@ public class AnimationHelper {
      * @param view
      */
     public void viewAnimationScal(final View view) {
-        PropertyValuesHolder pvhX = PropertyValuesHolder.ofFloat("scaleX", 1, 1.3f, 1);
-        PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat("scaleY", 1, 1.3f, 1);
+        PropertyValuesHolder pvhX = PropertyValuesHolder.ofFloat("scaleX", 1, 1.5f, 1);
+        PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat("scaleY", 1, 1.5f, 1);
         ViewHelper.setPivotX(view, view.getWidth() >> 1);
         ViewHelper.setPivotY(view, view.getHeight() >> 1);
-        ObjectAnimator animator2 = ObjectAnimator.ofPropertyValuesHolder(view, pvhX, pvhY).setDuration(150);
+        ObjectAnimator animator2 = ObjectAnimator.ofPropertyValuesHolder(view, pvhX, pvhY).setDuration(300);
         animator2.setInterpolator(mInterpolator);
         animator2.start();
     }

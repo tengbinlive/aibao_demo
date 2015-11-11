@@ -110,6 +110,13 @@
             android:theme="@style/AppThemeN"
             android:windowSoftInputMode="adjustPan"></activity>
 
+        <!--好友列表-->
+        <activity
+            android:name=".activity.FriendslistActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/AppThemeN"
+            android:windowSoftInputMode="adjustPan"></activity>
+
         <!-- push service start -->
         <!-- 用于接收系统消息以保证PushService正常运行 -->
         <receiver android:name="com.baidu.android.pushservice.PushServiceReceiver"

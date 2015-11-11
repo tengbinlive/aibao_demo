@@ -173,6 +173,7 @@ public class AddFollowActivity extends AbsActivity {
         if (state == INIT_LIST) {
             currentPager = 1;
             arrayList = null;
+            listview.setMode(PullToRefreshBase.Mode.BOTH);
         }
         manager.followList(this, "" + currentPager, "0", activityHandler, state);
     }
@@ -318,6 +319,8 @@ public class AddFollowActivity extends AbsActivity {
             }
             if (size >= COUNT_MAX) {
                 currentPager++;
+            }else{
+                listview.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
             }
         } else {
             CommonUtil.showToast(resposne.getMsg());

@@ -46,5 +46,7 @@
     <string name="cancel_attention">取消关注</string>
     <string name="accepat_ing">正在同意</string>
     <string name="cancel_ing">正在取消</string>
+    <string name="behavior">行为养成</string>
+    <string name="habit_executive">执行习惯</string>
 
 </resources>

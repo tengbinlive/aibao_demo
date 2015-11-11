@@ -6,9 +6,12 @@ import com.core.openapi.OpenApiSimpleResult;
  * Created by bin.teng on 2015/10/28.
  */
 public class HabitResult extends OpenApiSimpleResult {
+    public final static int GREAT = 1;
+    public final static int BAD = GREAT+1;
     private String name;
     private String head;
     private String date;
+    private int record;
 
     public String getName() {
         return name;
@@ -32,6 +35,14 @@ public class HabitResult extends OpenApiSimpleResult {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public int getRecord() {
+        return record;
+    }
+
+    public void setRecord(int record) {
+        this.record = record;
     }
 
     public static HabitResult testData() {

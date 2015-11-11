@@ -1,4 +1,8 @@
 <resources>
     <item type="id" name="main_tab_menu"></item>
     <item type="id" name="main_tab_select"></item>
+
+    <item type="id" name="item_habit_index"></item>
+    <item type="id" name="item_habit_view"></item>
+
 </resources>
