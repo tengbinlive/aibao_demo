@@ -9,7 +9,7 @@ import android.widget.ListView;
 import com.mytian.lb.AbsFragment;
 import com.mytian.lb.R;
 import com.mytian.lb.adapter.HabitAdapter;
-import com.mytian.lb.bean.HabitResult;
+import com.mytian.lb.bean.habitUser.HabitResult;
 import com.core.CommonResponse;
 import com.handmark.pulltorefresh.PullToRefreshBase;
 import com.handmark.pulltorefresh.PullToRefreshListView;

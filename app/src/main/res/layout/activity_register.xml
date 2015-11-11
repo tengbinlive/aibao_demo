@@ -52,7 +52,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="@dimen/content_1dp"
             android:background="@drawable/light_divide" />
 
         <RelativeLayout
@@ -91,7 +91,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="@dimen/content_1dp"
             android:background="@drawable/light_divide" />
 
         <LinearLayout
@@ -126,7 +126,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="@dimen/content_1dp"
             android:background="@drawable/light_divide" />
 
         <com.rey.material.widget.CheckBox

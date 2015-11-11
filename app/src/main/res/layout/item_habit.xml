@@ -2,15 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="@dimen/content_10dp"
-    android:paddingTop="@dimen/content_10dp">
+    android:background="@color/theme_bg_layout">
 
     <RelativeLayout
+        android:id="@+id/main_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="@dimen/content_10dp"
-        android:paddingTop="@dimen/content_10dp"
-        android:background="@color/theme_bg_layout">
+        android:paddingTop="@dimen/content_10dp">
 
         <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/head"
@@ -18,6 +17,7 @@
             android:layout_height="@dimen/item_head_size"
             android:layout_marginLeft="@dimen/content_gap"
             android:layout_marginRight="@dimen/content_gap"
+            android:layout_centerVertical="true"
             android:scaleType="centerInside"
             android:src="@mipmap/icon_contact"
             app:riv_border_width="0dip"
@@ -26,35 +26,48 @@
             app:riv_oval="false"
             app:riv_tile_mode="repeat" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/head"
+        <TextView
+            android:id="@+id/name"
             android:layout_toRightOf="@+id/head"
-            android:orientation="vertical">
+            android:layout_toLeftOf="@+id/like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:layout_centerVertical="true"
+            android:text="habit name"
+            android:textColor="@color/textcolor_222"
+            android:textSize="@dimen/font_btn" />
 
-            <TextView
-                android:id="@+id/name"
-                android:singleLine="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="user name"
-                android:textColor="@color/textcolor_222"
-                android:textSize="@dimen/font_btn" />
+        <ImageView
+            android:id="@+id/like"
+            android:layout_toLeftOf="@+id/dislike"
+            android:layout_width="wrap_content"
+            android:scaleType="centerInside"
+            android:padding="@dimen/content_gap"
+            android:layout_gravity="right"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_like_normal"
+            android:layout_height="wrap_content" />
 
-            <TextView
-                android:id="@+id/date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/name"
-                android:layout_marginTop="@dimen/content_10dp"
-                android:text="5分钟前"
-                android:textColor="@color/gray_hint"
-                android:textSize="@dimen/font_least" />
-
-        </RelativeLayout>
+        <ImageView
+            android:id="@+id/dislike"
+            android:layout_alignParentRight="true"
+            android:padding="@dimen/content_gap"
+            android:scaleType="centerInside"
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_dislike_normal"
+            android:layout_height="wrap_content" />
 
     </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/content_1dp"
+        android:layout_below="@+id/main_layout"
+        android:layout_marginLeft="@dimen/content_gap"
+        android:layout_marginRight="@dimen/content_gap"
+        android:background="@drawable/light_divide" />
 
 </RelativeLayout>
 

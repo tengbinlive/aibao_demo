@@ -1,0 +1,45 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/layout_user"
+    android:gravity="center_vertical"
+    android:elevation="@dimen/elevation_height"
+    android:background="@color/theme"
+    android:orientation="vertical"
+    android:padding="@dimen/content_gap" >
+
+    <com.mytian.lb.mview.CircleNetworkImageView
+        android:id="@+id/user_icon"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@mipmap/default_head" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:paddingTop="@dimen/content_gap"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:text="user name"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_btn" />
+
+        <TextView
+            android:id="@+id/user_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/user_name"
+            android:layout_marginTop="@dimen/content_10dp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_least" />
+
+    </RelativeLayout>
+</LinearLayout>
