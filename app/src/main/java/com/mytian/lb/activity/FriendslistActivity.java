@@ -12,8 +12,10 @@ import com.handmark.pulltorefresh.PullToRefreshBase;
 import com.handmark.pulltorefresh.PullToRefreshListView;
 import com.mytian.lb.AbsActivity;
 import com.mytian.lb.R;
-import com.mytian.lb.adapter.HabitAdapter;
-import com.mytian.lb.bean.habitUser.HabitResult;
+import com.mytian.lb.adapter.UserAdapter;
+import com.mytian.lb.bean.follow.FollowListResult;
+import com.mytian.lb.bean.follow.FollowUser;
+import com.mytian.lb.manager.FollowManager;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
 
 import java.util.ArrayList;
@@ -28,9 +30,11 @@ public class FriendslistActivity extends AbsActivity {
     LinearLayout llListEmpty;
 
     private ListView mActualListView;
-    private HabitAdapter mAdapter;
+    private UserAdapter mAdapter;
+    private int currentPager = 1;
+    private FollowManager manager = new FollowManager();
 
-    private ArrayList<HabitResult> arrayList;
+    private ArrayList<FollowUser> arrayList;
 
     @Override
     public void EInit() {
@@ -60,7 +64,7 @@ public class FriendslistActivity extends AbsActivity {
         // Need to use the Actual ListView when registering for Context Menu
         registerForContextMenu(mActualListView);
 
-        mAdapter = new HabitAdapter(this, arrayList);
+        mAdapter = new UserAdapter(this, arrayList);
 
         SwingBottomInAnimationAdapter animationAdapter = new SwingBottomInAnimationAdapter(mAdapter);
 
@@ -73,9 +77,11 @@ public class FriendslistActivity extends AbsActivity {
 
     private void getListData(int state) {
         if (state == INIT_LIST) {
+            currentPager = 1;
+            listview.setMode(PullToRefreshBase.Mode.BOTH);
             arrayList = null;
         }
-        activityHandler.sendEmptyMessageDelayed(state, 3000);
+        manager.followList(this, "" + currentPager, "1", activityHandler, state);
     }
 
     @Override
@@ -85,10 +91,9 @@ public class FriendslistActivity extends AbsActivity {
 
     @Override
     public void initActionBar() {
-        setToolbarLeft(0, R.string.behavior);
-        setToolbarRightVisbility(View.GONE,View.GONE);
+        setToolbarLeftStrID(R.string.select_friends);
+        setToolbarRightVisbility(View.GONE, View.GONE);
     }
-
 
     private static final int INIT_LIST = 0x01;//初始化数据处理
     private static final int LOAD_DATA = 0x02;//加载数据处理
@@ -109,11 +114,24 @@ public class FriendslistActivity extends AbsActivity {
 
     private void loadData(CommonResponse resposne) {
         dialogDismiss();
-        if (arrayList == null) {
-            arrayList = new ArrayList<>();
-        }
-        for (int i = 0; i < COUNT_MAX; i++) {
-            arrayList.add(HabitResult.testData());
+        if (resposne.isSuccess()) {
+            FollowListResult result = (FollowListResult) resposne.getData();
+            ArrayList<FollowUser> list = result.getList();
+            int size = list == null ? 0 : list.size();
+            if (arrayList == null) {
+                arrayList = new ArrayList<>();
+            }
+            if (size > 0) {
+                arrayList.addAll(list);
+                mAdapter.refresh(arrayList);
+            }
+            if (size >= COUNT_MAX) {
+                currentPager++;
+            } else {
+                listview.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
+            }
+        } else {
+            //避免第一次应用启动时 创建fragment加载数据多次提示
         }
         listview.onRefreshComplete();
         if (arrayList == null || arrayList.size() <= 0) {

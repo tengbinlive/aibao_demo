@@ -41,7 +41,7 @@ public class FollowManager {
         FollowListParam param = new FollowListParam();
         param.setUid(App.getInstance().userResult.getParent().getUid());
         param.setToken(App.getInstance().userResult.getParent().getToken());
-        param.setClient_type("1");// 0 MB端, 1 LB端
+        param.setClient_type("1");//0 MB端, 1 LB端
         param.setCurrentPage(currentPage);
         param.setParentId(App.getInstance().userResult.getParent().getUid());
         param.setIsFocus(isFocus);
