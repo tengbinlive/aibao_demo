@@ -79,34 +79,39 @@ public class FollowAddAdapter extends BaseAdapter {
         FollowUser bean = list.get(position);
         Glide.with(mContext).load(bean.getHead_thumb()).placeholder(R.mipmap.icon_contact).into(viewHolder.head);
         viewHolder.name.setText(bean.getName());
-        if(bean.isFocus()){
+        if (FollowUser.LB.equals(bean.getFocus_from())) {
             setAccepatView(viewHolder.accept_bt, false);
-            viewHolder.accept_bt.setText(R.string.already_attention);
-        }else {
-            viewHolder.accept_bt.setTag(position);
-            setAccepatView(viewHolder.accept_bt, true);
-            viewHolder.accept_bt.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int index = (Integer) view.getTag();
-                    FollowUser user = list.get(index);
-                    mContext.dialogShow(R.string.accepat_ing);
-                    ((Button) view).setText(R.string.already_attention);
-                    list.get(index).setFocus(true);
-                    setAccepatView((Button) view,false);
-                    view.setEnabled(false);
-                    manager.followAgree(mContext, user.getUid(), handler, ACCEPAT);
-                }
-            });
+            viewHolder.accept_bt.setText(R.string.already_pull);
+        } else {
+            if (bean.isFocus()) {
+                setAccepatView(viewHolder.accept_bt, false);
+                viewHolder.accept_bt.setText(R.string.already_attention);
+            } else {
+                viewHolder.accept_bt.setTag(position);
+                setAccepatView(viewHolder.accept_bt, true);
+                viewHolder.accept_bt.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        int index = (Integer) view.getTag();
+                        FollowUser user = list.get(index);
+                        mContext.dialogShow(R.string.accepat_ing);
+                        ((Button) view).setText(R.string.already_attention);
+                        list.get(index).setFocus(true);
+                        setAccepatView((Button) view, false);
+                        view.setEnabled(false);
+                        manager.followAgree(mContext, user.getUid(), handler, ACCEPAT);
+                    }
+                });
+            }
         }
         return convertView;
     }
 
-    private void setAccepatView(Button button,boolean is){
-        if(!is){
+    private void setAccepatView(Button button, boolean is) {
+        if (!is) {
             button.setBackgroundResource(0);
             button.setTextColor(0xffbdbdbd);
-        }else{
+        } else {
             button.setBackgroundResource(R.drawable.login_bg);
             button.setTextColor(0xffffffff);
         }

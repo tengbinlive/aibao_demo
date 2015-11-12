@@ -337,6 +337,7 @@ public class AddFollowActivity extends AbsActivity {
         dialogDismiss();
         if (resposne.isSuccess()) {
             CommonUtil.showToast(resposne.getMsg());
+            getListData(LOAD_DATA);
         } else {
             CommonUtil.showToast(resposne.getMsg());
         }

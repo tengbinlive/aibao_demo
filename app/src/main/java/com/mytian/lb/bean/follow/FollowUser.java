@@ -7,6 +7,8 @@ import com.mytian.lb.R;
  */
 
 public class FollowUser {
+    public  final static String MB = "0";
+    public  final static String LB = "1";
     private String uid;
     private String name;
     private String sex;
