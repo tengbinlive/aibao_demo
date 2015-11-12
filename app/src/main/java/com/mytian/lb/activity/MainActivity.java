@@ -2,7 +2,6 @@ package com.mytian.lb.activity;
 
 import android.content.Intent;
 import android.os.Process;
-import android.support.v4.widget.DrawerLayout;
 import android.view.KeyEvent;
 import android.view.View;
 
@@ -12,9 +11,7 @@ import com.mytian.lb.App;
 import com.mytian.lb.R;
 import com.mytian.lb.event.SettingEventType;
 import com.mytian.lb.fragment.ContentFragment;
-import com.mytian.lb.mview.MDrawerView;
 
-import butterknife.Bind;
 import de.greenrobot.event.EventBus;
 
 
@@ -24,10 +21,10 @@ public class MainActivity extends AbsActivity {
      * 两次点击返回之间的间隔时间, 这个时间内算为双击
      */
     private static final int EXIT_DOUBLE_CLICK_DIFF_TIME = 2000;
-    @Bind(R.id.left_drawer)
-    MDrawerView leftDrawer;
-    @Bind(R.id.drawer_layout)
-    DrawerLayout drawerLayout;
+//    @Bind(R.id.left_drawer)
+//    MDrawerView leftDrawer;
+//    @Bind(R.id.drawer_layout)
+//    DrawerLayout drawerLayout;
 
     private ContentFragment contentFragment;
 
@@ -74,27 +71,27 @@ public class MainActivity extends AbsActivity {
     private void init() {
         initLayout();
         setActionBar();
-        initDrawerLayout();
+//        initDrawerLayout();
     }
 
-    private void initDrawerLayout() {
-        drawerLayout.setDrawerListener(new MyDrawerListener());//设置drawer的开关监听
-        leftDrawer.setOnButtonClick(new MDrawerView.OnButtonClick() {
-            @Override
-            public void onClick(int type) {
-            }
-        });
+//    private void initDrawerLayout() {
+//        drawerLayout.setDrawerListener(new MyDrawerListener());//设置drawer的开关监听
+//        leftDrawer.setOnButtonClick(new MDrawerView.OnButtonClick() {
+//            @Override
+//            public void onClick(int type) {
+//            }
+//        });
+//
+//    }
 
-    }
-
-    private void toggerDrawer() {
-        boolean is = drawerLayout.isDrawerOpen(leftDrawer);
-        if (is) {
-            drawerLayout.closeDrawer(leftDrawer);
-        } else {
-            drawerLayout.openDrawer(leftDrawer);
-        }
-    }
+//    private void toggerDrawer() {
+//        boolean is = drawerLayout.isDrawerOpen(leftDrawer);
+//        if (is) {
+//            drawerLayout.closeDrawer(leftDrawer);
+//        } else {
+//            drawerLayout.openDrawer(leftDrawer);
+//        }
+//    }
 
     private void initLayout() {
         contentFragment = new ContentFragment();
@@ -144,8 +141,7 @@ public class MainActivity extends AbsActivity {
                     startActivity(intent);
                 }
             });
-        }
-        else {
+        } else {
             setToolbarRightVisbility(View.INVISIBLE, View.VISIBLE);
         }
     }
@@ -155,12 +151,12 @@ public class MainActivity extends AbsActivity {
 
     private void setActionBar() {
         setToolbarLeft(R.mipmap.menu_normal);
-        setToolbarLeftOnClick(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                toggerDrawer();
-            }
-        });
+//        setToolbarLeftOnClick(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                toggerDrawer();
+//            }
+//        });
 
     }
 
@@ -170,28 +166,28 @@ public class MainActivity extends AbsActivity {
         Process.killProcess(Process.myPid());
     }
 
-    /**
-     * drawer的监听
-     */
-    private class MyDrawerListener implements DrawerLayout.DrawerListener {
-        @Override
-        public void onDrawerOpened(View drawerView) {// 打开drawer
-        }
-
-        @Override
-        public void onDrawerClosed(View drawerView) {// 关闭drawer
-        }
-
-        @Override
-        public void onDrawerSlide(View drawerView, float slideOffset) {// drawer滑动的回调
-            //滑动的百分比，完全划出为 slideOffset =1.0
-            if (slideOffset >= 1.0) {
-                leftDrawer.setUserInfo();
-            }
-        }
-
-        @Override
-        public void onDrawerStateChanged(int newState) {// drawer状态改变的回调
-        }
-    }
+//    /**
+//     * drawer的监听
+//     */
+//    private class MyDrawerListener implements DrawerLayout.DrawerListener {
+//        @Override
+//        public void onDrawerOpened(View drawerView) {// 打开drawer
+//        }
+//
+//        @Override
+//        public void onDrawerClosed(View drawerView) {// 关闭drawer
+//        }
+//
+//        @Override
+//        public void onDrawerSlide(View drawerView, float slideOffset) {// drawer滑动的回调
+//            //滑动的百分比，完全划出为 slideOffset =1.0
+//            if (slideOffset >= 1.0) {
+//                leftDrawer.setUserInfo();
+//            }
+//        }
+//
+//        @Override
+//        public void onDrawerStateChanged(int newState) {// drawer状态改变的回调
+//        }
+//    }
 }

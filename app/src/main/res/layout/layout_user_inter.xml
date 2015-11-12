@@ -13,7 +13,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_gravity="center_horizontal"
-        android:src="@mipmap/default_head" />
+        android:src="@mipmap/head_default" />
 
     <RelativeLayout
         android:layout_width="match_parent"

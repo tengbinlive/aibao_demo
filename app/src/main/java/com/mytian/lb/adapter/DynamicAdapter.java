@@ -63,7 +63,7 @@ public class DynamicAdapter extends BaseAdapter {
         }
         DynamicResult bean = list.get(position);
 
-        Glide.with(mContext).load(bean.getHead()).placeholder(R.mipmap.icon_contact).centerCrop().crossFade().into(viewHolder.head);
+//        Glide.with(mContext).load(bean.getHeadid()).placeholder(R.mipmap.icon_contact).into(viewHolder.head);
         viewHolder.name.setText(bean.getName());
         viewHolder.date.setText(bean.getDate());
         viewHolder.desc.setText(bean.getDesc());

@@ -12,7 +12,7 @@ import com.handmark.pulltorefresh.PullToRefreshBase;
 import com.handmark.pulltorefresh.PullToRefreshListView;
 import com.mytian.lb.AbsActivity;
 import com.mytian.lb.R;
-import com.mytian.lb.adapter.UserAdapter;
+import com.mytian.lb.adapter.FriendslistAdapter;
 import com.mytian.lb.bean.follow.FollowListResult;
 import com.mytian.lb.bean.follow.FollowUser;
 import com.mytian.lb.manager.FollowManager;
@@ -30,7 +30,7 @@ public class FriendslistActivity extends AbsActivity {
     LinearLayout llListEmpty;
 
     private ListView mActualListView;
-    private UserAdapter mAdapter;
+    private FriendslistAdapter mAdapter;
     private int currentPager = 1;
     private FollowManager manager = new FollowManager();
 
@@ -64,7 +64,7 @@ public class FriendslistActivity extends AbsActivity {
         // Need to use the Actual ListView when registering for Context Menu
         registerForContextMenu(mActualListView);
 
-        mAdapter = new UserAdapter(this, arrayList);
+        mAdapter = new FriendslistAdapter(this, arrayList);
 
         SwingBottomInAnimationAdapter animationAdapter = new SwingBottomInAnimationAdapter(mAdapter);
 
@@ -104,13 +104,31 @@ public class FriendslistActivity extends AbsActivity {
             switch (what) {
                 case INIT_LIST:
                 case LOAD_DATA:
-                    loadData((CommonResponse) msg.obj);
+                    loadTestData();
                     break;
                 default:
                     break;
             }
         }
     };
+
+
+    private void loadTestData() {
+        dialogDismiss();
+        if (arrayList == null) {
+            arrayList = new ArrayList<>();
+            for (int i = 0; i < 4; i++) {
+                arrayList.add(FollowUser.testData(i));
+                mAdapter.refresh(arrayList);
+            }
+        }
+        listview.onRefreshComplete();
+        if (arrayList == null || arrayList.size() <= 0) {
+            llListEmpty.setVisibility(View.VISIBLE);
+        } else {
+            llListEmpty.setVisibility(View.GONE);
+        }
+    }
 
     private void loadData(CommonResponse resposne) {
         dialogDismiss();

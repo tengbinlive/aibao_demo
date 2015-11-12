@@ -14,7 +14,7 @@
         android:id="@+id/user_icon"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:src="@mipmap/default_head" />
+        android:src="@mipmap/head_user_woman" />
 
     <RelativeLayout
         android:layout_width="match_parent"

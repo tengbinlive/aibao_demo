@@ -10,9 +10,7 @@ import com.mytian.lb.AbsFragment;
 import com.mytian.lb.App;
 import com.mytian.lb.R;
 import com.mytian.lb.adapter.AgreementAdapter;
-import com.mytian.lb.adapter.HabitAdapter;
 import com.mytian.lb.bean.AgreementBean;
-import com.mytian.lb.bean.habitUser.HabitResult;
 import com.mytian.lb.mview.CircleNetworkImageView;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
 
@@ -53,27 +51,27 @@ public class AgreementFragment extends AbsFragment {
         gridview.setEmptyView(llListEmpty);
     }
 
-    private String[] argeementTitle = new String[]{"写作业","看书","做家务","吃饭","出去玩","睡觉"};
+    private String[] argeementTitle = new String[]{"写作业", "看书", "做家务", "吃饭", "出去玩", "睡觉"};
 
-    private void initData(){
-        for(int i =0; i<17 ; i++){
+    private void initData() {
+        for (int i = 0; i < 6; i++) {
             String iconStr = "icon_love_hb";
-            int imgId = getResources().getIdentifier(iconStr+(i%6+1), "mipmap",App.getInstance().getPackageName());
-            AgreementBean bean = new AgreementBean(argeementTitle[i%6],imgId);
+            int imgId = getResources().getIdentifier(iconStr + (i % 6 + 1), "mipmap", App.getInstance().getPackageName());
+            AgreementBean bean = new AgreementBean(argeementTitle[i % 6], imgId);
             arrayList.add(bean);
         }
     }
 
     private void setUserInfo() {
-        String name = App.getInstance().userResult.getParent().getName();
+        String name = "小明";
         name = StringUtil.isNotBlank(name) ? name : "你猜.";
-        String head = App.getInstance().userResult.getParent().getHeadThumb();
+        String head = "";
         head = StringUtil.isNotBlank(head) ? head : "";
-        String phone = App.getInstance().userResult.getParent().getPhone();
+        String phone = "...";
         phone = StringUtil.isNotBlank(phone) ? phone : "...";
         user_name.setText(name);
         user_phone.setText(phone);
-        Glide.with(this).load(head).placeholder(R.mipmap.default_head).centerCrop().crossFade().into(user_icon);
+        //        Glide.with(this).load(R.mipmap.head_default).placeholder(R.mipmap.default_head).centerCrop().crossFade().into(user_icon);
     }
 
     @Override

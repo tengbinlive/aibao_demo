@@ -221,7 +221,7 @@ public class AddFollowActivity extends AbsActivity {
         ImageView background = (ImageView) convertView.findViewById(R.id.background);
 
         Glide.with(this).load(followUser.getBaby().getHeadThumb()).crossFade().into(background);
-        String nameStr = followUser.getBaby().getName();
+        String nameStr = followUser.getBaby().getAlias();
         String phoneStr = followUser.getBaby().getPhone();
         if (StringUtil.isNotBlank(nameStr)) {
             name.setText(nameStr);
@@ -358,7 +358,7 @@ public class AddFollowActivity extends AbsActivity {
     @Override
     public void onBackPressed() {
         if (isOpenActionbar) {
-            addBt.cross();
+            addBt.toggle();
             actionbarAnimation(false);
             return;
         }

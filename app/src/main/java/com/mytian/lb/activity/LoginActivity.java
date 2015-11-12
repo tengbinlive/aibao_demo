@@ -101,6 +101,7 @@ public class LoginActivity extends AnimatedRectActivity {
         phoneEt.setText(phone);
         passwordEt.setText(password);
         if (StringUtil.isNotBlank(phone) && StringUtil.isNotBlank(password)) {
+            phoneEt.setSelection(phone.length());
             login();
         }
     }

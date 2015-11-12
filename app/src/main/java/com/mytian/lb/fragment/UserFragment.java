@@ -186,7 +186,7 @@ public class UserFragment extends AbsFragment {
         phone = StringUtil.isNotBlank(phone) ? phone : "...";
         user_name.setText(name);
         user_phone.setText(phone);
-        Glide.with(this).load(head).placeholder(R.mipmap.default_head).centerCrop().crossFade().into(user_icon);
+//        Glide.with(this).load(R.mipmap.head_user_woman).placeholder(R.mipmap.default_head).centerCrop().crossFade().into(user_icon);
     }
 
     public void onEvent(SettingEventType event) {

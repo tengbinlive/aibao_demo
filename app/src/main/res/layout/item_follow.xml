@@ -6,8 +6,6 @@
     android:background="@color/theme_bg_layout"
     android:layout_height="wrap_content">
 
-    <include layout="@layout/title_follow_item" />
-
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

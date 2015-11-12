@@ -41,6 +41,10 @@ public class HabitFragment extends AbsFragment {
 
     private void initListView() {
 
+        View headView = mInflater.inflate(R.layout.layout_user_inter,null);
+
+        setUserInfo(headView);
+
         listview.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
@@ -67,10 +71,6 @@ public class HabitFragment extends AbsFragment {
 
         mActualListView.setAdapter(animationAdapter);
 
-        View headView = mInflater.inflate(R.layout.layout_user_inter,null);
-
-        setUserInfo(headView);
-
         mActualListView.addHeaderView(headView);
 
         listview.setEmptyView(llListEmpty);
@@ -78,7 +78,7 @@ public class HabitFragment extends AbsFragment {
 
     private void getListData() {
         int startIndex = arrayList == null || arrayList.size() <= 0 ? 0 : arrayList.size();
-        activityHandler.sendEmptyMessageDelayed(INIT_LIST, 2500);
+        activityHandler.sendEmptyMessageDelayed(startIndex==0?INIT_LIST:LOAD_DATA, 2500);
     }
 
     @Override
@@ -107,15 +107,15 @@ public class HabitFragment extends AbsFragment {
         TextView user_name = (TextView) headView.findViewById(R.id.user_name);
         TextView user_phone = (TextView) headView.findViewById(R.id.user_phone);
         CircleNetworkImageView user_icon = (CircleNetworkImageView) headView.findViewById(R.id.user_icon);
-        String name = App.getInstance().userResult.getParent().getName();
+        String name = "小明";
         name = StringUtil.isNotBlank(name) ? name : "你猜.";
-        String head = App.getInstance().userResult.getParent().getHeadThumb();
+        String head = "";
         head = StringUtil.isNotBlank(head) ? head : "";
-        String phone = App.getInstance().userResult.getParent().getPhone();
+        String phone = "...";
         phone = StringUtil.isNotBlank(phone) ? phone : "...";
         user_name.setText(name);
         user_phone.setText(phone);
-        Glide.with(this).load(head).placeholder(R.mipmap.default_head).centerCrop().crossFade().into(user_icon);
+//        Glide.with(this).load(R.mipmap.head_default).placeholder(R.mipmap.default_head).centerCrop().crossFade().into(user_icon);
     }
 
     private static final int INIT_LIST = 0x01;//初始化数据处理
@@ -137,12 +137,12 @@ public class HabitFragment extends AbsFragment {
 
     private void loadData(CommonResponse resposne, int what) {
         dialogDismiss();
-        if (true) {
-            for (int i = 0; i < COUNT_MAX; i++) {
+        if (what==INIT_LIST) {
+            for (int i = 0; i < 6; i++) {
                 if(arrayList==null){
                     arrayList = new ArrayList<>();
                 }
-                arrayList.add(HabitResult.testData());
+                arrayList.add(HabitResult.testData(i));
             }
             mAdapter.refresh(arrayList);
         } else {

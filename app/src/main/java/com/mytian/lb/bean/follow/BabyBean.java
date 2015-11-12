@@ -7,7 +7,7 @@ package com.mytian.lb.bean.follow;
 public class BabyBean {
     private int uid;
     private long createTime;
-    private int birthday;
+    private long birthday;
     private int sex;
     private String phone;
     private String otherRelation;
@@ -37,7 +37,7 @@ public class BabyBean {
         this.createTime = createTime;
     }
 
-    public void setBirthday(int birthday) {
+    public void setBirthday(long birthday) {
         this.birthday = birthday;
     }
 
@@ -129,7 +129,7 @@ public class BabyBean {
         return createTime;
     }
 
-    public int getBirthday() {
+    public long getBirthday() {
         return birthday;
     }
 

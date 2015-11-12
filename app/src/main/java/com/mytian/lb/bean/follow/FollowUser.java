@@ -1,5 +1,7 @@
 package com.mytian.lb.bean.follow;
 
+import com.mytian.lb.R;
+
 /**
  * Created by bin.teng on 2015/10/28.
  */
@@ -23,6 +25,15 @@ public class FollowUser {
     private String other_relation;
     private String searchKey;
     private boolean focus;
+    private int head_id;
+
+    public int getHead_id() {
+        return head_id;
+    }
+
+    public void setHead_id(int head_id) {
+        this.head_id = head_id;
+    }
 
     public boolean isFocus() {
         return focus;
@@ -168,11 +179,29 @@ public class FollowUser {
         this.other_relation = other_relation;
     }
 
-    public static FollowUser testData() {
+    public static FollowUser testData(int index) {
         FollowUser result = new FollowUser();
-        result.name = "宝宝";
-        result.phone = "18888888888";
-        result.head_thumb = "http://img1.pcgames.com.cn/pcgames/1101/30/2125889_1.gif";
+        if(index == 0) {
+            result.name = "韩梅梅";
+            result.phone = "18217612155";
+            result.head_thumb = "http://img1.pcgames.com.cn/pcgames/1101/30/2125889_1.gif";
+            result.head_id = R.mipmap.head_1;
+        }else if(index ==1){
+            result.name = "李雷";
+            result.phone = "18812187512";
+            result.head_thumb = "http://img1.pcgames.com.cn/pcgames/1101/30/2125889_1.gif";
+            result.head_id = R.mipmap.head_2;
+        }else if(index ==2){
+            result.name = "安徒生";
+            result.phone = "18812127521";
+            result.head_thumb = "http://img1.pcgames.com.cn/pcgames/1101/30/2125889_1.gif";
+            result.head_id = R.mipmap.head_3;
+        }else if(index ==3){
+            result.name = "契柯夫";
+            result.phone = "18812127111";
+            result.head_thumb = "http://img1.pcgames.com.cn/pcgames/1101/30/2125889_1.gif";
+            result.head_id = R.mipmap.head_4;
+        }
         return result;
     }
 

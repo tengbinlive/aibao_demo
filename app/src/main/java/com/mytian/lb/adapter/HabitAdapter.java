@@ -66,7 +66,7 @@ public class HabitAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         HabitResult bean = list.get(position);
-        Glide.with(mContext).load(bean.getHead()).placeholder(R.mipmap.icon_contact).centerCrop().crossFade().into(viewHolder.head);
+        Glide.with(mContext).load(bean.getHeadIcon()).fitCenter().into(viewHolder.head);
         viewHolder.name.setText(bean.getName());
 
         int record = bean.getRecord();
