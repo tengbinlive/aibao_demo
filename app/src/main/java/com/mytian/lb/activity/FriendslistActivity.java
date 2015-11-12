@@ -4,6 +4,7 @@ package com.mytian.lb.activity;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
@@ -15,12 +16,15 @@ import com.mytian.lb.R;
 import com.mytian.lb.adapter.FriendslistAdapter;
 import com.mytian.lb.bean.follow.FollowListResult;
 import com.mytian.lb.bean.follow.FollowUser;
+import com.mytian.lb.demodata.DemoUserType;
+import com.mytian.lb.helper.AnimationHelper;
 import com.mytian.lb.manager.FollowManager;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
+import de.greenrobot.event.EventBus;
 
 public class FriendslistActivity extends AbsActivity {
 
@@ -73,6 +77,15 @@ public class FriendslistActivity extends AbsActivity {
         mActualListView.setAdapter(animationAdapter);
 
         listview.setEmptyView(llListEmpty);
+
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                AnimationHelper.getInstance().viewAnimationScal(view);
+                EventBus.getDefault().post(new DemoUserType(arrayList.get(position - 1).getUid()));
+                finish();
+            }
+        });
     }
 
     private void getListData(int state) {
@@ -112,13 +125,12 @@ public class FriendslistActivity extends AbsActivity {
         }
     };
 
-
     private void loadTestData() {
         dialogDismiss();
         if (arrayList == null) {
             arrayList = new ArrayList<>();
-            for (int i = 0; i < 4; i++) {
-                arrayList.add(FollowUser.testData(i));
+            for (int i = 0; i < 5; i++) {
+                arrayList.add(FollowUser.testData("" + i));
                 mAdapter.refresh(arrayList);
             }
         }

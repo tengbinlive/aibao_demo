@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level-list
+xmlns:android="http://schemas.android.com/apk/res/android">
+<item android:maxLevel="0" android:drawable="@mipmap/ring_colored_27" ></item>
+<item android:maxLevel="1" android:drawable="@mipmap/ring_colored_26" ></item>
+<item android:maxLevel="2" android:drawable="@mipmap/ring_colored_25" ></item>
+<item android:maxLevel="3" android:drawable="@mipmap/ring_colored_24" ></item>
+<item android:maxLevel="4" android:drawable="@mipmap/ring_colored_23" ></item>
+<item android:maxLevel="5" android:drawable="@mipmap/ring_colored_22" ></item>
+<item android:maxLevel="6" android:drawable="@mipmap/ring_colored_21" ></item>
+<item android:maxLevel="7" android:drawable="@mipmap/ring_colored_20" ></item>
+<item android:maxLevel="8" android:drawable="@mipmap/ring_colored_19" ></item>
+<item android:maxLevel="9" android:drawable="@mipmap/ring_colored_18" ></item>
+<item android:maxLevel="10" android:drawable="@mipmap/ring_colored_17" ></item>
+<item android:maxLevel="11" android:drawable="@mipmap/ring_colored_16" ></item>
+<item android:maxLevel="12" android:drawable="@mipmap/ring_colored_15" ></item>
+<item android:maxLevel="13" android:drawable="@mipmap/ring_colored_14" ></item>
+<item android:maxLevel="14" android:drawable="@mipmap/ring_colored_13" ></item>
+<item android:maxLevel="15" android:drawable="@mipmap/ring_colored_12" ></item>
+<item android:maxLevel="16" android:drawable="@mipmap/ring_colored_11" ></item>
+<item android:maxLevel="17" android:drawable="@mipmap/ring_colored_10" ></item>
+<item android:maxLevel="18" android:drawable="@mipmap/ring_colored_09" ></item>
+<item android:maxLevel="19" android:drawable="@mipmap/ring_colored_08" ></item>
+<item android:maxLevel="20" android:drawable="@mipmap/ring_colored_07" ></item>
+<item android:maxLevel="21" android:drawable="@mipmap/ring_colored_06" ></item>
+<item android:maxLevel="22" android:drawable="@mipmap/ring_colored_05" ></item>
+<item android:maxLevel="23" android:drawable="@mipmap/ring_colored_04" ></item>
+<item android:maxLevel="24" android:drawable="@mipmap/ring_colored_03" ></item>
+<item android:maxLevel="25" android:drawable="@mipmap/ring_colored_02" ></item>
+<item android:maxLevel="26" android:drawable="@mipmap/ring_colored_01" ></item>
+</level-list>

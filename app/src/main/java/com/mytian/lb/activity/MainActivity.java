@@ -10,6 +10,8 @@ import com.mytian.lb.AbsActivity;
 import com.mytian.lb.App;
 import com.mytian.lb.R;
 import com.mytian.lb.event.SettingEventType;
+import com.mytian.lb.event.TimeEventType;
+import com.mytian.lb.fragment.AgreementFragment;
 import com.mytian.lb.fragment.ContentFragment;
 
 import de.greenrobot.event.EventBus;
@@ -137,8 +139,10 @@ public class MainActivity extends AbsActivity {
             setToolbarRightOnClick(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(MainActivity.this, FriendslistActivity.class);
-                    startActivity(intent);
+                    if(!AgreementFragment.isSettingShow) {
+                        Intent intent = new Intent(MainActivity.this, FriendslistActivity.class);
+                        startActivity(intent);
+                    }
                 }
             });
         } else {

@@ -8,13 +8,21 @@ import com.core.openapi.OpenApiSimpleResult;
  */
 public class AgreementBean extends OpenApiSimpleResult {
 
+    public final static int GREAT = 1;
+    public final static int BAD = GREAT + 1;
+    private String name;
+    private String head;
+    private String date;
+    private int record;
     private String title;
-
     private int icon;
 
-    public AgreementBean(String title, int icon) {
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
         this.title = title;
-        this.icon = icon;
     }
 
     public int getIcon() {
@@ -25,18 +33,46 @@ public class AgreementBean extends OpenApiSimpleResult {
         this.icon = icon;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getHead() {
+        return head;
+    }
+
+    public void setHead(String head) {
+        this.head = head;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public int getRecord() {
+        return record;
+    }
+
+    public void setRecord(int record) {
+        this.record = record;
     }
 
     @Override
     public String toString() {
-        return "AgreementBean{" +
-                "title='" + title + '\'' +
+        return "HabitResult{" +
+                "name='" + name + '\'' +
+                ", head='" + head + '\'' +
+                ", date='" + date + '\'' +
+                ", record=" + record +
+                ", title='" + title + '\'' +
                 ", icon=" + icon +
                 '}';
     }

@@ -1,7 +1,6 @@
 package com.mytian.lb.bean;
 
 import com.core.openapi.OpenApiSimpleResult;
-import com.mytian.lb.R;
 
 /**
  * Created by bin.teng on 2015/10/28.
@@ -60,17 +59,6 @@ public class DynamicResult extends OpenApiSimpleResult {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public static DynamicResult testData(){
-        DynamicResult result= new DynamicResult();
-        result.name = "宝宝";
-        result.head = "http://img1.pcgames.com.cn/pcgames/1101/30/2125889_1.gif";
-        result.date = "五分钟前";
-        result.desc = "麦宝客户端";
-        result.content ="       现在DotA的节奏越来越快，不像以前那样可以太安心打钱了，所以前期推荐升满一技能，推进和防推进都有相当的好处，当然对防gank也有一定用处，然后主加射程可以让火枪有更多的输出空间。后面点满爆头让火枪Dps更高，跟人对点也能拼得过。";
-        result.headid = R.mipmap.head_user_man;
-        return result;
     }
 
     @Override

@@ -8,15 +8,18 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.core.util.StringUtil;
-import com.mytian.lb.AbsFragment;
-import com.mytian.lb.App;
-import com.mytian.lb.R;
-import com.mytian.lb.adapter.HabitAdapter;
-import com.mytian.lb.bean.habitUser.HabitResult;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.core.CommonResponse;
 import com.handmark.pulltorefresh.PullToRefreshBase;
 import com.handmark.pulltorefresh.PullToRefreshListView;
+import com.mytian.lb.AbsFragment;
+import com.mytian.lb.R;
+import com.mytian.lb.adapter.HabitAdapter;
+import com.mytian.lb.bean.AgreementBean;
+import com.mytian.lb.bean.DemoUserInfo;
+import com.mytian.lb.demodata.DemoManger;
+import com.mytian.lb.demodata.DemoUserType;
+import com.mytian.lb.event.SettingEventType;
 import com.mytian.lb.mview.CircleNetworkImageView;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
 import com.rey.material.widget.FloatingActionButton;
@@ -36,14 +39,13 @@ public class HabitFragment extends AbsFragment {
 
     private ListView mActualListView;
     private HabitAdapter mAdapter;
+    private View headView;
 
-    private ArrayList<HabitResult> arrayList = new ArrayList<>();
+    private ArrayList<AgreementBean> arrayList = new ArrayList<>();
 
     private void initListView() {
 
-        View headView = mInflater.inflate(R.layout.layout_user_inter,null);
-
-        setUserInfo(headView);
+        headView = mInflater.inflate(R.layout.layout_user_inter, null);
 
         listview.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
@@ -69,16 +71,16 @@ public class HabitFragment extends AbsFragment {
 
         animationAdapter.setAbsListView(mActualListView);
 
-        mActualListView.setAdapter(animationAdapter);
+        mActualListView.addHeaderView(headView,null,true);
 
-        mActualListView.addHeaderView(headView);
+        mActualListView.setAdapter(animationAdapter);
 
         listview.setEmptyView(llListEmpty);
     }
 
     private void getListData() {
         int startIndex = arrayList == null || arrayList.size() <= 0 ? 0 : arrayList.size();
-        activityHandler.sendEmptyMessageDelayed(startIndex==0?INIT_LIST:LOAD_DATA, 2500);
+        activityHandler.sendEmptyMessageDelayed(startIndex == 0 ? INIT_LIST : LOAD_DATA, 2500);
     }
 
     @Override
@@ -100,27 +102,38 @@ public class HabitFragment extends AbsFragment {
                 add_bt.setLineMorphingState((add_bt.getLineMorphingState() + 1) % 2, true);
             }
         });
-        activityHandler.sendEmptyMessageDelayed(INIT_LIST, 500);
+        Message message = new Message();
+        message.what = INIT_USER_INFO;
+        message.obj = "0";
+        activityHandler.sendMessage(message);
     }
 
-    private void setUserInfo(View headView) {
+    private void setUserInfo(DemoUserInfo demoUserInfo) {
         TextView user_name = (TextView) headView.findViewById(R.id.user_name);
         TextView user_phone = (TextView) headView.findViewById(R.id.user_phone);
         CircleNetworkImageView user_icon = (CircleNetworkImageView) headView.findViewById(R.id.user_icon);
-        String name = "小明";
-        name = StringUtil.isNotBlank(name) ? name : "你猜.";
-        String head = "";
-        head = StringUtil.isNotBlank(head) ? head : "";
-        String phone = "...";
-        phone = StringUtil.isNotBlank(phone) ? phone : "...";
+        String name = demoUserInfo.getParent().getName();
+        int head = demoUserInfo.getHeadid();
+        String phone = demoUserInfo.getParent().getPhone();
         user_name.setText(name);
         user_phone.setText(phone);
-//        Glide.with(this).load(R.mipmap.head_default).placeholder(R.mipmap.default_head).centerCrop().crossFade().into(user_icon);
+        Glide.with(this).load(head).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.mipmap.default_head).centerCrop().crossFade().into(user_icon);
+
+        arrayList = demoUserInfo.getBeans();
+        mAdapter.refresh(arrayList);
+    }
+
+    public void onEvent(DemoUserType event) {
+        Message message = new Message();
+        message.what = INIT_USER_INFO;
+        message.obj = event.index;
+        activityHandler.sendMessage(message);
     }
 
     private static final int INIT_LIST = 0x01;//初始化数据处理
     private static final int LOAD_DATA = 0x02;//加载数据处理
     private static final int COUNT_MAX = 15;//加载数据最大值
+    private static final int INIT_USER_INFO = 0x03;//设置用户信息
     private Handler activityHandler = new Handler() {
         public void handleMessage(Message msg) {
             int what = msg.what;
@@ -128,6 +141,9 @@ public class HabitFragment extends AbsFragment {
                 case INIT_LIST:
                 case LOAD_DATA:
                     loadData((CommonResponse) msg.obj, what);
+                    break;
+                case INIT_USER_INFO:
+                    setUserInfo(DemoManger.getInstance().getDemoUserInfo(msg.obj.toString()));
                     break;
                 default:
                     break;
@@ -137,17 +153,6 @@ public class HabitFragment extends AbsFragment {
 
     private void loadData(CommonResponse resposne, int what) {
         dialogDismiss();
-        if (what==INIT_LIST) {
-            for (int i = 0; i < 6; i++) {
-                if(arrayList==null){
-                    arrayList = new ArrayList<>();
-                }
-                arrayList.add(HabitResult.testData(i));
-            }
-            mAdapter.refresh(arrayList);
-        } else {
-            //避免第一次应用启动时 创建fragment加载数据多次提示
-        }
         listview.onRefreshComplete();
     }
 

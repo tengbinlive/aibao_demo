@@ -1,14 +1,15 @@
 package com.mytian.lb.bean.follow;
 
-import com.mytian.lb.R;
+import com.mytian.lb.bean.DemoUserInfo;
+import com.mytian.lb.demodata.DemoManger;
 
 /**
  * Created by bin.teng on 2015/10/28.
  */
 
 public class FollowUser {
-    public  final static String MB = "0";
-    public  final static String LB = "1";
+    public final static String MB = "0";
+    public final static String LB = "1";
     private String uid;
     private String name;
     private String sex;
@@ -181,29 +182,11 @@ public class FollowUser {
         this.other_relation = other_relation;
     }
 
-    public static FollowUser testData(int index) {
-        FollowUser result = new FollowUser();
-        if(index == 0) {
-            result.name = "韩梅梅";
-            result.phone = "18217612155";
-            result.head_thumb = "http://img1.pcgames.com.cn/pcgames/1101/30/2125889_1.gif";
-            result.head_id = R.mipmap.head_1;
-        }else if(index ==1){
-            result.name = "李雷";
-            result.phone = "18812187512";
-            result.head_thumb = "http://img1.pcgames.com.cn/pcgames/1101/30/2125889_1.gif";
-            result.head_id = R.mipmap.head_2;
-        }else if(index ==2){
-            result.name = "安徒生";
-            result.phone = "18812127521";
-            result.head_thumb = "http://img1.pcgames.com.cn/pcgames/1101/30/2125889_1.gif";
-            result.head_id = R.mipmap.head_3;
-        }else if(index ==3){
-            result.name = "契柯夫";
-            result.phone = "18812127111";
-            result.head_thumb = "http://img1.pcgames.com.cn/pcgames/1101/30/2125889_1.gif";
-            result.head_id = R.mipmap.head_4;
-        }
+    public static FollowUser testData(String index) {
+        DemoUserInfo demoUserInfo = DemoManger.getInstance().getDemoUserInfo(index);
+        FollowUser result = demoUserInfo.getParent();
+        result.head_id = demoUserInfo.getHeadid();
+        result.uid = demoUserInfo.getId();
         return result;
     }
 

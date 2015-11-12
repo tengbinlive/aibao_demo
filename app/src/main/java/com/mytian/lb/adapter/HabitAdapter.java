@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.core.util.CommonUtil;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mytian.lb.R;
+import com.mytian.lb.bean.AgreementBean;
 import com.mytian.lb.bean.habitUser.HabitResult;
 import com.mytian.lb.enums.ItemButton;
 import com.mytian.lb.helper.AnimationHelper;
@@ -25,11 +26,11 @@ public class HabitAdapter extends BaseAdapter {
 
     private LayoutInflater mInflater;
 
-    private ArrayList<HabitResult> list;
+    private ArrayList<AgreementBean> list;
 
     private Context mContext;
 
-    public HabitAdapter(Context context, ArrayList<HabitResult> _list) {
+    public HabitAdapter(Context context, ArrayList<AgreementBean> _list) {
         this.list = _list;
         mContext = context;
         mInflater = LayoutInflater.from(context);
@@ -50,7 +51,7 @@ public class HabitAdapter extends BaseAdapter {
         return 0;
     }
 
-    public void refresh(ArrayList<HabitResult> _list) {
+    public void refresh(ArrayList<AgreementBean> _list) {
         list = _list;
         notifyDataSetChanged();
     }
@@ -65,15 +66,15 @@ public class HabitAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        HabitResult bean = list.get(position);
-        Glide.with(mContext).load(bean.getHeadIcon()).fitCenter().into(viewHolder.head);
+        AgreementBean bean = list.get(position);
+        Glide.with(mContext).load(bean.getIcon()).fitCenter().into(viewHolder.head);
         viewHolder.name.setText(bean.getName());
 
         int record = bean.getRecord();
-        if(record == HabitResult.GREAT){
+        if(record == AgreementBean.GREAT){
             setIconInfo(viewHolder.like, ItemButton.RECORD_LIKE, true);
             setIconInfo(viewHolder.dislike, ItemButton.RECORD_DISLIKE, false);
-        }else  if(record == HabitResult.BAD){
+        }else  if(record == AgreementBean.BAD){
             setIconInfo(viewHolder.like, ItemButton.RECORD_LIKE, false);
             setIconInfo(viewHolder.dislike, ItemButton.RECORD_DISLIKE, true);
         }else{
@@ -89,7 +90,7 @@ public class HabitAdapter extends BaseAdapter {
                 CommonUtil.showToast("记录成功");
                 int index = (int) v.getTag(R.id.item_habit_index);
                 ImageView dislike = (ImageView) v.getTag(R.id.item_habit_view);
-                list.get(index).setRecord(HabitResult.GREAT);
+                list.get(index).setRecord(AgreementBean.GREAT);
                 setIconInfo((ImageView) v, ItemButton.RECORD_LIKE, true);
                 setIconInfo(dislike, ItemButton.RECORD_DISLIKE, false);
             }
@@ -103,7 +104,7 @@ public class HabitAdapter extends BaseAdapter {
                 CommonUtil.showToast("记录成功");
                 int index = (int) v.getTag(R.id.item_habit_index);
                 ImageView like = (ImageView) v.getTag(R.id.item_habit_view);
-                list.get(index).setRecord(HabitResult.BAD);
+                list.get(index).setRecord(AgreementBean.BAD);
                 setIconInfo((ImageView) v, ItemButton.RECORD_DISLIKE, true);
                 setIconInfo(like, ItemButton.RECORD_LIKE, false);
             }

@@ -40,7 +40,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/content_gap"
-            android:text="2"
+            android:text="0"
             android:gravity="center"
             android:background="@mipmap/skin_tips_message_red"
             android:textColor="@color/white"

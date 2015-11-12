@@ -11,6 +11,7 @@
     <string name="hint_password">请输入密码</string>
     <string name="hint_verification">请输入验证码</string>
     <string name="login">登录</string>
+    <string name="cancle_reservation">取消预约</string>
     <string name="register">注册</string>
     <string name="reset_password">重置密码</string>
     <string name="get_verification">获取验证码</string>
