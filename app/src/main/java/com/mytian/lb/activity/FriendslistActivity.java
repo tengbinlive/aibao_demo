@@ -86,7 +86,7 @@ public class FriendslistActivity extends AbsActivity {
 
     @Override
     public int getContentView() {
-        return R.layout.activity_add_follow;
+        return R.layout.activity_friends_list;
     }
 
     @Override
