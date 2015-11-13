@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -40,6 +41,7 @@ import com.mytian.lb.adapter.UserAdapter;
 import com.mytian.lb.bean.follow.FollowListResult;
 import com.mytian.lb.bean.follow.FollowUser;
 import com.mytian.lb.bean.user.UpdateParentParam;
+import com.mytian.lb.enums.WomanOrManEnum;
 import com.mytian.lb.event.SettingEventType;
 import com.mytian.lb.helper.AnimationHelper;
 import com.mytian.lb.helper.AnimatorUtils;
@@ -69,14 +71,19 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
     TextView phoneValue;
     @Bind(R.id.birthday_value)
     TextView birthdayValue;
-    @Bind(R.id.gender_value)
-    TextView genderValue;
     @Bind(R.id.integral_value)
     TextView integralValue;
     @Bind(R.id.layout_setting)
     ClipRevealFrame layoutSetting;
     @Bind(R.id.change_bt)
     Button change_bt;
+    @Bind(R.id.woman_bt)
+    Button woman_bt;
+    @Bind(R.id.man_bt)
+    Button man_bt;
+    @Bind(R.id.gender_layout)
+    RelativeLayout gender_layout;
+
     @BindColor(R.color.theme)
     int accentColor;
     private Calendar birthdayDate;
@@ -190,10 +197,10 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
 
     private void setUserInfo() {
         String name = App.getInstance().userResult.getParent().getAlias();
-        boolean isName =StringUtil.isBlank(name);
-        if(isName) {
+        boolean isName = StringUtil.isBlank(name);
+        if (isName) {
             nameValue.setHint("请输入您的昵称");
-        }else{
+        } else {
             nameValue.setHint(name);
         }
         name = !isName ? name : "你猜.";
@@ -203,11 +210,11 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         user_name.setText(name);
         user_phone.setText(phone);
         phoneValue.setText(phone);
-        Long bir = App.getInstance().userResult.getParent().getBirthday();
-        if(StringUtil.isNotBlank(bir)) {
-            String birthday = DateUtil.ConverToString( bir, DateUtil.YYYY_MM_DD);
+        long bir = App.getInstance().userResult.getParent().getBirthday();
+        if (bir > 0) {
+            String birthday = DateUtil.ConverToString(bir, DateUtil.YYYY_MM_DD);
             birthdayValue.setHint(birthday);
-        }else{
+        } else {
             birthdayValue.setHint("选下咯");
         }
         user_icon.setVisibility(View.VISIBLE);
@@ -233,21 +240,66 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
     }
 
     @OnClick(R.id.change_bt)
-    void onChangeInfo(){
-        String name= nameValue.getText().toString();
-        if (StringUtil.isBlank(name)) {
+    void onChangeInfo() {
+        String name = nameValue.getText().toString();
+        String nameHint = nameValue.getHint().toString();
+        String birthday = birthdayValue.getText().toString();
+        String birthdayHint = birthdayValue.getHint().toString();
+        boolean isname = false;
+        boolean isbirthday = false;
+        if (StringUtil.isBlank(name) && StringUtil.isBlank(nameHint)) {
             AnimationHelper.getInstance().viewAnimationQuiver(nameValue);
             return;
         }
+        if (StringUtil.isBlank(birthday) && StringUtil.isBlank(birthdayHint)) {
+            AnimationHelper.getInstance().viewAnimationQuiver(birthdayValue);
+            return;
+        }
+
+        int sex = -1;
+        if (woman_bt.getVisibility() == View.VISIBLE && man_bt.getVisibility() == View.VISIBLE) {
+            sex = -1;
+        } else if (woman_bt.getVisibility() == View.VISIBLE) {
+            sex = WomanOrManEnum.WOMAN.getCode();
+        } else if (man_bt.getVisibility() == View.VISIBLE) {
+            sex = WomanOrManEnum.MAN.getCode();
+        }
+
+        if (sex == -1) {
+            CommonUtil.showToast("暂不在泰国上线.");
+            AnimationHelper.getInstance().viewAnimationQuiver(gender_layout);
+            return;
+        }
+
         dialogShow();
         UserManager manager = new UserManager();
         UpdateParentParam param = new UpdateParentParam();
-        param.setAlias(name);
-        String birthday= birthdayValue.getText().toString();
+        param.setSex(sex);
+        if (StringUtil.isNotBlank(name)) {
+            param.setAlias(name);
+        }
         if (StringUtil.isNotBlank(birthday)) {
             param.setBirthday(birthdayDate.getTimeInMillis());
         }
-        manager.updateParent(mContext,param,activityHandler,UPDATE_PARENT);
+        manager.updateParent(mContext, param, activityHandler, UPDATE_PARENT);
+    }
+
+    @OnClick({R.id.gender_layout, R.id.woman_bt, R.id.man_bt})
+    void selectSex(View view) {
+        int id = view.getId();
+        if (id == R.id.gender_layout) {
+            List<Animator> animList = new ArrayList<>();
+            animList.addAll(selectSexView(1));
+            AnimatorSet animSet = new AnimatorSet();
+            animSet.playSequentially(animList);
+            animSet.start();
+        } else if (id == R.id.woman_bt) {
+            Animator revealAnim = createViewScale0(man_bt);
+            revealAnim.start();
+        } else if (id == R.id.man_bt) {
+            Animator revealAnim = createViewScale0(woman_bt);
+            revealAnim.start();
+        }
     }
 
     /**
@@ -310,21 +362,18 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         revealAnim.setDuration(500);
         animList.add(revealAnim);
 
-        revealAnim = ObjectAnimator.ofPropertyValuesHolder(
-                change_bt,
-                AnimatorUtils.scaleX(0f, 1f),
-                AnimatorUtils.scaleY(0f, 1f)
-        );
-        revealAnim.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-                super.onAnimationStart(animation);
-                change_bt.setVisibility(View.VISIBLE);
-            }
-        });
-        revealAnim.setDuration(100);
-        revealAnim.setInterpolator(new DecelerateInterpolator());
+        revealAnim = createViewScale1(change_bt);
         animList.add(revealAnim);
+
+        int sex = App.getInstance().userResult.getParent().getSex();
+
+        if (WomanOrManEnum.WOMAN.getCode() == sex) {
+            revealAnim = createViewScale1(woman_bt);
+            animList.add(revealAnim);
+        } else {
+            revealAnim = createViewScale1(man_bt);
+            animList.add(revealAnim);
+        }
 
         AnimatorSet animSet = new AnimatorSet();
         animSet.playSequentially(animList);
@@ -346,25 +395,82 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         });
         animList.add(revealAnim);
 
-        revealAnim = ObjectAnimator.ofPropertyValuesHolder(
-                change_bt,
+        revealAnim = createViewScale0(change_bt);
+        animList.add(revealAnim);
+
+        animList.addAll(selectSexView(0));
+
+        AnimatorSet animSet = new AnimatorSet();
+        animSet.playSequentially(animList);
+        animSet.start();
+    }
+
+    /**
+     * 设置 性别选择按钮 显示 隐藏
+     * <p/>
+     *
+     * @param state state 0 = 隐藏 , 1 = 显示
+     * @return
+     */
+    private List<Animator> selectSexView(int state) {
+        List<Animator> animList = new ArrayList<>();
+        Animator revealAnim;
+        if (state == 0) {
+            if (woman_bt.getVisibility() == View.VISIBLE) {
+                revealAnim = createViewScale0(woman_bt);
+                animList.add(revealAnim);
+            }
+            if (man_bt.getVisibility() == View.VISIBLE) {
+                revealAnim = createViewScale0(man_bt);
+                animList.add(revealAnim);
+            }
+        } else if (state == 1) {
+            if (woman_bt.getVisibility() == View.INVISIBLE) {
+                revealAnim = createViewScale1(woman_bt);
+                animList.add(revealAnim);
+            }
+            if (man_bt.getVisibility() == View.INVISIBLE) {
+                revealAnim = createViewScale1(man_bt);
+                animList.add(revealAnim);
+            }
+        }
+        return animList;
+    }
+
+    private Animator createViewScale1(final View view) {
+        Animator revealAnim = ObjectAnimator.ofPropertyValuesHolder(
+                view,
+                AnimatorUtils.scaleX(0f, 1f),
+                AnimatorUtils.scaleY(0f, 1f)
+        );
+        revealAnim.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                super.onAnimationStart(animation);
+                view.setVisibility(View.VISIBLE);
+            }
+        });
+        revealAnim.setDuration(100);
+        revealAnim.setInterpolator(new DecelerateInterpolator());
+        return revealAnim;
+    }
+
+    private Animator createViewScale0(final View view) {
+        Animator revealAnim = ObjectAnimator.ofPropertyValuesHolder(
+                view,
                 AnimatorUtils.scaleX(1f, 0f),
                 AnimatorUtils.scaleY(1f, 0f)
         );
         revealAnim.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                super.onAnimationStart(animation);
-                change_bt.setVisibility(View.GONE);
+                super.onAnimationEnd(animation);
+                view.setVisibility(View.INVISIBLE);
             }
         });
         revealAnim.setDuration(100);
         revealAnim.setInterpolator(new DecelerateInterpolator());
-        animList.add(revealAnim);
-
-        AnimatorSet animSet = new AnimatorSet();
-        animSet.playSequentially(animList);
-        animSet.start();
+        return revealAnim;
     }
 
     private Animator createCircularReveal(final ClipRevealFrame view, int x, int y, float startRadius,
@@ -432,11 +538,13 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         if (resposne.isSuccess()) {
             String name = nameValue.getText().toString();
             String birthday = birthdayValue.getText().toString();
-            nameValue.setText("");
-            nameValue.setHint(name);
             nameValue.clearFocus();
-            user_name.setText(name);
-            if(StringUtil.isNotBlank(birthday)) {
+            if (StringUtil.isNotBlank(name)) {
+                nameValue.setText("");
+                nameValue.setHint(name);
+                user_name.setText(name);
+            }
+            if (StringUtil.isNotBlank(birthday)) {
                 birthdayValue.setText("");
                 birthdayValue.setHint(birthday);
             }

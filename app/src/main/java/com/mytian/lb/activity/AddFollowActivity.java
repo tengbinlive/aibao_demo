@@ -84,7 +84,7 @@ public class AddFollowActivity extends AbsActivity {
     }
 
     private void iniView() {
-        searchKeyAibao.setVisibility(View.GONE);
+        search_layout_aibao.setVisibility(View.GONE);
         searchKey.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

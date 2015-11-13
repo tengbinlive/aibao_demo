@@ -16,7 +16,7 @@ public class UpdateParentParam extends OpenApiBaseRequest implements OpenApiRequ
 
     private String realName;
 
-    private String sex;
+    private int sex;//性别(0女，1男)
 
     private long birthday;
 
@@ -54,11 +54,11 @@ public class UpdateParentParam extends OpenApiBaseRequest implements OpenApiRequ
         this.realName = realName;
     }
 
-    public String getSex() {
+    public int getSex() {
         return sex;
     }
 
-    public void setSex(String sex) {
+    public void setSex(int sex) {
         this.sex = sex;
     }
 

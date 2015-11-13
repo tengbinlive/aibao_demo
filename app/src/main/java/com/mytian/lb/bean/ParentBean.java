@@ -11,8 +11,8 @@ public class ParentBean extends OpenApiSimpleResult {
     private String token;
     private String phone;
     private String alias;
-    private String sex;
-    private Long birthday;
+    private int sex;
+    private long birthday;
     private String headThumb;
     private String sysThumbId;
     private String thumbType;
@@ -58,19 +58,19 @@ public class ParentBean extends OpenApiSimpleResult {
         this.alias = alias;
     }
 
-    public String getSex() {
+    public int getSex() {
         return sex;
     }
 
-    public void setSex(String sex) {
+    public void setSex(int sex) {
         this.sex = sex;
     }
 
-    public Long getBirthday() {
+    public long getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Long birthday) {
+    public void setBirthday(long birthday) {
         this.birthday = birthday;
     }
 

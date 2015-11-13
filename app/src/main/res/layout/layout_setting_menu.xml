@@ -134,6 +134,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
+                android:id="@+id/gender_layout"
                 android:layout_height="wrap_content">
 
                 <TextView
@@ -146,16 +147,35 @@
                     android:textColor="@color/textcolor_222"
                     android:textSize="@dimen/font_btn" />
 
-                <TextView
-                    android:id="@+id/gender_value"
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_margin="@dimen/content_gap"
-                    android:singleLine="true"
-                    android:textColor="@color/gray_hint"
-                    android:textSize="@dimen/font_btn" />
+                    android:layout_marginRight="@dimen/content_gap"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:id="@+id/woman_bt"
+                        android:layout_width="65dp"
+                        android:layout_height="32dp"
+                        android:visibility="invisible"
+                        android:background="@drawable/button_bg_theme"
+                        android:text="@string/woman"
+                        android:layout_marginRight="@dimen/content_gap"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/font_btn" />
+
+                    <Button
+                        android:id="@+id/man_bt"
+                        android:layout_width="65dp"
+                        android:visibility="invisible"
+                        android:layout_height="32dp"
+                        android:background="@drawable/button_bg_theme"
+                        android:text="@string/man"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/font_small" />
+                </LinearLayout>
 
             </RelativeLayout>
 
