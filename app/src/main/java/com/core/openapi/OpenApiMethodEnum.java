@@ -11,6 +11,11 @@ package com.core.openapi;
 public enum OpenApiMethodEnum {
 
     /**
+     * 补全信息
+     */
+    LOAD_UPDATEPARENT("myt_parent/parentAction_updateParent.do", "openapi_json", OpenApi.URL_TYPE_DATA),
+
+    /**
      * 爱宝解除关注麦宝
      */
     LOAD_FOLLOW_CANCEL("myt_focus/babyParentFocusAction_parentReleaseFocusBaby.do", "openapi_json", OpenApi.URL_TYPE_DATA),

@@ -2,6 +2,7 @@ package com.mytian.lb.fragment;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Build;
@@ -10,7 +11,10 @@ import android.os.Message;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -18,6 +22,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.core.CommonResponse;
+import com.core.util.CommonUtil;
+import com.core.util.DateUtil;
 import com.core.util.StringUtil;
 import com.handmark.pulltorefresh.PullToRefreshBase;
 import com.handmark.pulltorefresh.PullToRefreshListView;
@@ -33,44 +39,47 @@ import com.mytian.lb.activityexpand.activity.AnimatedRectLayout;
 import com.mytian.lb.adapter.UserAdapter;
 import com.mytian.lb.bean.follow.FollowListResult;
 import com.mytian.lb.bean.follow.FollowUser;
+import com.mytian.lb.bean.user.UpdateParentParam;
 import com.mytian.lb.event.SettingEventType;
-import com.mytian.lb.event.UserEventType;
+import com.mytian.lb.helper.AnimationHelper;
+import com.mytian.lb.helper.AnimatorUtils;
 import com.mytian.lb.helper.SharedPreferencesHelper;
 import com.mytian.lb.manager.FollowManager;
+import com.mytian.lb.manager.UserManager;
 import com.mytian.lb.mview.ClipRevealFrame;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
 import com.nineoldandroids.animation.ValueAnimator;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 import butterknife.Bind;
+import butterknife.BindColor;
 import butterknife.BindDimen;
 import butterknife.OnClick;
 
-public class UserFragment extends AbsFragment {
+public class UserFragment extends AbsFragment implements DatePickerDialog.OnDateSetListener {
 
-    @Bind(R.id.name)
-    TextView name;
     @Bind(R.id.name_value)
-    TextView nameValue;
-    @Bind(R.id.phone)
-    TextView phone;
+    EditText nameValue;
     @Bind(R.id.phone_value)
     TextView phoneValue;
-    @Bind(R.id.birthday)
-    TextView birthday;
     @Bind(R.id.birthday_value)
     TextView birthdayValue;
-    @Bind(R.id.gender)
-    TextView gender;
     @Bind(R.id.gender_value)
     TextView genderValue;
-    @Bind(R.id.integral)
-    TextView integral;
     @Bind(R.id.integral_value)
     TextView integralValue;
     @Bind(R.id.layout_setting)
     ClipRevealFrame layoutSetting;
+    @Bind(R.id.change_bt)
+    Button change_bt;
+    @BindColor(R.color.theme)
+    int accentColor;
+    private Calendar birthdayDate;
 
     private static boolean isSettingShow;
 
@@ -162,6 +171,7 @@ public class UserFragment extends AbsFragment {
 
     @Override
     public void EInit() {
+        birthdayDate = Calendar.getInstance();
         initListView();
         setUserInfo();
         getListData(INIT_LIST);
@@ -180,12 +190,26 @@ public class UserFragment extends AbsFragment {
 
     private void setUserInfo() {
         String name = App.getInstance().userResult.getParent().getAlias();
-        name = StringUtil.isNotBlank(name) ? name : "你猜.";
+        boolean isName =StringUtil.isBlank(name);
+        if(isName) {
+            nameValue.setHint("请输入您的昵称");
+        }else{
+            nameValue.setHint(name);
+        }
+        name = !isName ? name : "你猜.";
         String phone = App.getInstance().userResult.getParent().getPhone();
         phone = StringUtil.isNotBlank(phone) ? phone : "...";
         String head = App.getInstance().userResult.getParent().getHeadThumb();
         user_name.setText(name);
         user_phone.setText(phone);
+        phoneValue.setText(phone);
+        Long bir = App.getInstance().userResult.getParent().getBirthday();
+        if(StringUtil.isNotBlank(bir)) {
+            String birthday = DateUtil.ConverToString( bir, DateUtil.YYYY_MM_DD);
+            birthdayValue.setHint(birthday);
+        }else{
+            birthdayValue.setHint("选下咯");
+        }
         user_icon.setVisibility(View.VISIBLE);
         Glide.with(App.getInstance()).load(R.mipmap.head_user_woman).asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -197,9 +221,6 @@ public class UserFragment extends AbsFragment {
         toggleShowSetting(event.mView);
     }
 
-    public void onEvent(UserEventType event) {
-    }
-
     @OnClick(R.id.exit_bt)
     void exitAccount() {
         SharedPreferencesHelper.setString(getActivity(), Constant.LoginUser.SHARED_PREFERENCES_PHONE, "");
@@ -209,6 +230,24 @@ public class UserFragment extends AbsFragment {
         getActivity().startActivity(intent);
         getActivity().overridePendingTransition(0, 0);
         getActivity().finish();
+    }
+
+    @OnClick(R.id.change_bt)
+    void onChangeInfo(){
+        String name= nameValue.getText().toString();
+        if (StringUtil.isBlank(name)) {
+            AnimationHelper.getInstance().viewAnimationQuiver(nameValue);
+            return;
+        }
+        dialogShow();
+        UserManager manager = new UserManager();
+        UpdateParentParam param = new UpdateParentParam();
+        param.setAlias(name);
+        String birthday= birthdayValue.getText().toString();
+        if (StringUtil.isNotBlank(birthday)) {
+            param.setBirthday(birthdayDate.getTimeInMillis());
+        }
+        manager.updateParent(mContext,param,activityHandler,UPDATE_PARENT);
     }
 
     /**
@@ -263,17 +302,41 @@ public class UserFragment extends AbsFragment {
     }
 
     private void showMenu(int cx, int cy, float startRadius, float endRadius) {
+        List<Animator> animList = new ArrayList<>();
+
         layoutSetting.setVisibility(View.VISIBLE);
         Animator revealAnim = createCircularReveal(layoutSetting, cx, cy, startRadius, endRadius);
         revealAnim.setInterpolator(new AccelerateDecelerateInterpolator());
-        revealAnim.setDuration(200);
-        revealAnim.start();
+        revealAnim.setDuration(500);
+        animList.add(revealAnim);
+
+        revealAnim = ObjectAnimator.ofPropertyValuesHolder(
+                change_bt,
+                AnimatorUtils.scaleX(0f, 1f),
+                AnimatorUtils.scaleY(0f, 1f)
+        );
+        revealAnim.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                super.onAnimationStart(animation);
+                change_bt.setVisibility(View.VISIBLE);
+            }
+        });
+        revealAnim.setDuration(100);
+        revealAnim.setInterpolator(new DecelerateInterpolator());
+        animList.add(revealAnim);
+
+        AnimatorSet animSet = new AnimatorSet();
+        animSet.playSequentially(animList);
+        animSet.start();
     }
 
     private void hideMenu(int cx, int cy, float startRadius, float endRadius) {
+        List<Animator> animList = new ArrayList<>();
+
         Animator revealAnim = createCircularReveal(layoutSetting, cx, cy, startRadius, endRadius);
         revealAnim.setInterpolator(new AccelerateDecelerateInterpolator());
-        revealAnim.setDuration(200);
+        revealAnim.setDuration(500);
         revealAnim.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
@@ -281,7 +344,27 @@ public class UserFragment extends AbsFragment {
                 layoutSetting.setVisibility(View.INVISIBLE);
             }
         });
-        revealAnim.start();
+        animList.add(revealAnim);
+
+        revealAnim = ObjectAnimator.ofPropertyValuesHolder(
+                change_bt,
+                AnimatorUtils.scaleX(1f, 0f),
+                AnimatorUtils.scaleY(1f, 0f)
+        );
+        revealAnim.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationStart(animation);
+                change_bt.setVisibility(View.GONE);
+            }
+        });
+        revealAnim.setDuration(100);
+        revealAnim.setInterpolator(new DecelerateInterpolator());
+        animList.add(revealAnim);
+
+        AnimatorSet animSet = new AnimatorSet();
+        animSet.playSequentially(animList);
+        animSet.start();
     }
 
     private Animator createCircularReveal(final ClipRevealFrame view, int x, int y, float startRadius,
@@ -320,6 +403,7 @@ public class UserFragment extends AbsFragment {
 
     private static final int INIT_LIST = 0x01;//初始化数据处理
     private static final int LOAD_DATA = 0x02;//加载数据处理
+    private static final int UPDATE_PARENT = 0x04;//信息补全
     private static final int COUNT_MAX = 15;//加载数据最大值
     private static final int ANIMATION = 0x03;//user layout
     private Handler activityHandler = new Handler() {
@@ -330,6 +414,9 @@ public class UserFragment extends AbsFragment {
                 case LOAD_DATA:
                     loadData((CommonResponse) msg.obj);
                     break;
+                case UPDATE_PARENT:
+                    loadUpdate((CommonResponse) msg.obj);
+                    break;
                 case ANIMATION:
                     userAnimation(true);
                     break;
@@ -338,6 +425,23 @@ public class UserFragment extends AbsFragment {
             }
         }
     };
+
+    private void loadUpdate(CommonResponse resposne) {
+        dialogDismiss();
+        CommonUtil.showToast(resposne.getMsg());
+        if (resposne.isSuccess()) {
+            String name = nameValue.getText().toString();
+            String birthday = birthdayValue.getText().toString();
+            nameValue.setText("");
+            nameValue.setHint(name);
+            nameValue.clearFocus();
+            user_name.setText(name);
+            if(StringUtil.isNotBlank(birthday)) {
+                birthdayValue.setText("");
+                birthdayValue.setHint(birthday);
+            }
+        }
+    }
 
     private void loadData(CommonResponse resposne) {
         if (resposne.isSuccess()) {
@@ -367,6 +471,27 @@ public class UserFragment extends AbsFragment {
         }
     }
 
+    /**
+     * 时间选择
+     */
+    @OnClick(R.id.birthday_value)
+    void showDateDialog() {
+        Calendar now = Calendar.getInstance();
+        Date time = now.getTime();
+        time.setTime(time.getTime());
+        DatePickerDialog dpd = DatePickerDialog.newInstance(
+                this,
+                now.get(Calendar.YEAR),
+                now.get(Calendar.MONTH),
+                now.get(Calendar.DAY_OF_MONTH)
+        );
+        now.setTime(time);
+        dpd.setMaxDate(now);
+        dpd.setAccentColor(accentColor);
+        dpd.show(getActivity().getFragmentManager(), "Datepickerdialog");
+
+    }
+
     @Override
     public boolean onBackPressed() {
         if (isSettingShow) {
@@ -376,4 +501,10 @@ public class UserFragment extends AbsFragment {
         return false;
     }
 
+    @Override
+    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+        birthdayDate.set(year, monthOfYear, dayOfMonth);
+        String dateStr = DateUtil.ConverToString(birthdayDate.getTime());
+        birthdayValue.setText(dateStr);
+    }
 }

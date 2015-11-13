@@ -50,5 +50,6 @@
     <string name="cancel_ing">正在取消</string>
     <string name="select_friends">选择用户</string>
     <string name="habit_executive">执行习惯</string>
+    <string name="change_ok">确定修改</string>
 
 </resources>

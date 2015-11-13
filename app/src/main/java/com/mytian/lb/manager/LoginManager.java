@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.Handler;
 
 import com.alibaba.fastjson.TypeReference;
-import com.mytian.lb.bean.UserResult;
+import com.mytian.lb.bean.user.UserResult;
 import com.mytian.lb.bean.login.AuthCodeParam;
 import com.mytian.lb.bean.login.LoginParam;
 import com.mytian.lb.bean.login.RegisterParam;
@@ -17,7 +17,7 @@ import com.mytian.lb.bean.login.ResetPassWordParam;
 import com.mytian.lb.bean.login.ResetPassWordResult;
 
 /**
- * 用户中心业务类.
+ * 登录业务类.
  *
  * @author bin.teng
  */

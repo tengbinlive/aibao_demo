@@ -10,7 +10,7 @@ import android.net.ConnectivityManager;
 
 import com.baidu.android.pushservice.PushConstants;
 import com.baidu.android.pushservice.PushManager;
-import com.mytian.lb.bean.UserResult;
+import com.mytian.lb.bean.user.UserResult;
 import com.core.CrashHandler;
 import com.core.enums.ConfigKeyEnum;
 import com.core.manager.ConfigManager;

@@ -68,7 +68,7 @@ public class DynamicAdapter extends BaseAdapter {
         int heandid = R.mipmap.head_0;
         String name = bean.getAlias();
         if("系统".equals(name)) {
-            heandid = R.mipmap.ic_launcher;
+            heandid = R.mipmap.icon_sys;
         } else if(position%4==0){
             heandid = R.mipmap.head_1;
         }else if(position%4==1){

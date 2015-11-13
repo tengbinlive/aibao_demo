@@ -3,6 +3,8 @@
     android:id="@+id/layout_setting"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:background="@color/theme_bg_layout"
     android:visibility="invisible">
 
@@ -39,15 +41,17 @@
                     android:textColor="@color/textcolor_222"
                     android:textSize="@dimen/font_btn" />
 
-                <TextView
+                <EditText
                     android:id="@+id/name_value"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:gravity="right"
+                    android:textColor="@color/textcolor_222"
+                    android:textColorHint="@color/gray_hint"
+                    android:textCursorDrawable="@null"
                     android:layout_margin="@dimen/content_gap"
                     android:singleLine="true"
-                    android:textColor="@color/gray_hint"
                     android:textSize="@dimen/font_btn" />
 
             </RelativeLayout>
@@ -78,8 +82,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_margin="@dimen/content_gap"
+                    android:gravity="right"
+                    android:layout_centerVertical="true"                    android:layout_margin="@dimen/content_gap"
                     android:singleLine="true"
                     android:textColor="@color/gray_hint"
                     android:textSize="@dimen/font_btn" />
@@ -109,13 +113,14 @@
 
                 <TextView
                     android:id="@+id/birthday_value"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="right"
                     android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
                     android:layout_margin="@dimen/content_gap"
                     android:singleLine="true"
-                    android:textColor="@color/gray_hint"
+                    android:textColor="@color/textcolor_222"
+                    android:textColorHint="@color/gray_hint"
                     android:textSize="@dimen/font_btn" />
 
             </RelativeLayout>
@@ -194,7 +199,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/button_height"
                 android:layout_margin="@dimen/content_gap_big"
-                android:background="@drawable/login_bg"
+                android:background="@drawable/button_bg_theme"
                 android:text="@string/exit"
                 android:textColor="@color/white"
                 android:textSize="@dimen/font_btn" />

@@ -117,7 +117,7 @@ public class FollowAddAdapter extends BaseAdapter {
             button.setBackgroundResource(0);
             button.setTextColor(0xffbdbdbd);
         } else {
-            button.setBackgroundResource(R.drawable.login_bg);
+            button.setBackgroundResource(R.drawable.button_bg_theme);
             button.setTextColor(0xffffffff);
         }
 

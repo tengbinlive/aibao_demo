@@ -142,7 +142,7 @@ public class DateUtil {
 	}
 
 	// 把日期转为字符串
-	public static String ConverToString(Date date,String type) {
+	public static String ConverToString(Long date,String type) {
 		SimpleDateFormat df = new SimpleDateFormat(type);
 		return df.format(date);
 	}

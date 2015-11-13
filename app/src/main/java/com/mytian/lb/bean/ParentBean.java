@@ -12,7 +12,7 @@ public class ParentBean extends OpenApiSimpleResult {
     private String phone;
     private String alias;
     private String sex;
-    private String birthday;
+    private Long birthday;
     private String headThumb;
     private String sysThumbId;
     private String thumbType;
@@ -66,11 +66,11 @@ public class ParentBean extends OpenApiSimpleResult {
         this.sex = sex;
     }
 
-    public String getBirthday() {
+    public Long getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(String birthday) {
+    public void setBirthday(Long birthday) {
         this.birthday = birthday;
     }
 

@@ -65,7 +65,7 @@
             android:layout_centerVertical="true"
             android:layout_height="@dimen/button_height"
             android:layout_marginRight="@dimen/content_gap"
-            android:background="@drawable/login_bg"
+            android:background="@drawable/button_bg_theme"
             android:text="@string/accept"
             android:textColor="@color/white"
             android:textSize="@dimen/font_btn" />

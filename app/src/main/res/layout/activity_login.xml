@@ -102,7 +102,7 @@
                 android:layout_marginRight="@dimen/content_right_margin"
                 android:layout_marginBottom="@dimen/content_right_margin"
                 android:layout_weight="3"
-                android:background="@drawable/login_bg"
+                android:background="@drawable/button_bg_theme"
                 android:text="@string/login"
                 android:textColor="@color/white"
                 android:textSize="@dimen/font_btn" />
@@ -112,7 +112,7 @@
                 android:layout_width="0dp"
                 android:layout_height="@dimen/button_height"
                 android:layout_weight="1"
-                android:background="@drawable/login_bg"
+                android:background="@drawable/button_bg_theme"
                 android:text="@string/register"
                 android:textColor="@color/white"
                 android:textSize="@dimen/font_btn" />

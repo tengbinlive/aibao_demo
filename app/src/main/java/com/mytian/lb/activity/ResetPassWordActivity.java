@@ -14,13 +14,12 @@ import com.mytian.lb.AbsActivity;
 import com.mytian.lb.App;
 import com.mytian.lb.Constant;
 import com.mytian.lb.R;
-import com.mytian.lb.bean.UserResult;
+import com.mytian.lb.bean.user.UserResult;
 import com.mytian.lb.helper.AnimationHelper;
 import com.mytian.lb.helper.SMSContentObserver;
 import com.mytian.lb.helper.SharedPreferencesHelper;
 import com.mytian.lb.manager.LoginManager;
 import com.mytian.lb.mview.EditTextWithDelete;
-import com.rey.material.widget.CheckBox;
 
 import java.util.Timer;
 import java.util.TimerTask;
