@@ -24,6 +24,7 @@
         <RelativeLayout android:layout_width="90dp"
             android:id="@+id/delete_layout"
             android:background="@color/red"
+            android:layout_gravity="right"
             android:layout_height="match_parent">
 
         <TextView
@@ -42,14 +43,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+        <com.makeramen.roundedimageview.RoundedImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/head"
             android:layout_width="@dimen/item_head_size_small"
             android:layout_height="@dimen/item_head_size_small"
             android:layout_centerVertical="true"
             android:layout_margin="@dimen/content_gap"
-            android:scaleType="centerInside"
-            android:src="@mipmap/icon_contact"
             app:riv_border_width="0dip"
             app:riv_corner_radius="30dip"
             app:riv_mutate_background="true"

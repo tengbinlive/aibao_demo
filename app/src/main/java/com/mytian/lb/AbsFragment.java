@@ -1,5 +1,6 @@
 package com.mytian.lb;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -31,6 +32,8 @@ public abstract class AbsFragment extends Fragment implements EInitFragmentDate 
     public NiftyDialogBuilder dialogBuilder;
 
     public LayoutInflater mInflater;
+
+    public Context mContext;
 
     public abstract boolean onBackPressed();
 
@@ -75,6 +78,7 @@ public abstract class AbsFragment extends Fragment implements EInitFragmentDate 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mContext = this.getContext();
         mInflater = inflater;
         View rootView = mInflater.inflate(getContentView(), container, false);
         ButterKnife.bind(this, rootView);

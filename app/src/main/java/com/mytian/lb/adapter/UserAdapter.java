@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.core.CommonResponse;
 import com.core.util.CommonUtil;
 import com.daimajia.swipe.adapters.BaseSwipeAdapter;
@@ -87,7 +88,9 @@ public class UserAdapter extends BaseSwipeAdapter {
     public void fillValues(int position, View convertView) {
         ViewHolder holder = (ViewHolder) convertView.getTag();
         FollowUser bean = list.get(position);
-        Glide.with(mContext).load(bean.getHead_thumb()).placeholder(R.mipmap.icon_contact).into(holder.head);
+        Glide.with(mContext).load(bean.getHead_thumb()).asBitmap()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .placeholder(R.mipmap.icon_contact).into(holder.head);
         holder.name.setText(bean.getName());
         holder.phone.setText(bean.getPhone());
         holder.deleteLayout.setTag(position);

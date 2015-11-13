@@ -10,11 +10,16 @@
     android:paddingLeft="@dimen/content_gap"
     android:paddingTop="@dimen/content_gap_big">
 
-    <com.mytian.lb.mview.CircleNetworkImageView
+    <com.makeramen.roundedimageview.RoundedImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/user_icon"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:src="@mipmap/head_user_woman" />
+        android:layout_width="@dimen/item_head_size"
+        android:layout_height="@dimen/item_head_size"
+        app:riv_border_width="0dip"
+        app:riv_corner_radius="30dip"
+        app:riv_mutate_background="true"
+        app:riv_oval="false"
+        app:riv_tile_mode="repeat" />
 
     <RelativeLayout
         android:layout_width="match_parent"

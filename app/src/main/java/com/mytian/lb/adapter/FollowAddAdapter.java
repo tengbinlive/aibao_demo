@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.core.CommonResponse;
 import com.core.util.CommonUtil;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -77,7 +78,11 @@ public class FollowAddAdapter extends BaseAdapter {
         }
 
         FollowUser bean = list.get(position);
-        Glide.with(mContext).load(bean.getHead_thumb()).placeholder(R.mipmap.icon_contact).into(viewHolder.head);
+        Glide.with(mContext).load(bean.getHead_thumb())
+                .asBitmap()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .placeholder(R.mipmap.icon_contact)
+                .into(viewHolder.head);
         viewHolder.name.setText(bean.getName());
         if (FollowUser.LB.equals(bean.getFocus_from())) {
             setAccepatView(viewHolder.accept_bt, false);

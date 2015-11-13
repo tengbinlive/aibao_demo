@@ -9,11 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.core.util.CommonUtil;
-import com.makeramen.roundedimageview.RoundedImageView;
 import com.mytian.lb.R;
 import com.mytian.lb.bean.AgreementBean;
-import com.mytian.lb.bean.habitUser.HabitResult;
 import com.mytian.lb.enums.ItemButton;
 import com.mytian.lb.helper.AnimationHelper;
 
@@ -67,7 +66,8 @@ public class HabitAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         AgreementBean bean = list.get(position);
-        Glide.with(mContext).load(bean.getIcon()).fitCenter().into(viewHolder.head);
+        Glide.with(mContext).load(bean.getIcon()).asBitmap()
+                .diskCacheStrategy(DiskCacheStrategy.ALL).fitCenter().into(viewHolder.head);
         viewHolder.name.setText(bean.getName());
 
         int record = bean.getRecord();
@@ -130,7 +130,7 @@ public class HabitAdapter extends BaseAdapter {
      */
     static class ViewHolder {
         @Bind(R.id.head)
-        RoundedImageView head;
+        ImageView head;
         @Bind(R.id.name)
         TextView name;
         @Bind(R.id.like)

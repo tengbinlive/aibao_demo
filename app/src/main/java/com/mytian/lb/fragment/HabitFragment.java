@@ -12,6 +12,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.core.CommonResponse;
 import com.handmark.pulltorefresh.PullToRefreshBase;
 import com.handmark.pulltorefresh.PullToRefreshListView;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.mytian.lb.AbsFragment;
 import com.mytian.lb.R;
 import com.mytian.lb.adapter.HabitAdapter;
@@ -19,8 +20,6 @@ import com.mytian.lb.bean.AgreementBean;
 import com.mytian.lb.bean.DemoUserInfo;
 import com.mytian.lb.demodata.DemoManger;
 import com.mytian.lb.demodata.DemoUserType;
-import com.mytian.lb.event.SettingEventType;
-import com.mytian.lb.mview.CircleNetworkImageView;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
 import com.rey.material.widget.FloatingActionButton;
 
@@ -71,7 +70,7 @@ public class HabitFragment extends AbsFragment {
 
         animationAdapter.setAbsListView(mActualListView);
 
-        mActualListView.addHeaderView(headView,null,true);
+        mActualListView.addHeaderView(headView, null, true);
 
         mActualListView.setAdapter(animationAdapter);
 
@@ -111,14 +110,14 @@ public class HabitFragment extends AbsFragment {
     private void setUserInfo(DemoUserInfo demoUserInfo) {
         TextView user_name = (TextView) headView.findViewById(R.id.user_name);
         TextView user_phone = (TextView) headView.findViewById(R.id.user_phone);
-        CircleNetworkImageView user_icon = (CircleNetworkImageView) headView.findViewById(R.id.user_icon);
+        RoundedImageView user_icon = (RoundedImageView) headView.findViewById(R.id.user_icon);
         String name = demoUserInfo.getParent().getName();
         int head = demoUserInfo.getHeadid();
         String phone = demoUserInfo.getParent().getPhone();
         user_name.setText(name);
         user_phone.setText(phone);
-        Glide.with(this).load(head).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.mipmap.default_head).centerCrop().crossFade().into(user_icon);
-
+        Glide.with(this).load(head).asBitmap().diskCacheStrategy(DiskCacheStrategy.ALL)
+                .placeholder(R.mipmap.default_head).centerCrop().into(user_icon);
         arrayList = demoUserInfo.getBeans();
         mAdapter.refresh(arrayList);
     }

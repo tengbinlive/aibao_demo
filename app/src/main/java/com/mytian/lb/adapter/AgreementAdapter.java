@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.mytian.lb.R;
 import com.mytian.lb.bean.AgreementBean;
 
@@ -62,7 +63,7 @@ public class AgreementAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         AgreementBean bean = list.get(position);
-        Glide.with(mContext).load(bean.getIcon()).into(viewHolder.icon);
+        Glide.with(mContext).load(bean.getIcon()).asBitmap().diskCacheStrategy(DiskCacheStrategy.ALL).into(viewHolder.icon);
         viewHolder.title.setText(bean.getTitle());
         return convertView;
     }

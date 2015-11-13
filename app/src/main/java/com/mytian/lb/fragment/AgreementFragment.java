@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.mytian.lb.AbsFragment;
 import com.mytian.lb.App;
 import com.mytian.lb.R;
@@ -27,7 +28,7 @@ import com.mytian.lb.bean.DemoUserInfo;
 import com.mytian.lb.demodata.DemoManger;
 import com.mytian.lb.demodata.DemoUserType;
 import com.mytian.lb.event.TimeEventType;
-import com.mytian.lb.mview.CircleNetworkImageView;
+import com.mytian.lb.helper.AnimationHelper;
 import com.mytian.lb.mview.ClipRevealFrame;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
 
@@ -48,7 +49,7 @@ public class AgreementFragment extends AbsFragment {
     @Bind(R.id.user_phone)
     TextView user_phone;
     @Bind(R.id.user_icon)
-    CircleNetworkImageView user_icon;
+    RoundedImageView user_icon;
     @Bind(R.id.user_name)
     TextView user_name;
 
@@ -66,7 +67,7 @@ public class AgreementFragment extends AbsFragment {
 
     private AgreementAdapter mAdapter;
     private AgreementBean cureentAgreement;
-    public static final long DKEY_TIME = 15*60 * 1000;// 预约倒计时 15分60 秒
+    public static final long DKEY_TIME = 15 * 60 * 1000;// 预约倒计时 15分60 秒
     private final Timer timer = new Timer();
 
     private long DKEY_START_TIME = 0;
@@ -96,7 +97,8 @@ public class AgreementFragment extends AbsFragment {
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(!isSettingShow) {
+                if (!isSettingShow) {
+                    AnimationHelper.getInstance().viewAnimationScal(view);
                     tempClip = view;
                     cureentAgreement = arrayList.get(position);
                     toggleShowSetting(tempClip);
@@ -130,7 +132,10 @@ public class AgreementFragment extends AbsFragment {
         String phone = demoUserInfo.getParent().getPhone();
         user_name.setText(name);
         user_phone.setText(phone);
-        Glide.with(this).load(head).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.mipmap.default_head).centerCrop().crossFade().into(user_icon);
+        Glide.with(this).load(head)
+                .asBitmap()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .placeholder(R.mipmap.default_head).centerCrop().into(user_icon);
     }
 
     private void startTimeAnimation() {
@@ -165,31 +170,32 @@ public class AgreementFragment extends AbsFragment {
     };
 
     StringBuffer buffer = new StringBuffer();
+
     private void setTimeText(long TimeUsed) {
-        int TimeMinute = ((15*60) - (int) TimeUsed / 1000)/60;
-        int TimeSeconds =  ((15*60) - (int) TimeUsed / 1000)%60;
+        int TimeMinute = ((15 * 60) - (int) TimeUsed / 1000) / 60;
+        int TimeSeconds = ((15 * 60) - (int) TimeUsed / 1000) % 60;
         if (TimeUsed < DKEY_TIME) {
             buffer.setLength(0);
             buffer.append(TimeMinute).append("分");
-            if(TimeSeconds==0){
+            if (TimeSeconds == 0) {
                 buffer.append("0");
             }
             buffer.append(TimeSeconds).append("秒");
             agreementTime.setText(buffer.toString());
 
-            int int_time = (int)TimeUsed / 1000;
-            int int_dkey_time = (int)DKEY_TIME / 1000;
-            int level = animaitonNum - (int_time*animaitonNum)/int_dkey_time;
-            if(level>=animaitonNum){
+            int int_time = (int) TimeUsed / 1000;
+            int int_dkey_time = (int) DKEY_TIME / 1000;
+            int level = animaitonNum - (int_time * animaitonNum) / int_dkey_time;
+            if (level >= animaitonNum) {
                 level = animaitonNum;
-            }else if(level<=0){
+            } else if (level <= 0) {
                 level = 0;
             }
-            if(level!=animaitonNum&&!isTimeUsed){
+            if (level != animaitonNum && !isTimeUsed) {
                 isTimeUsed = true;
                 agreementAnimation.setImageResource(R.drawable.level_time);
             }
-            if(isTimeUsed) {
+            if (isTimeUsed) {
                 agreementAnimation.setImageLevel(level);
             }
         }
@@ -262,7 +268,7 @@ public class AgreementFragment extends AbsFragment {
         layoutClip.setVisibility(View.VISIBLE);
         Animator revealAnim = createCircularReveal(layoutClip, cx, cy, startRadius, endRadius);
         revealAnim.setInterpolator(new AccelerateDecelerateInterpolator());
-        revealAnim.setDuration(400);
+        revealAnim.setDuration(1000);
         revealAnim.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
@@ -276,7 +282,7 @@ public class AgreementFragment extends AbsFragment {
     private void hideMenu(int cx, int cy, float startRadius, float endRadius) {
         Animator revealAnim = createCircularReveal(layoutClip, cx, cy, startRadius, endRadius);
         revealAnim.setInterpolator(new AccelerateDecelerateInterpolator());
-        revealAnim.setDuration(400);
+        revealAnim.setDuration(500);
         revealAnim.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {

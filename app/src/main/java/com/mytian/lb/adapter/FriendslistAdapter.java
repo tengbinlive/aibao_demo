@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mytian.lb.R;
 import com.mytian.lb.bean.follow.FollowUser;
@@ -69,7 +70,8 @@ public class FriendslistAdapter extends BaseAdapter {
         }
 
         FollowUser bean = list.get(position);
-        Glide.with(mContext).load(bean.getHead_id()).into(viewHolder.head);
+        Glide.with(mContext).load(bean.getHead_id()).asBitmap()
+                .diskCacheStrategy(DiskCacheStrategy.ALL).into(viewHolder.head);
         viewHolder.name.setText(bean.getName());
         viewHolder.phone.setText(bean.getPhone());
         return convertView;

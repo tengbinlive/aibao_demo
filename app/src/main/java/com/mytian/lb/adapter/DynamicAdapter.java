@@ -7,10 +7,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.mytian.lb.R;
 import com.mytian.lb.bean.DynamicResult;
-import com.bumptech.glide.Glide;
-import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
 
@@ -63,7 +64,17 @@ public class DynamicAdapter extends BaseAdapter {
         }
         DynamicResult bean = list.get(position);
 
-//        Glide.with(mContext).load(bean.getHeadid()).placeholder(R.mipmap.icon_contact).into(viewHolder.head);
+        int heandid = R.mipmap.head_0;
+        if(position%4==0){
+            heandid = R.mipmap.head_1;
+        } if(position%4==1){
+            heandid = R.mipmap.head_2;
+        }if(position%4==2){
+            heandid = R.mipmap.head_3;
+        }
+        Glide.with(mContext).load(heandid).asBitmap()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .placeholder(R.mipmap.icon_contact).into(viewHolder.head);
         viewHolder.name.setText(bean.getName());
         viewHolder.date.setText(bean.getDate());
         viewHolder.desc.setText(bean.getDesc());

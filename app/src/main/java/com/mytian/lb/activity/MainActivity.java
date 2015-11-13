@@ -155,12 +155,12 @@ public class MainActivity extends AbsActivity {
 
     private void setActionBar() {
         setToolbarLeft(R.mipmap.menu_normal);
-//        setToolbarLeftOnClick(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
+        setToolbarLeftOnClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 //                toggerDrawer();
-//            }
-//        });
+            }
+        });
 
     }
 

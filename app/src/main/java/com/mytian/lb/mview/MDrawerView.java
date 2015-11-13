@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -26,7 +27,7 @@ public class MDrawerView extends LinearLayout {
 
     private TextView mWalletTv, mPlateTv, mMsgTv, mMsTitlegTv, mOrderTv, mCouponTv, mShareTv, mSettingTv;
 
-    private CircleNetworkImageView mHead;
+    private ImageView mHead;
 
     private TextView mName;
 
@@ -54,7 +55,7 @@ public class MDrawerView extends LinearLayout {
         mInflater = LayoutInflater.from(context);
         mInflater.inflate(R.layout.layout_drawer, this);
 
-        mHead = (CircleNetworkImageView) findViewById(R.id.menu_user_icon);
+        mHead = (ImageView) findViewById(R.id.menu_user_icon);
         mName = (TextView) findViewById(R.id.menu_user_name);
 
         mPlate = (LinearLayout) findViewById(R.id.me_plate);

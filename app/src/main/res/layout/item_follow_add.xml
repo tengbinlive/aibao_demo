@@ -25,8 +25,6 @@
             android:layout_height="@dimen/item_head_size_small"
             android:layout_centerVertical="true"
             android:layout_margin="@dimen/content_gap"
-            android:scaleType="centerInside"
-            android:src="@mipmap/icon_contact"
             app:riv_border_width="0dip"
             app:riv_corner_radius="30dip"
             app:riv_mutate_background="true"

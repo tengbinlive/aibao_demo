@@ -16,10 +16,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.core.CommonResponse;
 import com.core.util.StringUtil;
 import com.handmark.pulltorefresh.PullToRefreshBase;
 import com.handmark.pulltorefresh.PullToRefreshListView;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.mytian.lb.AbsActivity;
 import com.mytian.lb.AbsFragment;
 import com.mytian.lb.App;
@@ -35,7 +37,6 @@ import com.mytian.lb.event.SettingEventType;
 import com.mytian.lb.event.UserEventType;
 import com.mytian.lb.helper.SharedPreferencesHelper;
 import com.mytian.lb.manager.FollowManager;
-import com.mytian.lb.mview.CircleNetworkImageView;
 import com.mytian.lb.mview.ClipRevealFrame;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
 import com.nineoldandroids.animation.ValueAnimator;
@@ -91,7 +92,7 @@ public class UserFragment extends AbsFragment {
     @Bind(R.id.user_phone)
     TextView user_phone;
     @Bind(R.id.user_icon)
-    CircleNetworkImageView user_icon;
+    RoundedImageView user_icon;
     @Bind(R.id.user_name)
     TextView user_name;
     @Bind(R.id.layout_user)
@@ -180,13 +181,15 @@ public class UserFragment extends AbsFragment {
     private void setUserInfo() {
         String name = App.getInstance().userResult.getParent().getName();
         name = StringUtil.isNotBlank(name) ? name : "你猜.";
-        String head = App.getInstance().userResult.getParent().getHeadThumb();
-        head = StringUtil.isNotBlank(head) ? head : "";
         String phone = App.getInstance().userResult.getParent().getPhone();
         phone = StringUtil.isNotBlank(phone) ? phone : "...";
+        String head = App.getInstance().userResult.getParent().getHeadThumb();
         user_name.setText(name);
         user_phone.setText(phone);
-//        Glide.with(this).load(R.mipmap.head_user_woman).placeholder(R.mipmap.default_head).centerCrop().crossFade().into(user_icon);
+        user_icon.setVisibility(View.VISIBLE);
+        Glide.with(App.getInstance()).load(R.mipmap.head_user_woman).asBitmap()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .centerCrop().placeholder(R.mipmap.default_head).into(user_icon);
     }
 
     public void onEvent(SettingEventType event) {
@@ -254,6 +257,7 @@ public class UserFragment extends AbsFragment {
                 lp.height = (int) value;
                 layout_user.setLayoutParams(lp);
             }
+
         });
         animation.start();
     }
@@ -349,7 +353,7 @@ public class UserFragment extends AbsFragment {
             }
             if (size >= COUNT_MAX) {
                 currentPager++;
-            }else{
+            } else {
                 listview.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
             }
         } else {
