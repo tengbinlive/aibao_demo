@@ -10,7 +10,7 @@ public class ParentBean extends OpenApiSimpleResult {
     private String uid;
     private String token;
     private String phone;
-    private String name;
+    private String alias;
     private String sex;
     private String birthday;
     private String headThumb;
@@ -50,12 +50,12 @@ public class ParentBean extends OpenApiSimpleResult {
         this.phone = phone;
     }
 
-    public String getName() {
-        return name;
+    public String getAlias() {
+        return alias;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setAlias(String alias) {
+        this.alias = alias;
     }
 
     public String getSex() {
@@ -96,7 +96,7 @@ public class ParentBean extends OpenApiSimpleResult {
                 "uid='" + uid + '\'' +
                 ", token='" + token + '\'' +
                 ", phone='" + phone + '\'' +
-                ", name='" + name + '\'' +
+                ", alias='" + alias + '\'' +
                 ", sex='" + sex + '\'' +
                 ", birthday='" + birthday + '\'' +
                 ", headThumb='" + headThumb + '\'' +

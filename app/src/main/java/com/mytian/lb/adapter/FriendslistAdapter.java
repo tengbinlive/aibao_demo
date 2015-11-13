@@ -72,7 +72,7 @@ public class FriendslistAdapter extends BaseAdapter {
         FollowUser bean = list.get(position);
         Glide.with(mContext).load(bean.getHead_id()).asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.ALL).into(viewHolder.head);
-        viewHolder.name.setText(bean.getName());
+        viewHolder.name.setText(bean.getAlias());
         viewHolder.phone.setText(bean.getPhone());
         return convertView;
     }

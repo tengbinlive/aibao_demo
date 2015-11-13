@@ -64,18 +64,22 @@ public class DynamicAdapter extends BaseAdapter {
         }
         DynamicResult bean = list.get(position);
 
+
         int heandid = R.mipmap.head_0;
-        if(position%4==0){
+        String name = bean.getAlias();
+        if("系统".equals(name)) {
+            heandid = R.mipmap.ic_launcher;
+        } else if(position%4==0){
             heandid = R.mipmap.head_1;
-        } if(position%4==1){
+        }else if(position%4==1){
             heandid = R.mipmap.head_2;
-        }if(position%4==2){
+        }else if(position%4==2){
             heandid = R.mipmap.head_3;
         }
         Glide.with(mContext).load(heandid).asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .placeholder(R.mipmap.icon_contact).into(viewHolder.head);
-        viewHolder.name.setText(bean.getName());
+        viewHolder.name.setText(name);
         viewHolder.date.setText(bean.getDate());
         viewHolder.desc.setText(bean.getDesc());
         viewHolder.content.setText(bean.getContent());

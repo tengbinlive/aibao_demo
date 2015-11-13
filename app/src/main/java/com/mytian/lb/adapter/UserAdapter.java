@@ -91,7 +91,7 @@ public class UserAdapter extends BaseSwipeAdapter {
         Glide.with(mContext).load(bean.getHead_thumb()).asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .placeholder(R.mipmap.icon_contact).into(holder.head);
-        holder.name.setText(bean.getName());
+        holder.name.setText(bean.getAlias());
         holder.phone.setText(bean.getPhone());
         holder.deleteLayout.setTag(position);
     }

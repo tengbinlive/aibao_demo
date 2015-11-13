@@ -127,7 +127,7 @@ public class AgreementFragment extends AbsFragment {
     }
 
     private void setUserInfo(DemoUserInfo demoUserInfo) {
-        String name = demoUserInfo.getParent().getName();
+        String name = demoUserInfo.getParent().getAlias();
         int head = demoUserInfo.getHeadid();
         String phone = demoUserInfo.getParent().getPhone();
         user_name.setText(name);
@@ -165,8 +165,6 @@ public class AgreementFragment extends AbsFragment {
                 setTimeText(TimeUsed);
             }
         }
-
-        ;
     };
 
     StringBuffer buffer = new StringBuffer();

@@ -111,7 +111,7 @@ public class HabitFragment extends AbsFragment {
         TextView user_name = (TextView) headView.findViewById(R.id.user_name);
         TextView user_phone = (TextView) headView.findViewById(R.id.user_phone);
         RoundedImageView user_icon = (RoundedImageView) headView.findViewById(R.id.user_icon);
-        String name = demoUserInfo.getParent().getName();
+        String name = demoUserInfo.getParent().getAlias();
         int head = demoUserInfo.getHeadid();
         String phone = demoUserInfo.getParent().getPhone();
         user_name.setText(name);

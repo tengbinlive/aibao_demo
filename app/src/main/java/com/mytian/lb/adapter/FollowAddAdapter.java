@@ -83,7 +83,7 @@ public class FollowAddAdapter extends BaseAdapter {
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .placeholder(R.mipmap.icon_contact)
                 .into(viewHolder.head);
-        viewHolder.name.setText(bean.getName());
+        viewHolder.name.setText(bean.getAlias());
         if (FollowUser.LB.equals(bean.getFocus_from())) {
             setAccepatView(viewHolder.accept_bt, false);
             viewHolder.accept_bt.setText(R.string.already_pull);

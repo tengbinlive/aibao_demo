@@ -68,7 +68,7 @@ public class HabitAdapter extends BaseAdapter {
         AgreementBean bean = list.get(position);
         Glide.with(mContext).load(bean.getIcon()).asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.ALL).fitCenter().into(viewHolder.head);
-        viewHolder.name.setText(bean.getName());
+        viewHolder.name.setText(bean.getTitle());
 
         int record = bean.getRecord();
         if(record == AgreementBean.GREAT){

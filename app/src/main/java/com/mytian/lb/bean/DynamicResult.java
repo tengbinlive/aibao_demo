@@ -6,7 +6,7 @@ import com.core.openapi.OpenApiSimpleResult;
  * Created by bin.teng on 2015/10/28.
  */
 public class DynamicResult extends OpenApiSimpleResult {
-    private String name;
+    private String alias;
     private String head;
     private String date;
     private String desc;
@@ -21,12 +21,12 @@ public class DynamicResult extends OpenApiSimpleResult {
         this.headid = headid;
     }
 
-    public String getName() {
-        return name;
+    public String getAlias() {
+        return alias;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setAlias(String alias) {
+        this.alias = alias;
     }
 
     public String getHead() {
@@ -64,7 +64,7 @@ public class DynamicResult extends OpenApiSimpleResult {
     @Override
     public String toString() {
         return "DynamicResult{" +
-                "name='" + name + '\'' +
+                "alias='" + alias + '\'' +
                 ", head='" + head + '\'' +
                 ", date='" + date + '\'' +
                 ", desc='" + desc + '\'' +

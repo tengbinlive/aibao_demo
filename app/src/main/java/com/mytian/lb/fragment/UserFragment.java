@@ -179,7 +179,7 @@ public class UserFragment extends AbsFragment {
     }
 
     private void setUserInfo() {
-        String name = App.getInstance().userResult.getParent().getName();
+        String name = App.getInstance().userResult.getParent().getAlias();
         name = StringUtil.isNotBlank(name) ? name : "你猜.";
         String phone = App.getInstance().userResult.getParent().getPhone();
         phone = StringUtil.isNotBlank(phone) ? phone : "...";

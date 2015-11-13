@@ -9,7 +9,7 @@ import com.core.openapi.OpenApiSimpleResult;
 public class ParentFocusBean extends OpenApiSimpleResult {
     private String uid;
     private String phone;
-    private String name;
+    private String alias;
     private String sex;
     private String birthday;
     private String head_thumb;
@@ -36,12 +36,12 @@ public class ParentFocusBean extends OpenApiSimpleResult {
         this.phone = phone;
     }
 
-    public String getName() {
-        return name;
+    public String getAlias() {
+        return alias;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setAlias(String alias) {
+        this.alias = alias;
     }
 
     public String getSex() {
@@ -121,7 +121,7 @@ public class ParentFocusBean extends OpenApiSimpleResult {
         return "ParentFocusBean{" +
                 "uid='" + uid + '\'' +
                 ", phone='" + phone + '\'' +
-                ", name='" + name + '\'' +
+                ", alias='" + alias + '\'' +
                 ", sex='" + sex + '\'' +
                 ", birthday='" + birthday + '\'' +
                 ", head_thumb='" + head_thumb + '\'' +

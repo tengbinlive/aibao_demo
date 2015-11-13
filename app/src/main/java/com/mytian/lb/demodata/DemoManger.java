@@ -39,7 +39,7 @@ public class DemoManger {
         demoUserInfo_1 = new DemoUserInfo();
         FollowUser parent = new FollowUser();
         parent.setPhone("18217612177");
-        parent.setName("小明");
+        parent.setAlias("小明");
         demoUserInfo_1.setParent(parent);
         demoUserInfo_1.setId("1");
         demoUserInfo_1.setHeadid(R.mipmap.head_1);
@@ -61,7 +61,7 @@ public class DemoManger {
         demoUserInfo_2 = new DemoUserInfo();
         parent = new FollowUser();
         parent.setPhone("18217611111");
-        parent.setName("李雷");
+        parent.setAlias("李雷");
         demoUserInfo_2.setParent(parent);
         demoUserInfo_2.setHeadid(R.mipmap.head_2);
         demoUserInfo_2.setId("2");
@@ -87,7 +87,7 @@ public class DemoManger {
         demoUserInfo_3 = new DemoUserInfo();
         parent = new FollowUser();
         parent.setPhone("15217611213");
-        parent.setName("韩梅梅");
+        parent.setAlias("韩梅梅");
         demoUserInfo_3.setParent(parent);
         demoUserInfo_3.setHeadid(R.mipmap.head_3);
         demoUserInfo_3.setId("3");
@@ -105,7 +105,7 @@ public class DemoManger {
         demoUserInfo_4 = new DemoUserInfo();
         parent = new FollowUser();
         parent.setPhone("13217611222");
-        parent.setName("小红");
+        parent.setAlias("小红");
         demoUserInfo_4.setParent(parent);
         demoUserInfo_4.setHeadid(R.mipmap.head_4);
         demoUserInfo_4.setId("4");
@@ -139,7 +139,7 @@ public class DemoManger {
         demoUserInfo_0 = new DemoUserInfo();
         parent = new FollowUser();
         parent.setPhone("1392121520");
-        parent.setName("韩韩");
+        parent.setAlias("韩韩");
         demoUserInfo_0.setParent(parent);
         demoUserInfo_0.setHeadid(R.mipmap.head_0);
         demoUserInfo_0.setId("0");

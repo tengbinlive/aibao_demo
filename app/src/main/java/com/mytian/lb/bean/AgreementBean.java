@@ -10,7 +10,7 @@ public class AgreementBean extends OpenApiSimpleResult {
 
     public final static int GREAT = 1;
     public final static int BAD = GREAT + 1;
-    private String name;
+    private String alias;
     private String head;
     private String date;
     private int record;
@@ -33,12 +33,12 @@ public class AgreementBean extends OpenApiSimpleResult {
         this.icon = icon;
     }
 
-    public String getName() {
-        return name;
+    public String getAlias() {
+        return alias;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setAlias(String alias) {
+        this.alias = alias;
     }
 
     public String getHead() {
@@ -68,7 +68,7 @@ public class AgreementBean extends OpenApiSimpleResult {
     @Override
     public String toString() {
         return "HabitResult{" +
-                "name='" + name + '\'' +
+                "alias='" + alias + '\'' +
                 ", head='" + head + '\'' +
                 ", date='" + date + '\'' +
                 ", record=" + record +

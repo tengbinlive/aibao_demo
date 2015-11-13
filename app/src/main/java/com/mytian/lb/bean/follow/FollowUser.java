@@ -12,6 +12,7 @@ public class FollowUser {
     public final static String LB = "1";
     private String uid;
     private String name;
+    private String alias;
     private String sex;
     private String category;
     private String phone;
@@ -29,6 +30,14 @@ public class FollowUser {
     private String searchKey;
     private boolean focus;
     private int head_id;
+
+    public String getAlias() {
+        return alias;
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
+    }
 
     public int getHead_id() {
         return head_id;
