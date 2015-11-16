@@ -53,7 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_height="@dimen/button_height"
-            android:background="@drawable/button_bg_red"
+            android:background="@drawable/button_bg_match"
             android:text="@string/change_ok"
             android:visibility="gone"
             android:textColor="@color/white"

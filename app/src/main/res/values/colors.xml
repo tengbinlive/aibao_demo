@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#ffca0d</color>
-    <color name="colorPrimaryDark">#ffca0d</color>
-    <color name="colorAccent">#ffca0d</color>
-
-    <color name="theme">#ffca0d</color>
     <color name="theme_bg">#808080</color>
     <color name="theme_bg_layout">#fafafa</color>
     <color name="white">#FFFFFFFF</color>
@@ -12,7 +7,8 @@
     <color name="black">#000</color>
     <color name="transparent">#00000000</color>
     <color name="gray">#808080</color>
-    <color name="red">#f12e40</color>
+    <color name="match">#f12e40</color>
+    <color name="theme">#ffca0d</color>
 
 
     <!--font -->
