@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -12,6 +13,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mytian.lb.R;
 import com.mytian.lb.bean.DynamicResult;
+import com.mytian.lb.helper.GlideRoundTransform;
 
 import java.util.ArrayList;
 
@@ -26,10 +28,13 @@ public class DynamicAdapter extends BaseAdapter {
 
     private Context mContext;
 
+    private GlideRoundTransform transform;
+
     public DynamicAdapter(Context context, ArrayList<DynamicResult> _list) {
         this.list = _list;
         mContext = context;
         mInflater = LayoutInflater.from(context);
+        transform = new GlideRoundTransform(context,4);
     }
 
     @Override
@@ -63,11 +68,9 @@ public class DynamicAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         DynamicResult bean = list.get(position);
-
-
         int heandid = R.mipmap.head_0;
-        String name = bean.getAlias();
-        if("系统".equals(name)) {
+        int type = bean.getType();
+        if(type==DynamicResult.TYPE_SYS) {
             heandid = R.mipmap.icon_sys;
         } else if(position%4==0){
             heandid = R.mipmap.head_1;
@@ -76,10 +79,15 @@ public class DynamicAdapter extends BaseAdapter {
         }else if(position%4==2){
             heandid = R.mipmap.head_3;
         }
-        Glide.with(mContext).load(heandid).asBitmap()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(R.mipmap.icon_contact).into(viewHolder.head);
-        viewHolder.name.setText(name);
+        if(type==DynamicResult.TYPE_SYS) {
+            viewHolder.head.setImageDrawable(bean.getDrawable());
+        }else{
+            Glide.with(mContext).load(heandid).asBitmap()
+                    .transform(transform)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .placeholder(R.mipmap.icon_contact).into(viewHolder.head);
+        }
+        viewHolder.name.setText(bean.getAlias());
         viewHolder.date.setText(bean.getDate());
         viewHolder.desc.setText(bean.getDesc());
         viewHolder.content.setText(bean.getContent());
@@ -95,7 +103,7 @@ public class DynamicAdapter extends BaseAdapter {
      */
     static class ViewHolder {
         @Bind(R.id.head)
-        RoundedImageView head;
+        ImageView head;
         @Bind(R.id.name)
         TextView name;
         @Bind(R.id.date)

@@ -1,6 +1,7 @@
 package com.mytian.lb;
 
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -13,11 +14,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AbsListView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.gitonway.lee.niftymodaldialogeffects.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.NiftyDialogBuilder;
 import com.mytian.lb.event.AnyEventType;
@@ -56,6 +60,8 @@ public abstract class AbsActivity extends SwipeBackActivity implements EInitDate
 
     public NiftyDialogBuilder dialogBuilder;
 
+    public Context mContext;
+
     private boolean isBackAnim = false;
 
     public boolean isBackAnim() {
@@ -77,6 +83,7 @@ public abstract class AbsActivity extends SwipeBackActivity implements EInitDate
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext = this;
         EventBus.getDefault().register(this);
         App.getInstance().addActivity(this);
         int colos = getIntent().getIntExtra(STATUSBAR_COLOS, 0);
@@ -92,6 +99,29 @@ public abstract class AbsActivity extends SwipeBackActivity implements EInitDate
         EInit();
     }
 
+    /**
+     * 设置listview 滑动时不异步加载图片，停止时加载
+     * @param listview
+     */
+    public void setListGlide(ListView listview){
+        listview.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                if (scrollState == SCROLL_STATE_IDLE) {
+                    Glide.with(mContext).resumeRequests();
+                } else if (scrollState == SCROLL_STATE_FLING) {
+                    Glide.with(mContext).pauseRequests();
+                } else if (scrollState == SCROLL_STATE_TOUCH_SCROLL) {
+                    Glide.with(mContext).pauseRequests();
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+            }
+        });
+    }
 
     /**
      * 设置statusbar全透明

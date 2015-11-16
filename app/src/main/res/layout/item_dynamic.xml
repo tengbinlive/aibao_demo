@@ -12,14 +12,10 @@
         android:padding="@dimen/content_gap"
         android:background="@color/theme_bg_layout">
 
-        <com.makeramen.roundedimageview.RoundedImageView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
+        <ImageView
             android:id="@+id/head"
             android:layout_width="@dimen/item_head_size"
-            android:layout_height="@dimen/item_head_size"
-            app:riv_border_width="0dip"
-            app:riv_corner_radius="@dimen/rounded_size"
-            app:riv_oval="false" />
+            android:layout_height="@dimen/item_head_size" />
 
         <RelativeLayout
             android:layout_width="match_parent"

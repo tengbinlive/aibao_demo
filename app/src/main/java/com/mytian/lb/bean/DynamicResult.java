@@ -1,17 +1,46 @@
 package com.mytian.lb.bean;
 
+import com.amulyakhare.textdrawable.TextDrawable;
 import com.core.openapi.OpenApiSimpleResult;
+import com.mytian.lb.App;
+import com.mytian.lb.R;
 
 /**
  * Created by bin.teng on 2015/10/28.
  */
 public class DynamicResult extends OpenApiSimpleResult {
+    public final static int TYPE_SYS = 2;
+    public final static int TYPE_MAIBAO = 3;
+    public final static int TYPE_AIBAO = 4;
     private String alias;
     private String head;
     private String date;
     private String desc;
     private String content;
     private int headid;
+    private int type;
+    private TextDrawable drawable;
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public TextDrawable getDrawable() {
+        if (drawable == null) {
+            int radius = (int) App.getInstance().getResources().getDimension(R.dimen.rounded_size);
+            drawable = TextDrawable.builder()
+                    .buildRoundRect("sys", 0xffffca0d,radius);
+        }
+        return drawable;
+    }
+
+    public void setDrawable(TextDrawable drawable) {
+        this.drawable = drawable;
+    }
 
     public int getHeadid() {
         return headid;
@@ -69,6 +98,9 @@ public class DynamicResult extends OpenApiSimpleResult {
                 ", date='" + date + '\'' +
                 ", desc='" + desc + '\'' +
                 ", content='" + content + '\'' +
+                ", headid=" + headid +
+                ", type=" + type +
+                ", drawable=" + drawable +
                 '}';
     }
 }

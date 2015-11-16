@@ -155,6 +155,8 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
             }
         });
 
+        setListGlide(mActualListView);
+
     }
 
     private void getListData(int state) {
@@ -245,8 +247,6 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         String nameHint = nameValue.getHint().toString();
         String birthday = birthdayValue.getText().toString();
         String birthdayHint = birthdayValue.getHint().toString();
-        boolean isname = false;
-        boolean isbirthday = false;
         if (StringUtil.isBlank(name) && StringUtil.isBlank(nameHint)) {
             AnimationHelper.getInstance().viewAnimationQuiver(nameValue);
             return;

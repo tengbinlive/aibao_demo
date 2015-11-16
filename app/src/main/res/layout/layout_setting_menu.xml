@@ -153,12 +153,15 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/content_gap"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent">
 
                     <Button
                         android:id="@+id/woman_bt"
                         android:layout_width="65dp"
                         android:layout_height="32dp"
+                        android:layout_marginTop="@dimen/shadow"
+                        android:layout_marginLeft="@dimen/shadow"
+                        android:layout_marginBottom="@dimen/shadow"
                         android:visibility="invisible"
                         android:background="@drawable/button_bg_theme"
                         android:text="@string/woman"
@@ -170,6 +173,9 @@
                         android:id="@+id/man_bt"
                         android:layout_width="65dp"
                         android:visibility="invisible"
+                        android:layout_marginTop="@dimen/shadow"
+                        android:layout_marginBottom="@dimen/shadow"
+                        android:layout_marginRight="@dimen/shadow"
                         android:layout_height="32dp"
                         android:background="@drawable/button_bg_theme"
                         android:text="@string/man"

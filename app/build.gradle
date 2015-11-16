@@ -42,6 +42,7 @@ dependencies {
     compile 'com.makeramen:roundedimageview:2.2.1'//圆角 imageview
     compile 'com.pnikosis:materialish-progress:1.5'//material进度条
     compile 'com.mcxiaoke.volley:library:1.0.19'//volley
+    compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
     compile 'com.wdullaer:materialdatetimepicker:2.0.1'
     compile 'com.ogaclejapan.smarttablayout:library:1.4.2@aar'
     compile 'com.nineoldandroids:library:2.4.0'
