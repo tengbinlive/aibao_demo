@@ -17,9 +17,9 @@ public class DemoManger {
     private String[] argeementTitle;
 
     private DemoUserInfo demoUserInfo_1;//小明
-    private DemoUserInfo demoUserInfo_2;//李雷
+    private DemoUserInfo demoUserInfo_2;//小红
     private DemoUserInfo demoUserInfo_3;//韩梅梅
-    private DemoUserInfo demoUserInfo_4;//小红
+    private DemoUserInfo demoUserInfo_4;//李雷
     private DemoUserInfo demoUserInfo_0;//韩韩
 
     public static DemoManger getInstance() {
@@ -61,7 +61,7 @@ public class DemoManger {
         demoUserInfo_2 = new DemoUserInfo();
         parent = new FollowUser();
         parent.setPhone("18217611111");
-        parent.setAlias("李雷");
+        parent.setAlias("小红");
         demoUserInfo_2.setParent(parent);
         demoUserInfo_2.setHeadid(R.mipmap.head_2);
         demoUserInfo_2.setId("2");
@@ -105,7 +105,7 @@ public class DemoManger {
         demoUserInfo_4 = new DemoUserInfo();
         parent = new FollowUser();
         parent.setPhone("13217611222");
-        parent.setAlias("小红");
+        parent.setAlias("李雷");
         demoUserInfo_4.setParent(parent);
         demoUserInfo_4.setHeadid(R.mipmap.head_4);
         demoUserInfo_4.setId("4");
