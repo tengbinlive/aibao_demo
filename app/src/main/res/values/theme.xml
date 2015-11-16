@@ -1,0 +1,15 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:textColor">@color/textcolor_222</item>
+        <item name="android:textColorHint">@color/gray_hint</item>
+    </style>
+
+    <style name="AppThemeWTN" parent="AppTheme">
+        <item name="android:windowIsTranslucent">false</item>
+    </style>
+
+</resources>
