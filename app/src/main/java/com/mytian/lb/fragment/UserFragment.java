@@ -46,6 +46,7 @@ import com.mytian.lb.event.SettingEventType;
 import com.mytian.lb.helper.AnimationHelper;
 import com.mytian.lb.helper.AnimatorUtils;
 import com.mytian.lb.helper.SharedPreferencesHelper;
+import com.mytian.lb.helper.ThemeHelper;
 import com.mytian.lb.manager.FollowManager;
 import com.mytian.lb.manager.UserManager;
 import com.mytian.lb.mview.ClipRevealFrame;
@@ -84,7 +85,6 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
     @Bind(R.id.gender_layout)
     RelativeLayout gender_layout;
 
-    @BindColor(R.color.theme)
     int accentColor;
     private Calendar birthdayDate;
 
@@ -181,6 +181,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
     @Override
     public void EInit() {
         birthdayDate = Calendar.getInstance();
+        accentColor = ThemeHelper.getInstance().currentTheme.themeColos;
         initListView();
         setUserInfo();
         getListData(INIT_LIST);

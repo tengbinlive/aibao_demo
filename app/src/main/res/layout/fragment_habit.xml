@@ -31,7 +31,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginBottom="@dimen/content_gap_big"
         android:layout_marginRight="@dimen/content_gap_big"
-        app:fab_backgroundColor="@color/theme"
+        app:fab_backgroundColor="?attr/colos_theme"
         app:fab_elevation="2dp"
         app:fab_iconLineMorphing="@style/FloatingActionButtonIcon"
         app:fab_radius="@dimen/foatingbt_size"

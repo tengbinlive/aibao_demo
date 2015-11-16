@@ -4,7 +4,7 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/theme"
+    android:background="?attr/colos_theme"
     android:contentInsetLeft="0dp"
     android:elevation="@dimen/elevation_height"
     android:contentInsetStart="0dp"

@@ -56,7 +56,6 @@ public class LoginManager {
      * @param handlerMsgCode
      */
     public void login(Context context, String phone,String password, final Handler handler, final int handlerMsgCode) {
-
         LoginParam param = new LoginParam();
         param.setPhone(phone);
         param.setPassword(password);

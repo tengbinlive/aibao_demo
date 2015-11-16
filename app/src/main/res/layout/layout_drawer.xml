@@ -8,7 +8,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/statusBar_height"
         android:gravity="center_vertical"
-        android:background="@color/theme"
+        android:background="?attr/colos_theme"
         android:elevation="@dimen/elevation_height"
         android:orientation="vertical"
         android:paddingLeft="@dimen/content_gap">
@@ -193,7 +193,7 @@
                 android:layout_height="1dp"
                 android:elevation="0.5dp"
                 android:layout_marginBottom="@dimen/content_10dp"
-                android:background="@color/theme" />
+                android:background="?attr/colos_theme" />
 
             <LinearLayout
                 android:id="@+id/me_setting"

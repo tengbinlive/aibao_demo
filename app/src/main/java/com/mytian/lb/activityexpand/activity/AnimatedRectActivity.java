@@ -9,6 +9,9 @@ import android.util.Property;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.mytian.lb.R;
+import com.mytian.lb.helper.ThemeHelper;
+
 public abstract class AnimatedRectActivity extends Activity {
 
     private AnimatedRectLayout mAnimated;
@@ -17,9 +20,9 @@ public abstract class AnimatedRectActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ThemeHelper.getInstance().setThemeType(this,isThemeTranslucent());
         super.onCreate(savedInstanceState);
         setContentView(getContentView());
-
         FrameLayout activityRoot = (FrameLayout) findViewById(android.R.id.content);
         View parent = activityRoot.getChildAt(0);
 
@@ -37,6 +40,10 @@ public abstract class AnimatedRectActivity extends Activity {
     }
 
     protected abstract int getContentView();
+
+    public boolean isThemeTranslucent(){
+        return true;
+    }
 
     @Override
     public void onBackPressed() {
