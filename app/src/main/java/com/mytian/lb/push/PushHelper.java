@@ -39,7 +39,7 @@ public class PushHelper {
     public final static int STATE_UPDATE_NO = STATE_UPDATE_RE + 1;//上传id 上传失败
     public final static int STATE_UPDATE_YES = STATE_UPDATE_NO + 1;//上传id 上传成功
 
-    private final static String APP_KEY = "XqXiOUPbeYEAGaOz1IfDIpKK";//test:PSszk83CkivESkUMxWAegvKZ //XqXiOUPbeYEAGaOz1IfDIpKK
+    private final static String APP_KEY = "PSszk83CkivESkUMxWAegvKZ";//test:PSszk83CkivESkUMxWAegvKZ //XqXiOUPbeYEAGaOz1IfDIpKK
 
     public int pushState = STATE_NO;
 
