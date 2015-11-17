@@ -62,13 +62,11 @@
         android:icon="@mipmap/app_icon"
         android:label="@string/app_name"
         android:screenOrientation="portrait"
-        android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
         <activity
             android:name=".activity.LauncherActivity"
-            android:launchMode="singleTop"
-            android:theme="@style/AppThemeWTN">
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -79,8 +77,7 @@
         <!--主界面-->
         <activity
             android:name=".activity.MainActivity"
-            android:launchMode="singleTop"
-            android:theme="@style/AppThemeWTN"></activity>
+            android:launchMode="singleTop"></activity>
 
         <!--登录-->
         <activity

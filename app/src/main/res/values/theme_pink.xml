@@ -1,8 +1,8 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="colos_theme">@color/theme</item>
-        <item name="colos_match">@color/match</item>
+    <style name="AppThemePink" parent="Theme.AppCompat.NoActionBar">
+        <item name="colos_theme">@color/theme_pink</item>
+        <item name="colos_match">@color/match_pink</item>
         <item name="windowActionBar">false</item>
         <item name="android:windowBackground">@color/transparent</item>
         <item name="android:windowIsTranslucent">true</item>
@@ -10,7 +10,7 @@
         <item name="android:textColorHint">@color/gray_hint</item>
     </style>
 
-    <style name="AppThemeWTN" parent="AppTheme">
+    <style name="AppThemeWTNPink" parent="AppThemePink">
         <item name="android:windowIsTranslucent">false</item>
     </style>
 

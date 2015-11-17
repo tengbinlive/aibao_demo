@@ -23,10 +23,12 @@ import com.core.util.ProcessUtil;
 import com.dao.DaoMaster;
 import com.dao.DaoMaster.OpenHelper;
 import com.dao.DaoSession;
+import com.mytian.lb.helper.ThemeHelper;
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * App运行时上下文.
@@ -174,6 +176,11 @@ public class App extends Application {
 
         // 多进程情况只初始化一次
         if (ProcessUtil.isCurMainProcess(getApplicationContext())) {
+
+            Random random = new Random();
+            boolean is = random.nextBoolean();
+            ThemeHelper.getInstance().createTheme(this,is);
+            ThemeHelper.getInstance().setThemeType(this,true);
 
             if (Constant.DEBUG) {
                 CommonUtil.showToast(this, "测试环境");
