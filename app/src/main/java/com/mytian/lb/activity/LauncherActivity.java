@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.os.Message;
 
 import com.core.CommonResponse;
-import com.core.util.CommonUtil;
 import com.core.util.StringUtil;
 import com.mytian.lb.AbsActivity;
 import com.mytian.lb.App;
@@ -46,9 +45,9 @@ public class LauncherActivity extends AbsActivity {
     @OnClick(R.id.launcher_ly)
     void OnClickActivity() {
         activityHandler.removeMessages(statue);
-        if(App.getInstance().userResult==null) {
+        if (App.getInstance().userResult == null) {
             activityHandler.sendEmptyMessage(TO_LOGIN);
-        }else{
+        } else {
             activityHandler.sendEmptyMessage(TO_MAIN);
         }
     }
@@ -120,8 +119,14 @@ public class LauncherActivity extends AbsActivity {
             App.getInstance().userResult.getParent().setPhone(phone);
             activityHandler.sendEmptyMessage(TO_MAIN);
         } else {
-            SharedPreferencesHelper.setString(this, Constant.LoginUser.SHARED_PREFERENCES_PHONE, "");
-            SharedPreferencesHelper.setString(this, Constant.LoginUser.SHARED_PREFERENCES_PASSWORD, "");
+            String code = resposne.getCode();
+//                "result":  "10001"  , "description": "用户名或密码错误"
+//                "result":  "10011"  ,"description": "查无此用户"
+//                "result":  "10019"  ,"description": "密码错误"
+            if (code.equals("10001") || code.equals("10011") || code.equals("10019")) {
+                SharedPreferencesHelper.setString(this, Constant.LoginUser.SHARED_PREFERENCES_PHONE, "");
+                SharedPreferencesHelper.setString(this, Constant.LoginUser.SHARED_PREFERENCES_PASSWORD, "");
+            }
             activityHandler.sendEmptyMessage(TO_LOGIN);
         }
     }

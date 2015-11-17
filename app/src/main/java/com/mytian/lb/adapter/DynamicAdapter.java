@@ -34,7 +34,7 @@ public class DynamicAdapter extends BaseAdapter {
         this.list = _list;
         mContext = context;
         mInflater = LayoutInflater.from(context);
-        transform = new GlideRoundTransform(context,4);
+        transform = new GlideRoundTransform(context, 4);
     }
 
     @Override
@@ -68,20 +68,18 @@ public class DynamicAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         DynamicResult bean = list.get(position);
-        int heandid = R.mipmap.head_0;
         int type = bean.getType();
-        if(type==DynamicResult.TYPE_SYS) {
-            heandid = R.mipmap.icon_sys;
-        } else if(position%4==0){
-            heandid = R.mipmap.head_1;
-        }else if(position%4==1){
-            heandid = R.mipmap.head_2;
-        }else if(position%4==2){
-            heandid = R.mipmap.head_3;
-        }
-        if(type==DynamicResult.TYPE_SYS) {
+        if (type == DynamicResult.TYPE_SYS) {
             viewHolder.head.setImageDrawable(bean.getDrawable());
-        }else{
+        } else {
+            int heandid = R.mipmap.head_0;
+            if (position % 4 == 0) {
+                heandid = R.mipmap.head_1;
+            } else if (position % 4 == 1) {
+                heandid = R.mipmap.head_2;
+            } else if (position % 4 == 2) {
+                heandid = R.mipmap.head_3;
+            }
             Glide.with(mContext).load(heandid).asBitmap()
                     .transform(transform)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)

@@ -106,7 +106,7 @@ public class AddFollowActivity extends AbsActivity {
             @Override
             public void onClick(View v) {
                 String phone = searchKeyAibao.getText().toString();
-                if(StringUtil.isBlank(phone)){
+                if (StringUtil.isBlank(phone)) {
                     AnimationHelper.getInstance().viewAnimationQuiver(searchKey);
                     CommonUtil.showToast(R.string.error_hint_phone);
                     return;
@@ -124,7 +124,7 @@ public class AddFollowActivity extends AbsActivity {
             @Override
             public void onClick(View v) {
                 String phone = searchKeyMaibao.getText().toString();
-                if(StringUtil.isBlank(phone)){
+                if (StringUtil.isBlank(phone)) {
                     AnimationHelper.getInstance().viewAnimationQuiver(searchKey);
                     CommonUtil.showToast(R.string.error_hint_phone);
                     return;
@@ -243,7 +243,7 @@ public class AddFollowActivity extends AbsActivity {
             @Override
             public void onClick(View v) {
                 dialogShow(R.string.hint_add);
-                manager.followAdd(AddFollowActivity.this, ""+followUser.getBaby().getUid(),""+followUser.getBaby().getRelationId(),desc_et.getText().toString(),activityHandler, FOLLOW_ADD);
+                manager.followAdd(AddFollowActivity.this, "" + followUser.getBaby().getUid(), "" + followUser.getBaby().getRelationId(), desc_et.getText().toString(), activityHandler, FOLLOW_ADD);
             }
         });
         dialogBuilder = NiftyDialogBuilder.getInstance(this);
@@ -323,7 +323,7 @@ public class AddFollowActivity extends AbsActivity {
             }
             if (size >= COUNT_MAX) {
                 currentPager++;
-            }else{
+            } else {
                 listview.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
             }
         } else {

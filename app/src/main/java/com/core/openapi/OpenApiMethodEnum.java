@@ -11,6 +11,12 @@ package com.core.openapi;
 public enum OpenApiMethodEnum {
 
     /**
+     * 上传channelId
+     */
+    LOAD_UPDATECHANNELID("myt_parent/parentAction_updateChannelId.do", "openapi_json", OpenApi.URL_TYPE_DATA),
+
+
+    /**
      * 补全信息
      */
     LOAD_UPDATEPARENT("myt_parent/parentAction_updateParent.do", "openapi_json", OpenApi.URL_TYPE_DATA),

@@ -28,6 +28,7 @@ import com.core.util.CommonUtil;
 import com.core.util.StringUtil;
 import com.gitonway.lee.niftymodaldialogeffects.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.NiftyDialogBuilder;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

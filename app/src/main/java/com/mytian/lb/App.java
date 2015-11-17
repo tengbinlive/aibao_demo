@@ -24,6 +24,7 @@ import com.dao.DaoMaster;
 import com.dao.DaoMaster.OpenHelper;
 import com.dao.DaoSession;
 import com.mytian.lb.helper.ThemeHelper;
+import com.mytian.lb.push.PushHelper;
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
 
@@ -182,16 +183,13 @@ public class App extends Application {
             ThemeHelper.getInstance().createTheme(this,is);
             ThemeHelper.getInstance().setThemeType(this,true);
 
-            if (Constant.DEBUG) {
-                CommonUtil.showToast(this, "测试环境");
-            }
-
             // 初始化日志类,如果不是调试状态则不输出日志
             Logger.init("bin.teng")               // default PRETTYLOGGER or use just init()
                     .setMethodCount(3)            // default 2
                     .hideThreadInfo()             // default shown
                     .setMethodOffset(2)        // default 0
                     .setLogLevel(LogLevel.FULL);  // default LogLevel.FULL
+
             Logger.i(TAG, "成功初始化LOG日志.");
 
             // 注册crashHandler
@@ -217,9 +215,7 @@ public class App extends Application {
             // 系统配置业务.
             ConfigManager.init(this);
 
-            //push
-            PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY, "XqXiOUPbeYEAGaOz1IfDIpKK");
-        }
+            }
     }
 
     //创建并注册网络状态监听广播
@@ -228,6 +224,9 @@ public class App extends Application {
             @Override
             public void onReceive(Context context, Intent intent) {
                 setCurrentNetworkStatus(NetworkUtil.getCurrentNextworkState(context));
+                if(App.getInstance().userResult!=null){
+                    PushHelper.getInstance().initPush(getApplicationContext());
+                }
             }
         };
         IntentFilter intentFilter = new IntentFilter();

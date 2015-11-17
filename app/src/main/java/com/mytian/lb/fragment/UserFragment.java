@@ -42,6 +42,7 @@ import com.mytian.lb.bean.follow.FollowListResult;
 import com.mytian.lb.bean.follow.FollowUser;
 import com.mytian.lb.bean.user.UpdateParentParam;
 import com.mytian.lb.enums.WomanOrManEnum;
+import com.mytian.lb.event.PushUserEventType;
 import com.mytian.lb.event.SettingEventType;
 import com.mytian.lb.helper.AnimationHelper;
 import com.mytian.lb.helper.AnimatorUtils;
@@ -229,6 +230,26 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
     public void onEvent(SettingEventType event) {
         settingAchor = event.mView;
         toggleShowSetting(event.mView);
+    }
+
+    public void onEvent(PushUserEventType event) {
+        if(event==null){
+            return;
+        }
+        if(mAdapter==null){
+            return;
+        }
+        if (arrayList == null) {
+            arrayList = new ArrayList<>();
+        }
+        int size = arrayList.size();
+        if (size > 0) {
+            arrayList.add(0, event.user);
+        }else{
+            arrayList.add(event.user);
+        }
+        mAdapter.refresh(arrayList);
+        setEmpty();
     }
 
     @OnClick(R.id.exit_bt)
@@ -573,6 +594,10 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
             //避免第一次应用启动时 创建fragment加载数据多次提示
         }
         listview.onRefreshComplete();
+        setEmpty();
+    }
+
+    private void setEmpty(){
         if (arrayList == null || arrayList.size() <= 0) {
             llListEmpty.setVisibility(View.VISIBLE);
         } else {

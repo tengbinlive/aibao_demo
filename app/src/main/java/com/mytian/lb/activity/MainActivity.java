@@ -5,6 +5,8 @@ import android.os.Process;
 import android.view.KeyEvent;
 import android.view.View;
 
+import com.baidu.android.pushservice.PushConstants;
+import com.baidu.android.pushservice.PushManager;
 import com.core.util.CommonUtil;
 import com.mytian.lb.AbsActivity;
 import com.mytian.lb.App;
@@ -13,6 +15,7 @@ import com.mytian.lb.event.SettingEventType;
 import com.mytian.lb.event.TimeEventType;
 import com.mytian.lb.fragment.AgreementFragment;
 import com.mytian.lb.fragment.ContentFragment;
+import com.mytian.lb.push.PushHelper;
 
 import de.greenrobot.event.EventBus;
 
@@ -65,6 +68,7 @@ public class MainActivity extends AbsActivity {
 
     @Override
     public void EInit() {
+        PushHelper.getInstance().initPush(getApplicationContext());
         super.EInit();
         setSwipeBackEnable(false);
         init();
