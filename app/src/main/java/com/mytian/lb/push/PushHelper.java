@@ -39,7 +39,7 @@ public class PushHelper {
     public final static int STATE_UPDATE_NO = STATE_UPDATE_RE + 1;//上传id 上传失败
     public final static int STATE_UPDATE_YES = STATE_UPDATE_NO + 1;//上传id 上传成功
 
-    private final static String APP_KEY = "PSszk83CkivESkUMxWAegvKZ";//test:PSszk83CkivESkUMxWAegvKZ //XqXiOUPbeYEAGaOz1IfDIpKK
+    private final static String APP_KEY = "XqXiOUPbeYEAGaOz1IfDIpKK";//test:PSszk83CkivESkUMxWAegvKZ //XqXiOUPbeYEAGaOz1IfDIpKK
 
     public int pushState = STATE_NO;
 
@@ -60,7 +60,6 @@ public class PushHelper {
         } else if (STATE_NO == pushState) {
             pushState =STATE_DEF;
             PushManager.startWork(context, PushConstants.LOGIN_TYPE_API_KEY, APP_KEY);
-            PushManager.disableLbs(context);
         }
     }
 
@@ -126,14 +125,14 @@ public class PushHelper {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mContext)
                 .setSmallIcon(android.R.drawable.stat_notify_chat)
                 .setWhen(System.currentTimeMillis())
-                .setAutoCancel(false);
+                .setAutoCancel(true);
 
         mBuilder.setContentTitle(contentTitle);
         mBuilder.setTicker(tickerText);
         mBuilder.setContentText(content);
         // mBuilder.setNumber(notificationNum);
         Notification notification = mBuilder.build();
-
+        notification.flags = Notification.FLAG_AUTO_CANCEL;
         NotificationManager mNotificationManager = (NotificationManager) mContext.getSystemService(ns);
 
         //用mNotificationManager的notify方法通知用户生成标题栏消息通知
