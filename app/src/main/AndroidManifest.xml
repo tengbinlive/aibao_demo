@@ -66,7 +66,7 @@
 
         <activity
             android:name=".activity.LauncherActivity"
-            android:launchMode="singleTop">
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -77,36 +77,36 @@
         <!--主界面-->
         <activity
             android:name=".activity.MainActivity"
-            android:launchMode="singleTop"></activity>
+            android:launchMode="singleTask"></activity>
 
         <!--登录-->
         <activity
             android:name=".activity.LoginActivity"
-            android:launchMode="singleTop"
+            android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan"></activity>
 
         <!--注册-->
         <activity
             android:name=".activity.RegisterActivity"
-            android:launchMode="singleTop"
+            android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan"></activity>
 
         <!--重置密码-->
         <activity
             android:name=".activity.ResetPassWordActivity"
-            android:launchMode="singleTop"
+            android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan"></activity>
 
         <!--添加关注-->
         <activity
             android:name=".activity.AddFollowActivity"
-            android:launchMode="singleTop"
+            android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan"></activity>
 
         <!--好友列表-->
         <activity
             android:name=".activity.FriendslistActivity"
-            android:launchMode="singleTop"
+            android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan"></activity>
 
         <!-- push service start -->

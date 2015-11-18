@@ -9,12 +9,12 @@ import android.util.Property;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.mytian.lb.R;
+import com.mytian.lb.App;
 import com.mytian.lb.helper.ThemeHelper;
 
 public abstract class AnimatedRectActivity extends Activity {
 
-    private AnimatedRectLayout mAnimated;
+    public AnimatedRectLayout mAnimated;
     protected int mAnimationType;
     private int DURATION = 600;
 
@@ -22,6 +22,7 @@ public abstract class AnimatedRectActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         ThemeHelper.getInstance().setThemeType(this,isThemeTranslucent());
         super.onCreate(savedInstanceState);
+        App.getInstance().activityManager.pushActivity(this);
         setContentView(getContentView());
         FrameLayout activityRoot = (FrameLayout) findViewById(android.R.id.content);
         View parent = activityRoot.getChildAt(0);
@@ -36,6 +37,13 @@ public abstract class AnimatedRectActivity extends Activity {
         mAnimated.setAnimationType(mAnimationType);
 
         ObjectAnimator animator = ObjectAnimator.ofFloat(mAnimated, ANIMATED_RECT_LAYOUT_FLOAT_PROPERTY, 1).setDuration(DURATION);
+        animator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                animationStartEnd();
+            }
+        });
         animator.start();
     }
 
@@ -51,10 +59,17 @@ public abstract class AnimatedRectActivity extends Activity {
         animator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                finish();
+                animationBackEnd();
             }
         });
         animator.start();
+    }
+
+    public void animationBackEnd(){
+        App.getInstance().activityManager.popActivity(this);
+    }
+
+    public void animationStartEnd(){
     }
 
 

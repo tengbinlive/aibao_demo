@@ -9,6 +9,7 @@ import com.mytian.lb.App;
 import com.mytian.lb.bean.follow.FollowUser;
 import com.mytian.lb.bean.push.PushOnBindResult;
 import com.mytian.lb.bean.push.PushResult;
+import com.mytian.lb.bean.user.UserResult;
 import com.mytian.lb.event.PushUserEventType;
 import com.orhanobut.logger.Logger;
 
@@ -260,12 +261,13 @@ public class MyPushMessageReceiver extends PushMessageReceiver {
 
     private void updateContent(Context context, String content) {
         PushResult result = JSON.parseObject(content, PushResult.class);
-        if (null != result && App.getInstance().userResult.getParent().getUid().equals(result.getUid())) {
+        UserResult userResult = App.getInstance().userResult;
+        if (null != result && null!=userResult &&userResult.getParent().getUid().equals(result.getUid())) {
             if (PushCode.FOLLOW_NOTICE.equals(result.getCmd())) {
                 String info = result.getInfo();
                 FollowUser user = JSON.parseObject(info, FollowUser.class);
                 if(FollowUser.MB.equals(user.getFocus_from())) {
-                    EventBus.getDefault().post(new PushUserEventType(user));
+                    EventBus.getDefault().postSticky(new PushUserEventType(user));
                 }
                 PushHelper.getInstance().setNotification(result.getDescription());
             }

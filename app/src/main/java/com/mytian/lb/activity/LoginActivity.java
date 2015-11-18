@@ -14,6 +14,11 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.core.CommonResponse;
+import com.core.util.CommonUtil;
+import com.core.util.StringUtil;
+import com.gitonway.lee.niftymodaldialogeffects.Effectstype;
+import com.gitonway.lee.niftymodaldialogeffects.NiftyDialogBuilder;
 import com.mytian.lb.App;
 import com.mytian.lb.Constant;
 import com.mytian.lb.R;
@@ -23,12 +28,6 @@ import com.mytian.lb.helper.AnimationHelper;
 import com.mytian.lb.helper.SharedPreferencesHelper;
 import com.mytian.lb.manager.LoginManager;
 import com.mytian.lb.mview.EditTextWithDelete;
-import com.core.CommonResponse;
-import com.core.util.CommonUtil;
-import com.core.util.StringUtil;
-import com.gitonway.lee.niftymodaldialogeffects.Effectstype;
-import com.gitonway.lee.niftymodaldialogeffects.NiftyDialogBuilder;
-import com.wang.avi.AVLoadingIndicatorView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -51,6 +50,8 @@ public class LoginActivity extends AnimatedRectActivity {
     private String phone;
     private String password;
 
+    private boolean isLogin;
+
     @Override
     public int getContentView() {
         return R.layout.activity_login;
@@ -58,14 +59,27 @@ public class LoginActivity extends AnimatedRectActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        toLauncherActivity();
+        animationBackEnd();
+    }
+
+    @Override
+    public void animationStartEnd() {
+        App.getInstance().activityManager.popOneActivityExcept(MainActivity.class);
+    }
+
+    private void toLauncherActivity() {
+        Intent intent = new Intent(this, LauncherActivity.class);
+        intent.putExtra("login", isLogin);
+        intent.putExtra("isTo", true);
+        startActivity(intent);
     }
 
     @OnClick(R.id.register_bt)
     void toRegister() {
         Intent intent = new Intent(this, RegisterActivity.class);
         String phone = phoneEt.getText().toString();
-        if (StringUtil.isNotBlank(phone)&&StringUtil.checkMobile(phone)) {
+        if (StringUtil.isNotBlank(phone) && StringUtil.checkMobile(phone)) {
             intent.putExtra("phone", phone);
         }
         startActivity(intent);
@@ -94,6 +108,7 @@ public class LoginActivity extends AnimatedRectActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        isLogin = getIntent().getBooleanExtra("login", true);
         mInflater = LayoutInflater.from(this);
         ButterKnife.bind(this);
         setStatusBar();
@@ -103,7 +118,9 @@ public class LoginActivity extends AnimatedRectActivity {
         passwordEt.setText(password);
         if (StringUtil.isNotBlank(phone) && StringUtil.isNotBlank(password)) {
             phoneEt.setSelection(phone.length());
-            login();
+            if (isLogin) {
+                login();
+            }
         }
     }
 

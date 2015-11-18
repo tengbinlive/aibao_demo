@@ -4,6 +4,7 @@ package com.mytian.lb.activity;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.widget.LinearLayout;
 
 import com.core.CommonResponse;
 import com.core.util.StringUtil;
@@ -16,6 +17,7 @@ import com.mytian.lb.bean.user.UserResult;
 import com.mytian.lb.helper.SharedPreferencesHelper;
 import com.mytian.lb.manager.LoginManager;
 
+import butterknife.Bind;
 import butterknife.OnClick;
 
 public class LauncherActivity extends AbsActivity {
@@ -24,15 +26,22 @@ public class LauncherActivity extends AbsActivity {
     private final static int TO_GUIDE = 1;
     private final static int LOGIN_ING = 2;
     private final static int TO_MAIN = 3;
-    private boolean isTo = false;
+
+    private boolean isTo;//false 自动跳转, true 不自动跳转
     private static int statue;
     private LoginManager loginManager = new LoginManager();
 
     private String phone;
     private String password;
+    private boolean isLogin;
+
+    @Bind(R.id.launcher_ly)
+    LinearLayout launcherLy;
 
     @Override
     public void EInit() {
+        isLogin = getIntent().getBooleanExtra("login", true);
+        isTo = getIntent().getBooleanExtra("isTo", false);
         super.EInit();
         setSwipeBackEnable(false);
         if (!isTo) {
@@ -42,25 +51,36 @@ public class LauncherActivity extends AbsActivity {
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        launcherLy.setEnabled(true);
+    }
+
     @OnClick(R.id.launcher_ly)
     void OnClickActivity() {
+        launcherLy.setEnabled(false);
         activityHandler.removeMessages(statue);
-        if (App.getInstance().userResult == null) {
-            activityHandler.sendEmptyMessage(TO_LOGIN);
-        } else {
-            activityHandler.sendEmptyMessage(TO_MAIN);
-        }
+        statue = App.isFirstLunch() ? TO_GUIDE : TO_LOGIN;
+        activityHandler.sendEmptyMessage(statue);
     }
 
     void login(String phone, String password) {
-        if (StringUtil.isNotBlank(phone) && StringUtil.isNotBlank(password)) {
+        if (isLogin && StringUtil.isNotBlank(phone) && StringUtil.isNotBlank(password)) {
             loginManager.login(this, phone, password, activityHandler, LOGIN_ING);
         } else {
             Intent intent = new Intent(this, LoginActivity.class);
             intent.putExtra("animation_type", AnimatedRectLayout.ANIMATION_WAVE_TR);
+            intent.putExtra("login", isLogin);
             startActivity(intent);
             overridePendingTransition(0, 0);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        activityHandler.removeMessages(statue);
+        App.getInstance().exit();
     }
 
     @Override

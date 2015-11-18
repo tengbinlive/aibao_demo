@@ -6,6 +6,7 @@ import com.alibaba.fastjson.TypeReference;
 import com.core.CommonResponse;
 import com.core.enums.CodeEnum;
 import com.core.util.StringUtil;
+import com.mytian.lb.App;
 import com.orhanobut.logger.Logger;
 
 
@@ -22,6 +23,7 @@ public class OpenApiParser {
 	private static final String JSON_ELEMENT_MESG = "description";
 
 	private static final String JSON_VALUE_SUCCESS_CODE = "1";
+	private static final String JSON_VALUE_OUT_CODE = "-1";// 账号退出
 
 	/**
 	 * 从JSON数据中解析为指定对象.
@@ -43,7 +45,10 @@ public class OpenApiParser {
 				String mesg = jsonObject.getString(JSON_ELEMENT_MESG);
 
 				// 先判断code
-				if (StringUtil.isBlank(code) || !JSON_VALUE_SUCCESS_CODE.equals(code)) {
+				if(StringUtil.isNotBlank(code) && JSON_VALUE_OUT_CODE.equals(code)){
+					App.getInstance().changeAccount(false);
+					return null;
+				}else if (StringUtil.isBlank(code) || !JSON_VALUE_SUCCESS_CODE.equals(code)) {
 					response.setData(null);
 					response.setCode(code);
 					response.setMsg(StringUtil.isBlank(mesg)?mesg:mesg);

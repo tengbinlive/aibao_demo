@@ -36,7 +36,6 @@ import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 public abstract class AbsActivity extends SwipeBackActivity implements EInitDate {
 
     private final static String TAG = AbsActivity.class.getSimpleName();
-    public final static String KEY = "KEY";
     public final static int TOP = 0;
     public final static int BOTTOM = TOP + 1;
     public final static int LEFT = BOTTOM + 1;
@@ -87,7 +86,7 @@ public abstract class AbsActivity extends SwipeBackActivity implements EInitDate
         super.onCreate(savedInstanceState);
         mContext = this;
         EventBus.getDefault().register(this);
-        App.getInstance().addActivity(this);
+        App.getInstance().activityManager.pushActivity(this);
         int colos = getIntent().getIntExtra(STATUSBAR_COLOS, 0);
         setStatusBar(colos);
         mInflater = LayoutInflater.from(this);
@@ -101,24 +100,27 @@ public abstract class AbsActivity extends SwipeBackActivity implements EInitDate
         EInit();
     }
 
-    public boolean isThemeTranslucent(){
+    public boolean isThemeTranslucent() {
         return true;
     }
 
     /**
      * 设置listview 滑动时不异步加载图片，停止时加载
+     *
      * @param listview
      */
-    public void setListGlide(ListView listview){
+    public void setListGlide(ListView listview) {
         listview.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
                 if (scrollState == SCROLL_STATE_IDLE) {
-                    Glide.with(mContext).resumeRequests();
-                } else if (scrollState == SCROLL_STATE_FLING) {
-                    Glide.with(mContext).pauseRequests();
+                    if (Glide.with(mContext).isPaused()) {
+                        Glide.with(mContext).resumeRequests();
+                    }
                 } else if (scrollState == SCROLL_STATE_TOUCH_SCROLL) {
-                    Glide.with(mContext).pauseRequests();
+                    if (!Glide.with(mContext).isPaused()) {
+                        Glide.with(mContext).pauseRequests();
+                    }
                 }
             }
 
@@ -148,28 +150,6 @@ public abstract class AbsActivity extends SwipeBackActivity implements EInitDate
 
     private void initAbsActionBar() {
         viewTitleBar = (LinearLayout) findViewById(R.id.toolbar);
-        if (null == viewTitleBar) {
-            return;
-        }
-
-        menuLeft = (TextView) viewTitleBar.findViewById(R.id.toolbar_left_btn);
-        toolbar_right_tv = (TextView) viewTitleBar.findViewById(R.id.toolbar_right_tv);
-        toolbar_intermediate_tv = (TextView) viewTitleBar.findViewById(R.id.toolbar_intermediate_tv);
-        toolbar_intermediate_btn = (RelativeLayout) viewTitleBar.findViewById(R.id.toolbar_intermediate_btn);
-        toolbar_intermediate_icon = (ImageButton) viewTitleBar.findViewById(R.id.toolbar_intermediate_icon);
-        toolbar_right_btn = (RelativeLayout) viewTitleBar.findViewById(R.id.toolbar_right_btn);
-
-        menuLeft.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-                onBackPressed();
-            }
-        });
-    }
-
-    public void initAbsActionBar(ViewGroup _viewTitleBar) {
-        viewTitleBar = _viewTitleBar;
         if (null == viewTitleBar) {
             return;
         }
@@ -407,7 +387,6 @@ public abstract class AbsActivity extends SwipeBackActivity implements EInitDate
     @Override
     public void finish() {
         dialogDismiss();
-        App.getInstance().deleteActivity(this);
         if (isBackAnim) {
             overridePendingTransition(0, R.anim.push_translate_out_left);
         }
@@ -518,13 +497,12 @@ public abstract class AbsActivity extends SwipeBackActivity implements EInitDate
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if (isBackAnim)
-            overridePendingTransition(0, R.anim.push_translate_out_left);
+        App.getInstance().activityManager.popActivity(this);
     }
 
 
-    private final  static int DIALOGSHOW = 1;
-    private final  static int DIALOGDISMISS = 0;
+    private final static int DIALOGSHOW = 1;
+    private final static int DIALOGDISMISS = 0;
 
     private Handler activityHandler = new Handler() {
         public void handleMessage(Message msg) {

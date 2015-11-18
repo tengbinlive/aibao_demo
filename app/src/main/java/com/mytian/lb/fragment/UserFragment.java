@@ -181,22 +181,13 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
 
     @Override
     public void EInit() {
+        isSettingShow = false;
+        isOpenUser = false;
         birthdayDate = Calendar.getInstance();
         accentColor = ThemeHelper.getInstance().currentTheme.themeColos;
         initListView();
         setUserInfo();
         getListData(INIT_LIST);
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            sendActionBarAnim();
-            //相当于Fragment的onResume
-        } else {
-            //相当于Fragment的onPause
-        }
     }
 
     private void setUserInfo() {
@@ -254,13 +245,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
 
     @OnClick(R.id.exit_bt)
     void exitAccount() {
-        SharedPreferencesHelper.setString(getActivity(), Constant.LoginUser.SHARED_PREFERENCES_PHONE, "");
-        SharedPreferencesHelper.setString(getActivity(), Constant.LoginUser.SHARED_PREFERENCES_PASSWORD, "");
-        Intent intent = new Intent(getActivity(), LoginActivity.class);
-        intent.putExtra("animation_type", AnimatedRectLayout.ANIMATION_WAVE_TL);
-        getActivity().startActivity(intent);
-        getActivity().overridePendingTransition(0, 0);
-        getActivity().finish();
+        App.getInstance().changeAccount(true);
     }
 
     @OnClick(R.id.change_bt)
@@ -349,6 +334,12 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
             isOpenUser = true;
             activityHandler.sendEmptyMessageDelayed(ANIMATION, 1000);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        sendActionBarAnim();
     }
 
     /**

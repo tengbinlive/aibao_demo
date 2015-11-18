@@ -173,11 +173,6 @@ public class MainActivity extends AbsActivity {
 
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Process.killProcess(Process.myPid());
-    }
 
 //    /**
 //     * drawer的监听

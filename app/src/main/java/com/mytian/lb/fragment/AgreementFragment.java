@@ -217,6 +217,7 @@ public class AgreementFragment extends AbsFragment {
 
     @Override
     public void EInit() {
+        isSettingShow = false;
         initGridView();
         StartThread();
         animationDrawable = (AnimationDrawable) getResources().getDrawable(R.drawable.animation_time);

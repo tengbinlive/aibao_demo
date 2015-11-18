@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +15,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.mytian.lb.event.AnyEventType;
-import com.mytian.lb.imp.EInitFragmentDate;
 import com.gitonway.lee.niftymodaldialogeffects.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.NiftyDialogBuilder;
+import com.mytian.lb.event.AnyEventType;
+import com.mytian.lb.imp.EInitFragmentDate;
 
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
@@ -27,10 +26,6 @@ import de.greenrobot.event.EventBus;
 public abstract class AbsFragment extends Fragment implements EInitFragmentDate {
 
     protected final String TAG = AbsFragment.class.getSimpleName();
-
-    public static final int RECODE_RELEASE = 4;//发布资讯返回代码
-
-    public final static String KEY = "KEY";
 
     public NiftyDialogBuilder dialogBuilder;
 
@@ -53,7 +48,7 @@ public abstract class AbsFragment extends Fragment implements EInitFragmentDate 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EventBus.getDefault().register(this);
+        EventBus.getDefault().registerSticky(this);
     }
 
     public void onEvent(AnyEventType event) {
@@ -115,18 +110,21 @@ public abstract class AbsFragment extends Fragment implements EInitFragmentDate 
 
     /**
      * 设置listview 滑动时不异步加载图片，停止时加载
+     *
      * @param listview
      */
-    public void setListGlide(ListView listview){
+    public void setListGlide(ListView listview) {
         listview.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
                 if (scrollState == SCROLL_STATE_IDLE) {
-                    Glide.with(mContext).resumeRequests();
-                } else if (scrollState == SCROLL_STATE_FLING) {
-                    Glide.with(mContext).pauseRequests();
+                    if (Glide.with(mContext).isPaused()) {
+                        Glide.with(mContext).resumeRequests();
+                    }
                 } else if (scrollState == SCROLL_STATE_TOUCH_SCROLL) {
-                    Glide.with(mContext).pauseRequests();
+                    if (!Glide.with(mContext).isPaused()) {
+                        Glide.with(mContext).pauseRequests();
+                    }
                 }
             }
 
@@ -155,10 +153,6 @@ public abstract class AbsFragment extends Fragment implements EInitFragmentDate 
         if (null != dialogBuilder && dialogBuilder.isShowing()) {
             activityHandler.sendEmptyMessage(DIALOGDISMISS);
         }
-    }
-
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        return false;
     }
 
     private final static int DIALOGSHOW = 1;

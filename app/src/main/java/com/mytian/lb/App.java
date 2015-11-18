@@ -8,14 +8,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 
-import com.baidu.android.pushservice.PushConstants;
-import com.baidu.android.pushservice.PushManager;
-import com.mytian.lb.bean.user.UserResult;
 import com.core.CrashHandler;
 import com.core.enums.ConfigKeyEnum;
 import com.core.manager.ConfigManager;
 import com.core.openapi.OpenApi;
-import com.core.util.CommonUtil;
 import com.core.util.FileDataHelper;
 import com.core.util.NetworkUtil;
 import com.core.util.NetworkUtil.NetworkClassEnum;
@@ -23,12 +19,16 @@ import com.core.util.ProcessUtil;
 import com.dao.DaoMaster;
 import com.dao.DaoMaster.OpenHelper;
 import com.dao.DaoSession;
+import com.mytian.lb.activity.LoginActivity;
+import com.mytian.lb.activityexpand.activity.AnimatedRectLayout;
+import com.mytian.lb.bean.user.UserResult;
+import com.mytian.lb.helper.ActivityManager;
+import com.mytian.lb.helper.SharedPreferencesHelper;
 import com.mytian.lb.helper.ThemeHelper;
 import com.mytian.lb.push.PushHelper;
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -45,7 +45,7 @@ public class App extends Application {
 
     private static final String TAG = App.class.getSimpleName();
 
-    private ArrayList<Activity> activities = new ArrayList<Activity>();
+    public ActivityManager activityManager = null;
 
     private static App instance;
 
@@ -178,10 +178,13 @@ public class App extends Application {
         // 多进程情况只初始化一次
         if (ProcessUtil.isCurMainProcess(getApplicationContext())) {
 
+            //初始化自定义Activity管理器
+            activityManager = ActivityManager.getScreenManager();
+
             Random random = new Random();
             boolean is = random.nextBoolean();
-            ThemeHelper.getInstance().createTheme(this,is);
-            ThemeHelper.getInstance().setThemeType(this,true);
+            ThemeHelper.getInstance().createTheme(this, is);
+            ThemeHelper.getInstance().setThemeType(this, true);
 
             // 初始化日志类,如果不是调试状态则不输出日志
             Logger.init("bin.teng")               // default PRETTYLOGGER or use just init()
@@ -215,7 +218,7 @@ public class App extends Application {
             // 系统配置业务.
             ConfigManager.init(this);
 
-            }
+        }
     }
 
     //创建并注册网络状态监听广播
@@ -224,7 +227,7 @@ public class App extends Application {
             @Override
             public void onReceive(Context context, Intent intent) {
                 setCurrentNetworkStatus(NetworkUtil.getCurrentNextworkState(context));
-                if(App.getInstance().userResult!=null){
+                if (App.getInstance().userResult != null) {
                     PushHelper.getInstance().initPush(getApplicationContext());
                 }
             }
@@ -242,28 +245,29 @@ public class App extends Application {
         }
     }
 
-    //添加Activity到容器中
-    public void addActivity(Activity activity) {
-        activities.add(activity);
-    }
-
-    public void deleteActivity(Activity activity) {
-        activities.remove(activity);
-    }
-
-
-    //finish
+    //退出app
     public void exit() {
-        if(null!=CommonUtil.mToast) {
-            CommonUtil.mToast.cancel();
-        }
-        for (int i = activities.size(); i > 0; i--) {
-            int index = i - 1;
-            Activity activity = activities.get(index);
-            activity.finish();
-        }
-        activities.clear();
+        activityManager.popAllActivityExceptOne(this.getClass());
+        android.os.Process.killProcess(android.os.Process.myPid());
+        System.exit(0);
+    }
 
+    /**
+     * 切换帐号
+     *
+     * @param isCancle true 清楚数据并跳转至登录界面  false 跳转至登录界面
+     */
+    public void changeAccount(boolean isCancle) {
+        if (isCancle) {
+            SharedPreferencesHelper.setString(this, Constant.LoginUser.SHARED_PREFERENCES_PHONE, "");
+            SharedPreferencesHelper.setString(this, Constant.LoginUser.SHARED_PREFERENCES_PASSWORD, "");
+        }
+        Activity activity = activityManager.currentActivity();
+        Intent intent = new Intent(activity, LoginActivity.class);
+        intent.putExtra("animation_type", AnimatedRectLayout.ANIMATION_WAVE_TL);
+        intent.putExtra("login", isCancle);
+        activity.startActivity(intent);
+        activity.overridePendingTransition(0, 0);
     }
 
     @Override
