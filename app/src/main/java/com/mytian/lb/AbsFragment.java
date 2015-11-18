@@ -108,33 +108,6 @@ public abstract class AbsFragment extends Fragment implements EInitFragmentDate 
         ButterKnife.unbind(this);
     }
 
-    /**
-     * 设置listview 滑动时不异步加载图片，停止时加载
-     *
-     * @param listview
-     */
-    public void setListGlide(ListView listview) {
-        listview.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-                if (scrollState == SCROLL_STATE_IDLE) {
-                    if (Glide.with(mContext).isPaused()) {
-                        Glide.with(mContext).resumeRequests();
-                    }
-                } else if (scrollState == SCROLL_STATE_TOUCH_SCROLL) {
-                    if (!Glide.with(mContext).isPaused()) {
-                        Glide.with(mContext).pauseRequests();
-                    }
-                }
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-
-            }
-        });
-    }
-
     public void dialogShow(String title) {
         dialogDismiss();
         LinearLayout convertView = (LinearLayout) getActivity().getLayoutInflater().inflate(R.layout.loading_view, null);

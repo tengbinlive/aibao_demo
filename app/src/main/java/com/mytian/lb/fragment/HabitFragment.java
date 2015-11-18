@@ -76,8 +76,6 @@ public class HabitFragment extends AbsFragment {
 
         listview.setEmptyView(llListEmpty);
 
-        setListGlide(mActualListView);
-
     }
 
     private void getListData() {

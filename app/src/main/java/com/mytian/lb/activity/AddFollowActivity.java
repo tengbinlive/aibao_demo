@@ -169,8 +169,6 @@ public class AddFollowActivity extends AbsActivity {
 
         listview.setEmptyView(llListEmpty);
 
-        setListGlide(mActualListView);
-
     }
 
     private void getListData(int state) {

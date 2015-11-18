@@ -118,6 +118,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
     float EDITEXT_OFFER;
     private final OvershootInterpolator mInterpolator = new OvershootInterpolator();
 
+    private int user_gender = -1;
     private void initListView() {
 
         listview.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
@@ -155,8 +156,6 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
                 toAddFollowActivity();
             }
         });
-
-        setListGlide(mActualListView);
 
     }
 
@@ -277,7 +276,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
             AnimationHelper.getInstance().viewAnimationQuiver(gender_layout);
             return;
         }
-
+        user_gender = sex;
         dialogShow();
         UserManager manager = new UserManager();
         UpdateParentParam param = new UpdateParentParam();
@@ -556,10 +555,15 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
                 nameValue.setText("");
                 nameValue.setHint(name);
                 user_name.setText(name);
+                App.getInstance().userResult.getParent().setAlias(name);
             }
             if (StringUtil.isNotBlank(birthday)) {
                 birthdayValue.setText("");
                 birthdayValue.setHint(birthday);
+                App.getInstance().userResult.getParent().setBirthday(Long.parseLong(birthday));
+            }
+            if(user_gender!=-1){
+                App.getInstance().userResult.getParent().setSex(user_gender);
             }
         }
     }
