@@ -181,9 +181,9 @@ public class App extends Application {
             //初始化自定义Activity管理器
             activityManager = ActivityManager.getScreenManager();
 
-            Random random = new Random();
-            boolean is = random.nextBoolean();
-            ThemeHelper.getInstance().createTheme(this, is);
+//            Random random = new Random();
+//            boolean is = random.nextBoolean();
+            ThemeHelper.getInstance().createTheme(this, true);
             ThemeHelper.getInstance().setThemeType(this, true);
 
             // 初始化日志类,如果不是调试状态则不输出日志

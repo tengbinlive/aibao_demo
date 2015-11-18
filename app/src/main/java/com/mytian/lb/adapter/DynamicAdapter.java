@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.makeramen.roundedimageview.RoundedImageView;
 import com.mytian.lb.R;
 import com.mytian.lb.bean.DynamicResult;
 import com.mytian.lb.helper.GlideRoundTransform;
@@ -69,22 +68,25 @@ public class DynamicAdapter extends BaseAdapter {
         }
         DynamicResult bean = list.get(position);
         int type = bean.getType();
+        int heandid = R.mipmap.head_0;
+        bean.setAlias("韩韩");
         if (type == DynamicResult.TYPE_SYS) {
-            viewHolder.head.setImageDrawable(bean.getDrawable());
-        } else {
-            int heandid = R.mipmap.head_0;
-            if (position % 4 == 0) {
-                heandid = R.mipmap.head_1;
-            } else if (position % 4 == 1) {
-                heandid = R.mipmap.head_2;
-            } else if (position % 4 == 2) {
-                heandid = R.mipmap.head_3;
-            }
-            Glide.with(mContext).load(heandid).asBitmap()
-                    .transform(transform)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .placeholder(R.mipmap.icon_contact).into(viewHolder.head);
+            heandid = R.mipmap.icon_sys;
+            bean.setAlias("系统");
+        } else if (position % 4 == 0) {
+            heandid = R.mipmap.head_1;
+            bean.setAlias("小明");
+        } else if (position % 4 == 1) {
+            heandid = R.mipmap.head_2;
+            bean.setAlias("小红");
+        } else if (position % 4 == 2) {
+            heandid = R.mipmap.head_3;
+            bean.setAlias("韩梅梅");
         }
+        Glide.with(mContext).load(heandid).asBitmap()
+                .transform(transform)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .placeholder(R.mipmap.icon_contact).into(viewHolder.head);
         viewHolder.name.setText(bean.getAlias());
         viewHolder.date.setText(bean.getDate());
         viewHolder.desc.setText(bean.getDesc());
