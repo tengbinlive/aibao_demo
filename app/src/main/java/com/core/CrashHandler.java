@@ -75,6 +75,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
 	 */
 	private boolean handleException(final Throwable ex) {
 		if (ex == null) { return false; }
+		Logger.e(ex.toString());
 		final String message = ex.getLocalizedMessage();
 		// 使用Toast来显示异常信息
 		new Thread() {
