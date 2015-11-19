@@ -62,8 +62,6 @@ public class DtnameicFragment extends AbsFragment {
 
         listview.setEmptyView(llListEmpty);
 
-        setListGlide(mActualListView);
-
     }
 
     private void getListData() {

@@ -87,7 +87,6 @@ public class FriendslistActivity extends AbsActivity {
             }
         });
 
-        setListGlide(mActualListView);
     }
 
     private void getListData(int state) {
