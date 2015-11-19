@@ -1,7 +1,14 @@
 apply plugin: 'com.android.application'
+apply plugin: 'im.fir.plugin.gradle'
 
-repositories {
-    maven { url "https://jitpack.io" }
+fir{
+    apiToken '2ec6a8e27ad4af3a2e27011c62a5216f'
+    changeLog 'fir.im update test'
+}
+
+bughd{
+    projectId '564d2c05a1de522229000007'
+    apiToken 'b155f5299b924efa85e22208f7162942'
 }
 
 android {
@@ -32,6 +39,7 @@ repositories {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
+    compile 'im.fir:sdk:latest.integration@aar'
     compile 'com.android.support:appcompat-v7:23.1.0'
     compile 'de.greenrobot:eventbus:2.4.0'//事件派发
     compile 'com.squareup.okhttp:okhttp:2.5.0'// okhttp 网络处理

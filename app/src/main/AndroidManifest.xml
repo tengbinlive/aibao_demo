@@ -22,6 +22,9 @@
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
+    <!--fir.img-->
+    <uses-permission android:name="android.permission.GET_TASKS"/>
+
     <!-- 允许程序打开网络套接字 -->
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -63,6 +66,9 @@
         android:label="@string/app_name"
         android:screenOrientation="portrait"
         android:theme="@style/AppTheme">
+
+        <!--fir.img-->
+        <meta-data android:value="b7973c5c45dda7b153456b5ea53ca5c9" android:name="BUG_HD_SDK_GENERAL_KEY" />
 
         <activity
             android:name=".activity.LauncherActivity"

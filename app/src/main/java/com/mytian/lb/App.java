@@ -31,6 +31,8 @@ import com.orhanobut.logger.Logger;
 
 import java.util.Random;
 
+import im.fir.sdk.FIR;
+
 /**
  * App运行时上下文.
  * <p/>
@@ -172,6 +174,7 @@ public class App extends Application {
 
     @Override
     public void onCreate() {
+        FIR.init(this);
         super.onCreate();
         instance = this;
 
