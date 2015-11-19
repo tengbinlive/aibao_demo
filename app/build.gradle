@@ -1,32 +1,51 @@
 apply plugin: 'com.android.application'
-apply plugin: 'im.fir.plugin.gradle'
-
-fir{
-    apiToken '2ec6a8e27ad4af3a2e27011c62a5216f'
-    changeLog 'fir.im update test'
-}
-
-bughd{
-    projectId '564d2c05a1de522229000007'
-    apiToken 'b155f5299b924efa85e22208f7162942'
-}
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
 
     defaultConfig {
         applicationId "com.mytian.lb"
         minSdkVersion 15
-        targetSdkVersion 23
+        targetSdkVersion 15
         versionCode 1
         versionName "1.0"
     }
+
+    signingConfigs {
+        debug {
+        }
+        release {
+            storeFile file("../aibao.jks");
+            storePassword "tengbin"
+            keyAlias "aibao"
+            keyPassword "aibaoaibao"
+        }
+    }
+
     buildTypes {
+
+        debug {
+            minifyEnabled false
+            zipAlignEnabled false
+            shrinkResources false
+            signingConfig signingConfigs.release
+        }
+
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            zipAlignEnabled true
+            //移除无用的资源文件
+            shrinkResources false
+            proguardFiles 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
+
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
     }
 }
 
@@ -37,19 +56,26 @@ repositories {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'im.fir:sdk:latest.integration@aar'
-    compile 'com.android.support:appcompat-v7:23.1.0'
-    compile 'de.greenrobot:eventbus:2.4.0'//事件派发
-    compile 'com.squareup.okhttp:okhttp:2.5.0'// okhttp 网络处理
+    compile 'com.android.support:appcompat-v7:22.1.1'
+    compile 'de.greenrobot:eventbus:2.4.0'
+    //事件派发
+    compile 'com.squareup.okhttp:okhttp:2.5.0'
+    // okhttp 网络处理
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.5.0'
-    compile 'com.jakewharton:butterknife:7.0.1'//布局id绑定生成 butterknife
-    compile 'de.greenrobot:greendao:2.0.0'//greendao 数据库
-    compile 'me.imid.swipebacklayout.lib:library:1.0.0'//滑动返回
-    compile 'com.makeramen:roundedimageview:2.2.1'//圆角 imageview
-    compile 'com.pnikosis:materialish-progress:1.5'//material进度条
-    compile 'com.mcxiaoke.volley:library:1.0.19'//volley
+    compile 'com.jakewharton:butterknife:7.0.1'
+    //布局id绑定生成 butterknife
+    compile 'de.greenrobot:greendao:2.0.0'
+    //greendao 数据库
+    compile 'me.imid.swipebacklayout.lib:library:1.0.0'
+    //滑动返回
+    compile 'com.makeramen:roundedimageview:2.2.1'
+    //圆角 imageview
+    compile 'com.pnikosis:materialish-progress:1.5'
+    //material进度条
+    compile 'com.mcxiaoke.volley:library:1.0.19'
+    //volley
     compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
     compile 'com.wdullaer:materialdatetimepicker:2.0.1'
     compile 'com.ogaclejapan.smarttablayout:library:1.4.2@aar'
@@ -59,10 +85,12 @@ dependencies {
     compile 'com.wang.avi:library:1.0.0'
     compile 'com.github.bumptech.glide:glide:3.6.1'
     compile 'com.nhaarman.listviewanimations:lib-core:3.1.0@aar'
-    compile(name: 'logger-debug', ext: 'aar')//日志
+    compile(name: 'logger-debug', ext: 'aar')
+    //日志
     compile(name: 'niftymodaldialog-release', ext: 'aar')
     compile(name: 'pulltorefresh-release', ext: 'aar')
     compile(name: 'alertview-release', ext: 'aar')
     compile(name: 'matchview-release', ext: 'aar')
     compile(name: 'swipeLayout-release', ext: 'aar')
+    compile files('libs/Bughd_android_sdk_v1.3.4.jar')
 }

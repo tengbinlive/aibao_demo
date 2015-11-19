@@ -72,7 +72,7 @@ public class DynamicAdapter extends BaseAdapter {
         bean.setAlias("韩韩");
         if (type == DynamicResult.TYPE_SYS) {
             heandid = R.mipmap.icon_sys;
-            bean.setAlias("系统");
+            bean.setAlias("麦田官方");
         } else if (position % 4 == 0) {
             heandid = R.mipmap.head_1;
             bean.setAlias("小明");

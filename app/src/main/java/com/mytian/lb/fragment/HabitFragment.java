@@ -18,6 +18,7 @@ import com.mytian.lb.R;
 import com.mytian.lb.adapter.HabitAdapter;
 import com.mytian.lb.bean.AgreementBean;
 import com.mytian.lb.bean.DemoUserInfo;
+import com.mytian.lb.demodata.DemoHabitUserType;
 import com.mytian.lb.demodata.DemoManger;
 import com.mytian.lb.demodata.DemoUserType;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
@@ -123,7 +124,7 @@ public class HabitFragment extends AbsFragment {
         mAdapter.refresh(arrayList);
     }
 
-    public void onEvent(DemoUserType event) {
+    public void onEvent(DemoHabitUserType event) {
         Message message = new Message();
         message.what = INIT_USER_INFO;
         message.obj = event.index;

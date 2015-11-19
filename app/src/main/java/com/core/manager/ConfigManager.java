@@ -65,7 +65,7 @@ public class ConfigManager {
 		String lastAppVersionName = (String) map.get(ConfigKeyEnum.APP_VERSION_NAME.name());
 
 		map.put(ConfigKeyEnum.DEVICE_ID.name(), DeviceUtil.getDeviceId(context));
-//		map.put(ConfigKeyEnum.IMEI.name(), DeviceUtil.getIMEI(context));
+		map.put(ConfigKeyEnum.IMEI.name(), DeviceUtil.getIMEI(context));
 		map.put(ConfigKeyEnum.MOBILE_TYPE.name(), DeviceUtil.getMobileType());
 		map.put(ConfigKeyEnum.SCREEN_WIDTH.name(), screenInfo[0]);
 		map.put(ConfigKeyEnum.SCREEN_HEIGHT.name(), screenInfo[1]);

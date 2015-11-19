@@ -174,7 +174,7 @@ public class App extends Application {
 
     @Override
     public void onCreate() {
-        FIR.init(this);
+        FIR.init(getApplicationContext());
         super.onCreate();
         instance = this;
 

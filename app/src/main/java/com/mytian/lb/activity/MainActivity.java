@@ -1,18 +1,14 @@
 package com.mytian.lb.activity;
 
 import android.content.Intent;
-import android.os.Process;
 import android.view.KeyEvent;
 import android.view.View;
 
-import com.baidu.android.pushservice.PushConstants;
-import com.baidu.android.pushservice.PushManager;
 import com.core.util.CommonUtil;
 import com.mytian.lb.AbsActivity;
 import com.mytian.lb.App;
 import com.mytian.lb.R;
 import com.mytian.lb.event.SettingEventType;
-import com.mytian.lb.event.TimeEventType;
 import com.mytian.lb.fragment.AgreementFragment;
 import com.mytian.lb.fragment.ContentFragment;
 import com.mytian.lb.push.PushHelper;
@@ -62,7 +58,7 @@ public class MainActivity extends AbsActivity {
     }
 
     @Override
-    public boolean isThemeTranslucent(){
+    public boolean isThemeTranslucent() {
         return false;
     }
 
@@ -128,7 +124,7 @@ public class MainActivity extends AbsActivity {
 
     }
 
-    private void actionbarIcon(int position) {
+    private void actionbarIcon(final int position) {
         if (position == ContentFragment.USER) {
             setToolbarRight(R.mipmap.icon_settings);
             setToolbarRightVisbility(View.VISIBLE, View.VISIBLE);
@@ -142,14 +138,20 @@ public class MainActivity extends AbsActivity {
                     EventBus.getDefault().post(settingEventType);
                 }
             });
-        } else if (position == ContentFragment.AGREEMENT) {
+        } else if (position == ContentFragment.AGREEMENT || position == ContentFragment.HABIT) {
             setToolbarRight(R.mipmap.icon_friendslist);
             setToolbarRightVisbility(View.VISIBLE, View.VISIBLE);
             setToolbarRightOnClick(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(!AgreementFragment.isSettingShow) {
+                    if (position == ContentFragment.AGREEMENT) {
+                        if (!AgreementFragment.isSettingShow) {
+                            Intent intent = new Intent(MainActivity.this, FriendslistActivity.class);
+                            startActivity(intent);
+                        }
+                    } else if (position == ContentFragment.HABIT) {
                         Intent intent = new Intent(MainActivity.this, FriendslistActivity.class);
+                        intent.putExtra("TYPE", position);
                         startActivity(intent);
                     }
                 }

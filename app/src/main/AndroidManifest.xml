@@ -4,9 +4,6 @@
     android:versionCode="1"
     android:versionName="v1.0">
 
-    <!-- 获取设备信息 -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-
     <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
@@ -58,6 +55,9 @@
     <!--短信-->
     <uses-permission android:name="android.permission.READ_SMS" />
 
+    <!-- 获取设备信息 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+
     <application
         android:name="com.mytian.lb.App"
         android:allowBackup="true"
@@ -68,7 +68,7 @@
         android:theme="@style/AppTheme">
 
         <!--fir.img-->
-        <meta-data android:value="b7973c5c45dda7b153456b5ea53ca5c9" android:name="BUG_HD_SDK_GENERAL_KEY" />
+        <meta-data android:value="073c54e897ed1268e330b4ceb3f78312" android:name="BUG_HD_SDK_GENERAL_KEY" />
 
         <activity
             android:name=".activity.LauncherActivity"
