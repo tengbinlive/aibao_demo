@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 
-import com.core.CrashHandler;
 import com.core.enums.ConfigKeyEnum;
 import com.core.manager.ConfigManager;
 import com.core.openapi.OpenApi;
@@ -28,8 +27,6 @@ import com.mytian.lb.helper.ThemeHelper;
 import com.mytian.lb.push.PushHelper;
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
-
-import java.util.Random;
 
 import im.fir.sdk.FIR;
 
@@ -197,13 +194,6 @@ public class App extends Application {
                     .setLogLevel(LogLevel.FULL);  // default LogLevel.FULL
 
             Logger.i(TAG, "成功初始化LOG日志.");
-
-            // 注册crashHandler
-            if (!Constant.DEBUG) {
-                CrashHandler crashHandler = CrashHandler.getInstance();
-                crashHandler.init(this);
-                Logger.i(TAG, "成功初始化CrashHandler.");
-            }
 
             // 初始化APP相关目录
             FileDataHelper.initDirectory();
