@@ -14,18 +14,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AbsListView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.gitonway.lee.niftymodaldialogeffects.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.NiftyDialogBuilder;
 import com.mytian.lb.event.AnyEventType;
-import com.mytian.lb.helper.ThemeHelper;
 import com.mytian.lb.imp.EInitDate;
 
 import butterknife.ButterKnife;
@@ -82,7 +78,6 @@ public abstract class AbsActivity extends SwipeBackActivity implements EInitDate
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ThemeHelper.getInstance().setThemeType(this, isThemeTranslucent());
         super.onCreate(savedInstanceState);
         mContext = this;
         EventBus.getDefault().register(this);
@@ -98,10 +93,6 @@ public abstract class AbsActivity extends SwipeBackActivity implements EInitDate
             initActionBar();
         }
         EInit();
-    }
-
-    public boolean isThemeTranslucent() {
-        return true;
     }
 
     /**

@@ -83,10 +83,15 @@ public class DynamicAdapter extends BaseAdapter {
             heandid = R.mipmap.head_3;
             bean.setAlias("韩梅梅");
         }
-        Glide.with(mContext).load(heandid).asBitmap()
-                .transform(transform)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(R.mipmap.icon_contact).into(viewHolder.head);
+
+        if (type == DynamicResult.TYPE_SYS) {
+            viewHolder.head.setImageDrawable(bean.getDrawable());
+        }else {
+            Glide.with(mContext).load(heandid).asBitmap()
+                    .transform(transform)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .placeholder(R.mipmap.icon_contact).into(viewHolder.head);
+        }
         viewHolder.name.setText(bean.getAlias());
         viewHolder.date.setText(bean.getDate());
         viewHolder.desc.setText(bean.getDesc());

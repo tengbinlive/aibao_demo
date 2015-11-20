@@ -32,11 +32,8 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.mytian.lb.AbsActivity;
 import com.mytian.lb.AbsFragment;
 import com.mytian.lb.App;
-import com.mytian.lb.Constant;
 import com.mytian.lb.R;
 import com.mytian.lb.activity.AddFollowActivity;
-import com.mytian.lb.activity.LoginActivity;
-import com.mytian.lb.activityexpand.activity.AnimatedRectLayout;
 import com.mytian.lb.adapter.UserAdapter;
 import com.mytian.lb.bean.follow.FollowListResult;
 import com.mytian.lb.bean.follow.FollowUser;
@@ -46,8 +43,6 @@ import com.mytian.lb.event.PushUserEventType;
 import com.mytian.lb.event.SettingEventType;
 import com.mytian.lb.helper.AnimationHelper;
 import com.mytian.lb.helper.AnimatorUtils;
-import com.mytian.lb.helper.SharedPreferencesHelper;
-import com.mytian.lb.helper.ThemeHelper;
 import com.mytian.lb.manager.FollowManager;
 import com.mytian.lb.manager.UserManager;
 import com.mytian.lb.mview.ClipRevealFrame;
@@ -86,6 +81,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
     @Bind(R.id.gender_layout)
     RelativeLayout gender_layout;
 
+    @BindColor(R.color.theme)
     int accentColor;
     private Calendar birthdayDate;
 
@@ -119,6 +115,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
     private final OvershootInterpolator mInterpolator = new OvershootInterpolator();
 
     private int user_gender = -1;
+
     private void initListView() {
 
         listview.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
@@ -183,7 +180,6 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         isSettingShow = false;
         isOpenUser = false;
         birthdayDate = Calendar.getInstance();
-        accentColor = ThemeHelper.getInstance().currentTheme.themeColos;
         initListView();
         setUserInfo();
         getListData(INIT_LIST);
@@ -223,10 +219,10 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
     }
 
     public void onEvent(PushUserEventType event) {
-        if(event==null){
+        if (event == null) {
             return;
         }
-        if(mAdapter==null){
+        if (mAdapter == null) {
             return;
         }
         if (arrayList == null) {
@@ -235,7 +231,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         int size = arrayList.size();
         if (size > 0) {
             arrayList.add(0, event.user);
-        }else{
+        } else {
             arrayList.add(event.user);
         }
         mAdapter.refresh(arrayList);
@@ -562,7 +558,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
                 birthdayValue.setHint(birthday);
                 App.getInstance().userResult.getParent().setBirthday(Long.parseLong(birthday));
             }
-            if(user_gender!=-1){
+            if (user_gender != -1) {
                 App.getInstance().userResult.getParent().setSex(user_gender);
             }
         }
@@ -592,7 +588,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         setEmpty();
     }
 
-    private void setEmpty(){
+    private void setEmpty() {
         if (arrayList == null || arrayList.size() <= 0) {
             llListEmpty.setVisibility(View.VISIBLE);
         } else {

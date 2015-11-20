@@ -194,7 +194,7 @@ public class LoginActivity extends AnimatedRectActivity {
                     dialogBuilder.dismiss();
                     break;
                 case TO_MAIN_ACTIVITY:
-                    dialogBuilder.dismiss();
+                    dialogDismiss();
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();

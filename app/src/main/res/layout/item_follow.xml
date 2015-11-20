@@ -23,7 +23,7 @@
 
         <RelativeLayout android:layout_width="90dp"
             android:id="@+id/delete_layout"
-            android:background="?attr/colos_match"
+            android:background="@color/match"
             android:layout_gravity="right"
             android:layout_height="match_parent">
 

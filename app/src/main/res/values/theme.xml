@@ -1,8 +1,6 @@
 <resources>
 
     <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="colos_theme">@color/theme</item>
-        <item name="colos_match">@color/match</item>
         <item name="windowActionBar">false</item>
         <item name="android:windowBackground">@color/transparent</item>
         <item name="android:windowIsTranslucent">true</item>

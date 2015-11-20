@@ -58,11 +58,6 @@ public class MainActivity extends AbsActivity {
     }
 
     @Override
-    public boolean isThemeTranslucent() {
-        return false;
-    }
-
-    @Override
     public void EInit() {
         PushHelper.getInstance().initPush(getApplicationContext());
         super.EInit();

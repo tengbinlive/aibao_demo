@@ -12,7 +12,7 @@
 
     <RelativeLayout
         android:layout_width="280dp"
-        android:background="?attr/colos_theme"
+        android:background="@color/theme"
         android:layout_height="280dp">
 
         <ImageView

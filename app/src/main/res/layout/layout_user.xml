@@ -4,7 +4,7 @@
     android:id="@+id/layout_user"
     android:gravity="center_vertical"
     android:elevation="@dimen/elevation_height"
-    android:background="?attr/colos_theme"
+    android:background="@color/theme"
     android:orientation="horizontal"
     android:paddingBottom="@dimen/content_gap"
     android:paddingLeft="@dimen/content_gap"
@@ -52,12 +52,14 @@
             android:id="@+id/change_bt"
             android:layout_width="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_height="@dimen/button_height"
+            android:layout_centerVertical="true"
+            android:layout_height="35dp"
             android:background="@drawable/button_bg_match"
             android:text="@string/change_ok"
+            android:paddingLeft="@dimen/elevation_height"
+            android:paddingRight="@dimen/elevation_height"
             android:visibility="gone"
             android:textColor="@color/white"
-            android:textSize="@dimen/font_btn" />
-
+            android:textSize="@dimen/font_medium" />
     </RelativeLayout>
 </LinearLayout>

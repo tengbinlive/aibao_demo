@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.mytian.lb.App;
-import com.mytian.lb.helper.ThemeHelper;
 
 public abstract class AnimatedRectActivity extends Activity {
 
@@ -20,7 +19,6 @@ public abstract class AnimatedRectActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ThemeHelper.getInstance().setThemeType(this,isThemeTranslucent());
         super.onCreate(savedInstanceState);
         App.getInstance().activityManager.pushActivity(this);
         setContentView(getContentView());
@@ -49,10 +47,6 @@ public abstract class AnimatedRectActivity extends Activity {
 
     protected abstract int getContentView();
 
-    public boolean isThemeTranslucent(){
-        return true;
-    }
-
     @Override
     public void onBackPressed() {
         ObjectAnimator animator = ObjectAnimator.ofFloat(mAnimated, ANIMATED_RECT_LAYOUT_FLOAT_PROPERTY, 0).setDuration(DURATION);
@@ -65,11 +59,11 @@ public abstract class AnimatedRectActivity extends Activity {
         animator.start();
     }
 
-    public void animationBackEnd(){
+    public void animationBackEnd() {
         App.getInstance().activityManager.popActivity(this);
     }
 
-    public void animationStartEnd(){
+    public void animationStartEnd() {
     }
 
 

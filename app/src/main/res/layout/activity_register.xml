@@ -145,7 +145,7 @@
             android:textColor="@color/textcolor_222"
             android:textSize="@dimen/font_small"
             android:checked="true"
-            app:cbd_strokeColor="?attr/colos_theme"
+            app:cbd_strokeColor="@color/theme"
             app:cbd_tickColor="@color/white"
             android:gravity="center_vertical"/>
 

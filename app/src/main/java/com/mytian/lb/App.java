@@ -23,7 +23,6 @@ import com.mytian.lb.activityexpand.activity.AnimatedRectLayout;
 import com.mytian.lb.bean.user.UserResult;
 import com.mytian.lb.helper.ActivityManager;
 import com.mytian.lb.helper.SharedPreferencesHelper;
-import com.mytian.lb.helper.ThemeHelper;
 import com.mytian.lb.push.PushHelper;
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
@@ -180,11 +179,6 @@ public class App extends Application {
 
             //初始化自定义Activity管理器
             activityManager = ActivityManager.getScreenManager();
-
-//            Random random = new Random();
-//            boolean is = random.nextBoolean();
-            ThemeHelper.getInstance().createTheme(this, true);
-            ThemeHelper.getInstance().setThemeType(this, true);
 
             // 初始化日志类,如果不是调试状态则不输出日志
             Logger.init("bin.teng")               // default PRETTYLOGGER or use just init()

@@ -4,7 +4,6 @@ import com.amulyakhare.textdrawable.TextDrawable;
 import com.core.openapi.OpenApiSimpleResult;
 import com.mytian.lb.App;
 import com.mytian.lb.R;
-import com.mytian.lb.helper.ThemeHelper;
 
 /**
  * Created by bin.teng on 2015/10/28.
@@ -33,9 +32,8 @@ public class DynamicResult extends OpenApiSimpleResult {
     public TextDrawable getDrawable() {
         if (drawable == null) {
             int radius = (int) App.getInstance().getResources().getDimension(R.dimen.rounded_size);
-            int colos = ThemeHelper.getInstance().currentTheme.matchColos;
             drawable = TextDrawable.builder()
-                    .buildRoundRect("sys", colos,radius);
+                    .buildRoundRect("sys", 0xfff12e40, radius);
         }
         return drawable;
     }

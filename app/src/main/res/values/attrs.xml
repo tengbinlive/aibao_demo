@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <attr name = "colos_theme" format = "color" />
-    <attr name = "colos_match" format = "color" />
-</resources>
