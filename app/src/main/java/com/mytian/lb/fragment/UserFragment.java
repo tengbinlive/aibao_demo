@@ -556,7 +556,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
             if (StringUtil.isNotBlank(birthday)) {
                 birthdayValue.setText("");
                 birthdayValue.setHint(birthday);
-                App.getInstance().userResult.getParent().setBirthday(Long.parseLong(birthday));
+                App.getInstance().userResult.getParent().setBirthday(birthdayDate.getTimeInMillis());
             }
             if (user_gender != -1) {
                 App.getInstance().userResult.getParent().setSex(user_gender);
