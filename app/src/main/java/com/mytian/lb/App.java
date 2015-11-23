@@ -8,6 +8,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.integration.okhttp.OkHttpUrlLoader;
+import com.bumptech.glide.load.model.GlideUrl;
 import com.core.enums.ConfigKeyEnum;
 import com.core.manager.ConfigManager;
 import com.core.openapi.OpenApi;
@@ -26,6 +29,9 @@ import com.mytian.lb.helper.SharedPreferencesHelper;
 import com.mytian.lb.push.PushHelper;
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
+import com.squareup.okhttp.OkHttpClient;
+
+import java.io.InputStream;
 
 import im.fir.sdk.FIR;
 
@@ -177,7 +183,7 @@ public class App extends Application {
         if (ProcessUtil.isCurMainProcess(getApplicationContext())) {
 
             FIR.init(getApplicationContext());
-
+            Glide.get(this).register(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory(new OkHttpClient()));
             //初始化自定义Activity管理器
             activityManager = ActivityManager.getScreenManager();
 

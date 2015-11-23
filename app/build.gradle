@@ -88,6 +88,7 @@ dependencies {
     compile 'com.github.cdflynn:crossview:v1.0.1'
     compile 'com.wang.avi:library:1.0.0'
     compile 'com.github.bumptech.glide:glide:3.6.1'
+    compile 'com.github.bumptech.glide:okhttp-integration:1.3.1'
     compile 'com.nhaarman.listviewanimations:lib-core:3.1.0@aar'
     compile(name: 'logger-debug', ext: 'aar')
     //日志
@@ -96,5 +97,4 @@ dependencies {
     compile(name: 'alertview-release', ext: 'aar')
     compile(name: 'matchview-release', ext: 'aar')
     compile(name: 'swipeLayout-release', ext: 'aar')
-    compile files('libs/Bughd_android_sdk_v1.3.4.jar')
 }

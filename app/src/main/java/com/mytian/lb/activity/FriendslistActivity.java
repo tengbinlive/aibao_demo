@@ -85,7 +85,6 @@ public class FriendslistActivity extends AbsActivity {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                AnimationHelper.getInstance().viewAnimationScal(view);
                 if (TYPE == MainActivity.AGREEMENT) {
                     EventBus.getDefault().post(new DemoUserType(arrayList.get(position - 1).getUid()));
                 } else if (TYPE == MainActivity.HABIT) {
