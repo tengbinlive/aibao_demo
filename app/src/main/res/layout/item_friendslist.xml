@@ -16,31 +16,25 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
+        android:padding="@dimen/content_gap"
         android:layout_height="wrap_content">
 
         <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/head"
             android:layout_width="@dimen/item_head_size_small"
             android:layout_height="@dimen/item_head_size_small"
-            android:layout_centerVertical="true"
-            android:layout_margin="@dimen/content_gap"
             app:riv_border_width="0dip"
             app:riv_corner_radius="30dip"
+            android:layout_marginRight="@dimen/content_gap"
             app:riv_mutate_background="true"
             app:riv_oval="false"
             app:riv_tile_mode="repeat" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/head"
-            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/head"
                 android:singleLine="true"
                 android:text="user name"
                 android:textColor="@color/textcolor_222"
@@ -51,11 +45,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/name"
-                android:layout_marginTop="@dimen/content_gap_small"
+                android:layout_marginTop="@dimen/content_10dp"
+                android:layout_toRightOf="@+id/head"
                 android:textColor="@color/gray_hint"
                 android:textSize="@dimen/font_least" />
 
-        </RelativeLayout>
     </RelativeLayout>
 </LinearLayout>
 

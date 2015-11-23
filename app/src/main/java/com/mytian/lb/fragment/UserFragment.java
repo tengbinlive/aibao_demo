@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.view.ViewAnimationUtils;
+import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
@@ -352,7 +353,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 float value = (Float) animation.getAnimatedValue();
-                LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) layout_user.getLayoutParams();
+                ViewGroup.LayoutParams lp = layout_user.getLayoutParams();
                 lp.height = (int) value;
                 layout_user.setLayoutParams(lp);
             }

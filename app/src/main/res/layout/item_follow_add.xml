@@ -17,30 +17,25 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
+        android:padding="@dimen/content_gap"
         android:layout_height="wrap_content">
 
         <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/head"
             android:layout_width="@dimen/item_head_size_small"
             android:layout_height="@dimen/item_head_size_small"
-            android:layout_centerVertical="true"
-            android:layout_margin="@dimen/content_gap"
             app:riv_border_width="0dip"
             app:riv_corner_radius="30dip"
             app:riv_mutate_background="true"
+            android:layout_marginRight="@dimen/content_gap"
             app:riv_oval="false"
             app:riv_tile_mode="repeat" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/head"
-            android:layout_centerVertical="true"
-            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/name"
                 android:singleLine="true"
+                android:layout_toRightOf="@+id/head"
+                android:layout_alignTop="@+id/head"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="user name"
@@ -51,12 +46,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/name"
-                android:layout_marginTop="@dimen/content_gap_small"
+                android:layout_marginTop="@dimen/content_10dp"
+                android:layout_toRightOf="@+id/head"
                 android:text="@string/hint_messge"
                 android:textColor="@color/gray_hint"
                 android:textSize="@dimen/font_least" />
-
-        </RelativeLayout>
 
         <Button
             android:id="@+id/accept_bt"
@@ -64,7 +58,6 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_height="@dimen/button_height"
-            android:layout_marginRight="@dimen/content_gap"
             android:background="@drawable/button_bg_theme"
             android:text="@string/accept"
             android:textColor="@color/white"

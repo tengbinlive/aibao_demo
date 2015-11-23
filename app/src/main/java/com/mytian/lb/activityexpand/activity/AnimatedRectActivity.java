@@ -9,7 +9,9 @@ import android.util.Property;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.debug.ViewServer;
 import com.mytian.lb.App;
+import com.mytian.lb.Constant;
 
 public abstract class AnimatedRectActivity extends Activity {
 
@@ -43,6 +45,25 @@ public abstract class AnimatedRectActivity extends Activity {
             }
         });
         animator.start();
+        if (Constant.DEBUG) {
+            ViewServer.get(this).removeWindow(this);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (Constant.DEBUG) {
+            ViewServer.get(this).setFocusedWindow(this);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (Constant.DEBUG) {
+            ViewServer.get(this).removeWindow(this);
+        }
     }
 
     protected abstract int getContentView();

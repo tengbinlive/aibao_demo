@@ -6,6 +6,7 @@ import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -187,7 +188,7 @@ public class AddFollowActivity extends AbsActivity {
 
     @Override
     public void initActionBar() {
-        LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) layout_follow_search.getLayoutParams();
+        ViewGroup.LayoutParams lp = layout_follow_search.getLayoutParams();
         lp.height = 0;
         layout_follow_search.setLayoutParams(lp);
         layout_follow_search.setVisibility(View.VISIBLE);
@@ -269,7 +270,7 @@ public class AddFollowActivity extends AbsActivity {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 float value = (Float) animation.getAnimatedValue();
-                LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) layout_follow_search.getLayoutParams();
+                ViewGroup.LayoutParams lp = layout_follow_search.getLayoutParams();
                 lp.height = (int) value;
                 layout_follow_search.setLayoutParams(lp);
             }

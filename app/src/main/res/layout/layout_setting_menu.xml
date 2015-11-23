@@ -3,9 +3,9 @@
     android:id="@+id/layout_setting"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/theme_bg_layout"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    android:background="@color/theme_bg_layout"
     android:visibility="invisible">
 
     <ScrollView
@@ -16,9 +16,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:orientation="vertical"
+            android:layout_height="match_parent"
             android:layout_marginTop="@dimen/content_gap"
-            android:layout_height="match_parent">
+            android:orientation="vertical">
 
             <View
                 android:layout_width="match_parent"
@@ -29,6 +29,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
+                android:padding="@dimen/content_gap"
                 android:layout_height="wrap_content">
 
                 <TextView
@@ -36,7 +37,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_margin="@dimen/content_gap"
                     android:text="@string/hint_name"
                     android:textColor="@color/textcolor_222"
                     android:textSize="@dimen/font_btn" />
@@ -47,11 +47,10 @@
                     android:layout_height="match_parent"
                     android:background="@null"
                     android:gravity="right"
+                    android:singleLine="true"
                     android:textColor="@color/textcolor_222"
                     android:textColorHint="@color/gray_hint"
                     android:textCursorDrawable="@null"
-                    android:layout_margin="@dimen/content_gap"
-                    android:singleLine="true"
                     android:textSize="@dimen/font_btn" />
 
             </RelativeLayout>
@@ -65,6 +64,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
+                android:padding="@dimen/content_gap"
                 android:layout_height="wrap_content">
 
                 <TextView
@@ -72,7 +72,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_margin="@dimen/content_gap"
                     android:text="@string/hint_phone"
                     android:textColor="@color/textcolor_222"
                     android:textSize="@dimen/font_btn" />
@@ -82,8 +81,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
                     android:gravity="right"
-                    android:layout_centerVertical="true"                    android:layout_margin="@dimen/content_gap"
                     android:singleLine="true"
                     android:textColor="@color/gray_hint"
                     android:textSize="@dimen/font_btn" />
@@ -99,6 +98,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
+                android:padding="@dimen/content_gap"
                 android:layout_height="wrap_content">
 
                 <TextView
@@ -106,7 +106,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_margin="@dimen/content_gap"
                     android:text="@string/hint_birthday"
                     android:textColor="@color/textcolor_222"
                     android:textSize="@dimen/font_btn" />
@@ -115,9 +114,8 @@
                     android:id="@+id/birthday_value"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="right"
                     android:layout_alignParentRight="true"
-                    android:layout_margin="@dimen/content_gap"
+                    android:gravity="right"
                     android:singleLine="true"
                     android:textColor="@color/textcolor_222"
                     android:textColorHint="@color/gray_hint"
@@ -133,8 +131,8 @@
                 android:background="@drawable/light_divide" />
 
             <RelativeLayout
-                android:layout_width="match_parent"
                 android:id="@+id/gender_layout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <TextView
@@ -142,46 +140,36 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_margin="@dimen/content_gap"
+                    android:padding="@dimen/content_gap"
                     android:text="@string/hint_gender"
                     android:textColor="@color/textcolor_222"
                     android:textSize="@dimen/font_btn" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:orientation="horizontal"
+                <Button
+                    android:id="@+id/woman_bt"
+                    android:layout_width="65dp"
+                    android:layout_height="32dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/content_gap"
+                    android:layout_toLeftOf="@+id/man_bt"
+                    android:background="@drawable/button_bg_theme"
+                    android:text="@string/woman"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_btn"
+                    android:visibility="invisible" />
+
+                <Button
+                    android:id="@+id/man_bt"
+                    android:layout_width="65dp"
+                    android:layout_height="32dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/content_gap"
-                    android:layout_height="match_parent">
-
-                    <Button
-                        android:id="@+id/woman_bt"
-                        android:layout_width="65dp"
-                        android:layout_height="32dp"
-                        android:layout_marginTop="@dimen/shadow"
-                        android:layout_marginLeft="@dimen/shadow"
-                        android:layout_marginBottom="@dimen/shadow"
-                        android:visibility="invisible"
-                        android:background="@drawable/button_bg_theme"
-                        android:text="@string/woman"
-                        android:layout_marginRight="@dimen/content_gap"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/font_btn" />
-
-                    <Button
-                        android:id="@+id/man_bt"
-                        android:layout_width="65dp"
-                        android:visibility="invisible"
-                        android:layout_marginTop="@dimen/shadow"
-                        android:layout_marginBottom="@dimen/shadow"
-                        android:layout_marginRight="@dimen/shadow"
-                        android:layout_height="32dp"
-                        android:background="@drawable/button_bg_theme"
-                        android:text="@string/man"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/font_small" />
-                </LinearLayout>
+                    android:background="@drawable/button_bg_theme"
+                    android:text="@string/man"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_small"
+                    android:visibility="invisible" />
 
             </RelativeLayout>
 
@@ -194,6 +182,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
+                android:padding="@dimen/content_gap"
                 android:layout_height="wrap_content">
 
                 <TextView
@@ -201,7 +190,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_margin="@dimen/content_gap"
                     android:text="@string/hint_integral"
                     android:textColor="@color/textcolor_222"
                     android:textSize="@dimen/font_btn" />
@@ -212,7 +200,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_margin="@dimen/content_gap"
                     android:singleLine="true"
                     android:text="0"
                     android:textColor="@color/gray_hint"

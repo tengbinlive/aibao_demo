@@ -9,28 +9,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <RelativeLayout
+
+    <GridView
+        android:id="@+id/gridview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/layout_user">
+        android:layout_below="@+id/layout_user"
+        android:listSelector="@color/transparent"
+        android:numColumns="3"
+        android:scrollbars="none"
+        android:stretchMode="columnWidth" />
 
-        <GridView
-            android:id="@+id/gridview"
-            android:layout_width="match_parent"
-            android:numColumns="3"
-            android:scrollbars="none"
-            android:stretchMode="columnWidth"
-            android:listSelector="@color/transparent"
-            android:layout_height="match_parent"/>
-
-        <include layout="@layout/list_empty" />
-
-    </RelativeLayout>
+    <include layout="@layout/list_empty"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/layout_user"
+        android:layout_height="match_parent"/>
 
     <include
         layout="@layout/layout_agreement_menu"
-        android:layout_below="@+id/layout_user"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_below="@+id/layout_user" />
 
 </RelativeLayout>

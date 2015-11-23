@@ -113,7 +113,7 @@ public class FriendslistActivity extends AbsActivity {
     @Override
     public void initActionBar() {
         setToolbarLeftStrID(R.string.select_friends);
-        setToolbarRightVisbility(View.GONE, View.GONE);
+        setToolbarRightVisbility( View.GONE);
     }
 
     private static final int INIT_LIST = 0x01;//初始化数据处理

@@ -1,79 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:background="@color/theme_bg_layout"
+    android:padding="@dimen/content_gap">
+
+    <ImageView
+        android:id="@+id/head"
+        android:layout_width="@dimen/item_head_size"
+        android:layout_height="@dimen/item_head_size" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/content_10dp"
-        android:layout_marginBottom="@dimen/content_10dp"
-        android:padding="@dimen/content_gap"
-        android:background="@color/theme_bg_layout">
-
-        <ImageView
-            android:id="@+id/head"
-            android:layout_width="@dimen/item_head_size"
-            android:layout_height="@dimen/item_head_size" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/content_gap_small"
-            android:layout_marginLeft="@dimen/content_left_margin"
-            android:layout_toRightOf="@+id/head"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="user name"
-                android:singleLine="true"
-                android:textColor="@color/textcolor_222"
-                android:textSize="@dimen/font_btn" />
-
-            <TextView
-                android:id="@+id/date"
-                android:layout_below="@+id/name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="5分钟前"
-                android:layout_marginTop="@dimen/content_gap_small"
-                android:textColor="@color/gray_hint"
-                android:textSize="@dimen/font_least" />
-
-            <TextView
-                android:id="@+id/desc"
-                android:layout_below="@+id/name"
-                android:layout_toRightOf="@+id/date"
-                android:layout_marginLeft="@dimen/content_left_margin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="麦宝客户端"
-                android:layout_marginTop="@dimen/content_gap_small"
-                android:textColor="@color/gray_hint"
-                android:textSize="@dimen/font_least" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:src="@mipmap/icon_share"
-                android:scaleType="centerInside"
-                android:layout_alignParentRight="true"
-                android:layout_height="wrap_content" />
-        </RelativeLayout>
+        android:layout_marginLeft="@dimen/content_left_margin"
+        android:layout_marginTop="@dimen/content_gap_small"
+        android:layout_toRightOf="@+id/head"
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/content"
-            android:layout_below="@+id/head"
-            android:paddingTop="@dimen/content_gap_small"
-            android:layout_width="match_parent"
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:text="user name"
             android:textColor="@color/textcolor_222"
-            android:lineSpacingMultiplier="1.3"
-            android:textSize="@dimen/font_small" />
+            android:textSize="@dimen/font_btn" />
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/name"
+            android:layout_marginTop="@dimen/content_gap_small"
+            android:text="5分钟前"
+            android:textColor="@color/gray_hint"
+            android:textSize="@dimen/font_least" />
+
+        <TextView
+            android:id="@+id/desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/name"
+            android:layout_marginLeft="@dimen/content_left_margin"
+            android:layout_marginTop="@dimen/content_gap_small"
+            android:layout_toRightOf="@+id/date"
+            android:text="麦宝客户端"
+            android:textColor="@color/gray_hint"
+            android:textSize="@dimen/font_least" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:scaleType="centerInside"
+            android:src="@mipmap/icon_share" />
     </RelativeLayout>
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/head"
+        android:lineSpacingMultiplier="1.3"
+        android:paddingTop="@dimen/content_gap_small"
+        android:textColor="@color/textcolor_222"
+        android:textSize="@dimen/font_small" />
+</RelativeLayout>
+
 

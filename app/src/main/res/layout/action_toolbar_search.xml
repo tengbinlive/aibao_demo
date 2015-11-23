@@ -1,25 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/toolbar"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/action_bar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/theme"
-    android:contentInsetLeft="0dp"
     android:elevation="@dimen/elevation_height"
-    android:contentInsetStart="0dp"
     android:minHeight="@dimen/actionbar_height"
     android:orientation="vertical"
-    app:contentInsetLeft="0dp"
-    app:contentInsetStart="0dp">
+    android:paddingTop="@dimen/statusBar_height">
+
+    <TextView
+        android:id="@+id/toolbar_left_btn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/actionbar_height"
+        android:layout_toLeftOf="@+id/toolbar_intermediate_tv"
+        android:drawablePadding="@dimen/content_gap_small"
+        android:gravity="center"
+        android:paddingLeft="@dimen/content_left_margin"
+        android:singleLine="true"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_actionbar" />
+
+    <TextView
+        android:id="@+id/toolbar_intermediate_tv"
+        android:layout_width="100dp"
+        android:layout_height="@dimen/actionbar_height"
+        android:layout_centerHorizontal="true"
+        android:drawablePadding="@dimen/content_gap_small"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_actionbar_title" />
+
+    <cdflynn.android.library.crossview.CrossView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/add_bt"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:padding="@dimen/content_left_margin"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/content_left_margin"
+        android:background="@color/transparent"
+        android:elevation="@dimen/elevation_height"
+        app:lineColor="@color/white" />
 
     <include
-        android:id="@+id/action_bar"
-        layout="@layout/action_bar_title_add"
+        layout="@layout/layout_follow_search"
+        android:layout_below="@+id/toolbar_left_btn"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/statusBar_height" />
+        android:layout_height="@dimen/actionbar_search_height" />
 
-    <include layout="@layout/layout_follow_search" />
-
-</LinearLayout>
+</RelativeLayout>

@@ -159,7 +159,7 @@ public class MainActivity extends AbsActivity {
     private void actionbarIcon(final int position) {
         if (position == USER) {
             setToolbarRight(R.mipmap.icon_settings);
-            setToolbarRightVisbility(View.VISIBLE, View.VISIBLE);
+            setToolbarRightVisbility( View.VISIBLE);
             setToolbarRightOnClick(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -172,7 +172,7 @@ public class MainActivity extends AbsActivity {
             });
         } else if (position == AGREEMENT || position == HABIT) {
             setToolbarRight(R.mipmap.icon_friendslist);
-            setToolbarRightVisbility(View.VISIBLE, View.VISIBLE);
+            setToolbarRightVisbility( View.VISIBLE);
             setToolbarRightOnClick(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -189,7 +189,7 @@ public class MainActivity extends AbsActivity {
                 }
             });
         } else {
-            setToolbarRightVisbility(View.INVISIBLE, View.VISIBLE);
+            setToolbarRightVisbility(View.VISIBLE);
         }
     }
 

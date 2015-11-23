@@ -45,6 +45,7 @@
             android:textSize="@dimen/font_btn" />
 
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/content_1dp"
