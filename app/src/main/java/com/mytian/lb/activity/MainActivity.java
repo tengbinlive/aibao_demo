@@ -1,33 +1,56 @@
 package com.mytian.lb.activity;
 
 import android.content.Intent;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.core.util.CommonUtil;
 import com.mytian.lb.AbsActivity;
+import com.mytian.lb.AbsFragment;
 import com.mytian.lb.App;
 import com.mytian.lb.R;
+import com.mytian.lb.adapter.MainViewPagerAdapter;
+import com.mytian.lb.enums.BottomMenu;
 import com.mytian.lb.event.SettingEventType;
 import com.mytian.lb.fragment.AgreementFragment;
-import com.mytian.lb.fragment.ContentFragment;
+import com.mytian.lb.fragment.DtnameicFragment;
+import com.mytian.lb.fragment.HabitFragment;
+import com.mytian.lb.fragment.KindleFragment;
+import com.mytian.lb.fragment.UserFragment;
 import com.mytian.lb.push.PushHelper;
+import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
+import java.util.ArrayList;
+
+import butterknife.Bind;
 import de.greenrobot.event.EventBus;
 
 
 public class MainActivity extends AbsActivity {
 
+    public final static int DYNAMIC = 0;
+    public final static int AGREEMENT = DYNAMIC + 1;
+    public final static int HABIT = AGREEMENT + 1;
+    public final static int KINDLE = HABIT + 1;
+    public final static int USER = KINDLE + 1;
+
+    @Bind(R.id.view_pager)
+    ViewPager viewPager;
+    @Bind(R.id.viewpager_tab)
+    SmartTabLayout viewPagerTab;
+
+    public ArrayList<AbsFragment> fragments;
+
     /**
      * 两次点击返回之间的间隔时间, 这个时间内算为双击
      */
     private static final int EXIT_DOUBLE_CLICK_DIFF_TIME = 2000;
-//    @Bind(R.id.left_drawer)
-//    MDrawerView leftDrawer;
-//    @Bind(R.id.drawer_layout)
-//    DrawerLayout drawerLayout;
-
-    private ContentFragment contentFragment;
 
     /**
      * 记录第一次点击返回的时间戳
@@ -71,56 +94,70 @@ public class MainActivity extends AbsActivity {
     }
 
     private void init() {
-        initLayout();
         setActionBar();
-//        initDrawerLayout();
+        initViewPager();
     }
 
-//    private void initDrawerLayout() {
-//        drawerLayout.setDrawerListener(new MyDrawerListener());//设置drawer的开关监听
-//        leftDrawer.setOnButtonClick(new MDrawerView.OnButtonClick() {
-//            @Override
-//            public void onClick(int type) {
-//            }
-//        });
-//
-//    }
-
-//    private void toggerDrawer() {
-//        boolean is = drawerLayout.isDrawerOpen(leftDrawer);
-//        if (is) {
-//            drawerLayout.closeDrawer(leftDrawer);
-//        } else {
-//            drawerLayout.openDrawer(leftDrawer);
-//        }
-//    }
-
-    private void initLayout() {
-        contentFragment = new ContentFragment();
-        contentFragment.setActionbarSet(new ContentFragment.ActionbarSet() {
+    // 初始化资源
+    private void initViewPager() {
+        fragments = new ArrayList<>();
+        fragments.add(new DtnameicFragment());
+        fragments.add(new AgreementFragment());
+        fragments.add(new HabitFragment());
+        fragments.add(new KindleFragment());
+        fragments.add(new UserFragment());
+        MainViewPagerAdapter adapter = new MainViewPagerAdapter(getSupportFragmentManager(), fragments);
+        viewPager.setAdapter(adapter);
+        viewPagerTab.setCustomTabView(new SmartTabLayout.TabProvider() {
             @Override
-            public void OnIndexSet(int position) {
-                actionbarIcon(position);
+            public View createTabView(ViewGroup container, int position, PagerAdapter adapter) {
+                LinearLayout custom_ly = (LinearLayout) mInflater.inflate(R.layout.tab_main_icon, container, false);
+                switch (position) {
+                    case DYNAMIC:
+                        setIconInfo(custom_ly, BottomMenu.DYNAMIC, true);
+                        break;
+                    case AGREEMENT:
+                        setIconInfo(custom_ly, BottomMenu.AGREEMENT);
+                        break;
+                    case HABIT:
+                        setIconInfo(custom_ly, BottomMenu.HABIT);
+                        break;
+                    case KINDLE:
+                        setIconInfo(custom_ly, BottomMenu.KINDLE);
+                        break;
+                    case USER:
+                        setIconInfo(custom_ly, BottomMenu.USER);
+                        break;
+                    default:
+                        throw new IllegalStateException("Invalid position: " + position);
+                }
+                return custom_ly;
             }
-
-            @Override
-            public void OnChanger() {
-            }
-
-            @Override
-            public void OnTitleSet(int title) {
-                setToolbarLeftStrID(title);
-            }
-
         });
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.contentlayout, contentFragment)
-                .commit();
+
+        viewPagerTab.setViewPager(viewPager);
+
+        viewPagerTab.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                fragments.get(position).EResetInit();
+                setSelectedTabBg(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
     }
 
     private void actionbarIcon(final int position) {
-        if (position == ContentFragment.USER) {
+        if (position == USER) {
             setToolbarRight(R.mipmap.icon_settings);
             setToolbarRightVisbility(View.VISIBLE, View.VISIBLE);
             setToolbarRightOnClick(new View.OnClickListener() {
@@ -133,18 +170,18 @@ public class MainActivity extends AbsActivity {
                     EventBus.getDefault().post(settingEventType);
                 }
             });
-        } else if (position == ContentFragment.AGREEMENT || position == ContentFragment.HABIT) {
+        } else if (position == AGREEMENT || position == HABIT) {
             setToolbarRight(R.mipmap.icon_friendslist);
             setToolbarRightVisbility(View.VISIBLE, View.VISIBLE);
             setToolbarRightOnClick(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (position == ContentFragment.AGREEMENT) {
+                    if (position == AGREEMENT) {
                         if (!AgreementFragment.isSettingShow) {
                             Intent intent = new Intent(MainActivity.this, FriendslistActivity.class);
                             startActivity(intent);
                         }
-                    } else if (position == ContentFragment.HABIT) {
+                    } else if (position == HABIT) {
                         Intent intent = new Intent(MainActivity.this, FriendslistActivity.class);
                         intent.putExtra("TYPE", position);
                         startActivity(intent);
@@ -156,7 +193,6 @@ public class MainActivity extends AbsActivity {
         }
     }
 
-
     private SettingEventType settingEventType;
 
     private void setActionBar() {
@@ -164,35 +200,53 @@ public class MainActivity extends AbsActivity {
         setToolbarLeftOnClick(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                toggerDrawer();
             }
         });
-
     }
 
+    private void setIconInfo(ViewGroup custom_ly, BottomMenu menu, boolean isClick) {
+        ImageView icon = (ImageView) custom_ly.findViewById(R.id.menu_icon);
+        TextView title = (TextView) custom_ly.findViewById(R.id.menu_title);
+        int titleStr = menu.getTitle();
+        title.setText(titleStr);
+        if (!isClick) {
+            icon.setImageResource(menu.getResid_normal());
+            title.setTextColor(menu.getTitle_colos_normal());
+        } else {
+            icon.setImageResource(menu.getResid_press());
+            title.setTextColor(menu.getTitle_colos_press());
+            setToolbarLeftStrID(titleStr);
+        }
+        custom_ly.setTag(R.id.main_tab_menu, menu);
+    }
 
-//    /**
-//     * drawer的监听
-//     */
-//    private class MyDrawerListener implements DrawerLayout.DrawerListener {
-//        @Override
-//        public void onDrawerOpened(View drawerView) {// 打开drawer
-//        }
-//
-//        @Override
-//        public void onDrawerClosed(View drawerView) {// 关闭drawer
-//        }
-//
-//        @Override
-//        public void onDrawerSlide(View drawerView, float slideOffset) {// drawer滑动的回调
-//            //滑动的百分比，完全划出为 slideOffset =1.0
-//            if (slideOffset >= 1.0) {
-//                leftDrawer.setUserInfo();
-//            }
-//        }
-//
-//        @Override
-//        public void onDrawerStateChanged(int newState) {// drawer状态改变的回调
-//        }
-//    }
+    private void setIconInfo(ViewGroup custom_ly, BottomMenu menu) {
+        setIconInfo(custom_ly, menu, false);
+    }
+
+    private void setSelectedTabBg(int position) {
+        int count = fragments.size();
+        for (int i = 0; i < count; i++) {
+            ViewGroup view = (ViewGroup) viewPagerTab.getTabAt(i);
+            setTabViewBackground(view, i == position, position);
+        }
+    }
+
+    private void setTabViewBackground(ViewGroup custom_ly, boolean isSelect, int position) {
+        BottomMenu menu = (BottomMenu) custom_ly.getTag(R.id.main_tab_menu);
+        ImageView icon = (ImageView) custom_ly.findViewById(R.id.menu_icon);
+        TextView title = (TextView) custom_ly.findViewById(R.id.menu_title);
+        int titleStr = menu.getTitle();
+        title.setText(titleStr);
+        if (!isSelect) {
+            icon.setImageResource(menu.getResid_normal());
+            title.setTextColor(menu.getTitle_colos_normal());
+        } else {
+            icon.setImageResource(menu.getResid_press());
+            title.setTextColor(menu.getTitle_colos_press());
+            setToolbarLeftStrID(titleStr);
+            actionbarIcon(position);
+        }
+    }
+
 }

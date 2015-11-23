@@ -18,7 +18,6 @@ import com.mytian.lb.bean.follow.FollowListResult;
 import com.mytian.lb.bean.follow.FollowUser;
 import com.mytian.lb.demodata.DemoHabitUserType;
 import com.mytian.lb.demodata.DemoUserType;
-import com.mytian.lb.fragment.ContentFragment;
 import com.mytian.lb.helper.AnimationHelper;
 import com.mytian.lb.manager.FollowManager;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
@@ -42,12 +41,12 @@ public class FriendslistActivity extends AbsActivity {
 
     private ArrayList<FollowUser> arrayList;
 
-    private int TYPE ;
+    private int TYPE;
 
     @Override
     public void EInit() {
         super.EInit();
-        TYPE = getIntent().getIntExtra("TYPE", ContentFragment.AGREEMENT);
+        TYPE = getIntent().getIntExtra("TYPE", MainActivity.AGREEMENT);
         initListView();
         dialogShow();
         getListData(INIT_LIST);
@@ -87,9 +86,9 @@ public class FriendslistActivity extends AbsActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 AnimationHelper.getInstance().viewAnimationScal(view);
-                if(TYPE==ContentFragment.AGREEMENT){
+                if (TYPE == MainActivity.AGREEMENT) {
                     EventBus.getDefault().post(new DemoUserType(arrayList.get(position - 1).getUid()));
-                }else if(TYPE==ContentFragment.HABIT){
+                } else if (TYPE == MainActivity.HABIT) {
                     EventBus.getDefault().post(new DemoHabitUserType(arrayList.get(position - 1).getUid()));
                 }
                 finish();

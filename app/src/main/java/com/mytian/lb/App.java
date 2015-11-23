@@ -170,12 +170,13 @@ public class App extends Application {
 
     @Override
     public void onCreate() {
-        FIR.init(getApplicationContext());
         super.onCreate();
         instance = this;
 
         // 多进程情况只初始化一次
         if (ProcessUtil.isCurMainProcess(getApplicationContext())) {
+
+            FIR.init(getApplicationContext());
 
             //初始化自定义Activity管理器
             activityManager = ActivityManager.getScreenManager();
