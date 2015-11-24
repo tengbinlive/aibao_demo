@@ -24,6 +24,7 @@ public abstract class AnimatedRectActivity extends Activity {
         super.onCreate(savedInstanceState);
         App.getInstance().activityManager.pushActivity(this);
         setContentView(getContentView());
+        getWindow().setBackgroundDrawable(null);
         FrameLayout activityRoot = (FrameLayout) findViewById(android.R.id.content);
         View parent = activityRoot.getChildAt(0);
 

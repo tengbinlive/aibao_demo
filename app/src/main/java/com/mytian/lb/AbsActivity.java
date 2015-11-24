@@ -76,6 +76,7 @@ public abstract class AbsActivity extends SwipeBackActivity implements EInitDate
         setStatusBar(colos);
         mInflater = LayoutInflater.from(this);
         setContentView(getContentView());
+        getWindow().setBackgroundDrawable(null);
         ButterKnife.bind(this);
         initAbsActionBar();
         if (null != viewTitleBar) {
