@@ -1,8 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mytian.lb"
-    android:installLocation="auto"
-    android:versionCode="2"
-    android:versionName="v1.1">
+    android:installLocation="auto">
 
     <supports-screens
         android:anyDensity="true"
@@ -91,6 +89,7 @@
         <activity
             android:name=".activity.LoginActivity"
             android:launchMode="singleTask"
+            android:theme="@style/AppThemeTN"
             android:windowSoftInputMode="adjustPan"></activity>
 
         <!--注册-->

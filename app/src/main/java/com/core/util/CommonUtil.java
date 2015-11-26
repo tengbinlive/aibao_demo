@@ -476,6 +476,24 @@ public class CommonUtil {
         return null;
     }
 
+    /**
+     * 获得APP的版本code
+     *
+     * @param c 上下文
+     * @return 返回版本名称(例如: 1)
+     */
+    public static int getAppVersionCode(Context c) {
+        try {
+            PackageManager manager = c.getPackageManager();
+            PackageInfo info = manager.getPackageInfo(c.getPackageName(), 0);
+            return info.versionCode;
+        } catch (NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+
     public static void delivery2Handler(Handler handler, int what, Object obj) {
         if (handler == null)
             return;

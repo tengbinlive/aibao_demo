@@ -1,40 +1,42 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <include layout="@layout/layout_user" />
+    <include
+        android:id="@+id/layout_user"
+        layout="@layout/layout_user" />
 
-    <RelativeLayout
+    <include
+        layout="@layout/list_empty"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white_light">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/layout_user" />
 
-        <include layout="@layout/list_empty" />
+    <com.handmark.pulltorefresh.PullToRefreshListView xmlns:ptr="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/listview"
+        android:layout_width="match_parent"
+        android:background="@color/theme_bg_layout"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/layout_user"
+        android:cacheColorHint="@color/transparent"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:divider="@null"
+        android:fadingEdge="none"
+        android:fastScrollEnabled="false"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false"
+        android:listSelector="@color/transparent"
+        android:paddingTop="@dimen/content_gap_small"
+        android:scrollbars="none"
+        android:smoothScrollbar="true"
+        ptr:ptrAnimationStyle="flip"
+        ptr:ptrMode="both" />
 
-        <com.handmark.pulltorefresh.PullToRefreshListView xmlns:ptr="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/listview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:cacheColorHint="@color/transparent"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:divider="@null"
-            android:fadingEdge="none"
-            android:fastScrollEnabled="false"
-            android:footerDividersEnabled="false"
-            android:headerDividersEnabled="false"
-            android:listSelector="@color/transparent"
-            android:paddingTop="@dimen/content_gap_small"
-            android:scrollbars="none"
-            android:smoothScrollbar="true"
-            ptr:ptrAnimationStyle="flip"
-            ptr:ptrMode="both" />
+    <include
+        layout="@layout/layout_setting_menu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/layout_user" />
 
-        <include
-            layout="@layout/layout_setting_menu"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </RelativeLayout>
-</LinearLayout>
+</RelativeLayout>

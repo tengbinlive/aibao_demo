@@ -21,6 +21,8 @@ public class Constant {
 
 	public static final String SHARED_PREFERENCES_FILE_NAME = "mytian";
 
+	public static final String FIR_API_TOKEN = "2ec6a8e27ad4af3a2e27011c62a5216f";
+
 
 	/** 存储目录/文件 **/
 	public static class Dir {

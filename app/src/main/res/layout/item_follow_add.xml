@@ -3,7 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:background="@color/theme_bg_layout"
     android:layout_height="wrap_content">
 
     <include layout="@layout/title_follow_item" />
@@ -17,6 +16,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
+        android:background="@color/white_item"
         android:padding="@dimen/content_gap"
         android:layout_height="wrap_content">
 

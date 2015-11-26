@@ -3,7 +3,6 @@
     android:id="@+id/layout_setting"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/theme_bg_layout"
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:visibility="invisible">
@@ -12,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipChildren="false"
+        android:background="@color/white_item"
         android:scrollbars="none">
 
         <LinearLayout
@@ -207,16 +207,36 @@
 
             </RelativeLayout>
 
-            <Button
-                android:id="@+id/exit_bt"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/button_height"
-                android:layout_margin="@dimen/content_gap_big"
-                android:background="@drawable/button_bg_theme"
-                android:text="@string/exit"
-                android:textColor="@color/white"
-                android:textSize="@dimen/font_btn" />
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_height="wrap_content">
 
+                <Button
+                    android:id="@+id/exit_bt"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="@dimen/button_height"
+                    android:layout_margin="@dimen/content_gap_big"
+                    android:background="@drawable/button_bg_theme"
+                    android:text="@string/exit"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_btn" />
+
+                <Button
+                    android:id="@+id/update_bt"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="@dimen/button_height"
+                    android:layout_margin="@dimen/content_gap_big"
+                    android:background="@drawable/button_bg_theme"
+                    android:text="@string/update"
+                    android:visibility="gone"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_btn" />
+
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </com.mytian.lb.mview.ClipRevealFrame>

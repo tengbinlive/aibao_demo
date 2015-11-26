@@ -147,6 +147,7 @@ public class LauncherActivity extends AbsActivity {
                 SharedPreferencesHelper.setString(this, Constant.LoginUser.SHARED_PREFERENCES_PHONE, "");
                 SharedPreferencesHelper.setString(this, Constant.LoginUser.SHARED_PREFERENCES_PASSWORD, "");
             }
+            isLogin = false;
             activityHandler.sendEmptyMessage(TO_LOGIN);
         }
     }

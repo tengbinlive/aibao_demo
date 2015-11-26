@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
@@ -27,12 +28,15 @@ import com.core.CommonResponse;
 import com.core.util.CommonUtil;
 import com.core.util.DateUtil;
 import com.core.util.StringUtil;
+import com.gitonway.lee.niftymodaldialogeffects.Effectstype;
+import com.gitonway.lee.niftymodaldialogeffects.NiftyDialogBuilder;
 import com.handmark.pulltorefresh.PullToRefreshBase;
 import com.handmark.pulltorefresh.PullToRefreshListView;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mytian.lb.AbsActivity;
 import com.mytian.lb.AbsFragment;
 import com.mytian.lb.App;
+import com.mytian.lb.Constant;
 import com.mytian.lb.R;
 import com.mytian.lb.activity.AddFollowActivity;
 import com.mytian.lb.adapter.UserAdapter;
@@ -60,6 +64,9 @@ import butterknife.Bind;
 import butterknife.BindColor;
 import butterknife.BindDimen;
 import butterknife.OnClick;
+import im.fir.sdk.FIR;
+import im.fir.sdk.callback.VersionCheckCallback;
+import im.fir.sdk.version.AppVersion;
 
 public class UserFragment extends AbsFragment implements DatePickerDialog.OnDateSetListener {
 
@@ -79,6 +86,8 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
     Button woman_bt;
     @Bind(R.id.man_bt)
     Button man_bt;
+    @Bind(R.id.update_bt)
+    Button update_bt;
     @Bind(R.id.gender_layout)
     RelativeLayout gender_layout;
 
@@ -116,6 +125,8 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
     private final OvershootInterpolator mInterpolator = new OvershootInterpolator();
 
     private int user_gender = -1;
+
+    private AppVersion firAppVersion;
 
     private void initListView() {
 
@@ -183,6 +194,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         birthdayDate = Calendar.getInstance();
         initListView();
         setUserInfo();
+        updateDetect();
         getListData(INIT_LIST);
     }
 
@@ -305,6 +317,70 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         }
     }
 
+    @OnClick(R.id.update_bt)
+    void updateVersion(View view) {
+        StringBuffer versionInfo = new StringBuffer();
+        versionInfo.append("version :   ").append(firAppVersion.getVersionName()).append("\n")
+                .append("log :   ").append(firAppVersion.getChangeLog()).append("\n\n")
+                .append("download...");
+        dialogAddFollow(versionInfo.toString(), firAppVersion.getUpdateUrl());
+    }
+
+    private void toDownload(String download) {
+        Uri uri = Uri.parse(download);
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(intent);
+    }
+
+    public void dialogAddFollow(String value, final String download) {
+        if (StringUtil.isBlank(value)) {
+            return;
+        }
+        dialogDismiss();
+        LinearLayout convertView = (LinearLayout) mInflater.inflate(R.layout.dialog_prompt, null);
+        TextView valueTv = (TextView) convertView.findViewById(R.id.value);
+        valueTv.setText(value);
+        valueTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                toDownload(download);
+            }
+        });
+        dialogBuilder = NiftyDialogBuilder.getInstance(getActivity());
+        dialogBuilder.withDuration(700) // def
+                .isCancelableOnTouchOutside(true) // def | isCancelable(true)
+                .withEffect(Effectstype.Fadein) // def Effectstype.Slidetop
+                .setCustomView(convertView, getActivity()); // .setCustomView(View
+        dialogBuilder.show();
+    }
+
+    private void updateDetect() {
+        FIR.checkForUpdateInFIR(Constant.FIR_API_TOKEN, new VersionCheckCallback() {
+            @Override
+            public void onSuccess(AppVersion appVersion, boolean b) {
+                firAppVersion = appVersion;
+            }
+
+            @Override
+            public void onFail(String s, int i) {
+            }
+
+            @Override
+            public void onError(Exception e) {
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
+    }
+
     /**
      * 设置界面
      */
@@ -373,6 +449,11 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
 
         revealAnim = createViewScale1(change_bt);
         animList.add(revealAnim);
+
+        if (firAppVersion != null && firAppVersion.getVersionCode() > App.getAppVersionCode() && update_bt.getVisibility() != View.VISIBLE) {
+            revealAnim = createViewScale1(update_bt);
+            animList.add(revealAnim);
+        }
 
         int sex = App.getInstance().userResult.getParent().getSex();
 
@@ -475,6 +556,24 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
                 view.setVisibility(View.INVISIBLE);
+            }
+        });
+        revealAnim.setDuration(100);
+        revealAnim.setInterpolator(new DecelerateInterpolator());
+        return revealAnim;
+    }
+
+    private Animator createViewScale0(final View view, final int type) {
+        Animator revealAnim = ObjectAnimator.ofPropertyValuesHolder(
+                view,
+                AnimatorUtils.scaleX(1f, 0f),
+                AnimatorUtils.scaleY(1f, 0f)
+        );
+        revealAnim.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                view.setVisibility(type);
             }
         });
         revealAnim.setDuration(100);

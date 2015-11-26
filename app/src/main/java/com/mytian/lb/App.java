@@ -167,6 +167,13 @@ public class App extends Application {
     }
 
     /**
+     * @return 返回APP版本code
+     */
+    public static int getAppVersionCode() {
+        return ConfigManager.getConfigAsInt(ConfigKeyEnum.APP_VERSION_CODE);
+    }
+
+    /**
      * @return 是否第一次启动(某版本)
      */
     public static boolean isFirstLunch() {

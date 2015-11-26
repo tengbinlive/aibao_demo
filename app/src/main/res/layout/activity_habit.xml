@@ -1,7 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white_light">
+    android:layout_height="match_parent">
 
     <include
         android:id="@+id/toolbar"
@@ -19,6 +18,7 @@
     <com.handmark.pulltorefresh.PullToRefreshListView
         xmlns:ptr="http://schemas.android.com/apk/res-auto"
         android:id="@+id/listview"
+        android:background="@color/theme_bg_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/layout_user"

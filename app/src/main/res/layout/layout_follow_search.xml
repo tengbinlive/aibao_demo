@@ -3,7 +3,7 @@
     android:id="@+id/layout_follow_search"
     android:layout_width="match_parent"
     android:layout_height="@dimen/actionbar_search_height"
-    android:background="@color/theme_bg_layout"
+    android:background="@color/white_item"
     android:visibility="gone"
     android:orientation="vertical">
 

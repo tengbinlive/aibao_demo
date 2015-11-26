@@ -18,6 +18,8 @@ public enum ConfigKeyEnum {
 	SCREEN_HEIGHT,
 	/** APP版本名称(例如:3.0.3) */
 	APP_VERSION_NAME,
+	/** APP版本code(例如:1) */
+	APP_VERSION_CODE,
 	/** 是否 第一次安装 */
 	IS_FIRST_LUNCH,
 

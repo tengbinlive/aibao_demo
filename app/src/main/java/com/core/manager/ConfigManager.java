@@ -69,6 +69,7 @@ public class ConfigManager {
 		map.put(ConfigKeyEnum.MOBILE_TYPE.name(), DeviceUtil.getMobileType());
 		map.put(ConfigKeyEnum.SCREEN_WIDTH.name(), screenInfo[0]);
 		map.put(ConfigKeyEnum.SCREEN_HEIGHT.name(), screenInfo[1]);
+		map.put(ConfigKeyEnum.APP_VERSION_CODE.name(), CommonUtil.getAppVersionCode(context));
 		map.put(ConfigKeyEnum.APP_VERSION_NAME.name(), currentAppVersionName);
 
 		//	判断数据库中保存的版本号和当前的是否一致, 如果不一致, 需要更新到数据库中, 并标记本次启动为首次启动
