@@ -215,19 +215,17 @@
 
                 <Button
                     android:id="@+id/exit_bt"
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
+                    android:layout_width="100dp"
                     android:layout_height="@dimen/button_height"
                     android:layout_margin="@dimen/content_gap_big"
-                    android:background="@drawable/button_bg_theme"
+                    android:background="@drawable/button_bg_match"
                     android:text="@string/exit"
                     android:textColor="@color/white"
                     android:textSize="@dimen/font_btn" />
 
                 <Button
                     android:id="@+id/update_bt"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_width="match_parent"
                     android:layout_height="@dimen/button_height"
                     android:layout_margin="@dimen/content_gap_big"
                     android:background="@drawable/button_bg_theme"

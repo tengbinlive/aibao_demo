@@ -95,7 +95,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
     int accentColor;
     private Calendar birthdayDate;
 
-    private static boolean isSettingShow;
+    public static boolean isSettingShow;
 
     @Bind(R.id.listview)
     PullToRefreshListView listview;
@@ -194,6 +194,14 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         birthdayDate = Calendar.getInstance();
         initListView();
         setUserInfo();
+        user_icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!isSettingShow) {
+                    toggleShowSetting(settingAchor);
+                }
+            }
+        });
         updateDetect();
         getListData(INIT_LIST);
     }
