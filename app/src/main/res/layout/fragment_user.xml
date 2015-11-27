@@ -6,12 +6,6 @@
         android:id="@+id/layout_user"
         layout="@layout/layout_user" />
 
-    <include
-        layout="@layout/list_empty"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/layout_user" />
-
     <com.handmark.pulltorefresh.PullToRefreshListView xmlns:ptr="http://schemas.android.com/apk/res-auto"
         android:id="@+id/listview"
         android:layout_width="match_parent"
@@ -32,6 +26,17 @@
         android:smoothScrollbar="true"
         ptr:ptrAnimationStyle="flip"
         ptr:ptrMode="both" />
+
+    <TextView
+        android:id="@+id/ll_listEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/layout_user"
+        android:gravity="center"
+        android:lineSpacingMultiplier="1.4"
+        android:text="@string/list_empty"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/font_medium" />
 
     <include
         layout="@layout/layout_setting_menu"

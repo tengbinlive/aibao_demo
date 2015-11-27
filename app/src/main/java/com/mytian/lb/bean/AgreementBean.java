@@ -3,6 +3,7 @@ package com.mytian.lb.bean;
 import com.core.openapi.OpenApiSimpleResult;
 
 /**
+ * 爱的约定
  * 执行项目
  * Created by bin.teng on 2015/10/28.
  */
@@ -16,6 +17,15 @@ public class AgreementBean extends OpenApiSimpleResult {
     private int record;
     private String title;
     private int icon;
+    private String appointId;
+
+    public String getAppointId() {
+        return appointId;
+    }
+
+    public void setAppointId(String appointId) {
+        this.appointId = appointId;
+    }
 
     public String getTitle() {
         return title;
@@ -67,13 +77,15 @@ public class AgreementBean extends OpenApiSimpleResult {
 
     @Override
     public String toString() {
-        return "HabitResult{" +
+        return "AgreementBean{" +
                 "alias='" + alias + '\'' +
                 ", head='" + head + '\'' +
                 ", date='" + date + '\'' +
                 ", record=" + record +
                 ", title='" + title + '\'' +
                 ", icon=" + icon +
+                ", appointId='" + appointId + '\'' +
                 '}';
     }
+
 }

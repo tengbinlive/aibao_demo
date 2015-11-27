@@ -18,17 +18,21 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.core.CommonResponse;
+import com.core.util.CommonUtil;
+import com.dao.Agreement;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mytian.lb.AbsFragment;
-import com.mytian.lb.App;
 import com.mytian.lb.R;
 import com.mytian.lb.adapter.AgreementAdapter;
-import com.mytian.lb.bean.AgreementBean;
 import com.mytian.lb.bean.DemoUserInfo;
+import com.mytian.lb.bean.follow.FollowUser;
 import com.mytian.lb.demodata.DemoManger;
 import com.mytian.lb.demodata.DemoUserType;
 import com.mytian.lb.event.TimeEventType;
 import com.mytian.lb.helper.AnimationHelper;
+import com.mytian.lb.manager.AgreementDOManager;
+import com.mytian.lb.manager.AgreementManager;
 import com.mytian.lb.mview.ClipRevealFrame;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
 
@@ -65,20 +69,22 @@ public class AgreementFragment extends AbsFragment {
     TextView agreementTime;
     private View tempClip;
 
+    private AgreementManager manager = new AgreementManager();
+    private ArrayList<Agreement> arrayList;
     private AgreementAdapter mAdapter;
-    private AgreementBean cureentAgreement;
-    public static final long DKEY_TIME = 15 * 60 * 1000;// 预约倒计时 15分60 秒
+    private Agreement cureentAgreement;
+    private FollowUser cureentParent;
     private final Timer timer = new Timer();
 
     private long DKEY_START_TIME = 0;
-
-    private ArrayList<AgreementBean> arrayList = new ArrayList<>();
 
     private AnimationDrawable animationDrawable;
 
     private int animaitonNum;
 
     private boolean isTimeUsed; //进度条是否开始同步时间
+
+    private static long DKEY_TIME = 15 * 60 * 1000;
 
     private void initGridView() {
 
@@ -101,7 +107,8 @@ public class AgreementFragment extends AbsFragment {
                     AnimationHelper.getInstance().viewAnimationScal(view);
                     tempClip = view;
                     cureentAgreement = arrayList.get(position);
-                    toggleShowSetting(tempClip);
+                    DKEY_TIME = cureentAgreement.getDate().getTime();
+                    manager.sendAgreement(getActivity(), cureentParent.getUid(), cureentAgreement.getDate().getTime(), cureentAgreement.getAppointId(), activityHandler, AGREEMENT);
                 }
             }
         });
@@ -109,27 +116,18 @@ public class AgreementFragment extends AbsFragment {
 
     @OnClick(R.id.agreement_cancle)
     public void cancleAgreement() {
-        toggleShowSetting(tempClip);
+        manager.cancleAgreement(getActivity(), cureentParent.getUid(), cureentAgreement.getAppointId(), activityHandler, AGREEMENT_CANCLE);
     }
 
-    private String[] argeementTitle = new String[]{"写作业", "看书", "做家务", "吃饭", "出去玩", "睡觉"};
-
     private void initData() {
-        int max = 6;
-        for (int i = 0; i < max; i++) {
-            String iconStr = "icon_love_hb";
-            int imgId = getResources().getIdentifier(iconStr + (i % 6 + 1), "mipmap", App.getInstance().getPackageName());
-            AgreementBean bean = new AgreementBean();
-            bean.setTitle(argeementTitle[i % max]);
-            bean.setIcon(imgId);
-            arrayList.add(bean);
-        }
+        arrayList = AgreementDOManager.getInstance().getArrayList();
     }
 
     private void setUserInfo(DemoUserInfo demoUserInfo) {
-        String name = demoUserInfo.getParent().getAlias();
+        cureentParent = demoUserInfo.getParent();
+        String name = cureentParent.getAlias();
         int head = demoUserInfo.getHeadid();
-        String phone = demoUserInfo.getParent().getPhone();
+        String phone = cureentParent.getPhone();
         user_name.setText(name);
         user_phone.setText(phone);
         Glide.with(this).load(head)
@@ -167,7 +165,7 @@ public class AgreementFragment extends AbsFragment {
         }
     };
 
-    StringBuffer buffer = new StringBuffer();
+    private StringBuffer buffer = new StringBuffer();
 
     private void setTimeText(long TimeUsed) {
         int TimeMinute = ((15 * 60) - (int) TimeUsed / 1000) / 60;
@@ -252,8 +250,6 @@ public class AgreementFragment extends AbsFragment {
         float radiusFromToRoot = (float) Math.hypot(
                 Math.max(x, layoutClip.getWidth() - x),
                 Math.max(y, layoutClip.getHeight() - y));
-
-
         if (!isSettingShow) {
             isSettingShow = true;
             showMenu(x, y, radiusOf, radiusFromToRoot);
@@ -268,13 +264,6 @@ public class AgreementFragment extends AbsFragment {
         Animator revealAnim = createCircularReveal(layoutClip, cx, cy, startRadius, endRadius);
         revealAnim.setInterpolator(new AccelerateDecelerateInterpolator());
         revealAnim.setDuration(1000);
-        revealAnim.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                startTimeAnimation();
-            }
-
-        });
         revealAnim.start();
     }
 
@@ -327,6 +316,8 @@ public class AgreementFragment extends AbsFragment {
         return reveal;
     }
 
+    private static final int AGREEMENT = 0x01;//约定
+    private static final int AGREEMENT_CANCLE = 0x02;//取消约定
     private static final int INIT_USER_INFO = 0x03;//设置用户信息
     private Handler activityHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -335,10 +326,39 @@ public class AgreementFragment extends AbsFragment {
                 case INIT_USER_INFO:
                     setUserInfo(DemoManger.getInstance().getDemoUserInfo(msg.obj.toString()));
                     break;
+                case AGREEMENT:
+                    loadAgreement((CommonResponse) msg.obj);
+                    break;
+                case AGREEMENT_CANCLE:
+                    loadAgreementCancle((CommonResponse) msg.obj);
+                    break;
                 default:
                     break;
             }
         }
     };
+
+    private void loadAgreement(CommonResponse resposne) {
+        dialogDismiss();
+        if (resposne.isSuccess()) {
+            if (!isSettingShow) {
+                toggleShowSetting(tempClip);
+            }
+            startTimeAnimation();
+        } else {
+            CommonUtil.showToast(resposne.getMsg());
+        }
+    }
+
+    private void loadAgreementCancle(CommonResponse resposne) {
+        dialogDismiss();
+        if (resposne.isSuccess()) {
+            if (isSettingShow) {
+                toggleShowSetting(tempClip);
+            }
+        } else {
+            CommonUtil.showToast(resposne.getMsg());
+        }
+    }
 
 }

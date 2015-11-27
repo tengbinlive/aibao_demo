@@ -35,9 +35,11 @@ public class DemoManger {
     }
 
 
+
     private void initData() {
         demoUserInfo_1 = new DemoUserInfo();
         FollowUser parent = new FollowUser();
+        parent.setUid("10000002");
         parent.setPhone("18217612177");
         parent.setAlias("小明");
         demoUserInfo_1.setParent(parent);
@@ -60,6 +62,7 @@ public class DemoManger {
 
         demoUserInfo_2 = new DemoUserInfo();
         parent = new FollowUser();
+        parent.setUid("10000002");
         parent.setPhone("18217611111");
         parent.setAlias("小红");
         demoUserInfo_2.setParent(parent);
@@ -86,6 +89,7 @@ public class DemoManger {
 
         demoUserInfo_3 = new DemoUserInfo();
         parent = new FollowUser();
+        parent.setUid("10000002");
         parent.setPhone("15217611213");
         parent.setAlias("韩梅梅");
         demoUserInfo_3.setParent(parent);
@@ -104,6 +108,7 @@ public class DemoManger {
 
         demoUserInfo_4 = new DemoUserInfo();
         parent = new FollowUser();
+        parent.setUid("10000002");
         parent.setPhone("13217611222");
         parent.setAlias("李雷");
         demoUserInfo_4.setParent(parent);
@@ -138,6 +143,7 @@ public class DemoManger {
 
         demoUserInfo_0 = new DemoUserInfo();
         parent = new FollowUser();
+        parent.setUid("10000002");
         parent.setPhone("1392121520");
         parent.setAlias("韩韩");
         demoUserInfo_0.setParent(parent);

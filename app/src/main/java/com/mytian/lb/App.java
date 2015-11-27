@@ -26,6 +26,7 @@ import com.mytian.lb.activityexpand.activity.AnimatedRectLayout;
 import com.mytian.lb.bean.user.UserResult;
 import com.mytian.lb.helper.ActivityManager;
 import com.mytian.lb.helper.SharedPreferencesHelper;
+import com.mytian.lb.manager.AgreementDOManager;
 import com.mytian.lb.push.PushHelper;
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
@@ -216,10 +217,16 @@ public class App extends Application {
             // 初始化OpenAPI
             OpenApi.init(Constant.DEBUG); // 设置OpenAPI的调试状态和App的Contant同步
 
-            // 系统配置业务.
-            ConfigManager.init(this);
-
+            //本地数据库
+            initDAOData();
         }
+    }
+
+    private void initDAOData(){
+        // 系统配置业务.
+        ConfigManager.init(this);
+        //约定
+        AgreementDOManager.getInstance().init();
     }
 
     //创建并注册网络状态监听广播

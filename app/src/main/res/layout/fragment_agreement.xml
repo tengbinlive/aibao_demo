@@ -11,7 +11,7 @@
     <GridView
         android:id="@+id/gridview"
         android:layout_width="match_parent"
-        android:background="@color/theme_bg_layout"
+        android:background="@color/white_item"
         android:layout_height="match_parent"
         android:layout_below="@+id/layout_user"
         android:listSelector="@color/transparent"

@@ -262,7 +262,7 @@ public class MyPushMessageReceiver extends PushMessageReceiver {
     private void updateContent(Context context, String content) {
         PushResult result = JSON.parseObject(content, PushResult.class);
         UserResult userResult = App.getInstance().userResult;
-        if (null != result && null!=userResult &&userResult.getParent().getUid().equals(result.getUid())) {
+        if (null != result && null!=userResult &&isSend(userResult,result)) {
             if (PushCode.FOLLOW_NOTICE.equals(result.getCmd())) {
                 String info = result.getInfo();
                 FollowUser user = JSON.parseObject(info, FollowUser.class);
@@ -272,6 +272,11 @@ public class MyPushMessageReceiver extends PushMessageReceiver {
                 PushHelper.getInstance().setNotification(result.getDescription());
             }
         }
+    }
+
+    private boolean isSend(UserResult userResult,PushResult result){
+        String uid = userResult.getParent().getUid();
+        return "*".equals(result.getUid())||uid.equals(result.getUid());
     }
 
     private void updateNotificationContent(Context context, String content) {

@@ -17,6 +17,8 @@ import com.mytian.lb.R;
 import com.mytian.lb.bean.push.PushOnBindResult;
 import com.mytian.lb.manager.PushMManager;
 
+import java.util.ArrayList;
+
 /**
  * Created by Administrator on 2015/10/30.
  */
@@ -60,6 +62,9 @@ public class PushHelper {
         } else if (STATE_NO == pushState) {
             pushState =STATE_DEF;
             PushManager.startWork(context, PushConstants.LOGIN_TYPE_API_KEY, APP_KEY);
+            ArrayList<String> tags = new ArrayList<>();
+            tags.add("parent");
+            PushManager.setTags(mContext,tags);
         }
     }
 

@@ -100,7 +100,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
     @Bind(R.id.listview)
     PullToRefreshListView listview;
     @Bind(R.id.ll_listEmpty)
-    LinearLayout llListEmpty;
+    View llListEmpty;
 
     private ListView mActualListView;
     private UserAdapter mAdapter;

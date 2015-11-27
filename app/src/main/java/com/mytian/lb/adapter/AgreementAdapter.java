@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.dao.Agreement;
 import com.mytian.lb.R;
 import com.mytian.lb.bean.AgreementBean;
 
@@ -22,11 +23,11 @@ public class AgreementAdapter extends BaseAdapter {
 
     private LayoutInflater mInflater;
 
-    private ArrayList<AgreementBean> list;
+    private ArrayList<Agreement> list;
 
     private Context mContext;
 
-    public AgreementAdapter(Context context, ArrayList<AgreementBean> _list) {
+    public AgreementAdapter(Context context, ArrayList<Agreement> _list) {
         this.list = _list;
         mContext = context;
         mInflater = LayoutInflater.from(context);
@@ -47,7 +48,7 @@ public class AgreementAdapter extends BaseAdapter {
         return 0;
     }
 
-    public void refresh(ArrayList<AgreementBean> _list) {
+    public void refresh(ArrayList<Agreement> _list) {
         list = _list;
         notifyDataSetChanged();
     }
@@ -62,7 +63,7 @@ public class AgreementAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        AgreementBean bean = list.get(position);
+        Agreement bean = list.get(position);
         Glide.with(mContext).load(bean.getIcon()).asBitmap().diskCacheStrategy(DiskCacheStrategy.ALL).into(viewHolder.icon);
         viewHolder.title.setText(bean.getTitle());
         return convertView;

@@ -11,6 +11,16 @@ package com.core.openapi;
 public enum OpenApiMethodEnum {
 
     /**
+     * 取消爱的约定
+     */
+    LOAD_CANCELLOVEAPPOINT("myt_parent/commandAction_cancelLoveAppoint.do", "openapi_json", OpenApi.URL_TYPE_DATA),
+
+    /**
+     * 爱的约定
+     */
+    LOAD_LOVEAPPOINT("myt_parent/commandAction_loveAppoint.do", "openapi_json", OpenApi.URL_TYPE_DATA),
+
+    /**
      * 上传channelId
      */
     LOAD_UPDATECHANNELID("myt_parent/parentAction_updateChannelId.do", "openapi_json", OpenApi.URL_TYPE_DATA),
