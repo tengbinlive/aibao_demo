@@ -1,6 +1,7 @@
 package com.mytian.lb.adapter;
 
 import android.content.Context;
+import android.support.v4.util.ArrayMap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +14,6 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.mytian.lb.R;
 import com.mytian.lb.bean.follow.FollowUser;
 
-import java.util.ArrayList;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -22,11 +21,11 @@ public class FriendslistAdapter extends BaseAdapter {
 
     private LayoutInflater mInflater;
 
-    private ArrayList<FollowUser> list;
+    private ArrayMap<String, FollowUser> list;
 
     private Context mContext;
 
-    public FriendslistAdapter(Context context, ArrayList<FollowUser> _list) {
+    public FriendslistAdapter(Context context, ArrayMap<String, FollowUser> _list) {
         this.list = _list;
         mContext = context;
         mInflater = LayoutInflater.from(context);
@@ -39,7 +38,7 @@ public class FriendslistAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return list.get(position);
+        return list.valueAt(position);
     }
 
     @Override
@@ -47,9 +46,16 @@ public class FriendslistAdapter extends BaseAdapter {
         return 0;
     }
 
-    public void refresh(ArrayList<FollowUser> _list) {
+    public void refresh(ArrayMap<String, FollowUser> _list) {
         list = _list;
         notifyDataSetChanged();
+    }
+
+    public void refresh(String key, FollowUser value) {
+        if (list != null && list.containsKey(key)) {
+            list.put(key, value);
+            notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -69,10 +75,11 @@ public class FriendslistAdapter extends BaseAdapter {
             viewHolder.title.setVisibility(View.GONE);
         }
 
-        FollowUser bean = list.get(position);
+        FollowUser bean = list.valueAt(position);
         Glide.with(mContext).load(bean.getHead_id()).asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.ALL).into(viewHolder.head);
-        viewHolder.name.setText(bean.getAlias());
+        String is_online = "0".equals(bean.getIs_online()) ? "   [在线]" : "   [离线]";
+        viewHolder.name.setText(bean.getAlias() + is_online);
         viewHolder.phone.setText(bean.getPhone());
         return convertView;
     }

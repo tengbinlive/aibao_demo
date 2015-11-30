@@ -11,6 +11,7 @@ import com.mytian.lb.AbsActivity;
 import com.mytian.lb.App;
 import com.mytian.lb.Constant;
 import com.mytian.lb.R;
+import com.mytian.lb.activityexpand.activity.AnimatedRectLayout;
 import com.mytian.lb.bean.user.UserResult;
 import com.mytian.lb.helper.AnimationHelper;
 import com.mytian.lb.helper.SMSContentObserver;
@@ -125,6 +126,11 @@ public class RegisterActivity extends AbsActivity {
             toMainActivity();
         } else {
             CommonUtil.showToast(resposne.getMsg());
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.putExtra("animation_type", AnimatedRectLayout.ANIMATION_WAVE_TR);
+            intent.putExtra("login", false);
+            startActivity(intent);
+            overridePendingTransition(0, 0);
         }
     }
 
@@ -138,7 +144,7 @@ public class RegisterActivity extends AbsActivity {
 
     @OnClick(R.id.register_bt)
     void register() {
-        String phone = phone_et.getText().toString();
+        phone = phone_et.getText().toString();
         if (StringUtil.isBlank(phone) || !StringUtil.checkMobile(phone)) {
             AnimationHelper.getInstance().viewAnimationQuiver(phone_et);
             return;
@@ -150,7 +156,7 @@ public class RegisterActivity extends AbsActivity {
             return;
         }
 
-        String password = password_et.getText().toString();
+        password = password_et.getText().toString();
         if (StringUtil.isBlank(password)) {
             AnimationHelper.getInstance().viewAnimationQuiver(password_et);
             return;

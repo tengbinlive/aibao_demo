@@ -3,12 +3,14 @@ package com.mytian.lb.activity;
 
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.util.ArrayMap;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.core.CommonResponse;
+import com.core.util.CommonUtil;
 import com.handmark.pulltorefresh.PullToRefreshBase;
 import com.handmark.pulltorefresh.PullToRefreshListView;
 import com.mytian.lb.AbsActivity;
@@ -18,7 +20,7 @@ import com.mytian.lb.bean.follow.FollowListResult;
 import com.mytian.lb.bean.follow.FollowUser;
 import com.mytian.lb.demodata.DemoHabitUserType;
 import com.mytian.lb.demodata.DemoUserType;
-import com.mytian.lb.helper.AnimationHelper;
+import com.mytian.lb.event.PushStateEventType;
 import com.mytian.lb.manager.FollowManager;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
 
@@ -39,7 +41,7 @@ public class FriendslistActivity extends AbsActivity {
     private int currentPager = 1;
     private FollowManager manager = new FollowManager();
 
-    private ArrayList<FollowUser> arrayList;
+    private ArrayMap<String, FollowUser> arrayList;
 
     private int TYPE;
 
@@ -85,10 +87,15 @@ public class FriendslistActivity extends AbsActivity {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                FollowUser followUser = arrayList.get(position - 1);
+                if ("1".equals(followUser.getIs_online())) {
+                    CommonUtil.showToast("没在线呢");
+                    return;
+                }
                 if (TYPE == MainActivity.AGREEMENT) {
-                    EventBus.getDefault().post(new DemoUserType(arrayList.get(position - 1).getUid()));
+                    EventBus.getDefault().post(new DemoUserType(followUser.getUid()));
                 } else if (TYPE == MainActivity.HABIT) {
-                    EventBus.getDefault().post(new DemoHabitUserType(arrayList.get(position - 1).getUid()));
+                    EventBus.getDefault().post(new DemoHabitUserType(followUser.getUid()));
                 }
                 finish();
             }
@@ -113,7 +120,7 @@ public class FriendslistActivity extends AbsActivity {
     @Override
     public void initActionBar() {
         setToolbarLeftStrID(R.string.select_friends);
-        setToolbarRightVisbility( View.GONE);
+        setToolbarRightVisbility(View.GONE);
     }
 
     private static final int INIT_LIST = 0x01;//初始化数据处理
@@ -133,14 +140,30 @@ public class FriendslistActivity extends AbsActivity {
         }
     };
 
+    /**
+     * 线上状态更新
+     *
+     * @param event
+     */
+    public void onEvent(PushStateEventType event) {
+        String babyUid = event.babyUid;
+        if (arrayList != null && arrayList.containsKey(babyUid)) {
+            FollowUser followUser = arrayList.get(babyUid);
+            followUser.setIs_online(event.is_online);
+            arrayList.put(babyUid, followUser);
+            mAdapter.refresh(babyUid, followUser);
+        }
+    }
+
     private void loadTestData() {
         dialogDismiss();
         if (arrayList == null) {
-            arrayList = new ArrayList<>();
+            arrayList = new ArrayMap<>();
             for (int i = 0; i < 5; i++) {
-                arrayList.add(FollowUser.testData("" + i));
-                mAdapter.refresh(arrayList);
+                FollowUser followUser = FollowUser.testData("" + i);
+                arrayList.put(followUser.getUid(), followUser);
             }
+            mAdapter.refresh(arrayList);
         }
         listview.onRefreshComplete();
         if (arrayList == null || arrayList.size() <= 0) {
@@ -157,10 +180,12 @@ public class FriendslistActivity extends AbsActivity {
             ArrayList<FollowUser> list = result.getList();
             int size = list == null ? 0 : list.size();
             if (arrayList == null) {
-                arrayList = new ArrayList<>();
+                arrayList = new ArrayMap<>();
             }
             if (size > 0) {
-                arrayList.addAll(list);
+                for (FollowUser followUser : list) {
+                    arrayList.put(followUser.getUid(), followUser);
+                }
                 mAdapter.refresh(arrayList);
             }
             if (size >= COUNT_MAX) {

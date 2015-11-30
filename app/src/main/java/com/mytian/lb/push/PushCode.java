@@ -5,4 +5,6 @@ package com.mytian.lb.push;
  */
 public class PushCode {
     public final static String FOLLOW_NOTICE = "100205"; //关注推送通知 cmd
+    public final static String FOLLOW_ONLINE  = "100207"; //麦宝上线 cmd
+    public final static String FOLLOW_OFFLINE = "100208"; //麦宝离线 cmd
 }

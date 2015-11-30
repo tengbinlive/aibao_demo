@@ -3,6 +3,7 @@ package com.mytian.lb.activity;
 
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.util.ArrayMap;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -28,6 +29,7 @@ import com.mytian.lb.adapter.FollowAddAdapter;
 import com.mytian.lb.bean.follow.FollowBabyResult;
 import com.mytian.lb.bean.follow.FollowListResult;
 import com.mytian.lb.bean.follow.FollowUser;
+import com.mytian.lb.event.PushStateEventType;
 import com.mytian.lb.helper.AnimationHelper;
 import com.mytian.lb.manager.FollowManager;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
@@ -63,7 +65,7 @@ public class AddFollowActivity extends AbsActivity {
     private ListView mActualListView;
     private FollowAddAdapter mAdapter;
 
-    private ArrayList<FollowUser> arrayList;
+    private ArrayMap<String, FollowUser> arrayList;
     private FollowManager manager = new FollowManager();
     private int currentPager = 1;
 
@@ -74,6 +76,21 @@ public class AddFollowActivity extends AbsActivity {
     private final OvershootInterpolator mInterpolator = new OvershootInterpolator();
 
     private boolean isOpenActionbar;
+
+    /**
+     * 线上状态更新
+     *
+     * @param event
+     */
+    public void onEvent(PushStateEventType event) {
+        String babyUid = event.babyUid;
+        if (arrayList != null && arrayList.containsKey(babyUid)) {
+            FollowUser followUser = arrayList.get(babyUid);
+            followUser.setIs_online(event.is_online);
+            arrayList.put(babyUid, followUser);
+            mAdapter.refresh(babyUid, followUser);
+        }
+    }
 
     @Override
     public void EInit() {
@@ -314,10 +331,12 @@ public class AddFollowActivity extends AbsActivity {
             ArrayList<FollowUser> list = result.getList();
             int size = list == null ? 0 : list.size();
             if (arrayList == null) {
-                arrayList = new ArrayList<>();
+                arrayList = new ArrayMap<>();
             }
             if (size > 0) {
-                arrayList.addAll(list);
+                for (FollowUser followUser : list) {
+                    arrayList.put(followUser.getUid(), followUser);
+                }
                 mAdapter.refresh(arrayList);
             }
             if (size >= COUNT_MAX) {

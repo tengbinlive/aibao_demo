@@ -85,6 +85,16 @@ public class LoginActivity extends AnimatedRectActivity {
         startActivity(intent);
     }
 
+    @OnClick(R.id.reset_password_bt)
+    void toResetPassword() {
+        Intent intent = new Intent(this, ResetPassWordActivity.class);
+        String phone = phoneEt.getText().toString();
+        if (StringUtil.isNotBlank(phone) && StringUtil.checkMobile(phone)) {
+            intent.putExtra("phone", phone);
+        }
+        startActivity(intent);
+    }
+
     @OnClick(R.id.login_bt)
     void login() {
         phone = phoneEt.getText().toString();

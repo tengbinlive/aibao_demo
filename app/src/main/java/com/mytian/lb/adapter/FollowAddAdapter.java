@@ -2,6 +2,7 @@ package com.mytian.lb.adapter;
 
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.util.ArrayMap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +20,6 @@ import com.mytian.lb.R;
 import com.mytian.lb.bean.follow.FollowUser;
 import com.mytian.lb.manager.FollowManager;
 
-import java.util.ArrayList;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -28,13 +27,13 @@ public class FollowAddAdapter extends BaseAdapter {
 
     private LayoutInflater mInflater;
 
-    private ArrayList<FollowUser> list;
+    private ArrayMap<String, FollowUser> list;
 
     private AbsActivity mContext;
 
     private FollowManager manager = new FollowManager();
 
-    public FollowAddAdapter(AbsActivity context, ArrayList<FollowUser> _list) {
+    public FollowAddAdapter(AbsActivity context, ArrayMap<String, FollowUser> _list) {
         this.list = _list;
         mContext = context;
         mInflater = LayoutInflater.from(context);
@@ -47,7 +46,7 @@ public class FollowAddAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return list.get(position);
+        return list.valueAt(position);
     }
 
     @Override
@@ -55,9 +54,16 @@ public class FollowAddAdapter extends BaseAdapter {
         return 0;
     }
 
-    public void refresh(ArrayList<FollowUser> _list) {
+    public void refresh(ArrayMap<String, FollowUser> _list) {
         list = _list;
         notifyDataSetChanged();
+    }
+
+    public void refresh(String key, FollowUser value) {
+        if (list != null && list.containsKey(key)) {
+            list.put(key, value);
+            notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -77,13 +83,14 @@ public class FollowAddAdapter extends BaseAdapter {
             viewHolder.title.setVisibility(View.GONE);
         }
 
-        FollowUser bean = list.get(position);
+        FollowUser bean = list.valueAt(position);
         Glide.with(mContext).load(bean.getHead_thumb())
                 .asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .placeholder(R.mipmap.icon_contact)
                 .into(viewHolder.head);
-        viewHolder.name.setText(bean.getAlias());
+        String is_online = "0".equals(bean.getIs_online()) ? "   [在线]" : "   [离线]";
+        viewHolder.name.setText(bean.getAlias() + is_online);
         if (FollowUser.LB.equals(bean.getFocus_from())) {
             setAccepatView(viewHolder.accept_bt, false);
             viewHolder.accept_bt.setText(R.string.already_pull);
@@ -98,10 +105,10 @@ public class FollowAddAdapter extends BaseAdapter {
                     @Override
                     public void onClick(View view) {
                         int index = (Integer) view.getTag();
-                        FollowUser user = list.get(index);
+                        FollowUser user = list.valueAt(index);
                         mContext.dialogShow(R.string.accepat_ing);
                         ((Button) view).setText(R.string.already_attention);
-                        list.get(index).setFocus(true);
+                        list.valueAt(index).setFocus(true);
                         setAccepatView((Button) view, false);
                         view.setEnabled(false);
                         manager.followAgree(mContext, user.getUid(), handler, ACCEPAT);

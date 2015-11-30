@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.util.ArrayMap;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
@@ -44,6 +45,7 @@ import com.mytian.lb.bean.follow.FollowListResult;
 import com.mytian.lb.bean.follow.FollowUser;
 import com.mytian.lb.bean.user.UpdateParentParam;
 import com.mytian.lb.enums.WomanOrManEnum;
+import com.mytian.lb.event.PushStateEventType;
 import com.mytian.lb.event.PushUserEventType;
 import com.mytian.lb.event.SettingEventType;
 import com.mytian.lb.helper.AnimationHelper;
@@ -105,7 +107,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
     private ListView mActualListView;
     private UserAdapter mAdapter;
 
-    private ArrayList<FollowUser> arrayList;
+    private ArrayMap<String, FollowUser> arrayList;
     private FollowManager manager = new FollowManager();
     private int currentPager = 1;
     private View settingAchor;
@@ -231,6 +233,21 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         toggleShowSetting(event.mView);
     }
 
+    /**
+     * 线上状态更新
+     *
+     * @param event
+     */
+    public void onEvent(PushStateEventType event) {
+        String babyUid = event.babyUid;
+        if (arrayList != null && arrayList.containsKey(babyUid)) {
+            FollowUser followUser = arrayList.get(babyUid);
+            followUser.setIs_online(event.is_online);
+            arrayList.put(babyUid, followUser);
+            mAdapter.refresh(babyUid, followUser);
+        }
+    }
+
     public void onEvent(PushUserEventType event) {
         if (event == null) {
             return;
@@ -239,14 +256,9 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
             return;
         }
         if (arrayList == null) {
-            arrayList = new ArrayList<>();
+            arrayList = new ArrayMap<>();
         }
-        int size = arrayList.size();
-        if (size > 0) {
-            arrayList.add(0, event.user);
-        } else {
-            arrayList.add(event.user);
-        }
+        arrayList.put(event.user.getUid(), event.user);
         mAdapter.refresh(arrayList);
         setEmpty();
     }
@@ -670,10 +682,12 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
             ArrayList<FollowUser> list = result.getList();
             int size = list == null ? 0 : list.size();
             if (arrayList == null) {
-                arrayList = new ArrayList<>();
+                arrayList = new ArrayMap<>();
             }
             if (size > 0) {
-                arrayList.addAll(list);
+                for (FollowUser followUser : list) {
+                    arrayList.put(followUser.getUid(), followUser);
+                }
                 mAdapter.refresh(arrayList);
             }
             if (size >= COUNT_MAX) {

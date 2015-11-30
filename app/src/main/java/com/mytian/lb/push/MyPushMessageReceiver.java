@@ -5,11 +5,13 @@ import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.baidu.android.pushservice.PushMessageReceiver;
+import com.core.util.StringUtil;
 import com.mytian.lb.App;
 import com.mytian.lb.bean.follow.FollowUser;
 import com.mytian.lb.bean.push.PushOnBindResult;
 import com.mytian.lb.bean.push.PushResult;
 import com.mytian.lb.bean.user.UserResult;
+import com.mytian.lb.event.PushStateEventType;
 import com.mytian.lb.event.PushUserEventType;
 import com.orhanobut.logger.Logger;
 
@@ -262,21 +264,33 @@ public class MyPushMessageReceiver extends PushMessageReceiver {
     private void updateContent(Context context, String content) {
         PushResult result = JSON.parseObject(content, PushResult.class);
         UserResult userResult = App.getInstance().userResult;
-        if (null != result && null!=userResult &&isSend(userResult,result)) {
+        if (null != result && null != userResult && isSend(userResult, result)) {
             if (PushCode.FOLLOW_NOTICE.equals(result.getCmd())) {
                 String info = result.getInfo();
                 FollowUser user = JSON.parseObject(info, FollowUser.class);
-                if(FollowUser.MB.equals(user.getFocus_from())) {
+                if (FollowUser.MB.equals(user.getFocus_from())) {
                     EventBus.getDefault().postSticky(new PushUserEventType(user));
                 }
                 PushHelper.getInstance().setNotification(result.getDescription());
+            } else if (PushCode.FOLLOW_ONLINE.equals(result.getCmd()) || PushCode.FOLLOW_OFFLINE.equals(result.getCmd())) {
+                String info = result.getInfo();
+                String babyUid = "";
+                String is_online = PushCode.FOLLOW_ONLINE.equals(result.getCmd())?"0":"1";
+                try {
+                    JSONObject jsonObject = new JSONObject(info);
+                    babyUid = jsonObject.optString("babyUid");
+                } catch (JSONException e) {
+                }
+                if (StringUtil.isNotBlank(babyUid)) {
+                    EventBus.getDefault().postSticky(new PushStateEventType(babyUid,is_online));
+                }
             }
         }
     }
 
-    private boolean isSend(UserResult userResult,PushResult result){
+    private boolean isSend(UserResult userResult, PushResult result) {
         String uid = userResult.getParent().getUid();
-        return "*".equals(result.getUid())||uid.equals(result.getUid());
+        return "*".equals(result.getUid()) || uid.equals(result.getUid());
     }
 
     private void updateNotificationContent(Context context, String content) {
