@@ -35,7 +35,7 @@ public enum CodeEnum {
 	/** 无法连接网络 */
 	UNKNOWN_HOST("9106", "无法连接网络"),
 	/** 网络异常 */
-	NETWORK_EXCEPTION("9107", "网络异常"),
+	NETWORK_EXCEPTION("9107", "糟糕，网络不可用"),
 	/** 未知的数据格式 */
 	UNKNOWN_DATA_FORMAT("9108", "未知的数据格式"),
 	/** 未知错误 */

@@ -25,10 +25,8 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.mytian.lb.AbsFragment;
 import com.mytian.lb.R;
 import com.mytian.lb.adapter.AgreementAdapter;
-import com.mytian.lb.bean.DemoUserInfo;
 import com.mytian.lb.bean.follow.FollowUser;
-import com.mytian.lb.demodata.DemoManger;
-import com.mytian.lb.demodata.DemoUserType;
+import com.mytian.lb.event.AgreementUserType;
 import com.mytian.lb.event.TimeEventType;
 import com.mytian.lb.helper.AnimationHelper;
 import com.mytian.lb.manager.AgreementDOManager;
@@ -103,6 +101,10 @@ public class AgreementFragment extends AbsFragment {
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (null == cureentParent) {
+                    CommonUtil.showToast(R.string.select_user);
+                    return;
+                }
                 if (!isSettingShow) {
                     AnimationHelper.getInstance().viewAnimationScal(view);
                     tempClip = view;
@@ -123,10 +125,10 @@ public class AgreementFragment extends AbsFragment {
         arrayList = AgreementDOManager.getInstance().getArrayList();
     }
 
-    private void setUserInfo(DemoUserInfo demoUserInfo) {
-        cureentParent = demoUserInfo.getParent();
+    private void setUserInfo(FollowUser parent) {
+        cureentParent = parent;
         String name = cureentParent.getAlias();
-        int head = demoUserInfo.getHeadid();
+        String head = cureentParent.getHead_thumb();
         String phone = cureentParent.getPhone();
         user_name.setText(name);
         user_phone.setText(phone);
@@ -220,16 +222,12 @@ public class AgreementFragment extends AbsFragment {
         StartThread();
         animationDrawable = (AnimationDrawable) getResources().getDrawable(R.drawable.animation_time);
         animaitonNum = animationDrawable.getNumberOfFrames();
-        Message message = new Message();
-        message.what = INIT_USER_INFO;
-        message.obj = "0";
-        activityHandler.sendMessage(message);
     }
 
-    public void onEvent(DemoUserType event) {
+    public void onEvent(AgreementUserType event) {
         Message message = new Message();
         message.what = INIT_USER_INFO;
-        message.obj = event.index;
+        message.obj = event.cureentParent;
         activityHandler.sendMessage(message);
     }
 
@@ -324,7 +322,7 @@ public class AgreementFragment extends AbsFragment {
             int what = msg.what;
             switch (what) {
                 case INIT_USER_INFO:
-                    setUserInfo(DemoManger.getInstance().getDemoUserInfo(msg.obj.toString()));
+                    setUserInfo((FollowUser) msg.obj);
                     break;
                 case AGREEMENT:
                     loadAgreement((CommonResponse) msg.obj);

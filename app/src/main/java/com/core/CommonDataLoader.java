@@ -112,7 +112,7 @@ public class CommonDataLoader {
 			Integer what = request.getHandlerMsgCode();
 			CommonCallback cb = request.getCallback();
 			if (handler != null && what != null) {
-				CommonResponse response = new CommonResponse(CodeEnum.CONNECT_UNAVAILABLE);
+				CommonResponse response = new CommonResponse(CodeEnum.NETWORK_EXCEPTION);
 				CommonUtil.delivery2Handler(handler, what, response);
 			} else if (cb != null) {
 				callback(cb, new CommonResponse(CodeEnum.CONNECT_UNAVAILABLE));

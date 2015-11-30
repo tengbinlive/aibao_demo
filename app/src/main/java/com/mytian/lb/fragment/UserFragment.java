@@ -200,7 +200,8 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
             @Override
             public void onClick(View view) {
                 if (!isSettingShow) {
-                    toggleShowSetting(settingAchor);
+                    settingAchor = view;
+                    toggleShowSetting(view);
                 }
             }
         });
@@ -323,18 +324,30 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
     void selectSex(View view) {
         int id = view.getId();
         if (id == R.id.gender_layout) {
-            List<Animator> animList = new ArrayList<>();
-            animList.addAll(selectSexView(1));
-            AnimatorSet animSet = new AnimatorSet();
-            animSet.playSequentially(animList);
-            animSet.start();
+            showManOrWoman();
         } else if (id == R.id.woman_bt) {
-            Animator revealAnim = createViewScale0(man_bt);
-            revealAnim.start();
+            if(isManOrWomanVisib()) {
+                Animator revealAnim = createViewScale0(man_bt);
+                revealAnim.start();
+            }else{
+                showManOrWoman();
+            }
         } else if (id == R.id.man_bt) {
-            Animator revealAnim = createViewScale0(woman_bt);
-            revealAnim.start();
+            if(isManOrWomanVisib()) {
+                Animator revealAnim = createViewScale0(woman_bt);
+                revealAnim.start();
+            }else{
+                showManOrWoman();
+            }
         }
+    }
+
+    private void showManOrWoman(){
+        List<Animator> animList = new ArrayList<>();
+        animList.addAll(selectSexView(1));
+        AnimatorSet animSet = new AnimatorSet();
+        animSet.playSequentially(animList);
+        animSet.start();
     }
 
     @OnClick(R.id.update_bt)
@@ -547,6 +560,14 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         return animList;
     }
 
+    /**
+     * 男女选择是否都已经显示
+     * @return
+     */
+    private boolean isManOrWomanVisib(){
+            return   man_bt.getVisibility() == View.VISIBLE&& woman_bt.getVisibility() == View.VISIBLE;
+    }
+
     private Animator createViewScale1(final View view) {
         Animator revealAnim = ObjectAnimator.ofPropertyValuesHolder(
                 view,
@@ -576,24 +597,6 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
                 view.setVisibility(View.INVISIBLE);
-            }
-        });
-        revealAnim.setDuration(100);
-        revealAnim.setInterpolator(new DecelerateInterpolator());
-        return revealAnim;
-    }
-
-    private Animator createViewScale0(final View view, final int type) {
-        Animator revealAnim = ObjectAnimator.ofPropertyValuesHolder(
-                view,
-                AnimatorUtils.scaleX(1f, 0f),
-                AnimatorUtils.scaleY(1f, 0f)
-        );
-        revealAnim.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
-                view.setVisibility(type);
             }
         });
         revealAnim.setDuration(100);

@@ -2,7 +2,6 @@ package com.mytian.lb.demodata;
 
 import com.mytian.lb.R;
 import com.mytian.lb.bean.AgreementBean;
-import com.mytian.lb.bean.DemoUserInfo;
 import com.mytian.lb.bean.follow.FollowUser;
 
 import java.util.ArrayList;

@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:singleLine="true"
             android:layout_centerHorizontal="true"
-            android:text="user name"
+            android:text="@string/select_user"
             android:textColor="@color/white"
             android:textSize="@dimen/font_btn" />
 

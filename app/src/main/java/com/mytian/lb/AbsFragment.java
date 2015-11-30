@@ -75,7 +75,7 @@ public abstract class AbsFragment extends Fragment implements EInitFragmentDate 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mContext = this.getContext();
         mInflater = inflater;
-        View rootView = mInflater.inflate(getContentView(), container, false);
+        View rootView = inflater.inflate(getContentView(), container, false);
         ButterKnife.bind(this, rootView);
         EInit();
         return rootView;

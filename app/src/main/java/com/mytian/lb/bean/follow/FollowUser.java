@@ -1,6 +1,6 @@
 package com.mytian.lb.bean.follow;
 
-import com.mytian.lb.bean.DemoUserInfo;
+import com.mytian.lb.demodata.DemoUserInfo;
 import com.mytian.lb.demodata.DemoManger;
 
 /**

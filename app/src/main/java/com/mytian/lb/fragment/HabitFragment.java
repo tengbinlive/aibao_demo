@@ -17,10 +17,8 @@ import com.mytian.lb.AbsFragment;
 import com.mytian.lb.R;
 import com.mytian.lb.adapter.HabitAdapter;
 import com.mytian.lb.bean.AgreementBean;
-import com.mytian.lb.bean.DemoUserInfo;
-import com.mytian.lb.demodata.DemoHabitUserType;
-import com.mytian.lb.demodata.DemoManger;
-import com.mytian.lb.demodata.DemoUserType;
+import com.mytian.lb.bean.follow.FollowUser;
+import com.mytian.lb.event.HabitUserType;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
 import com.rey.material.widget.FloatingActionButton;
 
@@ -75,6 +73,7 @@ public class HabitFragment extends AbsFragment {
 
         mActualListView.setAdapter(animationAdapter);
 
+        ((TextView) (llListEmpty.findViewById(R.id.title))).setText(R.string.select_user);
         listview.setEmptyView(llListEmpty);
 
     }
@@ -103,31 +102,27 @@ public class HabitFragment extends AbsFragment {
                 add_bt.setLineMorphingState((add_bt.getLineMorphingState() + 1) % 2, true);
             }
         });
-        Message message = new Message();
-        message.what = INIT_USER_INFO;
-        message.obj = "0";
-        activityHandler.sendMessage(message);
     }
 
-    private void setUserInfo(DemoUserInfo demoUserInfo) {
+    private void setUserInfo(FollowUser parent) {
         TextView user_name = (TextView) headView.findViewById(R.id.user_name);
         TextView user_phone = (TextView) headView.findViewById(R.id.user_phone);
         RoundedImageView user_icon = (RoundedImageView) headView.findViewById(R.id.user_icon);
-        String name = demoUserInfo.getParent().getAlias();
-        int head = demoUserInfo.getHeadid();
-        String phone = demoUserInfo.getParent().getPhone();
+        String name = parent.getAlias();
+        String head = parent.getHead_thumb();
+        String phone = parent.getPhone();
         user_name.setText(name);
         user_phone.setText(phone);
         Glide.with(this).load(head).asBitmap().diskCacheStrategy(DiskCacheStrategy.ALL)
                 .placeholder(R.mipmap.default_head).centerCrop().into(user_icon);
-        arrayList = demoUserInfo.getBeans();
+        arrayList = null;
         mAdapter.refresh(arrayList);
     }
 
-    public void onEvent(DemoHabitUserType event) {
+    public void onEvent(HabitUserType event) {
         Message message = new Message();
         message.what = INIT_USER_INFO;
-        message.obj = event.index;
+        message.obj = event.cureentParent;
         activityHandler.sendMessage(message);
     }
 
@@ -144,7 +139,7 @@ public class HabitFragment extends AbsFragment {
                     loadData((CommonResponse) msg.obj, what);
                     break;
                 case INIT_USER_INFO:
-                    setUserInfo(DemoManger.getInstance().getDemoUserInfo(msg.obj.toString()));
+                    setUserInfo((FollowUser) msg.obj);
                     break;
                 default:
                     break;

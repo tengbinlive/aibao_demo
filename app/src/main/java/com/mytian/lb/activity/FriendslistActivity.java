@@ -18,8 +18,8 @@ import com.mytian.lb.R;
 import com.mytian.lb.adapter.FriendslistAdapter;
 import com.mytian.lb.bean.follow.FollowListResult;
 import com.mytian.lb.bean.follow.FollowUser;
-import com.mytian.lb.demodata.DemoHabitUserType;
-import com.mytian.lb.demodata.DemoUserType;
+import com.mytian.lb.event.AgreementUserType;
+import com.mytian.lb.event.HabitUserType;
 import com.mytian.lb.event.PushStateEventType;
 import com.mytian.lb.manager.FollowManager;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
@@ -93,9 +93,9 @@ public class FriendslistActivity extends AbsActivity {
                     return;
                 }
                 if (TYPE == MainActivity.AGREEMENT) {
-                    EventBus.getDefault().post(new DemoUserType(followUser.getUid()));
+                    EventBus.getDefault().post(new AgreementUserType(followUser));
                 } else if (TYPE == MainActivity.HABIT) {
-                    EventBus.getDefault().post(new DemoHabitUserType(followUser.getUid()));
+                    EventBus.getDefault().post(new HabitUserType(followUser));
                 }
                 finish();
             }
@@ -132,7 +132,7 @@ public class FriendslistActivity extends AbsActivity {
             switch (what) {
                 case INIT_LIST:
                 case LOAD_DATA:
-                    loadTestData();
+                    loadData((CommonResponse) msg.obj);
                     break;
                 default:
                     break;
@@ -152,24 +152,6 @@ public class FriendslistActivity extends AbsActivity {
             followUser.setIs_online(event.is_online);
             arrayList.put(babyUid, followUser);
             mAdapter.refresh(babyUid, followUser);
-        }
-    }
-
-    private void loadTestData() {
-        dialogDismiss();
-        if (arrayList == null) {
-            arrayList = new ArrayMap<>();
-            for (int i = 0; i < 5; i++) {
-                FollowUser followUser = FollowUser.testData("" + i);
-                arrayList.put(followUser.getUid(), followUser);
-            }
-            mAdapter.refresh(arrayList);
-        }
-        listview.onRefreshComplete();
-        if (arrayList == null || arrayList.size() <= 0) {
-            llListEmpty.setVisibility(View.VISIBLE);
-        } else {
-            llListEmpty.setVisibility(View.GONE);
         }
     }
 

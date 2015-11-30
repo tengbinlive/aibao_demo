@@ -9,8 +9,8 @@ android {
         applicationId "com.mytian.lb"
         minSdkVersion 15
         targetSdkVersion 15
-        versionCode 8
-        versionName "v1.1.8"
+        versionCode 0
+        versionName "v1.2.0"
     }
 
     signingConfigs {

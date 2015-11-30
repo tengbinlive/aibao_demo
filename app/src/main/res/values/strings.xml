@@ -54,5 +54,6 @@
     <string name="change_ok">确定修改</string>
     <string name="woman">女</string>
     <string name="man">男</string>
+    <string name="select_user">请先选择用户</string>
 
 </resources>
