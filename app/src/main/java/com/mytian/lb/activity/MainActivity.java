@@ -60,7 +60,11 @@ public class MainActivity extends AbsActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            doubleTouchToExit();
+            if(UserFragment.isSettingShow) {
+                toggleSetting();
+            }else{
+                doubleTouchToExit();
+            }
             return true;
         }
         return super.onKeyDown(keyCode, event);
@@ -163,11 +167,7 @@ public class MainActivity extends AbsActivity {
             setToolbarRightOnClick(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (null == settingEventType) {
-                        View settingView = getToolbar().findViewById(R.id.toolbar_right_tv);
-                        settingEventType = new SettingEventType(settingView);
-                    }
-                    EventBus.getDefault().post(settingEventType);
+                    toggleSetting();
                 }
             });
         } else if (position == AGREEMENT || position == HABIT) {
@@ -189,8 +189,16 @@ public class MainActivity extends AbsActivity {
                 }
             });
         } else {
-            setToolbarRightVisbility(View.VISIBLE);
+            setToolbarRightVisbility(View.GONE);
         }
+    }
+
+    private void toggleSetting(){
+        if (null == settingEventType) {
+            View settingView = getToolbar().findViewById(R.id.toolbar_right_tv);
+            settingEventType = new SettingEventType(settingView);
+        }
+        EventBus.getDefault().post(settingEventType);
     }
 
     private SettingEventType settingEventType;
