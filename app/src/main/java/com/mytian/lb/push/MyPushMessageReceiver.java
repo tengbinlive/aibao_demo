@@ -7,6 +7,7 @@ import com.alibaba.fastjson.JSON;
 import com.baidu.android.pushservice.PushMessageReceiver;
 import com.core.util.StringUtil;
 import com.mytian.lb.App;
+import com.mytian.lb.Constant;
 import com.mytian.lb.bean.follow.FollowUser;
 import com.mytian.lb.bean.push.PushOnBindResult;
 import com.mytian.lb.bean.push.PushResult;
@@ -283,6 +284,9 @@ public class MyPushMessageReceiver extends PushMessageReceiver {
                 }
                 if (StringUtil.isNotBlank(babyUid)) {
                     EventBus.getDefault().postSticky(new PushStateEventType(babyUid,is_online));
+                }
+                if(Constant.DEBUG){
+                    PushHelper.getInstance().setNotification("uid:"+babyUid+ "\nstate:"+is_online);
                 }
             }
         }

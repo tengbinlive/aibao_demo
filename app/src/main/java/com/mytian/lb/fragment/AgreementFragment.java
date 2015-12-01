@@ -26,7 +26,6 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.mytian.lb.AbsFragment;
 import com.mytian.lb.R;
 import com.mytian.lb.activity.FriendslistActivity;
-import com.mytian.lb.activity.MainActivity;
 import com.mytian.lb.adapter.AgreementAdapter;
 import com.mytian.lb.bean.follow.FollowUser;
 import com.mytian.lb.event.AgreementUserType;
@@ -130,7 +129,7 @@ public class AgreementFragment extends AbsFragment {
 
     private void setUserInfo(FollowUser userInfo) {
         String head = "";
-        if(null!=userInfo) {
+        if (null != userInfo) {
             cureentParent = userInfo;
             String name = cureentParent.getAlias();
             head = cureentParent.getHead_thumb();
@@ -233,7 +232,7 @@ public class AgreementFragment extends AbsFragment {
     }
 
     @OnClick(R.id.user_icon)
-    void toFriendslist(){
+    void toFriendslist() {
         Intent intent = new Intent(getActivity(), FriendslistActivity.class);
         startActivity(intent);
     }
