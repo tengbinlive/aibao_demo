@@ -88,7 +88,7 @@ public class FriendslistActivity extends AbsActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 FollowUser followUser = arrayList.valueAt(position - 1);
-                if ("1".equals(followUser.getIs_online())) {
+                if (FollowUser.OFFLINE.equals(followUser.getIs_online())) {
                     CommonUtil.showToast("没在线呢");
                     return;
                 }

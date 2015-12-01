@@ -97,7 +97,7 @@ public class UserAdapter extends BaseSwipeAdapter {
         Glide.with(mContext).load(bean.getHead_thumb()).asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .placeholder(R.mipmap.icon_contact).into(holder.head);
-        String is_online = "0".equals(bean.getIs_online())?"   [在线]":"   [离线]";
+        String is_online = FollowUser.ONLINE.equals(bean.getIs_online())?"   [在线]":"   [离线]";
         holder.name.setText(bean.getAlias() + is_online);
         holder.phone.setText(bean.getPhone());
         holder.deleteLayout.setTag(position);

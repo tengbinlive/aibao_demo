@@ -275,7 +275,7 @@ public class MyPushMessageReceiver extends PushMessageReceiver {
             } else if (PushCode.FOLLOW_ONLINE.equals(result.getCmd()) || PushCode.FOLLOW_OFFLINE.equals(result.getCmd())) {
                 String info = result.getInfo();
                 String babyUid = "";
-                String is_online = PushCode.FOLLOW_ONLINE.equals(result.getCmd())?"0":"1";
+                String is_online = PushCode.FOLLOW_ONLINE.equals(result.getCmd())?FollowUser.ONLINE:FollowUser.OFFLINE;
                 try {
                     JSONObject jsonObject = new JSONObject(info);
                     babyUid = jsonObject.optString("babyUid");

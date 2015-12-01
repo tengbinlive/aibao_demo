@@ -80,7 +80,7 @@ public class FriendslistAdapter extends BaseAdapter {
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .placeholder(R.mipmap.icon_contact)
                 .into(viewHolder.head);
-        String is_online = "0".equals(bean.getIs_online()) ? "   [在线]" : "   [离线]";
+        String is_online = FollowUser.ONLINE.equals(bean.getIs_online()) ? "   [在线]" : "   [离线]";
         viewHolder.name.setText(bean.getAlias() + is_online);
         viewHolder.phone.setText(bean.getPhone());
         return convertView;

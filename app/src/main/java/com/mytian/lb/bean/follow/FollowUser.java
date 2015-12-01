@@ -10,6 +10,10 @@ import com.mytian.lb.demodata.DemoManger;
 public class FollowUser {
     public final static String MB = "0";
     public final static String LB = "1";
+
+    public final static String ONLINE = "1";
+    public final static String OFFLINE = "0";
+
     private String uid;
     private String name;
     private String alias;
