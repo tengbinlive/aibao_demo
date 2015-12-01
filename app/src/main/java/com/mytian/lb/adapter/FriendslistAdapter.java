@@ -77,7 +77,9 @@ public class FriendslistAdapter extends BaseAdapter {
 
         FollowUser bean = list.valueAt(position);
         Glide.with(mContext).load(bean.getHead_id()).asBitmap()
-                .diskCacheStrategy(DiskCacheStrategy.ALL).into(viewHolder.head);
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .placeholder(R.mipmap.icon_contact)
+                .into(viewHolder.head);
         String is_online = "0".equals(bean.getIs_online()) ? "   [在线]" : "   [离线]";
         viewHolder.name.setText(bean.getAlias() + is_online);
         viewHolder.phone.setText(bean.getPhone());

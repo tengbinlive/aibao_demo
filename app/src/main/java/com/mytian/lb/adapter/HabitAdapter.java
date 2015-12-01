@@ -37,7 +37,11 @@ public class HabitAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return null == list ? 0 : list.size();
+        /**
+         * 因为listview header 在adapter count <= 0 时是跟随listview一起隐藏的 ，
+         * 为让 header 一直保持显示设置 1 个空占位。
+         */
+        return null == list ? 1 : list.size() + 1;
     }
 
     @Override
@@ -65,23 +69,34 @@ public class HabitAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
+        /**
+         * 为让 header 一直保持显示设置 1 个空占位。
+         * 所以 position 需要 减掉 1 。
+         */
+        if (position == 0) {
+            convertView.setVisibility(View.GONE);
+            return convertView;
+        } else {
+            convertView.setVisibility(View.VISIBLE);
+            position = position - 1;
+        }
         AgreementBean bean = list.get(position);
         Glide.with(mContext).load(bean.getIcon()).asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.ALL).into(viewHolder.head);
         viewHolder.name.setText(bean.getTitle());
 
         int record = bean.getRecord();
-        if(record == AgreementBean.GREAT){
+        if (record == AgreementBean.GREAT) {
             setIconInfo(viewHolder.like, ItemButton.RECORD_LIKE, true);
             setIconInfo(viewHolder.dislike, ItemButton.RECORD_DISLIKE, false);
-        }else  if(record == AgreementBean.BAD){
+        } else if (record == AgreementBean.BAD) {
             setIconInfo(viewHolder.like, ItemButton.RECORD_LIKE, false);
             setIconInfo(viewHolder.dislike, ItemButton.RECORD_DISLIKE, true);
-        }else{
+        } else {
             setIconInfo(viewHolder.like, ItemButton.RECORD_LIKE, false);
             setIconInfo(viewHolder.dislike, ItemButton.RECORD_DISLIKE, false);
         }
-        viewHolder.like.setTag(R.id.item_habit_index,position);
+        viewHolder.like.setTag(R.id.item_habit_index, position);
         viewHolder.like.setTag(R.id.item_habit_view, viewHolder.dislike);
         viewHolder.like.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,7 +110,7 @@ public class HabitAdapter extends BaseAdapter {
                 setIconInfo(dislike, ItemButton.RECORD_DISLIKE, false);
             }
         });
-        viewHolder.dislike.setTag(R.id.item_habit_index,position);
+        viewHolder.dislike.setTag(R.id.item_habit_index, position);
         viewHolder.dislike.setTag(R.id.item_habit_view, viewHolder.like);
         viewHolder.dislike.setOnClickListener(new View.OnClickListener() {
             @Override

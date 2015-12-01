@@ -1,5 +1,6 @@
 package com.mytian.lb.fragment;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
@@ -15,6 +16,8 @@ import com.handmark.pulltorefresh.PullToRefreshListView;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mytian.lb.AbsFragment;
 import com.mytian.lb.R;
+import com.mytian.lb.activity.FriendslistActivity;
+import com.mytian.lb.activity.MainActivity;
 import com.mytian.lb.adapter.HabitAdapter;
 import com.mytian.lb.bean.AgreementBean;
 import com.mytian.lb.bean.follow.FollowUser;
@@ -38,12 +41,18 @@ public class HabitFragment extends AbsFragment {
     private ListView mActualListView;
     private HabitAdapter mAdapter;
     private View headView;
+    private FollowUser cureentParent;
+
+    private RoundedImageView user_icon;
+    private TextView user_phone;
+    private TextView user_name;
 
     private ArrayList<AgreementBean> arrayList = new ArrayList<>();
 
     private void initListView() {
 
         headView = mInflater.inflate(R.layout.layout_user_inter, null);
+        initHeaderView(headView);
 
         listview.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
@@ -73,9 +82,21 @@ public class HabitFragment extends AbsFragment {
 
         mActualListView.setAdapter(animationAdapter);
 
-        ((TextView) (llListEmpty.findViewById(R.id.title))).setText(R.string.select_user);
         listview.setEmptyView(llListEmpty);
 
+    }
+
+    private void initHeaderView(View view){
+         user_icon = (RoundedImageView) view.findViewById(R.id.user_icon);
+         user_name = (TextView) view.findViewById(R.id.user_name);
+         user_phone = (TextView) view.findViewById(R.id.user_phone);
+
+        user_icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                toFriendslist();
+            }
+        });
     }
 
     private void getListData() {
@@ -96,6 +117,7 @@ public class HabitFragment extends AbsFragment {
     @Override
     public void EInit() {
         initListView();
+        setUserInfo(null);
         add_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,15 +126,22 @@ public class HabitFragment extends AbsFragment {
         });
     }
 
-    private void setUserInfo(FollowUser parent) {
-        TextView user_name = (TextView) headView.findViewById(R.id.user_name);
-        TextView user_phone = (TextView) headView.findViewById(R.id.user_phone);
-        RoundedImageView user_icon = (RoundedImageView) headView.findViewById(R.id.user_icon);
-        String name = parent.getAlias();
-        String head = parent.getHead_thumb();
-        String phone = parent.getPhone();
-        user_name.setText(name);
-        user_phone.setText(phone);
+    void toFriendslist(){
+        Intent intent = new Intent(getActivity(), FriendslistActivity.class);
+        intent.putExtra("TYPE", MainActivity.HABIT);
+        startActivity(intent);
+    }
+
+    private void setUserInfo(FollowUser userInfo) {
+        String head = "";
+        if(userInfo!=null) {
+            cureentParent = userInfo;
+            String name = cureentParent.getAlias();
+            head = cureentParent.getHead_thumb();
+            String phone = cureentParent.getPhone();
+            user_name.setText(name);
+            user_phone.setText(phone);
+        }
         Glide.with(this).load(head).asBitmap().diskCacheStrategy(DiskCacheStrategy.ALL)
                 .placeholder(R.mipmap.default_head).centerCrop().into(user_icon);
         arrayList = null;

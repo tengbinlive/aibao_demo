@@ -3,6 +3,7 @@ package com.mytian.lb.fragment;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Build;
 import android.os.Handler;
@@ -24,6 +25,8 @@ import com.dao.Agreement;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mytian.lb.AbsFragment;
 import com.mytian.lb.R;
+import com.mytian.lb.activity.FriendslistActivity;
+import com.mytian.lb.activity.MainActivity;
 import com.mytian.lb.adapter.AgreementAdapter;
 import com.mytian.lb.bean.follow.FollowUser;
 import com.mytian.lb.event.AgreementUserType;
@@ -125,17 +128,21 @@ public class AgreementFragment extends AbsFragment {
         arrayList = AgreementDOManager.getInstance().getArrayList();
     }
 
-    private void setUserInfo(FollowUser parent) {
-        cureentParent = parent;
-        String name = cureentParent.getAlias();
-        String head = cureentParent.getHead_thumb();
-        String phone = cureentParent.getPhone();
-        user_name.setText(name);
-        user_phone.setText(phone);
+    private void setUserInfo(FollowUser userInfo) {
+        String head = "";
+        if(null!=userInfo) {
+            cureentParent = userInfo;
+            String name = cureentParent.getAlias();
+            head = cureentParent.getHead_thumb();
+            String phone = cureentParent.getPhone();
+            user_name.setText(name);
+            user_phone.setText(phone);
+        }
         Glide.with(this).load(head)
                 .asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(R.mipmap.default_head).centerCrop().into(user_icon);
+                .placeholder(R.mipmap.default_head)
+                .centerCrop().into(user_icon);
     }
 
     private void startTimeAnimation() {
@@ -222,6 +229,13 @@ public class AgreementFragment extends AbsFragment {
         StartThread();
         animationDrawable = (AnimationDrawable) getResources().getDrawable(R.drawable.animation_time);
         animaitonNum = animationDrawable.getNumberOfFrames();
+        setUserInfo(null);
+    }
+
+    @OnClick(R.id.user_icon)
+    void toFriendslist(){
+        Intent intent = new Intent(getActivity(), FriendslistActivity.class);
+        startActivity(intent);
     }
 
     public void onEvent(AgreementUserType event) {
