@@ -81,7 +81,7 @@ public class DtnameicFragment extends AbsFragment {
     public void EInit() {
         initListView();
         arrayList = null;
-        activityHandler.sendEmptyMessageDelayed(INIT_LIST, 500);
+        getListData();
     }
 
     private static final int INIT_LIST = 0x01;//初始化数据处理

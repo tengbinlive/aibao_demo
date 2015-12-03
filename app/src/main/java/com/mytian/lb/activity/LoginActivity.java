@@ -59,20 +59,12 @@ public class LoginActivity extends AnimatedRectActivity {
 
     @Override
     public void onBackPressed() {
-        toLauncherActivity();
-        animationBackEnd();
+        App.getInstance().exit();
     }
 
     @Override
     public void animationStartEnd() {
         App.getInstance().activityManager.popOneActivityExcept(MainActivity.class);
-    }
-
-    private void toLauncherActivity() {
-        Intent intent = new Intent(this, LauncherActivity.class);
-        intent.putExtra("login", isLogin);
-        intent.putExtra("isTo", true);
-        startActivity(intent);
     }
 
     @OnClick(R.id.register_bt)
@@ -112,7 +104,10 @@ public class LoginActivity extends AnimatedRectActivity {
     }
 
     private void toMain() {
-        activityHandler.sendEmptyMessage(TO_MAIN_ACTIVITY);
+        dialogDismiss();
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override
@@ -192,7 +187,6 @@ public class LoginActivity extends AnimatedRectActivity {
     private final static int LOGIN_ING = 3;
     private final static int DIALOGSHOW = 1;
     private final static int DIALOGDISMISS = 0;
-    private final static int TO_MAIN_ACTIVITY = 2;
 
     private Handler activityHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -202,12 +196,6 @@ public class LoginActivity extends AnimatedRectActivity {
                     break;
                 case DIALOGDISMISS:
                     dialogBuilder.dismiss();
-                    break;
-                case TO_MAIN_ACTIVITY:
-                    dialogDismiss();
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
                     break;
                 case LOGIN_ING:
                     loadLogin((CommonResponse) msg.obj);
