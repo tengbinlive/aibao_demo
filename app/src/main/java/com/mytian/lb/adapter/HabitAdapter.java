@@ -73,13 +73,16 @@ public class HabitAdapter extends BaseAdapter {
          * 为让 header 一直保持显示设置 1 个空占位。
          * 所以 position 需要 减掉 1 。
          */
-        if (position == 0) {
+        if (getCount()==1) {
             convertView.setVisibility(View.GONE);
             return convertView;
-        } else {
-            convertView.setVisibility(View.VISIBLE);
-            position = position - 1;
+        }else{
+            position = position -1;
+            if(position<0){
+                position = 0;
+            }
         }
+
         AgreementBean bean = list.get(position);
         Glide.with(mContext).load(bean.getIcon()).asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.ALL).into(viewHolder.head);

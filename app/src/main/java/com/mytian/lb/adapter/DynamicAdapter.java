@@ -33,7 +33,7 @@ public class DynamicAdapter extends BaseAdapter {
         this.list = _list;
         mContext = context;
         mInflater = LayoutInflater.from(context);
-        transform = new GlideRoundTransform(context, 4);
+        transform = new GlideRoundTransform(context);
     }
 
     @Override

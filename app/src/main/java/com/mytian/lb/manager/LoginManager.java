@@ -103,7 +103,7 @@ public class LoginManager {
      * @param handler
      * @param handlerMsgCode
      */
-    public void resetpassword(Context context, String phone,String verification,String password, final Handler handler, final int handlerMsgCode) {
+    public void resetpassword(Context context, String phone,String password,String verification, final Handler handler, final int handlerMsgCode) {
 
         ResetPassWordParam param = new ResetPassWordParam();
         param.setPhone(phone);
