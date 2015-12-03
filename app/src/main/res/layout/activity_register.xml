@@ -79,7 +79,9 @@
 
             <Button
                 android:id="@+id/verification_bt"
-                android:layout_width="80dp"
+                android:layout_width="wrap_content"
+                android:paddingLeft="@dimen/elevation_height"
+                android:paddingRight="@dimen/elevation_height"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_height="33dp"

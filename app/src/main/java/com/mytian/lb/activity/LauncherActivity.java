@@ -25,7 +25,6 @@ public class LauncherActivity extends AbsActivity {
     private final static int TO_LOGIN = 0;
     private final static int TO_GUIDE = 1;
     private final static int LOGIN_ING = 2;
-    private final static int TO_MAIN = 3;
 
     private boolean isTo;//false 自动跳转, true 不自动跳转
     private static int statue;
@@ -103,6 +102,13 @@ public class LauncherActivity extends AbsActivity {
         overridePendingTransition(0, 0);
     }
 
+    private void toMain() {
+        Intent intent = new Intent(LauncherActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+
     private Handler activityHandler = new Handler() {
         public void handleMessage(Message msg) {
             toActivity(msg);
@@ -121,11 +127,6 @@ public class LauncherActivity extends AbsActivity {
             case LOGIN_ING:
                 loadLogin((CommonResponse) msg.obj);
                 break;
-            case TO_MAIN:
-                Intent intent = new Intent(LauncherActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-                break;
             default:
                 break;
         }
@@ -137,7 +138,7 @@ public class LauncherActivity extends AbsActivity {
             SharedPreferencesHelper.setString(this, Constant.LoginUser.SHARED_PREFERENCES_PASSWORD, password);
             App.getInstance().userResult = (UserResult) resposne.getData();
             App.getInstance().userResult.getParent().setPhone(phone);
-            activityHandler.sendEmptyMessage(TO_MAIN);
+            toMain();
         } else {
             String code = resposne.getCode();
 //                "result":  "10001"  , "description": "用户名或密码错误"
