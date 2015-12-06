@@ -48,4 +48,22 @@
         <item name="lmd_clockwise">true</item>
     </style>
 
+    <!--底部弹出框-->
+    <!--动画-->
+    <style name="BottomViewTheme_Defalut">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="BottomToTopAnim">
+        <item name="android:windowEnterAnimation">@anim/push_translate_in</item>
+        <item name="android:windowExitAnimation">@anim/push_translate_out</item>
+    </style>
+
 </resources>

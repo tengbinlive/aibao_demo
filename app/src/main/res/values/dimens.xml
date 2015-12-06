@@ -18,6 +18,7 @@
     <dimen name="content_gap_big">20dp</dimen>
     <dimen name="content_1dp">1dp</dimen>
     <dimen name="content_10dp">10dp</dimen>
+    <dimen name="content_1px">1px</dimen>
 
     <dimen name="tab_height">60dp</dimen>
 
@@ -42,6 +43,7 @@
 
     <dimen name="rounded_size">4dp</dimen>
 
+    <dimen name="bottom_bt_height">45dp</dimen>
 
     <!--progress-->
     <dimen name="progress_radius">30dp</dimen>

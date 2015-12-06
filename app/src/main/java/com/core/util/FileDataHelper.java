@@ -37,7 +37,7 @@ public final class FileDataHelper {
 
             // 如果没有找到SDCard
             if (root == null) {
-                rootFile = new File("/touyanshe");
+                rootFile = new File("/mytian");
                 if (rootFile.exists()) {
                     root = rootFile.toString();
                     Logger.i("/flase is using!");
@@ -83,7 +83,7 @@ public final class FileDataHelper {
             return Environment
                     .getExternalStorageDirectory().getAbsolutePath() + path;
         } else {
-            return "/touyanshe" + path;
+            return "/mytian" + path;
         }
     }
 

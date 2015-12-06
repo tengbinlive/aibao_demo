@@ -5,11 +5,17 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.util.ArrayMap;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
@@ -28,6 +34,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.core.CommonResponse;
 import com.core.util.CommonUtil;
 import com.core.util.DateUtil;
+import com.core.util.FileDataHelper;
 import com.core.util.StringUtil;
 import com.gitonway.lee.niftymodaldialogeffects.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.NiftyDialogBuilder;
@@ -40,6 +47,7 @@ import com.mytian.lb.App;
 import com.mytian.lb.Constant;
 import com.mytian.lb.R;
 import com.mytian.lb.activity.AddFollowActivity;
+import com.mytian.lb.activity.AuthClipPictureActivity;
 import com.mytian.lb.adapter.UserAdapter;
 import com.mytian.lb.bean.follow.FollowListResult;
 import com.mytian.lb.bean.follow.FollowUser;
@@ -52,11 +60,14 @@ import com.mytian.lb.helper.AnimationHelper;
 import com.mytian.lb.helper.AnimatorUtils;
 import com.mytian.lb.manager.FollowManager;
 import com.mytian.lb.manager.UserManager;
+import com.mytian.lb.mview.BottomView;
 import com.mytian.lb.mview.ClipRevealFrame;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
 import com.nineoldandroids.animation.ValueAnimator;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -111,6 +122,28 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
     private FollowManager manager = new FollowManager();
     private int currentPager = 1;
     private View settingAchor;
+
+    /**
+     * 图片地址
+     */
+    private Uri imageUri;
+    private static final String STR_PATH = "path";
+    private static final String STR_CLIPRATIO = "clipRatio";
+    private double clipRatio = 1.0;
+    private BottomView mBottomView;
+    /**
+     * 本地图片选取标志
+     */
+    private static final int FLAG_CHOOSE_IMG = 0x11;
+    /**
+     * 截取结束标志
+     */
+    private static final int FLAG_MODIFY_FINISH = 0x7;
+    /**
+     * 相机标志
+     */
+    private static final int FLAG_CHOOSE_CAMERA = 0x17;
+
 
     //user
     private static boolean isOpenUser;//只执行一次动画
@@ -202,6 +235,8 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
                 if (!isSettingShow) {
                     settingAchor = view;
                     toggleShowSetting(view);
+                }else{
+                    selectPict();
                 }
             }
         });
@@ -326,23 +361,23 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         if (id == R.id.gender_layout) {
             showManOrWoman();
         } else if (id == R.id.woman_bt) {
-            if(isManOrWomanVisib()) {
+            if (isManOrWomanVisib()) {
                 Animator revealAnim = createViewScale0(man_bt);
                 revealAnim.start();
-            }else{
+            } else {
                 showManOrWoman();
             }
         } else if (id == R.id.man_bt) {
-            if(isManOrWomanVisib()) {
+            if (isManOrWomanVisib()) {
                 Animator revealAnim = createViewScale0(woman_bt);
                 revealAnim.start();
-            }else{
+            } else {
                 showManOrWoman();
             }
         }
     }
 
-    private void showManOrWoman(){
+    private void showManOrWoman() {
         List<Animator> animList = new ArrayList<>();
         animList.addAll(selectSexView(1));
         AnimatorSet animSet = new AnimatorSet();
@@ -562,10 +597,11 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
 
     /**
      * 男女选择是否都已经显示
+     *
      * @return
      */
-    private boolean isManOrWomanVisib(){
-            return   man_bt.getVisibility() == View.VISIBLE&& woman_bt.getVisibility() == View.VISIBLE;
+    private boolean isManOrWomanVisib() {
+        return man_bt.getVisibility() == View.VISIBLE && woman_bt.getVisibility() == View.VISIBLE;
     }
 
     private Animator createViewScale1(final View view) {
@@ -757,4 +793,129 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         String dateStr = DateUtil.ConverToString(birthdayDate.getTime());
         birthdayValue.setText(dateStr);
     }
+
+    private void selectPict() {
+        mBottomView = new BottomView(getActivity(), R.style.BottomViewTheme_Defalut, R.layout.bottom_view);
+        mBottomView.setAnimation(R.style.BottomToTopAnim);
+        TextView bt1 = (TextView) mBottomView.getView().findViewById(R.id.bottom_tv_1);
+        TextView bt2 = (TextView) mBottomView.getView().findViewById(R.id.bottom_tv_2);
+        TextView bt3 = (TextView) mBottomView.getView().findViewById(R.id.bottom_tv_3);
+        TextView cancel = (TextView) mBottomView.getView().findViewById(R.id.bottom_tv_cancel);
+        View divider1 = mBottomView.getView().findViewById(R.id.divider1);
+        bt1.setVisibility(View.GONE);
+        divider1.setVisibility(View.GONE);
+        bt2.setText("拍照");
+        bt3.setText("从相册获取");
+        PictButtonOnClickListener listener = new PictButtonOnClickListener();
+        bt2.setOnClickListener(listener);
+        bt3.setOnClickListener(listener);
+        cancel.setOnClickListener(listener);
+        mBottomView.showBottomView(true);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //结果码不等于取消时候
+        FragmentActivity activity = getActivity();
+        if (resultCode != activity.RESULT_CANCELED) {
+            if (requestCode == FLAG_CHOOSE_IMG && resultCode == activity.RESULT_OK) {
+                processGalleryIMG(data);
+            } else if (requestCode == FLAG_CHOOSE_CAMERA && resultCode == activity.RESULT_OK) {
+                processCamera();
+            } else if (requestCode == FLAG_MODIFY_FINISH && resultCode == activity.RESULT_OK) {
+                if (data != null) {
+                    final String path = data.getStringExtra(STR_PATH);
+                    Bitmap bitmap = BitmapFactory.decodeFile(path);
+                    user_icon.setImageBitmap(bitmap);
+                }
+            }
+        }
+    }
+
+    class PictButtonOnClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.bottom_tv_2:
+                    getImageFromCamera();
+                    mBottomView.dismissBottomView();
+                    break;
+                case R.id.bottom_tv_3:
+                    getImageFromGallery();
+                    mBottomView.dismissBottomView();
+                    break;
+                case R.id.bottom_tv_cancel:
+                    mBottomView.dismissBottomView();
+                    break;
+            }
+        }
+    }
+
+    /**
+     * 相册
+     */
+    private void getImageFromGallery() {
+        imageStyle();
+        Intent intentFromGallery = new Intent();
+        intentFromGallery.setAction(Intent.ACTION_PICK);
+        intentFromGallery.setType("image/*");
+        startActivityForResult(intentFromGallery, FLAG_CHOOSE_IMG);
+    }
+
+    /**
+     * 相机获取图片
+     */
+    private void getImageFromCamera() {
+        imageStyle();
+        Intent intentFromCapture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (FileDataHelper.hasSdcard()) {
+            intentFromCapture.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+        }
+        startActivityForResult(intentFromCapture, FLAG_CHOOSE_CAMERA);
+    }
+    private void imageStyle() {
+        // 照片命名
+        String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+        String origFileName = "osc_" + timeStamp + ".jpg";
+        String path = FileDataHelper.getFilePath(Constant.Dir.IMAGE_TEMP);
+        imageUri = Uri.fromFile(new File(path, origFileName));
+    }
+
+    private void processGalleryIMG(Intent data) {
+        if (data != null) {
+            Uri uri = data.getData();
+            if (!TextUtils.isEmpty(uri.getAuthority())) {
+                Cursor cursor = getActivity().getContentResolver().query(uri,
+                        new String[]{MediaStore.Images.Media.DATA},
+                        null, null, null);
+                if (null == cursor) {
+                    CommonUtil.showToast("图片没找到哦");
+                    return;
+                }
+                cursor.moveToFirst();
+                String path = cursor.getString(cursor
+                        .getColumnIndex(MediaStore.Images.Media.DATA));
+                cursor.close();
+
+                Intent intent = new Intent(getActivity(), AuthClipPictureActivity.class);
+                intent.putExtra(STR_PATH, path);
+                intent.putExtra(STR_CLIPRATIO, clipRatio);
+                startActivityForResult(intent, FLAG_MODIFY_FINISH);
+            } else {
+                Intent intent = new Intent(getActivity(), AuthClipPictureActivity.class);
+                intent.putExtra(STR_PATH, uri.getPath());
+                intent.putExtra(STR_CLIPRATIO, clipRatio);
+                startActivityForResult(intent, FLAG_MODIFY_FINISH);
+            }
+        }
+    }
+
+    private void processCamera() {
+        Intent intent = new Intent(getActivity(), AuthClipPictureActivity.class);
+        intent.putExtra(STR_PATH, imageUri.getPath());
+        intent.putExtra(STR_CLIPRATIO, clipRatio);
+        startActivityForResult(intent, FLAG_MODIFY_FINISH);
+    }
+
 }

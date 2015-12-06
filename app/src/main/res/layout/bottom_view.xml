@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:padding="@dimen/content_10dp"
+              android:orientation="vertical">
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:orientation="vertical"
+                  android:background="@drawable/item_bg"
+                  android:layout_height="wrap_content">
+
+        <TextView
+                android:id="@+id/bottom_tv_1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/bottom_bt_height"
+                android:gravity="center"
+                android:textColor="@color/gray_hint"
+                android:textSize="@dimen/font_small"/>
+
+        <View
+                android:id="@+id/divider1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/content_1px"
+                android:background="@drawable/light_divide">
+        </View>
+
+        <TextView
+                android:id="@+id/bottom_tv_2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/bottom_bt_height"
+                android:gravity="center"
+                android:textColor="@color/textcolor_222"
+                android:textSize="@dimen/font_medium"/>
+
+        <View
+                android:id="@+id/divider2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/content_1px"
+                android:background="@drawable/light_divide">
+        </View>
+
+        <TextView
+                android:id="@+id/bottom_tv_3"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/bottom_bt_height"
+                android:gravity="center"
+                android:textColor="@color/textcolor_222"
+                android:textSize="@dimen/font_medium"/>
+    </LinearLayout>
+    <TextView
+            android:layout_marginTop="@dimen/content_10dp"
+            android:id="@+id/bottom_tv_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/bottom_bt_height"
+            android:gravity="center"
+            android:text="@string/cancle"
+            android:textColor="@color/textcolor_222"
+            android:background="@drawable/item_bg"
+            android:textSize="@dimen/font_medium"/>
+
+</LinearLayout>

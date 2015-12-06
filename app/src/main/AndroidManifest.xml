@@ -116,6 +116,11 @@
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan"></activity>
 
+        <!--图片裁剪-->
+        <activity android:name=".activity.AuthClipPictureActivity"
+            android:theme="@style/AppTheme">
+        </activity>
+
         <!-- push service start -->
         <!-- 用于接收系统消息以保证PushService正常运行 -->
         <receiver android:name="com.baidu.android.pushservice.PushServiceReceiver"
