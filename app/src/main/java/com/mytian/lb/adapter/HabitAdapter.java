@@ -29,6 +29,8 @@ public class HabitAdapter extends BaseAdapter {
 
     private Context mContext;
 
+    private int stateHead;// 是否在 没数据时显示head  1 时需要显示&数据list.size = 0 添加占位符;
+
     public HabitAdapter(Context context, ArrayList<AgreementBean> _list) {
         this.list = _list;
         mContext = context;
@@ -41,6 +43,13 @@ public class HabitAdapter extends BaseAdapter {
          * 因为listview header 在adapter count <= 0 时是跟随listview一起隐藏的 ，
          * 为让 header 一直保持显示设置 1 个空占位。
          */
+        int size = list == null ? 0 : list.size();
+        if(size<=0){
+            size++;
+            stateHead = 1;
+        }else{
+            stateHead = 0;
+        }
         return null == list ? 1 : list.size() + 1;
     }
 
@@ -73,14 +82,11 @@ public class HabitAdapter extends BaseAdapter {
          * 为让 header 一直保持显示设置 1 个空占位。
          * 所以 position 需要 减掉 1 。
          */
-        if (getCount()==1) {
+        if (stateHead==1) {
             convertView.setVisibility(View.GONE);
             return convertView;
         }else{
-            position = position -1;
-            if(position<0){
-                position = 0;
-            }
+            convertView.setVisibility(View.VISIBLE);
         }
 
         AgreementBean bean = list.get(position);
