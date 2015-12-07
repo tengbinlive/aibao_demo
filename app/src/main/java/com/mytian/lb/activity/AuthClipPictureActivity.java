@@ -92,7 +92,6 @@ public class AuthClipPictureActivity extends AbsActivity implements OnTouchListe
     public int screenWidth = 0;
     public int screenHeight = 0;
 
-    private int quality = 90; //压缩质量
     /**
      * 裁剪图片地址
      */
@@ -341,11 +340,10 @@ public class AuthClipPictureActivity extends AbsActivity implements OnTouchListe
         // 获取状态栏高度
         Rect frame = new Rect();
         this.getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
-        int statusBarHeight = frame.top;
 //
         Bitmap finalBitmap = Bitmap.createBitmap(view.getDrawingCache(),
-                clipview.getClipLeftMargin(), clipview.getClipTopMargin()
-                        + statusBarHeight, clipview.getClipWidth(),
+                clipview.getClipLeftMargin(), clipview.getClipTopMargin(),
+                clipview.getClipWidth(),
                 clipview.getClipHeight());
 //
         savaBitmap(finalBitmap);
@@ -370,7 +368,7 @@ public class AuthClipPictureActivity extends AbsActivity implements OnTouchListe
         } catch (Exception e) {
             e.printStackTrace();
         }
-        NativeUtil.compressBitmap(bitmap, quality,
+        NativeUtil.compressBitmap(bitmap, NativeUtil.DEFAULT_QUALITY,
                 f.getAbsolutePath(), true);
         try {
             fOut.flush();

@@ -23,7 +23,7 @@ import android.graphics.Rect;
 
 public class NativeUtil {
 
-    private static int DEFAULT_QUALITY = 55;
+    public static int DEFAULT_QUALITY = 55;
 
     public static void compressBitmap(Bitmap bit, String fileName,
                                       boolean optimize) {

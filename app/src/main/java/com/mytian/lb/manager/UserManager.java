@@ -42,6 +42,4 @@ public class UserManager {
         CommonDataLoader.getInstance(context).load(request);
     }
 
-
-
 }

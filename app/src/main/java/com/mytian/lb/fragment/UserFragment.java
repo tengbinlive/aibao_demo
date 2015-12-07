@@ -245,6 +245,9 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
     }
 
     private void setUserInfo() {
+        if(App.getInstance().userResult==null){
+            return;
+        }
         String name = App.getInstance().userResult.getParent().getAlias();
         boolean isName = StringUtil.isBlank(name);
         if (isName) {
