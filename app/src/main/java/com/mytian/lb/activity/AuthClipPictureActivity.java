@@ -307,7 +307,6 @@ public class AuthClipPictureActivity extends AbsActivity implements OnTouchListe
     }
 
     public void onClick(View v) {
-
         switch (v.getId()) {
             case R.id.line_cancle:
                 finish();

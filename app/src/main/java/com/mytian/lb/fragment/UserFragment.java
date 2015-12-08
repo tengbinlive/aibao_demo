@@ -32,6 +32,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.core.CommonResponse;
+import com.core.util.BitmapUtils;
 import com.core.util.CommonUtil;
 import com.core.util.DateUtil;
 import com.core.util.FileDataHelper;
@@ -163,6 +164,10 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
 
     private AppVersion firAppVersion;
 
+    private Bitmap headIcon;
+
+    private int isUpdateSuccess;
+
     private void initListView() {
 
         listview.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
@@ -270,7 +275,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
             birthdayValue.setHint("选下咯");
         }
         user_icon.setVisibility(View.VISIBLE);
-        Glide.with(App.getInstance()).load(R.mipmap.head_user_woman).asBitmap()
+        Glide.with(App.getInstance()).load(head).asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .centerCrop().placeholder(R.mipmap.default_head).into(user_icon);
     }
@@ -354,6 +359,11 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         }
         if (StringUtil.isNotBlank(birthday)) {
             param.setBirthday(birthdayDate.getTimeInMillis());
+        }
+        if(null!=headIcon){
+            byte[] bmData = BitmapUtils.Bitmap2Bytes(headIcon);
+            String pict = BitmapUtils.byte2hex(bmData);
+            param.setHeadThumb(pict);
         }
         manager.updateParent(mContext, param, activityHandler, UPDATE_PARENT);
     }
@@ -467,6 +477,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
             isSettingShow = true;
             showMenu(x, y, radiusOf, radiusFromToRoot);
         } else {
+            resetData();
             isSettingShow = false;
             hideMenu(x, y, radiusFromToRoot, radiusOf);
         }
@@ -702,10 +713,25 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         }
     };
 
+    private void resetData(){
+        if(null!=headIcon){
+            FileDataHelper.deleteDirectory(FileDataHelper.getFilePath(Constant.Dir.IMAGE_TEMP));
+            headIcon = null;
+        }
+        if(isUpdateSuccess==2) {
+            String head = App.getInstance().userResult.getParent().getHeadThumb();
+            Glide.with(App.getInstance()).load(head).asBitmap()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .centerCrop().placeholder(R.mipmap.default_head).into(user_icon);
+        }
+        isUpdateSuccess = 0 ;
+    }
+
     private void loadUpdate(CommonResponse resposne) {
         dialogDismiss();
         CommonUtil.showToast(resposne.getMsg());
         if (resposne.isSuccess()) {
+            isUpdateSuccess = 1;
             String name = nameValue.getText().toString();
             String birthday = birthdayValue.getText().toString();
             nameValue.clearFocus();
@@ -723,6 +749,8 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
             if (user_gender != -1) {
                 App.getInstance().userResult.getParent().setSex(user_gender);
             }
+        } else{
+            isUpdateSuccess = 2;
         }
     }
 
@@ -828,9 +856,9 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
                 processCamera();
             } else if (requestCode == FLAG_MODIFY_FINISH && resultCode == activity.RESULT_OK) {
                 if (data != null) {
-                    final String path = data.getStringExtra(STR_PATH);
-                    Bitmap bitmap = BitmapFactory.decodeFile(path);
-                    user_icon.setImageBitmap(bitmap);
+                    String headPaht = data.getStringExtra(STR_PATH);
+                    headIcon = BitmapFactory.decodeFile(headPaht);
+                    user_icon.setImageBitmap(headIcon);
                 }
             }
         }

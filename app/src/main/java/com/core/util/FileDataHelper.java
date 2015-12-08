@@ -70,10 +70,10 @@ public final class FileDataHelper {
                 }
                 result = true;
             } else {
-                Logger.e( "rootFile is null, created failed");
+                Logger.e("rootFile is null, created failed");
             }
         } catch (Exception e) {
-            Logger.e( "create directory Exception, " + e);
+            Logger.e("create directory Exception, " + e);
         }
         return result;
     }
