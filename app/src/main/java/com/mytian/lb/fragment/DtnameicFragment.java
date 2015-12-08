@@ -81,7 +81,8 @@ public class DtnameicFragment extends AbsFragment {
     public void EInit() {
         initListView();
         arrayList = null;
-        getListData();
+        loadData(null, 0);
+//        getListData();
     }
 
     private static final int INIT_LIST = 0x01;//初始化数据处理

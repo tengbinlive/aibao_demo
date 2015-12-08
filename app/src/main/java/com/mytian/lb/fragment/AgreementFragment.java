@@ -86,6 +86,8 @@ public class AgreementFragment extends AbsFragment {
 
     private static long DKEY_TIME = 15 * 60 * 1000;
 
+    private static int sendCount = 0;
+
     private void initGridView() {
 
         initData();
@@ -107,7 +109,8 @@ public class AgreementFragment extends AbsFragment {
                     CommonUtil.showToast(R.string.select_user);
                     return;
                 }
-                if (!isSettingShow) {
+                if (!isSettingShow&&sendCount<=0) {
+                    sendCount++;
                     AnimationHelper.getInstance().viewAnimationScal(view);
                     tempClip = view;
                     cureentAgreement = arrayList.get(position);
@@ -364,6 +367,7 @@ public class AgreementFragment extends AbsFragment {
     private void loadAgreementCancle(CommonResponse resposne) {
         dialogDismiss();
         if (resposne.isSuccess()) {
+            sendCount = 0;
             if (isSettingShow) {
                 toggleShowSetting(tempClip);
             }
