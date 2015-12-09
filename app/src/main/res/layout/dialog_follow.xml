@@ -67,6 +67,7 @@
              android:textColor="@color/textcolor_222"
              android:textColorHint="@color/gray_hint"
              android:textCursorDrawable="@null"
+             android:visibility="invisible"
              android:textSize="@dimen/font_medium" />
 
          <TextView

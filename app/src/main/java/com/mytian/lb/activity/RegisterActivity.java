@@ -5,8 +5,14 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
+import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.gitonway.lee.niftymodaldialogeffects.Effectstype;
+import com.gitonway.lee.niftymodaldialogeffects.NiftyDialogBuilder;
 import com.mytian.lb.AbsActivity;
 import com.mytian.lb.App;
 import com.mytian.lb.Constant;
@@ -232,6 +238,14 @@ public class RegisterActivity extends AbsActivity {
     @Override
     public void EInit() {
         super.EInit();
+        agree_cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    dialogAgreeValue("《用户使用协议》");
+                }
+            }
+        });
         phone = getIntent().getStringExtra("phone");
         if(StringUtil.isNotBlank(phone)) {
             phone_et.setText(phone);
@@ -258,5 +272,21 @@ public class RegisterActivity extends AbsActivity {
             this.getContentResolver().unregisterContentObserver(smsContentObserver);
             smsContentObserver = null;
         }
+    }
+
+    public void dialogAgreeValue(String value) {
+        if (StringUtil.isBlank(value)) {
+            return;
+        }
+        dialogDismiss();
+        LinearLayout convertView = (LinearLayout) mInflater.inflate(R.layout.dialog_agree, null);
+        TextView valueTv = (TextView) convertView.findViewById(R.id.value);
+        valueTv.setText(value);
+        dialogBuilder = NiftyDialogBuilder.getInstance(this);
+        dialogBuilder.withDuration(700) // def
+                .isCancelableOnTouchOutside(true) // def | isCancelable(true)
+                .withEffect(Effectstype.Fadein) // def Effectstype.Slidetop
+                .setCustomView(convertView, this); // .setCustomView(View
+        dialogBuilder.show();
     }
 }

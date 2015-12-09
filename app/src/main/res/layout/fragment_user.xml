@@ -39,7 +39,7 @@
         android:textSize="@dimen/font_medium" />
 
     <include
-        layout="@layout/layout_setting_menu"
+        layout="@layout/layout_setting_user"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/layout_user" />

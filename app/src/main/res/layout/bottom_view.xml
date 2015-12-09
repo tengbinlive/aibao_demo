@@ -7,7 +7,7 @@
 
     <LinearLayout android:layout_width="match_parent"
                   android:orientation="vertical"
-                  android:background="@drawable/item_bg"
+                  android:background="@drawable/button_bg_white"
                   android:layout_height="wrap_content">
 
         <TextView
@@ -55,8 +55,8 @@
             android:layout_height="@dimen/bottom_bt_height"
             android:gravity="center"
             android:text="@string/cancle"
-            android:textColor="@color/textcolor_222"
-            android:background="@drawable/item_bg"
+            android:textColor="@color/white"
+            android:background="@drawable/button_bg_white"
             android:textSize="@dimen/font_medium"/>
 
 </LinearLayout>

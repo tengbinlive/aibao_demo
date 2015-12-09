@@ -56,5 +56,6 @@
     <string name="woman">女</string>
     <string name="man">男</string>
     <string name="select_user">请先选择用户</string>
+    <string name="setting_sys">系统设置</string>
 
 </resources>

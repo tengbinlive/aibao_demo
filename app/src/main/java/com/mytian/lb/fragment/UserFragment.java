@@ -37,8 +37,6 @@ import com.core.util.CommonUtil;
 import com.core.util.DateUtil;
 import com.core.util.FileDataHelper;
 import com.core.util.StringUtil;
-import com.gitonway.lee.niftymodaldialogeffects.Effectstype;
-import com.gitonway.lee.niftymodaldialogeffects.NiftyDialogBuilder;
 import com.handmark.pulltorefresh.PullToRefreshBase;
 import com.handmark.pulltorefresh.PullToRefreshListView;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -49,6 +47,7 @@ import com.mytian.lb.Constant;
 import com.mytian.lb.R;
 import com.mytian.lb.activity.AddFollowActivity;
 import com.mytian.lb.activity.AuthClipPictureActivity;
+import com.mytian.lb.activity.SysSettingActivity;
 import com.mytian.lb.adapter.UserAdapter;
 import com.mytian.lb.bean.follow.FollowListResult;
 import com.mytian.lb.bean.follow.FollowUser;
@@ -78,9 +77,6 @@ import butterknife.Bind;
 import butterknife.BindColor;
 import butterknife.BindDimen;
 import butterknife.OnClick;
-import im.fir.sdk.FIR;
-import im.fir.sdk.callback.VersionCheckCallback;
-import im.fir.sdk.version.AppVersion;
 
 public class UserFragment extends AbsFragment implements DatePickerDialog.OnDateSetListener {
 
@@ -100,8 +96,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
     Button woman_bt;
     @Bind(R.id.man_bt)
     Button man_bt;
-    @Bind(R.id.update_bt)
-    Button update_bt;
+
     @Bind(R.id.gender_layout)
     RelativeLayout gender_layout;
 
@@ -145,7 +140,6 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
      */
     private static final int FLAG_CHOOSE_CAMERA = 0x17;
 
-
     //user
     private static boolean isOpenUser;//只执行一次动画
     @Bind(R.id.user_phone)
@@ -161,8 +155,6 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
     private final OvershootInterpolator mInterpolator = new OvershootInterpolator();
 
     private int user_gender = -1;
-
-    private AppVersion firAppVersion;
 
     private Bitmap headIcon;
 
@@ -238,19 +230,22 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
             @Override
             public void onClick(View view) {
                 if (!isSettingShow) {
-                    settingAchor = view;
-                    toggleShowSetting(view);
-                }else{
+                    toSysSettingActivity();
+                } else {
                     selectPict();
                 }
             }
         });
-        updateDetect();
         getListData(INIT_LIST);
     }
 
+    private void toSysSettingActivity() {
+        Intent intent = new Intent(getActivity(), SysSettingActivity.class);
+        startActivity(intent);
+    }
+
     private void setUserInfo() {
-        if(App.getInstance().userResult==null){
+        if (App.getInstance().userResult == null) {
             return;
         }
         String name = App.getInstance().userResult.getParent().getAlias();
@@ -315,11 +310,6 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         setEmpty();
     }
 
-    @OnClick(R.id.exit_bt)
-    void exitAccount() {
-        App.getInstance().changeAccount(true);
-    }
-
     @OnClick(R.id.change_bt)
     void onChangeInfo() {
         String name = nameValue.getText().toString();
@@ -360,7 +350,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         if (StringUtil.isNotBlank(birthday)) {
             param.setBirthday(birthdayDate.getTimeInMillis());
         }
-        if(null!=headIcon){
+        if (null != headIcon) {
             byte[] bmData = BitmapUtils.Bitmap2Bytes(headIcon);
             String pict = BitmapUtils.byte2hex(bmData);
             param.setHeadThumb(pict);
@@ -396,70 +386,6 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         AnimatorSet animSet = new AnimatorSet();
         animSet.playSequentially(animList);
         animSet.start();
-    }
-
-    @OnClick(R.id.update_bt)
-    void updateVersion(View view) {
-        StringBuffer versionInfo = new StringBuffer();
-        versionInfo.append("version :   ").append(firAppVersion.getVersionName()).append("\n")
-                .append("log :   ").append(firAppVersion.getChangeLog()).append("\n\n")
-                .append("download...");
-        dialogAddFollow(versionInfo.toString(), firAppVersion.getUpdateUrl());
-    }
-
-    private void toDownload(String download) {
-        Uri uri = Uri.parse(download);
-        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-        startActivity(intent);
-    }
-
-    public void dialogAddFollow(String value, final String download) {
-        if (StringUtil.isBlank(value)) {
-            return;
-        }
-        dialogDismiss();
-        LinearLayout convertView = (LinearLayout) mInflater.inflate(R.layout.dialog_prompt, null);
-        TextView valueTv = (TextView) convertView.findViewById(R.id.value);
-        valueTv.setText(value);
-        valueTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                toDownload(download);
-            }
-        });
-        dialogBuilder = NiftyDialogBuilder.getInstance(getActivity());
-        dialogBuilder.withDuration(700) // def
-                .isCancelableOnTouchOutside(true) // def | isCancelable(true)
-                .withEffect(Effectstype.Fadein) // def Effectstype.Slidetop
-                .setCustomView(convertView, getActivity()); // .setCustomView(View
-        dialogBuilder.show();
-    }
-
-    private void updateDetect() {
-        FIR.checkForUpdateInFIR(Constant.FIR_API_TOKEN, new VersionCheckCallback() {
-            @Override
-            public void onSuccess(AppVersion appVersion, boolean b) {
-                firAppVersion = appVersion;
-            }
-
-            @Override
-            public void onFail(String s, int i) {
-            }
-
-            @Override
-            public void onError(Exception e) {
-            }
-
-            @Override
-            public void onStart() {
-
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-        });
     }
 
     /**
@@ -531,11 +457,6 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
 
         revealAnim = createViewScale1(change_bt);
         animList.add(revealAnim);
-
-        if (firAppVersion != null && firAppVersion.getVersionCode() > App.getAppVersionCode() && update_bt.getVisibility() != View.VISIBLE) {
-            revealAnim = createViewScale1(update_bt);
-            animList.add(revealAnim);
-        }
 
         int sex = App.getInstance().userResult.getParent().getSex();
 
@@ -713,18 +634,18 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         }
     };
 
-    private void resetData(){
-        if(null!=headIcon){
+    private void resetData() {
+        if (null != headIcon) {
             FileDataHelper.deleteDirectory(FileDataHelper.getFilePath(Constant.Dir.IMAGE_TEMP));
             headIcon = null;
         }
-        if(isUpdateSuccess==2) {
+        if (isUpdateSuccess == 2) {
             String head = App.getInstance().userResult.getParent().getHeadThumb();
             Glide.with(App.getInstance()).load(head).asBitmap()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .centerCrop().placeholder(R.mipmap.default_head).into(user_icon);
         }
-        isUpdateSuccess = 0 ;
+        isUpdateSuccess = 0;
     }
 
     private void loadUpdate(CommonResponse resposne) {
@@ -749,7 +670,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
             if (user_gender != -1) {
                 App.getInstance().userResult.getParent().setSex(user_gender);
             }
-        } else{
+        } else {
             isUpdateSuccess = 2;
         }
     }
@@ -905,6 +826,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         }
         startActivityForResult(intentFromCapture, FLAG_CHOOSE_CAMERA);
     }
+
     private void imageStyle() {
         // 照片命名
         String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
