@@ -23,7 +23,6 @@ import com.mytian.lb.bean.AgreementBean;
 import com.mytian.lb.bean.follow.FollowUser;
 import com.mytian.lb.event.HabitUserType;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
-import com.rey.material.widget.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -34,9 +33,7 @@ public class HabitFragment extends AbsFragment {
     @Bind(R.id.listview)
     PullToRefreshListView listview;
     @Bind(R.id.ll_listEmpty)
-    LinearLayout llListEmpty;
-    @Bind(R.id.add_bt)
-    FloatingActionButton add_bt;
+    View llListEmpty;
 
     private ListView mActualListView;
     private HabitAdapter mAdapter;
@@ -82,14 +79,12 @@ public class HabitFragment extends AbsFragment {
 
         mActualListView.setAdapter(animationAdapter);
 
-        listview.setEmptyView(llListEmpty);
-
     }
 
-    private void initHeaderView(View view){
-         user_icon = (RoundedImageView) view.findViewById(R.id.user_icon);
-         user_name = (TextView) view.findViewById(R.id.user_name);
-         user_phone = (TextView) view.findViewById(R.id.user_phone);
+    private void initHeaderView(View view) {
+        user_icon = (RoundedImageView) view.findViewById(R.id.user_icon);
+        user_name = (TextView) view.findViewById(R.id.user_name);
+        user_phone = (TextView) view.findViewById(R.id.user_phone);
 
         user_icon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,15 +113,9 @@ public class HabitFragment extends AbsFragment {
     public void EInit() {
         initListView();
         setUserInfo(null);
-        add_bt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                add_bt.setLineMorphingState((add_bt.getLineMorphingState() + 1) % 2, true);
-            }
-        });
     }
 
-    void toFriendslist(){
+    void toFriendslist() {
         Intent intent = new Intent(getActivity(), FriendslistActivity.class);
         intent.putExtra("TYPE", MainActivity.HABIT);
         startActivity(intent);
@@ -134,7 +123,7 @@ public class HabitFragment extends AbsFragment {
 
     private void setUserInfo(FollowUser userInfo) {
         String head = "";
-        if(userInfo!=null) {
+        if (userInfo != null) {
             cureentParent = userInfo;
             String name = cureentParent.getAlias();
             head = cureentParent.getHead_thumb();

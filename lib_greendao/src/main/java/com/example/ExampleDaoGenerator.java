@@ -49,7 +49,7 @@ public class ExampleDaoGenerator {
         note.addIdProperty();
         note.addStringProperty("title");
         note.addStringProperty("appointId");
-        note.addIntProperty("icon");
+        note.addStringProperty("icon");
         note.addDateProperty("date");
     }
 

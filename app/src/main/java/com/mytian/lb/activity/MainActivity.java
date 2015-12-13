@@ -167,7 +167,7 @@ public class MainActivity extends AbsActivity {
             setToolbarRightOnClick(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    toggleSetting();
+                    toSysSettingActivity();
                 }
             });
         } else if (position == AGREEMENT || position == HABIT) {
@@ -193,6 +193,11 @@ public class MainActivity extends AbsActivity {
         }
     }
 
+    private void toSysSettingActivity() {
+        Intent intent = new Intent(this, SysSettingActivity.class);
+        startActivity(intent);
+    }
+
     private void toggleSetting(){
         if (null == settingEventType) {
             View settingView = getToolbar().findViewById(R.id.toolbar_right_tv);
@@ -204,7 +209,7 @@ public class MainActivity extends AbsActivity {
     private SettingEventType settingEventType;
 
     private void setActionBar() {
-        setToolbarLeft(R.mipmap.menu_normal);
+        setToolbarLeft(0);
         setToolbarLeftOnClick(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -43,7 +43,6 @@ public class DemoManger {
         parent.setAlias("小明");
         demoUserInfo_1.setParent(parent);
         demoUserInfo_1.setId("1");
-        demoUserInfo_1.setHeadid(R.mipmap.head_1);
         ArrayList<AgreementBean> beans = new ArrayList<>();
         AgreementBean bean = new AgreementBean();
         bean.setTitle(argeementTitle[0]);
@@ -65,7 +64,6 @@ public class DemoManger {
         parent.setPhone("18217611111");
         parent.setAlias("小红");
         demoUserInfo_2.setParent(parent);
-        demoUserInfo_2.setHeadid(R.mipmap.head_2);
         demoUserInfo_2.setId("2");
         beans = new ArrayList<>();
         bean = new AgreementBean();
@@ -92,7 +90,6 @@ public class DemoManger {
         parent.setPhone("15217611213");
         parent.setAlias("韩梅梅");
         demoUserInfo_3.setParent(parent);
-        demoUserInfo_3.setHeadid(R.mipmap.head_3);
         demoUserInfo_3.setId("3");
         beans = new ArrayList<>();
         bean = new AgreementBean();
@@ -111,7 +108,6 @@ public class DemoManger {
         parent.setPhone("13217611222");
         parent.setAlias("李雷");
         demoUserInfo_4.setParent(parent);
-        demoUserInfo_4.setHeadid(R.mipmap.head_4);
         demoUserInfo_4.setId("4");
         beans = new ArrayList<>();
         bean = new AgreementBean();
@@ -146,7 +142,6 @@ public class DemoManger {
         parent.setPhone("1392121520");
         parent.setAlias("韩韩");
         demoUserInfo_0.setParent(parent);
-        demoUserInfo_0.setHeadid(R.mipmap.head_0);
         demoUserInfo_0.setId("0");
         beans = new ArrayList<>();
         bean = new AgreementBean();

@@ -25,7 +25,7 @@ public class AgreementDao extends AbstractDao<Agreement, Long> {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Title = new Property(1, String.class, "title", false, "TITLE");
         public final static Property AppointId = new Property(2, String.class, "appointId", false, "APPOINT_ID");
-        public final static Property Icon = new Property(3, Integer.class, "icon", false, "ICON");
+        public final static Property Icon = new Property(3, String.class, "icon", false, "ICON");
         public final static Property Date = new Property(4, java.util.Date.class, "date", false, "DATE");
     };
 
@@ -45,7 +45,7 @@ public class AgreementDao extends AbstractDao<Agreement, Long> {
                 "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
                 "\"TITLE\" TEXT," + // 1: title
                 "\"APPOINT_ID\" TEXT," + // 2: appointId
-                "\"ICON\" INTEGER," + // 3: icon
+                "\"ICON\" TEXT," + // 3: icon
                 "\"DATE\" INTEGER);"); // 4: date
     }
 
@@ -75,9 +75,9 @@ public class AgreementDao extends AbstractDao<Agreement, Long> {
             stmt.bindString(3, appointId);
         }
  
-        Integer icon = entity.getIcon();
+        String icon = entity.getIcon();
         if (icon != null) {
-            stmt.bindLong(4, icon);
+            stmt.bindString(4, icon);
         }
  
         java.util.Date date = entity.getDate();
@@ -99,7 +99,7 @@ public class AgreementDao extends AbstractDao<Agreement, Long> {
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // title
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // appointId
-            cursor.isNull(offset + 3) ? null : cursor.getInt(offset + 3), // icon
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // icon
             cursor.isNull(offset + 4) ? null : new java.util.Date(cursor.getLong(offset + 4)) // date
         );
         return entity;
@@ -111,7 +111,7 @@ public class AgreementDao extends AbstractDao<Agreement, Long> {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setTitle(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setAppointId(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setIcon(cursor.isNull(offset + 3) ? null : cursor.getInt(offset + 3));
+        entity.setIcon(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setDate(cursor.isNull(offset + 4) ? null : new java.util.Date(cursor.getLong(offset + 4)));
      }
     

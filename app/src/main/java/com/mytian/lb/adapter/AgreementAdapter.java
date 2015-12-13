@@ -13,6 +13,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.dao.Agreement;
 import com.mytian.lb.R;
 import com.mytian.lb.bean.AgreementBean;
+import com.mytian.lb.helper.util;
 
 import java.util.ArrayList;
 
@@ -64,7 +65,8 @@ public class AgreementAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         Agreement bean = list.get(position);
-        Glide.with(mContext).load(bean.getIcon()).asBitmap().diskCacheStrategy(DiskCacheStrategy.ALL).into(viewHolder.icon);
+        int iconID = util.getResource(mContext,bean.getIcon(),"mipmap");
+        Glide.with(mContext).load(iconID).asBitmap().diskCacheStrategy(DiskCacheStrategy.ALL).into(viewHolder.icon);
         viewHolder.title.setText(bean.getTitle());
         return convertView;
     }

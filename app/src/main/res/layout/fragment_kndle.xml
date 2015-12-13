@@ -14,4 +14,19 @@
         android:textColor="@color/gray"
         android:textSize="@dimen/font_medium"/>
 
+    <com.rey.material.widget.FloatingActionButton xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/add_bt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/content_gap_big"
+        android:layout_marginRight="@dimen/content_gap_big"
+        app:fab_backgroundColor="@color/theme"
+        app:fab_elevation="2dp"
+        app:fab_iconLineMorphing="@style/FloatingActionButtonIcon"
+        app:fab_radius="@dimen/foatingbt_size"
+        app:rd_delayClick="untilRelease"
+        app:rd_rippleColor="#33000000" />
+
 </RelativeLayout>

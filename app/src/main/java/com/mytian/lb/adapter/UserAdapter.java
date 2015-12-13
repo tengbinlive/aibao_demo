@@ -81,7 +81,7 @@ public class UserAdapter extends BaseSwipeAdapter {
             public void onClick(View view) {
                 closeAllItems();
                 int index = (Integer) view.getTag();
-                FollowUser user = list.get(index);
+                FollowUser user = list.valueAt(index);
                 mContext.dialogShow(R.string.cancel_ing);
                 manager.followcancel(mContext, user.getUid(), handler, CANCEL);
             }

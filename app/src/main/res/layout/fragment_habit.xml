@@ -2,13 +2,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.handmark.pulltorefresh.PullToRefreshListView
-        xmlns:ptr="http://schemas.android.com/apk/res-auto"
+    <com.handmark.pulltorefresh.PullToRefreshListView xmlns:ptr="http://schemas.android.com/apk/res-auto"
         android:id="@+id/listview"
-        android:background="@color/theme_bg_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/layout_user"
+        android:background="@color/theme_bg_layout"
         android:cacheColorHint="@color/transparent"
         android:divider="@null"
         android:fadingEdge="none"
@@ -21,21 +20,14 @@
         ptr:ptrAnimationStyle="flip"
         ptr:ptrMode="both" />
 
-    <include layout="@layout/list_empty" />
-
-    <com.rey.material.widget.FloatingActionButton xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/add_bt"
+    <TextView
+        android:id="@+id/ll_listEmpty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="@dimen/content_gap_big"
-        android:layout_marginRight="@dimen/content_gap_big"
-        app:fab_backgroundColor="@color/theme"
-        app:fab_elevation="2dp"
-        app:fab_iconLineMorphing="@style/FloatingActionButtonIcon"
-        app:fab_radius="@dimen/foatingbt_size"
-        app:rd_delayClick="untilRelease"
-        app:rd_rippleColor="#33000000" />
+        android:layout_centerInParent="true"
+        android:lineSpacingMultiplier="1.4"
+        android:text="@string/list_empty"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/font_medium" />
 
 </RelativeLayout>

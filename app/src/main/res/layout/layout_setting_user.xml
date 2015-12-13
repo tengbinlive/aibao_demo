@@ -131,7 +131,6 @@
                 android:background="@drawable/light_divide" />
 
             <RelativeLayout
-                android:id="@+id/gender_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -145,32 +144,41 @@
                     android:textColor="@color/textcolor_222"
                     android:textSize="@dimen/font_btn" />
 
-                <Button
+                <com.rey.material.widget.RadioButton
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/woman_bt"
-                    android:layout_width="65dp"
-                    android:layout_height="32dp"
+                    style="@style/RadioButtonDrawable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
+                    android:layout_marginBottom="25dp"
                     android:layout_marginRight="@dimen/content_gap"
                     android:layout_toLeftOf="@+id/man_bt"
-                    android:background="@drawable/button_bg_theme"
+                    android:checked="true"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/content_gap_small"
                     android:text="@string/woman"
-                    android:textColor="@color/white"
+                    android:textColor="@color/gray_hint"
                     android:textSize="@dimen/font_btn"
-                    android:visibility="invisible" />
+                    app:rbd_strokeColor="@color/match"/>
 
-                <Button
+                <com.rey.material.widget.RadioButton
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/man_bt"
-                    android:layout_width="65dp"
-                    android:layout_height="32dp"
+                    style="@style/RadioButtonDrawable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
+                    android:layout_marginBottom="25dp"
                     android:layout_marginRight="@dimen/content_gap"
-                    android:background="@drawable/button_bg_theme"
+                    android:checked="false"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/content_gap_small"
                     android:text="@string/man"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/font_small"
-                    android:visibility="invisible" />
-
+                    android:textColor="@color/gray_hint"
+                    android:textSize="@dimen/font_btn"
+                    app:rbd_strokeColor="@color/match" />
             </RelativeLayout>
 
             <View

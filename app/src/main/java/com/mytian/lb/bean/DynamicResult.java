@@ -17,7 +17,6 @@ public class DynamicResult extends OpenApiSimpleResult {
     private String date;
     private String desc;
     private String content;
-    private int headid;
     private int type;
     private TextDrawable drawable;
 
@@ -30,24 +29,18 @@ public class DynamicResult extends OpenApiSimpleResult {
     }
 
     public TextDrawable getDrawable() {
-        if (drawable == null) {
-            int radius = (int) App.getInstance().getResources().getDimension(R.dimen.rounded_size);
-            drawable = TextDrawable.builder()
-                    .buildRoundRect("sys", 0xfff12e40, radius);
+        if(null==drawable){
+            setDrawable();
         }
         return drawable;
     }
 
-    public void setDrawable(TextDrawable drawable) {
-        this.drawable = drawable;
-    }
-
-    public int getHeadid() {
-        return headid;
-    }
-
-    public void setHeadid(int headid) {
-        this.headid = headid;
+    private void setDrawable() {
+        int radius = (int) App.getInstance().getResources().getDimension(R.dimen.rounded_size);
+        String name = alias.substring(0,1);
+        int color = type == TYPE_SYS ? 0xfff12e40 : 0xffff6699;
+        this.drawable = TextDrawable.builder()
+                .buildRoundRect(name, color, radius);
     }
 
     public String getAlias() {
@@ -98,7 +91,6 @@ public class DynamicResult extends OpenApiSimpleResult {
                 ", date='" + date + '\'' +
                 ", desc='" + desc + '\'' +
                 ", content='" + content + '\'' +
-                ", headid=" + headid +
                 ", type=" + type +
                 ", drawable=" + drawable +
                 '}';

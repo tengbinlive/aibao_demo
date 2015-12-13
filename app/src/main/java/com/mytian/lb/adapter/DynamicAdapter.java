@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.core.util.StringUtil;
 import com.mytian.lb.R;
 import com.mytian.lb.bean.DynamicResult;
 import com.mytian.lb.helper.GlideRoundTransform;
@@ -67,26 +68,11 @@ public class DynamicAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         DynamicResult bean = list.get(position);
-        int type = bean.getType();
-        int heandid = R.mipmap.head_0;
-        bean.setAlias("韩韩");
-        if (type == DynamicResult.TYPE_SYS) {
-            bean.setAlias("麦田官方");
-        } else if (position % 4 == 0) {
-            heandid = R.mipmap.head_1;
-            bean.setAlias("小明");
-        } else if (position % 4 == 1) {
-            heandid = R.mipmap.head_2;
-            bean.setAlias("小红");
-        } else if (position % 4 == 2) {
-            heandid = R.mipmap.head_3;
-            bean.setAlias("韩梅梅");
-        }
-
-        if (type == DynamicResult.TYPE_SYS) {
+        String heandurl = bean.getHead();
+        if(StringUtil.isBlank(heandurl)){
             viewHolder.head.setImageDrawable(bean.getDrawable());
-        }else {
-            Glide.with(mContext).load(heandid).asBitmap()
+        }else{
+            Glide.with(mContext).load(heandurl).asBitmap()
                     .transform(transform)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .placeholder(R.mipmap.icon_contact).into(viewHolder.head);

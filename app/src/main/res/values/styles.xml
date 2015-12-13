@@ -35,6 +35,8 @@
 
     <style name="CheckBoxDrawable" parent="Material.Drawable.CheckBox"/>
 
+    <style name="RadioButtonDrawable" parent="Material.Drawable.RadioButton"/>
+
     <style name="FloatingActionButtonIcon" >
         <item name="lmd_state">@xml/fab_icon_states</item>
         <item name="lmd_curState">0</item>

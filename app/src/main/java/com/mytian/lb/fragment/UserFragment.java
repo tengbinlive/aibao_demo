@@ -26,7 +26,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -47,7 +46,6 @@ import com.mytian.lb.Constant;
 import com.mytian.lb.R;
 import com.mytian.lb.activity.AddFollowActivity;
 import com.mytian.lb.activity.AuthClipPictureActivity;
-import com.mytian.lb.activity.SysSettingActivity;
 import com.mytian.lb.adapter.UserAdapter;
 import com.mytian.lb.bean.follow.FollowListResult;
 import com.mytian.lb.bean.follow.FollowUser;
@@ -64,6 +62,8 @@ import com.mytian.lb.mview.BottomView;
 import com.mytian.lb.mview.ClipRevealFrame;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
 import com.nineoldandroids.animation.ValueAnimator;
+import com.rey.material.widget.RadioButton;
+import android.widget.CompoundButton;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.io.File;
@@ -93,12 +93,9 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
     @Bind(R.id.change_bt)
     Button change_bt;
     @Bind(R.id.woman_bt)
-    Button woman_bt;
+    RadioButton woman_bt;
     @Bind(R.id.man_bt)
-    Button man_bt;
-
-    @Bind(R.id.gender_layout)
-    RelativeLayout gender_layout;
+    RadioButton man_bt;
 
     @BindColor(R.color.theme)
     int accentColor;
@@ -224,24 +221,32 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         isSettingShow = false;
         isOpenUser = false;
         birthdayDate = Calendar.getInstance();
+        CompoundButton.OnCheckedChangeListener listener = new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    woman_bt.setChecked(woman_bt == buttonView);
+                    man_bt.setChecked(man_bt == buttonView);
+                }
+            }
+        };
+
+        woman_bt.setOnCheckedChangeListener(listener);
+        man_bt.setOnCheckedChangeListener(listener);
         initListView();
         setUserInfo();
         user_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!isSettingShow) {
-                    toSysSettingActivity();
+                    settingAchor = view;
+                    toggleShowSetting(view);
                 } else {
                     selectPict();
                 }
             }
         });
         getListData(INIT_LIST);
-    }
-
-    private void toSysSettingActivity() {
-        Intent intent = new Intent(getActivity(), SysSettingActivity.class);
-        startActivity(intent);
     }
 
     private void setUserInfo() {
@@ -325,20 +330,13 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
             return;
         }
 
-        int sex = -1;
-        if (woman_bt.getVisibility() == View.VISIBLE && man_bt.getVisibility() == View.VISIBLE) {
-            sex = -1;
-        } else if (woman_bt.getVisibility() == View.VISIBLE) {
+        int sex = App.getInstance().userResult.getParent().getSex();
+        if (woman_bt.isChecked()) {
             sex = WomanOrManEnum.WOMAN.getCode();
-        } else if (man_bt.getVisibility() == View.VISIBLE) {
+        } else if (man_bt.isChecked()) {
             sex = WomanOrManEnum.MAN.getCode();
         }
 
-        if (sex == -1) {
-            CommonUtil.showToast("暂不在泰国上线.");
-            AnimationHelper.getInstance().viewAnimationQuiver(gender_layout);
-            return;
-        }
         user_gender = sex;
         dialogShow();
         UserManager manager = new UserManager();
@@ -356,36 +354,6 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
             param.setHeadThumb(pict);
         }
         manager.updateParent(mContext, param, activityHandler, UPDATE_PARENT);
-    }
-
-    @OnClick({R.id.gender_layout, R.id.woman_bt, R.id.man_bt})
-    void selectSex(View view) {
-        int id = view.getId();
-        if (id == R.id.gender_layout) {
-            showManOrWoman();
-        } else if (id == R.id.woman_bt) {
-            if (isManOrWomanVisib()) {
-                Animator revealAnim = createViewScale0(man_bt);
-                revealAnim.start();
-            } else {
-                showManOrWoman();
-            }
-        } else if (id == R.id.man_bt) {
-            if (isManOrWomanVisib()) {
-                Animator revealAnim = createViewScale0(woman_bt);
-                revealAnim.start();
-            } else {
-                showManOrWoman();
-            }
-        }
-    }
-
-    private void showManOrWoman() {
-        List<Animator> animList = new ArrayList<>();
-        animList.addAll(selectSexView(1));
-        AnimatorSet animSet = new AnimatorSet();
-        animSet.playSequentially(animList);
-        animSet.start();
     }
 
     /**
@@ -461,11 +429,11 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         int sex = App.getInstance().userResult.getParent().getSex();
 
         if (WomanOrManEnum.WOMAN.getCode() == sex) {
-            revealAnim = createViewScale1(woman_bt);
-            animList.add(revealAnim);
+            woman_bt.setChecked(true);
+            man_bt.setChecked(false);
         } else {
-            revealAnim = createViewScale1(man_bt);
-            animList.add(revealAnim);
+            man_bt.setChecked(true);
+            woman_bt.setChecked(false);
         }
 
         AnimatorSet animSet = new AnimatorSet();
@@ -491,52 +459,9 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         revealAnim = createViewScale0(change_bt);
         animList.add(revealAnim);
 
-        animList.addAll(selectSexView(0));
-
         AnimatorSet animSet = new AnimatorSet();
         animSet.playSequentially(animList);
         animSet.start();
-    }
-
-    /**
-     * 设置 性别选择按钮 显示 隐藏
-     * <p/>
-     *
-     * @param state state 0 = 隐藏 , 1 = 显示
-     * @return
-     */
-    private List<Animator> selectSexView(int state) {
-        List<Animator> animList = new ArrayList<>();
-        Animator revealAnim;
-        if (state == 0) {
-            if (woman_bt.getVisibility() == View.VISIBLE) {
-                revealAnim = createViewScale0(woman_bt);
-                animList.add(revealAnim);
-            }
-            if (man_bt.getVisibility() == View.VISIBLE) {
-                revealAnim = createViewScale0(man_bt);
-                animList.add(revealAnim);
-            }
-        } else if (state == 1) {
-            if (woman_bt.getVisibility() == View.INVISIBLE) {
-                revealAnim = createViewScale1(woman_bt);
-                animList.add(revealAnim);
-            }
-            if (man_bt.getVisibility() == View.INVISIBLE) {
-                revealAnim = createViewScale1(man_bt);
-                animList.add(revealAnim);
-            }
-        }
-        return animList;
-    }
-
-    /**
-     * 男女选择是否都已经显示
-     *
-     * @return
-     */
-    private boolean isManOrWomanVisib() {
-        return man_bt.getVisibility() == View.VISIBLE && woman_bt.getVisibility() == View.VISIBLE;
     }
 
     private Animator createViewScale1(final View view) {
@@ -667,9 +592,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
                 birthdayValue.setHint(birthday);
                 App.getInstance().userResult.getParent().setBirthday(birthdayDate.getTimeInMillis());
             }
-            if (user_gender != -1) {
-                App.getInstance().userResult.getParent().setSex(user_gender);
-            }
+            App.getInstance().userResult.getParent().setSex(user_gender);
         } else {
             isUpdateSuccess = 2;
         }
@@ -687,13 +610,13 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
                 for (FollowUser followUser : list) {
                     arrayList.put(followUser.getUid(), followUser);
                 }
-                mAdapter.refresh(arrayList);
             }
             if (size >= COUNT_MAX) {
                 currentPager++;
             } else {
                 listview.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
             }
+            mAdapter.refresh(arrayList);
         } else {
             //避免第一次应用启动时 创建fragment加载数据多次提示
         }

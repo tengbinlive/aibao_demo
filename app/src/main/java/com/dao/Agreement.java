@@ -9,7 +9,7 @@ public class Agreement {
     private Long id;
     private String title;
     private String appointId;
-    private Integer icon;
+    private String icon;
     private java.util.Date date;
 
     public Agreement() {
@@ -19,7 +19,7 @@ public class Agreement {
         this.id = id;
     }
 
-    public Agreement(Long id, String title, String appointId, Integer icon, java.util.Date date) {
+    public Agreement(Long id, String title, String appointId, String icon, java.util.Date date) {
         this.id = id;
         this.title = title;
         this.appointId = appointId;
@@ -51,11 +51,11 @@ public class Agreement {
         this.appointId = appointId;
     }
 
-    public Integer getIcon() {
+    public String getIcon() {
         return icon;
     }
 
-    public void setIcon(Integer icon) {
+    public void setIcon(String icon) {
         this.icon = icon;
     }
 
