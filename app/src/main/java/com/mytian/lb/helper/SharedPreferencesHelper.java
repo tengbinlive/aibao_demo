@@ -20,7 +20,7 @@ public final class SharedPreferencesHelper {
 		SharedPreferences sp = c.getSharedPreferences(Constant.SHARED_PREFERENCES_FILE_NAME, Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = sp.edit();
 		editor.putBoolean(key, content);
-		editor.commit();
+		editor.apply();
 	}
 
 	public static int getPreferInt(Context c, String key, int defValue) {
@@ -32,7 +32,7 @@ public final class SharedPreferencesHelper {
 		SharedPreferences sp = c.getSharedPreferences(Constant.SHARED_PREFERENCES_FILE_NAME, Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = sp.edit();
 		editor.putInt(key, content);
-		editor.commit();
+		editor.apply();
 	}
 
 	public static float getFloat(Context c, String key, float defValue) {
@@ -44,7 +44,7 @@ public final class SharedPreferencesHelper {
 		SharedPreferences sp = c.getSharedPreferences(Constant.SHARED_PREFERENCES_FILE_NAME, Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = sp.edit();
 		editor.putFloat(key, content);
-		editor.commit();
+		editor.apply();
 	}
 
 	public static long getLong(Context c, String key, long defValue) {
@@ -56,7 +56,7 @@ public final class SharedPreferencesHelper {
 		SharedPreferences sp = c.getSharedPreferences(Constant.SHARED_PREFERENCES_FILE_NAME, Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = sp.edit();
 		editor.putLong(key, content);
-		editor.commit();
+		editor.apply();
 	}
 
 	public static String getString(Context c, String key, String defValue) {
@@ -68,13 +68,13 @@ public final class SharedPreferencesHelper {
 		SharedPreferences sp = c.getSharedPreferences(Constant.SHARED_PREFERENCES_FILE_NAME, Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = sp.edit();
 		editor.putString(key, content);
-		editor.commit();
+		editor.apply();
 	}
 
 	public static void remove(Context c, String key) {
 		SharedPreferences sp = c.getSharedPreferences(Constant.SHARED_PREFERENCES_FILE_NAME, Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = sp.edit();
 		editor.remove(key);
-		editor.commit();
+		editor.apply();
 	}
 }

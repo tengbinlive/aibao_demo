@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.droidtitan.lintcleaner'
 
 android {
 
@@ -8,7 +9,7 @@ android {
     defaultConfig {
         applicationId "com.mytian.lb"
         minSdkVersion 15
-        targetSdkVersion 15
+        targetSdkVersion 22
         versionCode 19
         versionName "v1.2.9"
     }
@@ -51,12 +52,28 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
     }
+
+    lintOptions{
+        abortOnError false
+    }
+
 }
 
 repositories {
     flatDir {
         dirs 'libs' //this way we can find the .aar file in libs folder
     }
+}
+
+lintCleaner {
+    // Exclude specific files
+    exclude = ['com_crashlytics_export_strings.xml','config.xml']
+
+    // Ability to ignore all resource files. False by default.
+    ignoreResFiles = true
+
+    // Default path is build/outputs/lint-results.xml
+    lintXmlFilePath = 'path/to/lint-results.xml'
 }
 
 dependencies {

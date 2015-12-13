@@ -57,5 +57,8 @@
     <string name="man">男</string>
     <string name="select_user">请先选择用户</string>
     <string name="setting_sys">系统设置</string>
+    <string name="forgot_password">忘记密码？</string>
+    <string name="user_agreement">我已阅读并同意《用户使用协议》</string>
+    <string name="save">保存</string>
 
 </resources>

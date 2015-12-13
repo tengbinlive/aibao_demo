@@ -48,10 +48,6 @@ public class AuthClipPictureActivity extends AbsActivity implements OnTouchListe
      */
     private LinearLayout saveLayout;
     /**
-     * 返回
-     */
-    private LinearLayout layout_finish;
-    /**
      * 取消
      */
     private LinearLayout line_cancle;
@@ -124,10 +120,8 @@ public class AuthClipPictureActivity extends AbsActivity implements OnTouchListe
                 initClipView(srcPic.getTop(), bitmap);
             }
         });
-        layout_finish = (LinearLayout) this.findViewById(R.id.line_cancle);
         saveLayout = (LinearLayout) this.findViewById(R.id.sure);
         line_cancle = (LinearLayout) this.findViewById(R.id.line_cancle);
-        layout_finish.setOnClickListener(this);
         line_cancle.setOnClickListener(this);
         saveLayout.setOnClickListener(this);
         File f = new File(mFilePath);
@@ -242,6 +236,7 @@ public class AuthClipPictureActivity extends AbsActivity implements OnTouchListe
                 LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
     }
 
+    @Override
     public boolean onTouch(View v, MotionEvent event) {
         ImageView view = (ImageView) v;
         switch (event.getAction() & MotionEvent.ACTION_MASK) {

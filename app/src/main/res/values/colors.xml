@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="theme_bg">#808080</color>
+
     <color name="theme_bg_layout">#dedede</color>
     <color name="white">#FFFFFFFF</color>
     <color name="white_item">#fafafa</color>

@@ -124,7 +124,7 @@
             android:layout_gravity="right"
             android:layout_height="@dimen/button_height"
             android:background="@color/transparent"
-            android:text="忘记密码？"
+            android:text="@string/forgot_password"
             android:textColor="@color/gray"
             android:textSize="@dimen/font_btn" />
 

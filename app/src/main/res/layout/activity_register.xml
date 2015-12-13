@@ -143,7 +143,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="25dp"
             android:padding="@dimen/content_gap_small"
-            android:text="我已阅读并同意《用户使用协议》"
+            android:text="@string/user_agreement"
             android:textColor="@color/textcolor_222"
             android:textSize="@dimen/font_small"
             android:checked="false"

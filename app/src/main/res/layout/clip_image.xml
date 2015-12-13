@@ -7,7 +7,7 @@
 
     <ImageView
             android:id="@+id/src_pic"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="0dip"
             android:layout_weight="0.86"
             android:scaleType="centerInside"/>
@@ -32,7 +32,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="取消"
+                    android:text="@string/cancel"
                     android:textColor="#ffffff"
                     android:textSize="15sp"/>
         </LinearLayout>
@@ -41,12 +41,7 @@
                 android:layout_width="2dip"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal"
-                android:background="#ffffff"/>
-
-        <LinearLayout
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:gravity="center"/>
+                android:background="@color/theme"/>
 
         <LinearLayout
                 android:id="@+id/sure"
@@ -60,7 +55,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="保存"
+                    android:text="@string/save"
                     android:textColor="#ffffff"
                     android:textSize="15sp"/>
         </LinearLayout>

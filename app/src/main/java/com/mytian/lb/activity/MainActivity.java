@@ -60,9 +60,9 @@ public class MainActivity extends AbsActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if(UserFragment.isSettingShow) {
+            if (UserFragment.isSettingShow) {
                 toggleSetting();
-            }else{
+            } else {
                 doubleTouchToExit();
             }
             return true;
@@ -163,7 +163,7 @@ public class MainActivity extends AbsActivity {
     private void actionbarIcon(final int position) {
         if (position == USER) {
             setToolbarRight(R.mipmap.icon_settings);
-            setToolbarRightVisbility( View.VISIBLE);
+            setToolbarRightVisbility(View.VISIBLE);
             setToolbarRightOnClick(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -172,7 +172,7 @@ public class MainActivity extends AbsActivity {
             });
         } else if (position == AGREEMENT || position == HABIT) {
             setToolbarRight(R.mipmap.icon_friendslist);
-            setToolbarRightVisbility( View.VISIBLE);
+            setToolbarRightVisbility(View.VISIBLE);
             setToolbarRightOnClick(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -198,7 +198,7 @@ public class MainActivity extends AbsActivity {
         startActivity(intent);
     }
 
-    private void toggleSetting(){
+    private void toggleSetting() {
         if (null == settingEventType) {
             View settingView = getToolbar().findViewById(R.id.toolbar_right_tv);
             settingEventType = new SettingEventType(settingView);

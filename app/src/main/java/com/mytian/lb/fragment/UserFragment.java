@@ -31,7 +31,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.core.CommonResponse;
-import com.core.util.BitmapUtils;
 import com.core.util.CommonUtil;
 import com.core.util.DateUtil;
 import com.core.util.FileDataHelper;
@@ -56,6 +55,7 @@ import com.mytian.lb.event.PushUserEventType;
 import com.mytian.lb.event.SettingEventType;
 import com.mytian.lb.helper.AnimationHelper;
 import com.mytian.lb.helper.AnimatorUtils;
+import com.mytian.lb.helper.Utils;
 import com.mytian.lb.manager.FollowManager;
 import com.mytian.lb.manager.UserManager;
 import com.mytian.lb.mview.BottomView;
@@ -349,8 +349,8 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
             param.setBirthday(birthdayDate.getTimeInMillis());
         }
         if (null != headIcon) {
-            byte[] bmData = BitmapUtils.Bitmap2Bytes(headIcon);
-            String pict = BitmapUtils.byte2hex(bmData);
+            byte[] bmData = Utils.Bitmap2Bytes(headIcon);
+            String pict = Utils.byte2hex(bmData);
             param.setHeadThumb(pict);
         }
         manager.updateParent(mContext, param, activityHandler, UPDATE_PARENT);
@@ -593,8 +593,6 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
                 App.getInstance().userResult.getParent().setBirthday(birthdayDate.getTimeInMillis());
             }
             App.getInstance().userResult.getParent().setSex(user_gender);
-        } else {
-            isUpdateSuccess = 2;
         }
     }
 
@@ -703,6 +701,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
                     String headPaht = data.getStringExtra(STR_PATH);
                     headIcon = BitmapFactory.decodeFile(headPaht);
                     user_icon.setImageBitmap(headIcon);
+                    isUpdateSuccess = 2;
                 }
             }
         }
