@@ -43,5 +43,15 @@
         android:textColor="@color/white"
         android:textSize="@dimen/font_btn" />
 
+    <Button
+        android:id="@+id/api_state"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:layout_margin="@dimen/content_gap_big"
+        android:background="@drawable/button_bg_theme"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        android:textSize="@dimen/font_btn" />
+
 </LinearLayout>
 

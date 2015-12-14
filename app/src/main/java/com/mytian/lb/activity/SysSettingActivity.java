@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.core.openapi.OpenApi;
 import com.core.util.CommonUtil;
 import com.core.util.StringUtil;
 import com.gitonway.lee.niftymodaldialogeffects.Effectstype;
@@ -27,6 +28,8 @@ public class SysSettingActivity extends AbsActivity {
 
     @Bind(R.id.update_bt)
     Button updateBt;
+    @Bind(R.id.api_state)
+    Button apiState;
 
     private AppVersion firAppVersion;
 
@@ -34,7 +37,25 @@ public class SysSettingActivity extends AbsActivity {
     public void EInit() {
         super.EInit();
         updateBt.setText("当前版本 ：" + App.getInstance().getAppVersionName());
+        initApiState();
         updateDetect();
+    }
+
+    private void initApiState(){
+        if(Constant.DEBUG){
+            apiState.setVisibility(View.VISIBLE);
+        }else{
+            apiState.setVisibility(View.GONE);
+        }
+        setApiState(OpenApi.isDEBUG());
+    }
+
+    private void setApiState(boolean state){
+        if(state){
+            apiState.setText("API：test ,ip：10.0.1.15");
+        }else{
+            apiState.setText("API：official ,ip：114.215.108.49");
+        }
     }
 
     @Override
@@ -50,6 +71,15 @@ public class SysSettingActivity extends AbsActivity {
     @OnClick(R.id.exit_bt)
     void exitAccount() {
         App.getInstance().changeAccount(true);
+    }
+
+    @OnClick(R.id.api_state)
+    void apistate() {
+         if(Constant.DEBUG){
+             boolean state = OpenApi.isDEBUG();
+             OpenApi.init(!state); // 设置OpenAPI的调试状态
+             setApiState(OpenApi.isDEBUG());
+         }
     }
 
     @OnClick(R.id.reset_password_bt)

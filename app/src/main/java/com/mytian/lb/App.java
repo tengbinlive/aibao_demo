@@ -189,7 +189,6 @@ public class App extends Application {
 
         // 多进程情况只初始化一次
         if (ProcessUtil.isCurMainProcess(getApplicationContext())) {
-
             FIR.init(getApplicationContext());
             Glide.get(this).register(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory(new OkHttpClient()));
             //初始化自定义Activity管理器
@@ -214,11 +213,14 @@ public class App extends Application {
             //注册网络状态监听广播
             newConnectionReceiver();
 
-            // 初始化OpenAPI
-            OpenApi.init(Constant.DEBUG); // 设置OpenAPI的调试状态和App的Contant同步
-
             //本地数据库
             initDAOData();
+
+            if(Constant.DEBUG) {
+                boolean API_STATE = SharedPreferencesHelper.getBoolean(this, "API_STATE", false);
+                // 初始化OpenAPI
+                OpenApi.init(API_STATE); // 设置OpenAPI的调试状态
+            }
         }
     }
 

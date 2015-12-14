@@ -14,7 +14,7 @@ public class OpenApi {
 	public final static String URL_TYPE_DATA = "URL_TYPE_DATA";
 
 	/** 调试环境OpenAPI地址 */
-	private static final String DEBUG_API_PATH = "http://114.215.108.49/";
+	private static final String DEBUG_API_PATH = "http://10.0.1.15/";
 
 	/** 正式环境OpenAPI地址 */
 	private static final String PROD_API_PATH = "http://114.215.108.49/";
@@ -26,6 +26,10 @@ public class OpenApi {
 	public static final String FORMAT_JSON = "openapi_json";
 
 	public static final String FORMAT_XML = "openapi_xml";
+
+	public static boolean isDEBUG() {
+		return DEBUG;
+	}
 
 	/**
 	 * 初始化OpenAPI
