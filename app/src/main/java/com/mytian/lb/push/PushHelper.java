@@ -99,6 +99,10 @@ public class PushHelper {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case STATE_UPDATE:
+                    if (App.getInstance().userResult != null) {
+                        sendPushState(STATE_UPDATE_NO);
+                        return;
+                    }
                     manager.updateChannelId(mContext, bindResult.getChannelId(), activityHandler, STATE_UPDATE_RE);
                     break;
                 case STATE_UPDATE_RE:
