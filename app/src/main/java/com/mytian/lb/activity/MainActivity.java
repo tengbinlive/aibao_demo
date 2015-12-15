@@ -21,7 +21,6 @@ import com.mytian.lb.event.SettingEventType;
 import com.mytian.lb.fragment.AgreementFragment;
 import com.mytian.lb.fragment.DtnameicFragment;
 import com.mytian.lb.fragment.HabitFragment;
-import com.mytian.lb.fragment.KindleFragment;
 import com.mytian.lb.fragment.UserFragment;
 import com.mytian.lb.push.PushHelper;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
@@ -37,8 +36,7 @@ public class MainActivity extends AbsActivity {
     public final static int DYNAMIC = 0;
     public final static int AGREEMENT = DYNAMIC + 1;
     public final static int HABIT = AGREEMENT + 1;
-    public final static int KINDLE = HABIT + 1;
-    public final static int USER = KINDLE + 1;
+    public final static int USER = HABIT + 1;
 
     @Bind(R.id.view_pager)
     ViewPager viewPager;
@@ -108,7 +106,6 @@ public class MainActivity extends AbsActivity {
         fragments.add(new DtnameicFragment());
         fragments.add(new AgreementFragment());
         fragments.add(new HabitFragment());
-        fragments.add(new KindleFragment());
         fragments.add(new UserFragment());
         MainViewPagerAdapter adapter = new MainViewPagerAdapter(getSupportFragmentManager(), fragments);
         viewPager.setAdapter(adapter);
@@ -125,9 +122,6 @@ public class MainActivity extends AbsActivity {
                         break;
                     case HABIT:
                         setIconInfo(custom_ly, BottomMenu.HABIT);
-                        break;
-                    case KINDLE:
-                        setIconInfo(custom_ly, BottomMenu.KINDLE);
                         break;
                     case USER:
                         setIconInfo(custom_ly, BottomMenu.USER);
