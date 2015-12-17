@@ -43,12 +43,13 @@
             android:padding="@dimen/content_gap"
             android:layout_height="wrap_content">
 
-            <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            <com.makeramen.roundedimageview.RoundedImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/head"
                 android:layout_width="@dimen/item_head_size_small"
                 android:layout_height="@dimen/item_head_size_small"
                 app:riv_border_width="0dip"
-                app:riv_corner_radius="30dip"
+                app:riv_corner_radius="@dimen/corner_radius"
                 android:layout_marginRight="@dimen/content_gap"
                 app:riv_mutate_background="true"
                 app:riv_oval="false"

@@ -2,7 +2,6 @@ package com.mytian.lb.push;
 
 import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
@@ -13,15 +12,17 @@ import com.baidu.android.pushservice.PushManager;
 import com.core.CommonResponse;
 import com.core.util.StringUtil;
 import com.mytian.lb.App;
-import com.mytian.lb.R;
 import com.mytian.lb.bean.push.PushOnBindResult;
+import com.mytian.lb.helper.SharedPreferencesHelper;
 import com.mytian.lb.manager.PushMManager;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 
 /**
  * Created by Administrator on 2015/10/30.
  */
+
 public class PushHelper {
 
     private static PushHelper instance;
@@ -33,17 +34,21 @@ public class PushHelper {
         return instance;
     }
 
-    public final static int STATE_DEF = 0;//初始 默认
-    public final static int STATE_NO = STATE_DEF + 1;//不可用
-    public final static int STATE_YES = STATE_NO + 1;//可用
-    public final static int STATE_UPDATE = STATE_YES + 1;//上传id 上传 用于延迟
-    public final static int STATE_UPDATE_RE = STATE_UPDATE + 1;//上传id 返回数据
-    public final static int STATE_UPDATE_NO = STATE_UPDATE_RE + 1;//上传id 上传失败
-    public final static int STATE_UPDATE_YES = STATE_UPDATE_NO + 1;//上传id 上传成功
+    public final static int LOAD_DATA = 0;//上传id 上传成功
+    public final static int STATE_ONBIND_NO = LOAD_DATA + 1;//未绑定
+    public final static int STATE_ONBIND_FAILURE = STATE_ONBIND_NO + 1;//绑定失败
+    public final static int STATE_UPLOAD_ID_NO = STATE_ONBIND_FAILURE + 1;//未上传
+    public final static int STATE_UPLOAD_ID_FAILURE = STATE_UPLOAD_ID_NO + 1;//上传id 失败
+    public final static int STATE_NORMAL = STATE_UPLOAD_ID_FAILURE + 1;//
+
 
     private final static String APP_KEY = "XqXiOUPbeYEAGaOz1IfDIpKK";//test:PSszk83CkivESkUMxWAegvKZ //XqXiOUPbeYEAGaOz1IfDIpKK
 
-    public int pushState = STATE_NO;
+    public static final String CHANNEL_STATE = "CHANNEL_STATE";
+
+    public int pushState = STATE_ONBIND_NO;
+
+    public boolean UPLOAD_ID_SUCCESS;
 
     private PushMManager manager = new PushMManager();
 
@@ -51,62 +56,75 @@ public class PushHelper {
 
     private PushOnBindResult bindResult;
 
-    private long delayedTime = 5 * 60 * 1000;
+    private long delayedTime = 60 * 1000;
 
     public void initPush(Context context) {
         if (mContext == null) {
             mContext = context;
         }
-        if (STATE_UPDATE_NO == pushState) {
-            sendPushState(STATE_UPDATE);
-        } else if (STATE_NO == pushState) {
-            pushState =STATE_DEF;
-            PushManager.startWork(context, PushConstants.LOGIN_TYPE_API_KEY, APP_KEY);
-            ArrayList<String> tags = new ArrayList<>();
-            tags.add("parent");
-            PushManager.setTags(mContext,tags);
-        }
+        sendPushState(pushState);
+    }
+
+    private void onBind() {
+        PushManager.startWork(mContext, PushConstants.LOGIN_TYPE_API_KEY, APP_KEY);
+        ArrayList<String> tags = new ArrayList<>();
+        tags.add("parent");
+        PushManager.setTags(mContext, tags);
     }
 
     /**
      * 绑定推送成功数据设置
+     *
      * @param bindResult
      */
     public void updateChannelid(PushOnBindResult bindResult) {
-        if (this.bindResult == null) {
+        if (bindResult == null && StringUtil.isNotBlank(bindResult.getChannelId())) {
             this.bindResult = bindResult;
-            if(StringUtil.isNotBlank(bindResult.getChannelId())) {
-                pushState = PushHelper.STATE_YES;
-                activityHandler.sendEmptyMessage(STATE_UPDATE);
-            }
+            sendPushState(STATE_UPLOAD_ID_NO);
+            return;
         }
+        sendPushState(STATE_ONBIND_FAILURE);
     }
 
-    private void sendPushState(int state) {
+    public void sendPushState(int state) {
         pushState = state;
-        if (state == STATE_UPDATE_NO) {//上传id失败 再次上传
-            if (App.isNetworkAvailable()) {
-                activityHandler.sendEmptyMessageDelayed(STATE_UPDATE, delayedTime);
+        if (!App.isNetworkAvailable()) {
+            return;
+        }
+        if (state == STATE_ONBIND_NO) {
+            activityHandler.sendEmptyMessage(STATE_ONBIND_NO);
+        } else if (state == STATE_ONBIND_FAILURE) {//绑定失败 1分钟后再次绑定
+            activityHandler.sendEmptyMessageDelayed(STATE_ONBIND_NO, delayedTime);
+        } else if (state == STATE_UPLOAD_ID_NO) {
+            if (UPLOAD_ID_SUCCESS) {
+                pushState = STATE_NORMAL;
+                return;
             }
-        }else if (state == STATE_UPDATE) {//首次id上传
-            if (App.isNetworkAvailable()) {
-                activityHandler.sendEmptyMessage(STATE_UPDATE);
+            activityHandler.sendEmptyMessage(STATE_UPLOAD_ID_NO);
+        } else if (state == STATE_UPLOAD_ID_FAILURE) {//上传失败 1分钟后再次上传
+            if (UPLOAD_ID_SUCCESS) {
+                pushState = STATE_NORMAL;
+                return;
             }
+            activityHandler.sendEmptyMessageDelayed(STATE_UPLOAD_ID_NO, delayedTime);
         }
     }
 
     private Handler activityHandler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                case STATE_UPDATE:
-                    if (App.getInstance().userResult != null) {
-                        sendPushState(STATE_UPDATE_NO);
+                case STATE_UPLOAD_ID_NO:
+                    if (App.getInstance().userResult.getParent() == null) {
+                        sendPushState(STATE_UPLOAD_ID_FAILURE);
                         return;
                     }
-                    manager.updateChannelId(mContext, bindResult.getChannelId(), activityHandler, STATE_UPDATE_RE);
+                    manager.updateChannelId(mContext, bindResult.getChannelId(), activityHandler, LOAD_DATA);
                     break;
-                case STATE_UPDATE_RE:
+                case LOAD_DATA:
                     loadData((CommonResponse) msg.obj);
+                    break;
+                case STATE_ONBIND_NO:
+                    onBind();
                     break;
                 default:
                     break;
@@ -116,17 +134,21 @@ public class PushHelper {
 
     /**
      * 上传channelid返回结果
+     *
      * @param resposne
      */
     private void loadData(CommonResponse resposne) {
         if (resposne.isSuccess()) {
-            pushState = STATE_UPDATE_YES;
+            Logger.d("上传成功");
+            UPLOAD_ID_SUCCESS = true;
+            pushState = STATE_NORMAL;
+            SharedPreferencesHelper.setBoolean(mContext, CHANNEL_STATE, UPLOAD_ID_SUCCESS);
         } else {
-            sendPushState(STATE_UPDATE_NO);
+            sendPushState(STATE_UPLOAD_ID_FAILURE);
         }
     }
 
-    public void setNotification(String content){
+    public void setNotification(String content) {
         String ns = Context.NOTIFICATION_SERVICE;
         CharSequence tickerText = "aibao..";
         CharSequence contentTitle = "aibao..";

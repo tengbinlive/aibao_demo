@@ -28,7 +28,7 @@ public class DtnameicFragment extends AbsFragment {
     private ListView mActualListView;
     private DynamicAdapter mAdapter;
 
-    private ArrayList<DynamicResult> arrayList = new ArrayList<>();
+    private ArrayList<DynamicResult> arrayList;
 
     private void initListView() {
 
@@ -64,7 +64,7 @@ public class DtnameicFragment extends AbsFragment {
 
     private void getListData() {
         int startIndex = arrayList == null || arrayList.size() <= 0 ? 0 : arrayList.size();
-        activityHandler.sendEmptyMessageDelayed(INIT_LIST, 2500);
+        activityHandler.sendEmptyMessageDelayed(INIT_LIST, 1000);
     }
 
     @Override
@@ -80,9 +80,7 @@ public class DtnameicFragment extends AbsFragment {
     @Override
     public void EInit() {
         initListView();
-        arrayList = null;
-        loadData(null, 0);
-//        getListData();
+        getListData();
     }
 
     private static final int INIT_LIST = 0x01;//初始化数据处理
@@ -104,7 +102,6 @@ public class DtnameicFragment extends AbsFragment {
 
     private void loadData(CommonResponse resposne, int what) {
         dialogDismiss();
-        if (true) {
             if (arrayList == null) {
                 arrayList = new ArrayList<>();
                 DynamicResult result = new DynamicResult();
@@ -194,9 +191,6 @@ public class DtnameicFragment extends AbsFragment {
                 arrayList.add(result);
             }
             mAdapter.refresh(arrayList);
-        } else {
-            //避免第一次应用启动时 创建fragment加载数据多次提示
-        }
         listview.onRefreshComplete();
     }
 

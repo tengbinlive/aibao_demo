@@ -366,8 +366,8 @@ public class AgreementFragment extends AbsFragment {
 
     private void loadAgreementCancle(CommonResponse resposne) {
         dialogDismiss();
+        sendCount = 0;
         if (resposne.isSuccess()) {
-            sendCount = 0;
             if (isSettingShow) {
                 toggleShowSetting(tempClip);
             }

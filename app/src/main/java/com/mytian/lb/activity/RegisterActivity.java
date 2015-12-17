@@ -11,6 +11,8 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.dao.Parent;
+import com.dao.ParentDao;
 import com.gitonway.lee.niftymodaldialogeffects.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.NiftyDialogBuilder;
 import com.mytian.lb.AbsActivity;
@@ -126,15 +128,15 @@ public class RegisterActivity extends AbsActivity {
 
     private void loadLogin(CommonResponse resposne) {
         if (resposne.isSuccess()) {
-            SharedPreferencesHelper.setString(this, Constant.LoginUser.SHARED_PREFERENCES_PHONE, phone);
-            SharedPreferencesHelper.setString(this, Constant.LoginUser.SHARED_PREFERENCES_PASSWORD, password);
             App.getInstance().userResult = (UserResult) resposne.getData();
+            ParentDao dao = App.getDaoSession().getParentDao();
+            dao.deleteAll();
+            dao.insertInTx(App.getInstance().userResult.getParent());
             toMainActivity();
         } else {
             CommonUtil.showToast(resposne.getMsg());
             Intent intent = new Intent(this, LoginActivity.class);
             intent.putExtra("animation_type", AnimatedRectLayout.ANIMATION_WAVE_TR);
-            intent.putExtra("login", false);
             startActivity(intent);
             overridePendingTransition(0, 0);
         }

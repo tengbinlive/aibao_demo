@@ -35,6 +35,8 @@ import com.core.util.CommonUtil;
 import com.core.util.DateUtil;
 import com.core.util.FileDataHelper;
 import com.core.util.StringUtil;
+import com.dao.Parent;
+import com.dao.ParentDao;
 import com.handmark.pulltorefresh.PullToRefreshBase;
 import com.handmark.pulltorefresh.PullToRefreshListView;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -250,10 +252,8 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
     }
 
     private void setUserInfo() {
-        if (App.getInstance().userResult == null) {
-            return;
-        }
-        String name = App.getInstance().userResult.getParent().getAlias();
+        Parent parent = App.getInstance().userResult.getParent();
+        String name = parent.getAlias();
         boolean isName = StringUtil.isBlank(name);
         if (isName) {
             nameValue.setHint("请输入您的昵称");
@@ -261,13 +261,13 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
             nameValue.setHint(name);
         }
         name = !isName ? name : "你猜.";
-        String phone = App.getInstance().userResult.getParent().getPhone();
+        String phone = parent.getPhone();
         phone = StringUtil.isNotBlank(phone) ? phone : "...";
-        String head = App.getInstance().userResult.getParent().getHeadThumb();
+        String head = parent.getHeadThumb();
         user_name.setText(name);
         user_phone.setText(phone);
         phoneValue.setText(phone);
-        long bir = App.getInstance().userResult.getParent().getBirthday();
+        long bir = parent.getBirthday();
         if (bir > 0) {
             String birthday = DateUtil.ConverToString(bir, DateUtil.YYYY_MM_DD);
             birthdayValue.setHint(birthday);
@@ -371,7 +371,6 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
             isSettingShow = true;
             showMenu(x, y, radiusOf, radiusFromToRoot);
         } else {
-            resetData();
             isSettingShow = false;
             hideMenu(x, y, radiusFromToRoot, radiusOf);
         }
@@ -451,6 +450,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
+                resetData();
                 layoutSetting.setVisibility(View.INVISIBLE);
             }
         });
@@ -593,6 +593,9 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
                 App.getInstance().userResult.getParent().setBirthday(birthdayDate.getTimeInMillis());
             }
             App.getInstance().userResult.getParent().setSex(user_gender);
+            ParentDao dao = App.getDaoSession().getParentDao();
+            dao.deleteAll();
+            dao.insertInTx(App.getInstance().userResult.getParent());
         }
     }
 

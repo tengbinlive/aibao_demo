@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -260,6 +261,15 @@ public abstract class AbsActivity extends SwipeBackActivity implements EInitDate
                 .isCancelableOnTouchOutside(false) // def | isCancelable(true)
                 .withEffect(Effectstype.Fadein) // def Effectstype.Slidetop
                 .setCustomView(convertView, this); // .setCustomView(View
+        dialogBuilder.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialogInterface, int keyCode, KeyEvent keyEvent) {
+                if (keyCode == KeyEvent.KEYCODE_BACK && keyEvent.getRepeatCount() == 0) {
+                    return true;
+                }
+                return false;
+            }
+        });
         activityHandler.sendEmptyMessage(DIALOGSHOW);
 
     }
@@ -273,6 +283,15 @@ public abstract class AbsActivity extends SwipeBackActivity implements EInitDate
         if (null != listener) {
             dialogBuilder.setOnCancelListener(listener);
         }
+        dialogBuilder.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialogInterface, int keyCode, KeyEvent keyEvent) {
+                if (keyCode == KeyEvent.KEYCODE_BACK && keyEvent.getRepeatCount() == 0) {
+                    return true;
+                }
+                return false;
+            }
+        });
         dialogBuilder.withDuration(700) // def
                 .isCancelableOnTouchOutside(false) // def | isCancelable(true)
                 .withEffect(Effectstype.Fadein) // def Effectstype.Slidetop
@@ -322,7 +341,6 @@ public abstract class AbsActivity extends SwipeBackActivity implements EInitDate
         super.onBackPressed();
         App.getInstance().activityManager.popActivity(this);
     }
-
 
     private final static int DIALOGSHOW = 1;
     private final static int DIALOGDISMISS = 0;

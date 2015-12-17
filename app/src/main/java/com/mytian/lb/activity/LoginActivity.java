@@ -1,12 +1,14 @@
 package com.mytian.lb.activity;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -17,6 +19,9 @@ import android.widget.TextView;
 import com.core.CommonResponse;
 import com.core.util.CommonUtil;
 import com.core.util.StringUtil;
+import com.dao.AgreementDao;
+import com.dao.Parent;
+import com.dao.ParentDao;
 import com.gitonway.lee.niftymodaldialogeffects.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.NiftyDialogBuilder;
 import com.mytian.lb.App;
@@ -49,8 +54,6 @@ public class LoginActivity extends AnimatedRectActivity {
 
     private String phone;
     private String password;
-
-    private boolean isLogin;
 
     @Override
     public int getContentView() {
@@ -104,7 +107,6 @@ public class LoginActivity extends AnimatedRectActivity {
     }
 
     private void toMain() {
-        dialogDismiss();
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
@@ -113,18 +115,14 @@ public class LoginActivity extends AnimatedRectActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        isLogin = getIntent().getBooleanExtra("login", true);
         mInflater = LayoutInflater.from(this);
         ButterKnife.bind(this);
         setStatusBar();
-        String phone = SharedPreferencesHelper.getString(this, Constant.LoginUser.SHARED_PREFERENCES_PHONE, "");
-        String password = SharedPreferencesHelper.getString(this, Constant.LoginUser.SHARED_PREFERENCES_PASSWORD, "");
-        phoneEt.setText(phone);
-        passwordEt.setText(password);
-        if (StringUtil.isNotBlank(phone) && StringUtil.isNotBlank(password)) {
-            phoneEt.setSelection(phone.length());
-            if (isLogin) {
-                login();
+        if(App.getInstance().userResult.getParent()!=null) {
+            String phone = App.getInstance().userResult.getParent().getPhone();
+            if (StringUtil.isNotBlank(phone)) {
+                phoneEt.setText(phone);
+                phoneEt.setSelection(phone.length());
             }
         }
     }
@@ -157,6 +155,15 @@ public class LoginActivity extends AnimatedRectActivity {
         TextView dialog_confirm_content = (TextView) convertView.findViewById(R.id.dialog_confirm_content);
         dialog_confirm_content.setText(title);
         dialogBuilder = NiftyDialogBuilder.getInstance(this);
+        dialogBuilder.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialogInterface, int keyCode, KeyEvent keyEvent) {
+                if (keyCode == KeyEvent.KEYCODE_BACK && keyEvent.getRepeatCount() == 0) {
+                    return true;
+                }
+                return false;
+            }
+        });
         dialogBuilder.withDuration(700) // def
                 .isCancelableOnTouchOutside(false) // def | isCancelable(true)
                 .withEffect(Effectstype.Fadein) // def Effectstype.Slidetop
@@ -174,10 +181,10 @@ public class LoginActivity extends AnimatedRectActivity {
     private void loadLogin(CommonResponse resposne) {
         dialogDismiss();
         if (resposne.isSuccess()) {
-            SharedPreferencesHelper.setString(this, Constant.LoginUser.SHARED_PREFERENCES_PHONE, phone);
-            SharedPreferencesHelper.setString(this, Constant.LoginUser.SHARED_PREFERENCES_PASSWORD, password);
             App.getInstance().userResult = (UserResult) resposne.getData();
-            App.getInstance().userResult.getParent().setPhone(phone);
+            ParentDao dao = App.getDaoSession().getParentDao();
+            dao.deleteAll();
+            dao.insertInTx(App.getInstance().userResult.getParent());
             toMain();
         } else {
             CommonUtil.showToast(resposne.getMsg());

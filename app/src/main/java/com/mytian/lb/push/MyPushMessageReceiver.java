@@ -7,7 +7,6 @@ import com.alibaba.fastjson.JSON;
 import com.baidu.android.pushservice.PushMessageReceiver;
 import com.core.util.StringUtil;
 import com.mytian.lb.App;
-import com.mytian.lb.Constant;
 import com.mytian.lb.bean.follow.FollowUser;
 import com.mytian.lb.bean.push.PushOnBindResult;
 import com.mytian.lb.bean.push.PushResult;
@@ -85,7 +84,7 @@ public class MyPushMessageReceiver extends PushMessageReceiver {
             bindResult.setRequestId(requestId);
             PushHelper.getInstance().updateChannelid(bindResult);
         } else {
-            PushHelper.getInstance().pushState = PushHelper.STATE_NO;
+            PushHelper.getInstance().sendPushState(PushHelper.STATE_ONBIND_FAILURE);
         }
     }
 
@@ -276,17 +275,18 @@ public class MyPushMessageReceiver extends PushMessageReceiver {
             } else if (PushCode.FOLLOW_ONLINE.equals(result.getCmd()) || PushCode.FOLLOW_OFFLINE.equals(result.getCmd())) {
                 String info = result.getInfo();
                 String babyUid = "";
-                String is_online = PushCode.FOLLOW_ONLINE.equals(result.getCmd())?FollowUser.ONLINE:FollowUser.OFFLINE;
+                String is_online = PushCode.FOLLOW_ONLINE.equals(result.getCmd()) ? FollowUser.ONLINE : FollowUser.OFFLINE;
                 try {
                     JSONObject jsonObject = new JSONObject(info);
                     babyUid = jsonObject.optString("babyUid");
                 } catch (JSONException e) {
                 }
                 if (StringUtil.isNotBlank(babyUid)) {
-                    EventBus.getDefault().postSticky(new PushStateEventType(babyUid,is_online));
+                    EventBus.getDefault().postSticky(new PushStateEventType(babyUid, is_online));
                 }
-                if(Constant.DEBUG){
-                    PushHelper.getInstance().setNotification("uid:"+babyUid+ "\nstate:"+is_online);
+                String des = result.getDescription();
+                if (StringUtil.isNotBlank(des)) {
+                    PushHelper.getInstance().setNotification(result.getDescription());
                 }
             }
         }

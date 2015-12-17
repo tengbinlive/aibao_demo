@@ -84,7 +84,6 @@ public class MainActivity extends AbsActivity {
 
     @Override
     public void EInit() {
-        PushHelper.getInstance().initPush(getApplicationContext());
         super.EInit();
         setSwipeBackEnable(false);
         init();

@@ -40,20 +40,4 @@ public class Constant {
 		public static final String CAMERA_TEMP = ROOT_DIR + "/images/camera_temp.jpg";
 	}
 
-	/**
-	 * 登陆信息
-	 */
-	public static class LoginUser{
-		/**
-		 * 手机号码
-		 */
-		public final static String SHARED_PREFERENCES_PHONE = "phone";
-
-		/**
-		 * 用户密码
-		 */
-		public final static String SHARED_PREFERENCES_PASSWORD= "password";
-
-	}
-
 }

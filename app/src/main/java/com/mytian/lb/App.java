@@ -21,6 +21,7 @@ import com.core.util.ProcessUtil;
 import com.dao.DaoMaster;
 import com.dao.DaoMaster.OpenHelper;
 import com.dao.DaoSession;
+import com.dao.ParentDao;
 import com.mytian.lb.activity.LoginActivity;
 import com.mytian.lb.activityexpand.activity.AnimatedRectLayout;
 import com.mytian.lb.bean.user.UserResult;
@@ -60,7 +61,7 @@ public class App extends Application {
 
     private BroadcastReceiver connectionReceiver;
 
-    public UserResult userResult;
+    public UserResult userResult = new UserResult();
 
     public String cookie;
 
@@ -194,6 +195,9 @@ public class App extends Application {
             //初始化自定义Activity管理器
             activityManager = ActivityManager.getScreenManager();
 
+            //加载百度 CHANNEL_ID 是否已经上传成功
+            PushHelper.getInstance().UPLOAD_ID_SUCCESS = SharedPreferencesHelper.getBoolean(this,PushHelper.CHANNEL_STATE,false);
+
             // 初始化日志类,如果不是调试状态则不输出日志
             Logger.init("bin.teng")               // default PRETTYLOGGER or use just init()
                     .setMethodCount(3)            // default 2
@@ -237,9 +241,7 @@ public class App extends Application {
             @Override
             public void onReceive(Context context, Intent intent) {
                 setCurrentNetworkStatus(NetworkUtil.getCurrentNextworkState(context));
-                if (App.getInstance().userResult != null) {
                     PushHelper.getInstance().initPush(getApplicationContext());
-                }
             }
         };
         IntentFilter intentFilter = new IntentFilter();
@@ -269,8 +271,8 @@ public class App extends Application {
      */
     public void changeAccount(boolean isCancle) {
         if (isCancle) {
-            SharedPreferencesHelper.setString(this, Constant.LoginUser.SHARED_PREFERENCES_PHONE, "");
-            SharedPreferencesHelper.setString(this, Constant.LoginUser.SHARED_PREFERENCES_PASSWORD, "");
+            ParentDao dao = getDaoSession().getParentDao();
+            dao.deleteAll();
         }
         Activity activity = activityManager.currentActivity();
         Intent intent = new Intent(activity, LoginActivity.class);
