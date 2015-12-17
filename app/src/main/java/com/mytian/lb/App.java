@@ -196,7 +196,7 @@ public class App extends Application {
             activityManager = ActivityManager.getScreenManager();
 
             //加载百度 CHANNEL_ID 是否已经上传成功
-            PushHelper.getInstance().UPLOAD_ID_SUCCESS = SharedPreferencesHelper.getBoolean(this,PushHelper.CHANNEL_STATE,false);
+            PushHelper.getInstance().UPLOAD_ID_SUCCESS = SharedPreferencesHelper.getBoolean(this, PushHelper.CHANNEL_STATE, false);
 
             // 初始化日志类,如果不是调试状态则不输出日志
             Logger.init("bin.teng")               // default PRETTYLOGGER or use just init()
@@ -220,7 +220,7 @@ public class App extends Application {
             //本地数据库
             initDAOData();
 
-            if(Constant.DEBUG) {
+            if (Constant.DEBUG) {
                 boolean API_STATE = SharedPreferencesHelper.getBoolean(this, "API_STATE", false);
                 // 初始化OpenAPI
                 OpenApi.init(API_STATE); // 设置OpenAPI的调试状态
@@ -228,7 +228,7 @@ public class App extends Application {
         }
     }
 
-    private void initDAOData(){
+    private void initDAOData() {
         // 系统配置业务.
         ConfigManager.init(this);
         //约定
@@ -241,7 +241,9 @@ public class App extends Application {
             @Override
             public void onReceive(Context context, Intent intent) {
                 setCurrentNetworkStatus(NetworkUtil.getCurrentNextworkState(context));
+                if (PushHelper.STATE_ONBIND_NO != PushHelper.getInstance().pushState) {
                     PushHelper.getInstance().initPush(getApplicationContext());
+                }
             }
         };
         IntentFilter intentFilter = new IntentFilter();

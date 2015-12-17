@@ -78,7 +78,7 @@ public class PushHelper {
      * @param bindResult
      */
     public void updateChannelid(PushOnBindResult bindResult) {
-        if (bindResult == null && StringUtil.isNotBlank(bindResult.getChannelId())) {
+        if (bindResult != null && StringUtil.isNotBlank(bindResult.getChannelId())) {
             this.bindResult = bindResult;
             sendPushState(STATE_UPLOAD_ID_NO);
             return;
