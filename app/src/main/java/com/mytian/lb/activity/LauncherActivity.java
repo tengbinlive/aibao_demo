@@ -8,11 +8,12 @@ import android.widget.LinearLayout;
 
 import com.dao.Parent;
 import com.dao.ParentDao;
+import com.igexin.sdk.PushManager;
+import com.igexin.sdk.Tag;
 import com.mytian.lb.AbsActivity;
 import com.mytian.lb.App;
 import com.mytian.lb.R;
 import com.mytian.lb.activityexpand.activity.AnimatedRectLayout;
-import com.mytian.lb.push.PushHelper;
 
 import java.util.List;
 
@@ -31,7 +32,12 @@ public class LauncherActivity extends AbsActivity {
 
     @Override
     public void EInit() {
-        PushHelper.getInstance().initPush(getApplicationContext());
+        PushManager.getInstance().initialize(this.getApplicationContext());
+        Tag[] tags = new Tag[1];
+        Tag tag = new Tag();
+        tag.setName("parent");
+        tags[0] = tag;
+        PushManager.getInstance().setTag(this,tags);
         super.EInit();
         setSwipeBackEnable(false);
         statue = App.isFirstLunch() ? TO_GUIDE : TO_LOGIN;

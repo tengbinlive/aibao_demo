@@ -43,7 +43,7 @@ import cdflynn.android.library.crossview.CrossView;
 
 public class AddFollowActivity extends AbsActivity {
 
-    @Bind(R.id.listview)
+    @Bind(R.id.listview_pr)
     PullToRefreshListView listview;
     @Bind(R.id.ll_listEmpty)
     LinearLayout llListEmpty;

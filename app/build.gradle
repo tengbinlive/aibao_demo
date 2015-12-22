@@ -8,10 +8,17 @@ android {
 
     defaultConfig {
         applicationId "com.mytian.lb"
+//        解决Android L上通知显示异常问题，targetSdkVersion需要设置成22
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 23
-        versionName "v1.3.3"
+        versionCode 26
+        versionName "v1.3.6"
+        manifestPlaceholders = [
+                GETUI_APP_ID    : "kvuUWGiv0c6sHXaYA8JzT7",
+                GETUI_APP_KEY   : "PO0la0IdOd8vTKnFl4Ftq2",
+                GETUI_APP_SECRET: "bGqQIpUdU69rpr74CTX3t2",
+                PACKAGE_NAME    : applicationId
+        ]
     }
 
     signingConfigs {
@@ -48,13 +55,20 @@ android {
         }
 
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
     }
 
-    lintOptions{
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+
+    lintOptions {
         abortOnError false
+        disable 'InvalidPackage'
     }
 
 }
@@ -67,7 +81,7 @@ repositories {
 
 lintCleaner {
     // Exclude specific files
-    exclude = ['com_crashlytics_export_strings.xml','config.xml']
+    exclude = ['com_crashlytics_export_strings.xml', 'config.xml']
 
     // Ability to ignore all resource files. False by default.
     ignoreResFiles = true
@@ -78,7 +92,6 @@ lintCleaner {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:22.1.1'
     compile 'de.greenrobot:eventbus:2.4.0'
     //事件派发
@@ -107,6 +120,11 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.6.1'
     compile 'com.github.bumptech.glide:okhttp-integration:1.3.1'
     compile 'com.nhaarman.listviewanimations:lib-core:3.1.0@aar'
+
+    //    个推
+    compile 'com.igexin:sdk:+'
+    compile 'com.igexin:getuiext:2.0.3'
+
     compile(name: 'logger-debug', ext: 'aar')
     //日志
     compile(name: 'niftymodaldialog-release', ext: 'aar')

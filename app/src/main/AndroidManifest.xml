@@ -2,6 +2,11 @@
     package="com.mytian.lb"
     android:installLocation="auto">
 
+    <!-- 解决Android L上通知显示异常问题，targetSdkVersion需要设置成22 -->
+    <uses-sdk
+        android:minSdkVersion="15"
+        android:targetSdkVersion="22" />
+
     <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
@@ -9,16 +14,8 @@
         android:resizeable="true"
         android:smallScreens="true" />
 
-    <!-- 权限 -->
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER"/>
-    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
-    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
     <!--fir.img-->
-    <uses-permission android:name="android.permission.GET_TASKS"/>
+    <uses-permission android:name="android.permission.GET_TASKS" />
 
     <!-- 允许程序打开网络套接字 -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -47,14 +44,11 @@
     <!-- 允许应用去呼叫killBackgroundProcesses()方法 -->
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
 
-    <!-- 写入设备外部存储空间（内置SDcard和外置SDCard）的文件 -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
     <!--短信-->
     <uses-permission android:name="android.permission.READ_SMS" />
 
     <!-- 获取设备信息 -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:name="com.mytian.lb.App"
@@ -66,12 +60,13 @@
         android:theme="@style/AppTheme">
 
         <!--fir.img-->
-        <meta-data android:value="073c54e897ed1268e330b4ceb3f78312" android:name="BUG_HD_SDK_GENERAL_KEY" />
+        <meta-data
+            android:name="BUG_HD_SDK_GENERAL_KEY"
+            android:value="073c54e897ed1268e330b4ceb3f78312" />
 
         <activity
             android:name=".activity.LauncherActivity"
-            android:theme="@style/AppThemeWTN"
-            android:launchMode="singleTask">
+            android:theme="@style/AppThemeWTN">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -82,8 +77,12 @@
         <!--主界面-->
         <activity
             android:name=".activity.MainActivity"
-            android:theme="@style/AppThemeWTN"
-            android:launchMode="singleTask"></activity>
+            android:launchMode="singleTask"
+            android:theme="@style/AppThemeWTN">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT"></category>
+            </intent-filter>
+        </activity>
 
         <!--登录-->
         <activity
@@ -123,60 +122,21 @@
             android:windowSoftInputMode="adjustPan"></activity>
 
         <!--图片裁剪-->
-        <activity android:name=".activity.AuthClipPictureActivity"
-            android:theme="@style/AppTheme">
-        </activity>
+        <activity
+            android:name=".activity.AuthClipPictureActivity"
+            android:theme="@style/AppTheme"></activity>
 
         <!-- push service start -->
-        <!-- 用于接收系统消息以保证PushService正常运行 -->
-        <receiver android:name="com.baidu.android.pushservice.PushServiceReceiver"
-            android:process=":bdservice_v1" >
+        <!--个推SDK配置开始-->
+        <!-- 配置第三方Receiver -->
+        <receiver
+            android:name=".push.PushMessageReceiver"
+            android:exported="false">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-                <action android:name="com.baidu.android.pushservice.action.notification.SHOW" />
-                <action android:name="com.baidu.android.pushservice.action.media.CLICK" />
-                <!-- 以下四项为可选的action声明，可大大提高service存活率和消息到达速度 -->
-                <action android:name="android.intent.action.MEDIA_MOUNTED" />
-                <action android:name="android.intent.action.USER_PRESENT" />
-                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
-                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+                <action android:name="com.igexin.sdk.action.OKVRBL3T7o6rAUqCZ15k39" />
             </intent-filter>
         </receiver>
-        <!-- Push服务接收客户端发送的各种请求-->
-        <receiver android:name="com.baidu.android.pushservice.RegistrationReceiver"
-            android:process=":bdservice_v1" >
-            <intent-filter>
-                <action android:name="com.baidu.android.pushservice.action.METHOD" />
-                <action android:name="com.baidu.android.pushservice.action.BIND_SYNC" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_REMOVED" />
-                <data android:scheme="package" />
-            </intent-filter>
-        </receiver>
-        <service android:name="com.baidu.android.pushservice.PushService" android:exported="true"
-            android:process=":bdservice_v1" >
-            <intent-filter >
-                <action android:name="com.baidu.android.pushservice.action.PUSH_SERVICE" />
-            </intent-filter>
-        </service>
-        <!-- 4.4版本新增的CommandService声明，提升小米和魅族手机上的实际推送到达率 -->
-        <service android:name="com.baidu.android.pushservice.CommandService"
-            android:exported="true" />
-        <!-- push结束 -->
-
-        <!-- baidu push receiver -->
-        <receiver android:name="com.mytian.lb.push.MyPushMessageReceiver">
-            <intent-filter>
-                <!-- 接收push消息 -->
-                <action android:name="com.baidu.android.pushservice.action.MESSAGE" />
-                <!-- 接收bind、setTags等method的返回结果-->
-                <action android:name="com.baidu.android.pushservice.action.RECEIVE" />
-                <!-- 接收通知点击事件，和通知自定义内容 -->
-                <action android:name="com.baidu.android.pushservice.action.notification.CLICK" />
-            </intent-filter>
-        </receiver>
+        <!-- 个推SDK配置结束 -->
 
     </application>
 

@@ -9,6 +9,8 @@ import com.core.CommonRequest;
 import com.core.openapi.OpenApiMethodEnum;
 import com.core.openapi.OpenApiSimpleResult;
 import com.mytian.lb.App;
+import com.mytian.lb.bean.user.SysAppUpgradeParam;
+import com.mytian.lb.bean.user.SysAppUpgradeResult;
 import com.mytian.lb.bean.user.UpdateParentParam;
 
 /**
@@ -35,6 +37,26 @@ public class UserManager {
         // 接口参数
         param.setMethod(OpenApiMethodEnum.LOAD_UPDATEPARENT);
         param.setParseTokenType(new TypeReference<OpenApiSimpleResult>() {
+        });
+        // 请求对象
+        CommonRequest request = new CommonRequest(param, handler, handlerMsgCode);
+        // 开始执行加载
+        CommonDataLoader.getInstance(context).load(request);
+    }
+
+    /**
+     * 应用更新
+     */
+    public void checkNewVersion(final Context context, final Handler handler, final Integer handlerMsgCode) {
+
+        // 接口参数
+        SysAppUpgradeParam param = new SysAppUpgradeParam();
+        param.setUid(App.getInstance().userResult.getParent().getUid());
+        param.setToken(App.getInstance().userResult.getParent().getToken());
+        param.setClient_type("1");//0 MB端, 1 LB端
+        // 接口参数
+        param.setMethod(OpenApiMethodEnum.APP_UPGRADE);
+        param.setParseTokenType(new TypeReference<SysAppUpgradeResult>() {
         });
         // 请求对象
         CommonRequest request = new CommonRequest(param, handler, handlerMsgCode);

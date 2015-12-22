@@ -20,7 +20,7 @@ import butterknife.Bind;
 
 public class DtnameicFragment extends AbsFragment {
 
-    @Bind(R.id.listview)
+    @Bind(R.id.listview_pr)
     PullToRefreshListView listview;
     @Bind(R.id.ll_listEmpty)
     View llListEmpty;

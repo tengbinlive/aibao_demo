@@ -23,6 +23,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -65,7 +66,6 @@ import com.mytian.lb.mview.ClipRevealFrame;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
 import com.nineoldandroids.animation.ValueAnimator;
 import com.rey.material.widget.RadioButton;
-import android.widget.CompoundButton;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.io.File;
@@ -105,7 +105,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
 
     public static boolean isSettingShow;
 
-    @Bind(R.id.listview)
+    @Bind(R.id.listview_pr)
     PullToRefreshListView listview;
     @Bind(R.id.ll_listEmpty)
     View llListEmpty;
@@ -173,6 +173,13 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
             }
         });
 
+        listview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mAdapter.closeAllItems();
+            }
+        });
+
         View headView = mInflater.inflate(R.layout.layout_user_new_messge, null);
 
         mActualListView = listview.getRefreshableView();
@@ -219,6 +226,12 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
     }
 
     @Override
+    public void EResetInit() {
+        super.EResetInit();
+        sendActionBarAnim();
+    }
+
+    @Override
     public void EInit() {
         isSettingShow = false;
         isOpenUser = false;
@@ -248,7 +261,6 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
                 }
             }
         });
-        getListData(INIT_LIST);
     }
 
     private void setUserInfo() {
@@ -308,7 +320,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
             return;
         }
         if (arrayList == null) {
-            arrayList = new ArrayMap<>();
+            arrayList = new ArrayMap<String, FollowUser>();
         }
         arrayList.put(event.user.getUid(), event.user);
         mAdapter.refresh(arrayList);
@@ -383,11 +395,6 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        sendActionBarAnim();
-    }
 
     /**
      * actionbar user info animation
@@ -400,6 +407,13 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         } else {
             animation.setDuration(300);
         }
+        animation.addListener(new com.nineoldandroids.animation.AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(com.nineoldandroids.animation.Animator animation) {
+                super.onAnimationEnd(animation);
+                getListData(INIT_LIST);
+            }
+        });
         animation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
@@ -414,7 +428,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
     }
 
     private void showMenu(int cx, int cy, float startRadius, float endRadius) {
-        List<Animator> animList = new ArrayList<>();
+        List<Animator> animList = new ArrayList<Animator>();
 
         layoutSetting.setVisibility(View.VISIBLE);
         Animator revealAnim = createCircularReveal(layoutSetting, cx, cy, startRadius, endRadius);

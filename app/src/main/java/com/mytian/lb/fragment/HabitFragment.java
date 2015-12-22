@@ -30,7 +30,7 @@ import butterknife.Bind;
 
 public class HabitFragment extends AbsFragment {
 
-    @Bind(R.id.listview)
+    @Bind(R.id.listview_pr)
     PullToRefreshListView listview;
     @Bind(R.id.ll_listEmpty)
     View llListEmpty;

@@ -307,7 +307,7 @@ public class CommonRequest extends Request<CommonResponse> {
     public Map<String, String> getHeaders() throws AuthFailureError {
         Map<String,String> headers = super.getHeaders();
         if (headers == null) {
-            headers = new HashMap<>();
+            headers = new HashMap<String,String>();
         }
         String sessionId = App.getInstance().cookie;
         if(sessionId!=null&&!sessionId.equals("")&&sessionId.length()>0){

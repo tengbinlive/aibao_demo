@@ -35,7 +35,6 @@ import com.squareup.okhttp.OkHttpClient;
 
 import java.io.InputStream;
 
-import im.fir.sdk.FIR;
 
 /**
  * App运行时上下文.
@@ -190,7 +189,7 @@ public class App extends Application {
 
         // 多进程情况只初始化一次
         if (ProcessUtil.isCurMainProcess(getApplicationContext())) {
-            FIR.init(getApplicationContext());
+
             Glide.get(this).register(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory(new OkHttpClient()));
             //初始化自定义Activity管理器
             activityManager = ActivityManager.getScreenManager();
@@ -241,7 +240,7 @@ public class App extends Application {
             @Override
             public void onReceive(Context context, Intent intent) {
                 setCurrentNetworkStatus(NetworkUtil.getCurrentNextworkState(context));
-                if (PushHelper.STATE_ONBIND_NO != PushHelper.getInstance().pushState) {
+                if (PushHelper.STATE_NORMAL != PushHelper.getInstance().pushState && !PushHelper.getInstance().UPLOAD_ID_SUCCESS) {
                     PushHelper.getInstance().initPush(getApplicationContext());
                 }
             }

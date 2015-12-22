@@ -7,17 +7,23 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.NotificationCompat;
 
-import com.baidu.android.pushservice.PushConstants;
-import com.baidu.android.pushservice.PushManager;
+import com.alibaba.fastjson.JSON;
 import com.core.CommonResponse;
 import com.core.util.StringUtil;
 import com.mytian.lb.App;
-import com.mytian.lb.bean.push.PushOnBindResult;
+import com.mytian.lb.bean.follow.FollowUser;
+import com.mytian.lb.bean.push.PushResult;
+import com.mytian.lb.bean.user.UserResult;
+import com.mytian.lb.event.PushStateEventType;
+import com.mytian.lb.event.PushUserEventType;
 import com.mytian.lb.helper.SharedPreferencesHelper;
 import com.mytian.lb.manager.PushMManager;
 import com.orhanobut.logger.Logger;
 
-import java.util.ArrayList;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by Administrator on 2015/10/30.
@@ -34,19 +40,14 @@ public class PushHelper {
         return instance;
     }
 
-    public final static int LOAD_DATA = 0;//上传id 上传成功
-    public final static int STATE_ONBIND_NO = LOAD_DATA + 1;//未绑定
-    public final static int STATE_ONBIND_FAILURE = STATE_ONBIND_NO + 1;//绑定失败
-    public final static int STATE_UPLOAD_ID_NO = STATE_ONBIND_FAILURE + 1;//未上传
+    public final static int LOAD_DATA = 0;//上传id 返回数据
+    public final static int STATE_UPLOAD_ID_NO = LOAD_DATA + 1;//未上传
     public final static int STATE_UPLOAD_ID_FAILURE = STATE_UPLOAD_ID_NO + 1;//上传id 失败
     public final static int STATE_NORMAL = STATE_UPLOAD_ID_FAILURE + 1;//
 
-
-    private final static String APP_KEY = "XqXiOUPbeYEAGaOz1IfDIpKK";//test:PSszk83CkivESkUMxWAegvKZ //XqXiOUPbeYEAGaOz1IfDIpKK
-
     public static final String CHANNEL_STATE = "CHANNEL_STATE";
 
-    public int pushState = STATE_ONBIND_NO;
+    public int pushState = STATE_NORMAL;
 
     public boolean UPLOAD_ID_SUCCESS;
 
@@ -54,7 +55,7 @@ public class PushHelper {
 
     private Context mContext;
 
-    private PushOnBindResult bindResult;
+    private String channelId;
 
     private long delayedTime = 60 * 1000;
 
@@ -65,25 +66,19 @@ public class PushHelper {
         sendPushState(pushState);
     }
 
-    private void onBind() {
-        PushManager.startWork(mContext, PushConstants.LOGIN_TYPE_API_KEY, APP_KEY);
-        ArrayList<String> tags = new ArrayList<>();
-        tags.add("parent");
-        PushManager.setTags(mContext, tags);
-    }
 
     /**
      * 绑定推送成功数据设置
      *
-     * @param bindResult
+     * @param channelId 上传id
      */
-    public void updateChannelid(PushOnBindResult bindResult) {
-        if (bindResult != null && StringUtil.isNotBlank(bindResult.getChannelId())) {
-            this.bindResult = bindResult;
+    public void updateChannelid(String channelId) {
+        if (StringUtil.isNotBlank(channelId)) {
+            this.channelId = channelId;
             sendPushState(STATE_UPLOAD_ID_NO);
             return;
         }
-        sendPushState(STATE_ONBIND_FAILURE);
+        sendPushState(STATE_UPLOAD_ID_FAILURE);
     }
 
     public void sendPushState(int state) {
@@ -91,11 +86,7 @@ public class PushHelper {
         if (!App.isNetworkAvailable()) {
             return;
         }
-        if (state == STATE_ONBIND_NO) {
-            activityHandler.sendEmptyMessage(STATE_ONBIND_NO);
-        } else if (state == STATE_ONBIND_FAILURE) {//绑定失败 1分钟后再次绑定
-            activityHandler.sendEmptyMessageDelayed(STATE_ONBIND_NO, delayedTime);
-        } else if (state == STATE_UPLOAD_ID_NO) {
+        if (state == STATE_UPLOAD_ID_NO) {
             if (UPLOAD_ID_SUCCESS) {
                 pushState = STATE_NORMAL;
                 return;
@@ -118,13 +109,10 @@ public class PushHelper {
                         sendPushState(STATE_UPLOAD_ID_FAILURE);
                         return;
                     }
-                    manager.updateChannelId(mContext, bindResult.getChannelId(), activityHandler, LOAD_DATA);
+                    manager.updateChannelId(mContext, channelId, activityHandler, LOAD_DATA);
                     break;
                 case LOAD_DATA:
                     loadData((CommonResponse) msg.obj);
-                    break;
-                case STATE_ONBIND_NO:
-                    onBind();
                     break;
                 default:
                     break;
@@ -148,7 +136,7 @@ public class PushHelper {
         }
     }
 
-    public void setNotification(String content) {
+    private void setNotification(String content) {
         String ns = Context.NOTIFICATION_SERVICE;
         CharSequence tickerText = "aibao..";
         CharSequence contentTitle = "aibao..";
@@ -168,5 +156,41 @@ public class PushHelper {
 
         //用mNotificationManager的notify方法通知用户生成标题栏消息通知
         mNotificationManager.notify(1, notification);
+    }
+
+    public void updateContent(String content) {
+        PushResult result = JSON.parseObject(content, PushResult.class);
+        UserResult userResult = App.getInstance().userResult;
+        if (null != result && null != userResult && isSend(userResult, result)) {
+            if (PushCode.FOLLOW_NOTICE.equals(result.getCmd())) {
+                String info = result.getInfo();
+                FollowUser user = JSON.parseObject(info, FollowUser.class);
+                if (FollowUser.MB.equals(user.getFocus_from())) {
+                    EventBus.getDefault().postSticky(new PushUserEventType(user));
+                }
+                setNotification(result.getDescription());
+            } else if (PushCode.FOLLOW_ONLINE.equals(result.getCmd()) || PushCode.FOLLOW_OFFLINE.equals(result.getCmd())) {
+                String info = result.getInfo();
+                String babyUid = "";
+                String is_online = PushCode.FOLLOW_ONLINE.equals(result.getCmd()) ? FollowUser.ONLINE : FollowUser.OFFLINE;
+                try {
+                    JSONObject jsonObject = new JSONObject(info);
+                    babyUid = jsonObject.optString("babyUid");
+                } catch (JSONException e) {
+                }
+                if (StringUtil.isNotBlank(babyUid)) {
+                    EventBus.getDefault().postSticky(new PushStateEventType(babyUid, is_online));
+                }
+                String des = result.getDescription();
+                if (StringUtil.isNotBlank(des)) {
+                    setNotification(result.getDescription());
+                }
+            }
+        }
+    }
+
+    private boolean isSend(UserResult userResult, PushResult result) {
+        String uid = userResult.getParent().getUid();
+        return "*".equals(result.getUid()) || uid.equals(result.getUid());
     }
 }

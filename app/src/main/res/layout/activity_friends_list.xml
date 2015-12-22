@@ -9,7 +9,7 @@
         android:layout_height="wrap_content" />
 
     <com.handmark.pulltorefresh.PullToRefreshListView xmlns:ptr="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/listview"
+        android:id="@+id/listview_pr"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/theme_bg_layout"

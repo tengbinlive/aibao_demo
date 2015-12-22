@@ -45,7 +45,7 @@ public class AgreementDOManager {
 
     private void initTestData() {
         String[] argeementTitle = new String[]{"写作业", "看书", "做家务", "吃饭", "出去玩", "睡觉"};
-        arrayList = new ArrayList<>();
+        arrayList = new ArrayList<Agreement>();
         Agreement bean = new Agreement();
         bean.setDate(new Date(15 * 60 * 1000));
         bean.setAppointId("2001");

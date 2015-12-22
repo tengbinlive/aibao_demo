@@ -11,6 +11,12 @@ package com.core.openapi;
 public enum OpenApiMethodEnum {
 
     /**
+     * 爱宝app更新
+     */
+    APP_UPGRADE("myt_file/clientPushAction_getLBAppInfo.do", "openapi_json", OpenApi.URL_TYPE_DATA),
+
+
+    /**
      * 取消爱的约定
      */
     LOAD_CANCELLOVEAPPOINT("myt_parent/commandAction_cancelLoveAppoint.do", "openapi_json", OpenApi.URL_TYPE_DATA),

@@ -13,6 +13,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.core.CommonResponse;
 import com.core.util.CommonUtil;
+import com.daimajia.swipe.SimpleSwipeListener;
+import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.BaseSwipeAdapter;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mytian.lb.AbsActivity;
@@ -75,7 +77,7 @@ public class UserAdapter extends BaseSwipeAdapter {
     public View generateView(int i, ViewGroup viewGroup) {
         View convertView;
         convertView = mInflater.inflate(R.layout.item_follow, viewGroup, false);
-        ViewHolder holder = new ViewHolder(convertView);
+        final ViewHolder holder = new ViewHolder(convertView);
         holder.deleteLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,6 +86,20 @@ public class UserAdapter extends BaseSwipeAdapter {
                 FollowUser user = list.valueAt(index);
                 mContext.dialogShow(R.string.cancel_ing);
                 manager.followcancel(mContext, user.getUid(), handler, CANCEL);
+            }
+        });
+        holder.deleteLayout.setClickable(false);
+        holder.swipeLayout.addSwipeListener(new SimpleSwipeListener(){
+            @Override
+            public void onOpen(SwipeLayout layout) {
+                super.onOpen(layout);
+                holder.deleteLayout.setClickable(true);
+            }
+
+            @Override
+            public void onClose(SwipeLayout layout) {
+                super.onClose(layout);
+                holder.deleteLayout.setClickable(false);
             }
         });
         convertView.setTag(holder);
@@ -118,6 +134,8 @@ public class UserAdapter extends BaseSwipeAdapter {
         TextView phone;
         @Bind(R.id.delete_layout)
         RelativeLayout deleteLayout;
+        @Bind(R.id.swipe)
+        SwipeLayout swipeLayout;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);

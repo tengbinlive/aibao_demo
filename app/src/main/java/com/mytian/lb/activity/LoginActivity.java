@@ -19,18 +19,14 @@ import android.widget.TextView;
 import com.core.CommonResponse;
 import com.core.util.CommonUtil;
 import com.core.util.StringUtil;
-import com.dao.AgreementDao;
-import com.dao.Parent;
 import com.dao.ParentDao;
 import com.gitonway.lee.niftymodaldialogeffects.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.NiftyDialogBuilder;
 import com.mytian.lb.App;
-import com.mytian.lb.Constant;
 import com.mytian.lb.R;
 import com.mytian.lb.activityexpand.activity.AnimatedRectActivity;
 import com.mytian.lb.bean.user.UserResult;
 import com.mytian.lb.helper.AnimationHelper;
-import com.mytian.lb.helper.SharedPreferencesHelper;
 import com.mytian.lb.manager.LoginManager;
 import com.mytian.lb.mview.EditTextWithDelete;
 

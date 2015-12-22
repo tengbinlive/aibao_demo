@@ -3,11 +3,14 @@ package com.mytian.lb.activity;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.core.CommonResponse;
 import com.core.openapi.OpenApi;
 import com.core.util.CommonUtil;
 import com.core.util.StringUtil;
@@ -17,12 +20,11 @@ import com.mytian.lb.AbsActivity;
 import com.mytian.lb.App;
 import com.mytian.lb.Constant;
 import com.mytian.lb.R;
+import com.mytian.lb.bean.user.SysAppUpgradeResult;
+import com.mytian.lb.manager.UserManager;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import im.fir.sdk.FIR;
-import im.fir.sdk.callback.VersionCheckCallback;
-import im.fir.sdk.version.AppVersion;
 
 public class SysSettingActivity extends AbsActivity {
 
@@ -30,30 +32,32 @@ public class SysSettingActivity extends AbsActivity {
     Button updateBt;
     @Bind(R.id.api_state)
     Button apiState;
+    @Bind(R.id.version_tv)
+    TextView versionTv;
 
-    private AppVersion firAppVersion;
+    private UserManager manager = new UserManager();
 
     @Override
     public void EInit() {
         super.EInit();
-        updateBt.setText("当前版本 ：" + App.getInstance().getAppVersionName());
+        versionTv.setText("version ：" + App.getInstance().getAppVersionName());
+        updateBt.setText("点击更新");
         initApiState();
-        updateDetect();
     }
 
-    private void initApiState(){
-        if(Constant.DEBUG){
+    private void initApiState() {
+        if (Constant.DEBUG) {
             apiState.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             apiState.setVisibility(View.GONE);
         }
         setApiState(OpenApi.isDEBUG());
     }
 
-    private void setApiState(boolean state){
-        if(state){
+    private void setApiState(boolean state) {
+        if (state) {
             apiState.setText("API：test ,ip：10.0.1.15");
-        }else{
+        } else {
             apiState.setText("API：official ,ip：114.215.108.49");
         }
     }
@@ -75,11 +79,11 @@ public class SysSettingActivity extends AbsActivity {
 
     @OnClick(R.id.api_state)
     void apistate() {
-         if(Constant.DEBUG){
-             boolean state = OpenApi.isDEBUG();
-             OpenApi.init(!state); // 设置OpenAPI的调试状态
-             setApiState(OpenApi.isDEBUG());
-         }
+        if (Constant.DEBUG) {
+            boolean state = OpenApi.isDEBUG();
+            OpenApi.init(!state); // 设置OpenAPI的调试状态
+            setApiState(OpenApi.isDEBUG());
+        }
     }
 
     @OnClick(R.id.reset_password_bt)
@@ -92,47 +96,9 @@ public class SysSettingActivity extends AbsActivity {
         startActivity(intent);
     }
 
-    private void updateDetect() {
-        FIR.checkForUpdateInFIR(Constant.FIR_API_TOKEN, new VersionCheckCallback() {
-            @Override
-            public void onSuccess(AppVersion appVersion, boolean b) {
-                firAppVersion = appVersion;
-                if (firAppVersion.getVersionCode() > App.getAppVersionCode()) {
-                    updateBt.setText("最新版本 ：" + firAppVersion.getVersionName());
-                }
-            }
-
-            @Override
-            public void onFail(String s, int i) {
-            }
-
-            @Override
-            public void onError(Exception e) {
-            }
-
-            @Override
-            public void onStart() {
-
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-        });
-    }
-
     @OnClick(R.id.update_bt)
     void updateVersion(View view) {
-        if (firAppVersion==null||firAppVersion.getVersionCode() <= App.getAppVersionCode()) {
-            CommonUtil.showToast("已是最新版拉");
-            return;
-        }
-        StringBuffer versionInfo = new StringBuffer();
-        versionInfo.append("version :   ").append(firAppVersion.getVersionName()).append("\n")
-                .append("log :   ").append(firAppVersion.getChangeLog()).append("\n\n")
-                .append("download...");
-        dialogAddFollow(versionInfo.toString(), firAppVersion.getUpdateUrl());
+        manager.checkNewVersion(this, activityHandler, APP_UPDATE);
     }
 
     private void toDownload(String download) {
@@ -141,7 +107,7 @@ public class SysSettingActivity extends AbsActivity {
         startActivity(intent);
     }
 
-    public void dialogAddFollow(String value, final String download) {
+    public void dialogUpdate(String value, final String download) {
         if (StringUtil.isBlank(value)) {
             return;
         }
@@ -161,6 +127,38 @@ public class SysSettingActivity extends AbsActivity {
                 .withEffect(Effectstype.Fadein) // def Effectstype.Slidetop
                 .setCustomView(convertView, this); // .setCustomView(View
         dialogBuilder.show();
+    }
+
+
+    private final static int APP_UPDATE = 0;
+
+    private Handler activityHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case APP_UPDATE:
+                    loadUpdate((CommonResponse) msg.obj);
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
+    private void loadUpdate(CommonResponse resposne) {
+        if (resposne.isSuccess()) {
+            SysAppUpgradeResult result = (SysAppUpgradeResult) resposne.getData();
+            if (result.getVersion() > App.getAppVersionCode()) {
+                StringBuffer versionInfo = new StringBuffer();
+                versionInfo.append("爱宝.").append("\n\n")
+                        .append("点击下载最新版").append("\n\n")
+                        .append("......");
+                dialogUpdate(versionInfo.toString(), result.getUrl());
+            } else {
+                updateBt.setText("已是最新版");
+            }
+        } else {
+            CommonUtil.showToast(resposne.getMsg());
+        }
     }
 
 }
