@@ -118,7 +118,6 @@
         <!--系统设置-->
         <activity
             android:name=".activity.SysSettingActivity"
-            android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan"></activity>
 
         <!--图片裁剪-->

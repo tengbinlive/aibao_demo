@@ -25,7 +25,7 @@ import com.dao.ParentDao;
 import com.mytian.lb.activity.LoginActivity;
 import com.mytian.lb.activityexpand.activity.AnimatedRectLayout;
 import com.mytian.lb.bean.user.UserResult;
-import com.mytian.lb.helper.ActivityManager;
+import com.mytian.lb.manager.ActivityManager;
 import com.mytian.lb.helper.SharedPreferencesHelper;
 import com.mytian.lb.manager.AgreementDOManager;
 import com.mytian.lb.push.PushHelper;

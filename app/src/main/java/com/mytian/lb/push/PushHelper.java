@@ -18,6 +18,7 @@ import com.mytian.lb.event.PushStateEventType;
 import com.mytian.lb.event.PushUserEventType;
 import com.mytian.lb.helper.SharedPreferencesHelper;
 import com.mytian.lb.manager.PushMManager;
+import com.mytian.lb.manager.AppManager;
 import com.orhanobut.logger.Logger;
 
 import org.json.JSONException;
@@ -136,7 +137,7 @@ public class PushHelper {
         }
     }
 
-    private void setNotification(String content) {
+    private void showNotification(String content) {
         String ns = Context.NOTIFICATION_SERVICE;
         CharSequence tickerText = "aibao..";
         CharSequence contentTitle = "aibao..";
@@ -168,7 +169,7 @@ public class PushHelper {
                 if (FollowUser.MB.equals(user.getFocus_from())) {
                     EventBus.getDefault().postSticky(new PushUserEventType(user));
                 }
-                setNotification(result.getDescription());
+                showNotification(result.getDescription());
             } else if (PushCode.FOLLOW_ONLINE.equals(result.getCmd()) || PushCode.FOLLOW_OFFLINE.equals(result.getCmd())) {
                 String info = result.getInfo();
                 String babyUid = "";
@@ -179,12 +180,15 @@ public class PushHelper {
                 } catch (JSONException e) {
                 }
                 if (StringUtil.isNotBlank(babyUid)) {
-                    EventBus.getDefault().postSticky(new PushStateEventType(babyUid, is_online));
+                    EventBus.getDefault().post(new PushStateEventType(babyUid, is_online));
                 }
                 String des = result.getDescription();
                 if (StringUtil.isNotBlank(des)) {
-                    setNotification(result.getDescription());
+                    showNotification(result.getDescription());
                 }
+            } else if (PushCode.AIBAO_UPDATE.equals(result.getCmd())) {
+                AppManager manager = new AppManager();
+                manager.updateVersion();
             }
         }
     }
@@ -193,4 +197,5 @@ public class PushHelper {
         String uid = userResult.getParent().getUid();
         return "*".equals(result.getUid()) || uid.equals(result.getUid());
     }
+
 }

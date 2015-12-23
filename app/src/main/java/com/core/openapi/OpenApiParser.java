@@ -1,23 +1,12 @@
 package com.core.openapi;
 
-import android.app.Activity;
-import android.content.DialogInterface;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.core.CommonResponse;
 import com.core.enums.CodeEnum;
 import com.core.util.StringUtil;
-import com.gitonway.lee.niftymodaldialogeffects.Effectstype;
-import com.gitonway.lee.niftymodaldialogeffects.NiftyDialogBuilder;
-import com.mytian.lb.App;
-import com.mytian.lb.R;
+import com.mytian.lb.manager.AppManager;
 import com.orhanobut.logger.Logger;
 
 
@@ -57,8 +46,10 @@ public class OpenApiParser {
 
                 // 先判断code
                 if (StringUtil.isNotBlank(code) && JSON_VALUE_OUT_CODE.equals(code)) {
-                    dialogOUT();
-                    return null;
+                    AppManager manager = new AppManager();
+                    manager.reLoginApp();
+                    response.setData(null);
+                    response.setCodeEnum(CodeEnum.LOGIN_REQUIRED);
                 } else if (StringUtil.isBlank(code) || !JSON_VALUE_SUCCESS_CODE.equals(code)) {
                     response.setData(null);
                     response.setCode(code);
@@ -85,44 +76,6 @@ public class OpenApiParser {
             }
         }
         return obj;
-    }
-
-    private static boolean isOUT;
-
-    private static void dialogOUT() {
-        if (isOUT) {
-            return;
-        }
-        isOUT = true;
-        Activity activity = App.getInstance().activityManager.currentActivity();
-        NiftyDialogBuilder dialogBuilder = NiftyDialogBuilder.getInstance(activity);
-        if (dialogBuilder.isShowing()) {
-            dialogBuilder.dismiss();
-        }
-        LinearLayout convertView = (LinearLayout) LayoutInflater.from(activity).inflate(R.layout.dialog_out, null);
-        TextView ok = (TextView) convertView.findViewById(R.id.tv_ok);
-        ok.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                isOUT = false;
-                App.getInstance().changeAccount(false);
-            }
-        });
-        dialogBuilder = NiftyDialogBuilder.getInstance(activity);
-        dialogBuilder.withDuration(700) // def
-                .isCancelableOnTouchOutside(false) // def | isCancelable(true)
-                .withEffect(Effectstype.Fadein) // def Effectstype.Slidetop
-                .setCustomView(convertView, activity); // .setCustomView(View
-        dialogBuilder.setOnKeyListener(new DialogInterface.OnKeyListener() {
-            @Override
-            public boolean onKey(DialogInterface dialogInterface, int keyCode, KeyEvent keyEvent) {
-                if (keyCode == KeyEvent.KEYCODE_BACK && keyEvent.getRepeatCount() == 0) {
-                    return true;
-                }
-                return false;
-            }
-        });
-        dialogBuilder.show();
     }
 
 }
