@@ -132,7 +132,7 @@
             android:name=".push.PushMessageReceiver"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.igexin.sdk.action.OKVRBL3T7o6rAUqCZ15k39" />
+                <action android:name="com.igexin.sdk.action.kvuUWGiv0c6sHXaYA8JzT7" />
             </intent-filter>
         </receiver>
         <!-- 个推SDK配置结束 -->
