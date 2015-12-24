@@ -194,7 +194,7 @@ public class App extends Application {
             //初始化自定义Activity管理器
             activityManager = ActivityManager.getScreenManager();
 
-            //加载百度 CHANNEL_ID 是否已经上传成功
+            // CHANNEL_ID 是否已经上传成功
             PushHelper.getInstance().UPLOAD_ID_SUCCESS = SharedPreferencesHelper.getBoolean(this, PushHelper.CHANNEL_STATE, false);
 
             // 初始化日志类,如果不是调试状态则不输出日志

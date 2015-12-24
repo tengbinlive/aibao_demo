@@ -9,16 +9,18 @@ import android.support.v4.app.NotificationCompat;
 
 import com.alibaba.fastjson.JSON;
 import com.core.CommonResponse;
+import com.core.util.CommonUtil;
 import com.core.util.StringUtil;
 import com.mytian.lb.App;
+import com.mytian.lb.Constant;
 import com.mytian.lb.bean.follow.FollowUser;
 import com.mytian.lb.bean.push.PushResult;
 import com.mytian.lb.bean.user.UserResult;
 import com.mytian.lb.event.PushStateEventType;
 import com.mytian.lb.event.PushUserEventType;
 import com.mytian.lb.helper.SharedPreferencesHelper;
-import com.mytian.lb.manager.PushMManager;
 import com.mytian.lb.manager.AppManager;
+import com.mytian.lb.manager.PushMManager;
 import com.orhanobut.logger.Logger;
 
 import org.json.JSONException;
@@ -141,12 +143,10 @@ public class PushHelper {
         String ns = Context.NOTIFICATION_SERVICE;
         CharSequence tickerText = "aibao..";
         CharSequence contentTitle = "aibao..";
-
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mContext)
                 .setSmallIcon(android.R.drawable.stat_notify_chat)
                 .setWhen(System.currentTimeMillis())
                 .setAutoCancel(true);
-
         mBuilder.setContentTitle(contentTitle);
         mBuilder.setTicker(tickerText);
         mBuilder.setContentText(content);
@@ -160,7 +160,14 @@ public class PushHelper {
     }
 
     public void updateContent(String content) {
-        PushResult result = JSON.parseObject(content, PushResult.class);
+        if(Constant.DEBUG) {
+            CommonUtil.showToast(content);
+        }
+        PushResult result = null;
+        try {
+            result = JSON.parseObject(content, PushResult.class);
+        }catch (Exception e){
+        }
         UserResult userResult = App.getInstance().userResult;
         if (null != result && null != userResult && isSend(userResult, result)) {
             if (PushCode.FOLLOW_NOTICE.equals(result.getCmd())) {

@@ -11,14 +11,21 @@ android {
 //        解决Android L上通知显示异常问题，targetSdkVersion需要设置成22
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 27
-        versionName "v1.3.7"
+        versionCode 28
+        versionName "v1.3.8"
         manifestPlaceholders = [
                 GETUI_APP_ID    : "kvuUWGiv0c6sHXaYA8JzT7",
                 GETUI_APP_KEY   : "PO0la0IdOd8vTKnFl4Ftq2",
                 GETUI_APP_SECRET: "bGqQIpUdU69rpr74CTX3t2",
                 PACKAGE_NAME    : applicationId
         ]
+        //tengbin,tengbin
+//        manifestPlaceholders = [
+//                GETUI_APP_ID    : "OKVRBL3T7o6rAUqCZ15k39",
+//                GETUI_APP_KEY   : "i1CuskYLy78LU3npj9n6e8",
+//                GETUI_APP_SECRET: "gELuOKx4Mo85sEEmoeDEO3",
+//                PACKAGE_NAME    : applicationId
+//        ]
     }
 
     signingConfigs {
