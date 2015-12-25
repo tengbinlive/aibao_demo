@@ -150,7 +150,7 @@ public class PushHelper {
             Logger.d("上传成功");
             UPLOAD_ID_SUCCESS = true;
             pushState = STATE_NORMAL;
-            SharedPreferencesHelper.setBoolean(mContext, CHANNEL_STATE, UPLOAD_ID_SUCCESS);
+            SharedPreferencesHelper.setBoolean(App.getInstance(), CHANNEL_STATE, UPLOAD_ID_SUCCESS);
         } else {
             sendPushState(STATE_UPLOAD_ID_FAILURE);
         }

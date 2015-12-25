@@ -36,6 +36,8 @@ public class AppManager {
 
     private NiftyDialogBuilder dialogBuilder;
 
+    private String downloadUrl;
+
     /**
      * 版本更新
      */
@@ -58,6 +60,7 @@ public class AppManager {
 
     private final static int APP_UPDATE = 0;
     private final static int APP_RELOGIN = 1;
+    private final static int APP_DOWNLOAD = 4;
     private final static int DIALOGSHOW = 2;
     private final static int DIALOGDISMISS = 3;
 
@@ -69,6 +72,9 @@ public class AppManager {
                     break;
                 case APP_RELOGIN:
                     dialogOUT();
+                    break;
+                case APP_DOWNLOAD:
+                    dialogDownload();
                     break;
                 case DIALOGSHOW:
                     dialogBuilder.show();
@@ -87,16 +93,23 @@ public class AppManager {
         if (resposne.isSuccess()) {
             SysAppUpgradeResult result = (SysAppUpgradeResult) resposne.getData();
             if (result.getVersion() > App.getAppVersionCode()) {
-                StringBuffer versionInfo = new StringBuffer();
-                versionInfo.append("爱宝.").append("\n\n")
-                        .append("点击下载最新版").append("\n\n")
-                        .append("......");
-                dialogUpdate(versionInfo.toString(), result.getUrl());
+                downloadUrl = result.getUrl();
+                activityHandler.sendEmptyMessage(APP_DOWNLOAD);
             } else {
                 CommonUtil.showToast("已是最新版");
             }
         } else {
             CommonUtil.showToast(resposne.getMsg());
+        }
+    }
+
+    private void dialogDownload(){
+        if(StringUtil.isNotBlank(downloadUrl)) {
+            StringBuffer versionInfo = new StringBuffer();
+            versionInfo.append("爱宝.").append("\n\n")
+                    .append("点击下载最新版").append("\n\n")
+                    .append("......");
+            dialogUpdate(versionInfo.toString(), downloadUrl);
         }
     }
 

@@ -11,8 +11,8 @@ android {
 //        解决Android L上通知显示异常问题，targetSdkVersion需要设置成22
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 28
-        versionName "v1.3.8"
+        versionCode 30
+        versionName "v1.4.0"
         manifestPlaceholders = [
                 GETUI_APP_ID    : "kvuUWGiv0c6sHXaYA8JzT7",
                 GETUI_APP_KEY   : "PO0la0IdOd8vTKnFl4Ftq2",
@@ -99,6 +99,7 @@ lintCleaner {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(dir: 'libs_share', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.1.1'
     compile 'de.greenrobot:eventbus:2.4.0'
     //事件派发

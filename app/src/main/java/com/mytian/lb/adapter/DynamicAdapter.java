@@ -1,6 +1,7 @@
 package com.mytian.lb.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +15,13 @@ import com.core.util.StringUtil;
 import com.mytian.lb.R;
 import com.mytian.lb.bean.DynamicResult;
 import com.mytian.lb.helper.GlideRoundTransform;
+import com.mytian.lb.manager.ShareManager;
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.sharesdk.framework.Platform;
 
 public class DynamicAdapter extends BaseAdapter {
 
@@ -67,11 +70,11 @@ public class DynamicAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        DynamicResult bean = list.get(position);
+        final DynamicResult bean = list.get(position);
         String heandurl = bean.getHead();
-        if(StringUtil.isBlank(heandurl)){
+        if (StringUtil.isBlank(heandurl)) {
             viewHolder.head.setImageDrawable(bean.getDrawable());
-        }else{
+        } else {
             Glide.with(mContext).load(heandurl).asBitmap()
                     .transform(transform)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -81,6 +84,13 @@ public class DynamicAdapter extends BaseAdapter {
         viewHolder.date.setText(bean.getDate());
         viewHolder.desc.setText(bean.getDesc());
         viewHolder.content.setText(bean.getContent());
+        viewHolder.share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Platform.ShareParams shareParams = ShareManager.getInstance().getParams("test_title","test_content",null,"http://img0.pcgames.com.cn/pcgames/1106/16/2239524_00018.gif",bean.getDrawable());
+                ShareManager.getInstance().share(shareParams);
+            }
+        });
         return convertView;
     }
 
@@ -102,6 +112,8 @@ public class DynamicAdapter extends BaseAdapter {
         TextView desc;
         @Bind(R.id.content)
         TextView content;
+        @Bind(R.id.share)
+        ImageView share;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);

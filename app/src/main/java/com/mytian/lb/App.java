@@ -26,6 +26,7 @@ import com.dao.ParentDao;
 import com.mytian.lb.activity.LoginActivity;
 import com.mytian.lb.activityexpand.activity.AnimatedRectLayout;
 import com.mytian.lb.bean.user.UserResult;
+import com.mytian.lb.manager.ShareManager;
 import com.mytian.lb.manager.ActivityManager;
 import com.mytian.lb.helper.SharedPreferencesHelper;
 import com.mytian.lb.manager.AgreementDOManager;
@@ -220,6 +221,9 @@ public class App extends Application {
             Logger.i(TAG, "保存当前网络状态:" + getCurrentNetworkStatus());
             //注册网络状态监听广播
             newConnectionReceiver();
+
+            //初始分享
+            ShareManager.getInstance().initShare();
 
             if (Constant.DEBUG) {
                 boolean API_STATE = SharedPreferencesHelper.getBoolean(this, "API_STATE", false);

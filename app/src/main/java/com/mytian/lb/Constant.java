@@ -40,4 +40,13 @@ public class Constant {
 		public static final String CAMERA_TEMP = ROOT_DIR + "/images/camera_temp.jpg";
 	}
 
+
+	/** 微信相关常量 */
+	public static class WeiXin {
+
+		/** 微信-应用唯一标识 */
+		public static final String APP_ID = "wxaf410328237f1376";
+
+	}
+
 }

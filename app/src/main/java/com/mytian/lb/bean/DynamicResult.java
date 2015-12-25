@@ -2,6 +2,7 @@ package com.mytian.lb.bean;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.core.openapi.OpenApiSimpleResult;
+import com.core.util.StringUtil;
 import com.mytian.lb.App;
 import com.mytian.lb.R;
 
@@ -29,7 +30,7 @@ public class DynamicResult extends OpenApiSimpleResult {
     }
 
     public TextDrawable getDrawable() {
-        if(null==drawable){
+        if (null==drawable) {
             setDrawable();
         }
         return drawable;
@@ -37,7 +38,7 @@ public class DynamicResult extends OpenApiSimpleResult {
 
     private void setDrawable() {
         int radius = (int) App.getInstance().getResources().getDimension(R.dimen.rounded_size);
-        String name = alias.substring(0,1);
+        String name = alias.substring(0, 1);
         int color = type == TYPE_SYS ? 0xfff12e40 : 0xffff6699;
         this.drawable = TextDrawable.builder()
                 .buildRoundRect(name, color, radius);

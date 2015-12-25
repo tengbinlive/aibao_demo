@@ -106,7 +106,7 @@ public class AgreementFragment extends AbsFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (null == cureentParent) {
-                    CommonUtil.showToast(R.string.select_user);
+                    toFriendslist();
                     return;
                 }
                 if (!isSettingShow&&sendCount<=0) {
@@ -158,7 +158,7 @@ public class AgreementFragment extends AbsFragment {
         agreementTime.setText("15分00秒");
     }
 
-    private void StartThread() {
+    private void startThread() {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -176,9 +176,8 @@ public class AgreementFragment extends AbsFragment {
         }
     };
 
-    private StringBuffer buffer = new StringBuffer();
-
     private void setTimeText(long TimeUsed) {
+        StringBuffer buffer = new StringBuffer();
         int TimeMinute = ((15 * 60) - (int) TimeUsed / 1000) / 60;
         int TimeSeconds = ((15 * 60) - (int) TimeUsed / 1000) % 60;
         if (TimeUsed < DKEY_TIME) {
@@ -228,7 +227,7 @@ public class AgreementFragment extends AbsFragment {
     public void EInit() {
         isSettingShow = false;
         initGridView();
-        StartThread();
+        startThread();
         animationDrawable = (AnimationDrawable) getResources().getDrawable(R.drawable.animation_time);
         animaitonNum = animationDrawable.getNumberOfFrames();
         setUserInfo(null);
