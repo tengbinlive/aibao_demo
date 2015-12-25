@@ -11,6 +11,8 @@ import com.alibaba.fastjson.JSON;
 import com.core.CommonResponse;
 import com.core.util.CommonUtil;
 import com.core.util.StringUtil;
+import com.igexin.sdk.PushManager;
+import com.igexin.sdk.Tag;
 import com.mytian.lb.App;
 import com.mytian.lb.Constant;
 import com.mytian.lb.bean.follow.FollowUser;
@@ -54,6 +56,8 @@ public class PushHelper {
 
     public boolean UPLOAD_ID_SUCCESS;
 
+    public boolean UPLOAD_ING;
+
     private PushMManager manager = new PushMManager();
 
     private Context mContext;
@@ -62,7 +66,19 @@ public class PushHelper {
 
     private long delayedTime = 60 * 1000;
 
-    public void initPush(Context context) {
+    public void initPush(Context context){
+        if (mContext == null) {
+            mContext = context;
+        }
+        PushManager.getInstance().initialize(context);
+        Tag[] tags = new Tag[1];
+        Tag tag = new Tag();
+        tag.setName("parent");
+        tags[0] = tag;
+        PushManager.getInstance().setTag(context, tags);
+    }
+
+    public void bindPush(Context context) {
         if (mContext == null) {
             mContext = context;
         }
@@ -73,22 +89,19 @@ public class PushHelper {
     /**
      * 绑定推送成功数据设置
      *
-     * @param channelId 上传id
+     * @param _channelId 上传id
      */
-    public void updateChannelid(String channelId) {
-        if (StringUtil.isNotBlank(channelId)) {
-            this.channelId = channelId;
-            sendPushState(STATE_UPLOAD_ID_NO);
-            return;
-        }
-        sendPushState(STATE_UPLOAD_ID_FAILURE);
+    public void updateChannelid(String _channelId) {
+        this.channelId = _channelId;
+        sendPushState(STATE_UPLOAD_ID_NO);
     }
 
     public void sendPushState(int state) {
         pushState = state;
-        if (!App.isNetworkAvailable()) {
+        if (!App.isNetworkAvailable()||StringUtil.isBlank(channelId)) {
             return;
         }
+        activityHandler.removeMessages(pushState);
         if (state == STATE_UPLOAD_ID_NO) {
             if (UPLOAD_ID_SUCCESS) {
                 pushState = STATE_NORMAL;
@@ -112,7 +125,10 @@ public class PushHelper {
                         sendPushState(STATE_UPLOAD_ID_FAILURE);
                         return;
                     }
-                    manager.updateChannelId(mContext, channelId, activityHandler, LOAD_DATA);
+                    if(!UPLOAD_ING) {
+                        UPLOAD_ING = true;
+                        manager.updateChannelId(mContext, channelId, activityHandler, LOAD_DATA);
+                    }
                     break;
                 case LOAD_DATA:
                     loadData((CommonResponse) msg.obj);
@@ -129,6 +145,7 @@ public class PushHelper {
      * @param resposne
      */
     private void loadData(CommonResponse resposne) {
+        UPLOAD_ING = false;
         if (resposne.isSuccess()) {
             Logger.d("上传成功");
             UPLOAD_ID_SUCCESS = true;

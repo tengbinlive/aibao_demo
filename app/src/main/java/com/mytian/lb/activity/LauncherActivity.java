@@ -7,15 +7,11 @@ import android.os.Message;
 import android.widget.LinearLayout;
 
 import com.dao.Parent;
-import com.dao.ParentDao;
-import com.igexin.sdk.PushManager;
-import com.igexin.sdk.Tag;
 import com.mytian.lb.AbsActivity;
 import com.mytian.lb.App;
 import com.mytian.lb.R;
 import com.mytian.lb.activityexpand.activity.AnimatedRectLayout;
-
-import java.util.List;
+import com.mytian.lb.push.PushHelper;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -32,12 +28,7 @@ public class LauncherActivity extends AbsActivity {
 
     @Override
     public void EInit() {
-        PushManager.getInstance().initialize(this.getApplicationContext());
-        Tag[] tags = new Tag[1];
-        Tag tag = new Tag();
-        tag.setName("parent");
-        tags[0] = tag;
-        PushManager.getInstance().setTag(this,tags);
+        PushHelper.getInstance().initPush(getApplicationContext());
         super.EInit();
         setSwipeBackEnable(false);
         statue = App.isFirstLunch() ? TO_GUIDE : TO_LOGIN;
@@ -71,12 +62,8 @@ public class LauncherActivity extends AbsActivity {
     }
 
     private void toLogining() {
-        ParentDao parentDao = App.getDaoSession().getParentDao();
-        List<Parent> parents = parentDao.loadAll();
-        int size = parents == null ? 0 : parents.size();
-        if (size > 0) {
-            Parent parent = parents.get(0);
-            App.getInstance().userResult.setParent(parent);
+        Parent parent = App.getInstance().userResult.getParent();
+        if (null != parent) {
             toMain();
         } else {
             Intent intent = new Intent(this, LoginActivity.class);

@@ -24,7 +24,7 @@ android {
 //                GETUI_APP_ID    : "OKVRBL3T7o6rAUqCZ15k39",
 //                GETUI_APP_KEY   : "i1CuskYLy78LU3npj9n6e8",
 //                GETUI_APP_SECRET: "gELuOKx4Mo85sEEmoeDEO3",
-//                PACKAGE_NAME    : applicationId
+//                PACKAGE_NAME    : applicationId 。
 //        ]
     }
 

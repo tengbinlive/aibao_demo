@@ -22,6 +22,7 @@ import com.mytian.lb.fragment.AgreementFragment;
 import com.mytian.lb.fragment.DtnameicFragment;
 import com.mytian.lb.fragment.HabitFragment;
 import com.mytian.lb.fragment.UserFragment;
+import com.mytian.lb.push.PushHelper;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 import java.util.ArrayList;
@@ -83,6 +84,7 @@ public class MainActivity extends AbsActivity {
 
     @Override
     public void EInit() {
+        PushHelper.getInstance().sendPushState(PushHelper.STATE_UPLOAD_ID_NO);
         super.EInit();
         setSwipeBackEnable(false);
         init();

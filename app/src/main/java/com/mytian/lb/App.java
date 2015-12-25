@@ -21,6 +21,7 @@ import com.core.util.ProcessUtil;
 import com.dao.DaoMaster;
 import com.dao.DaoMaster.OpenHelper;
 import com.dao.DaoSession;
+import com.dao.Parent;
 import com.dao.ParentDao;
 import com.mytian.lb.activity.LoginActivity;
 import com.mytian.lb.activityexpand.activity.AnimatedRectLayout;
@@ -34,6 +35,7 @@ import com.orhanobut.logger.Logger;
 import com.squareup.okhttp.OkHttpClient;
 
 import java.io.InputStream;
+import java.util.List;
 
 
 /**
@@ -60,7 +62,7 @@ public class App extends Application {
 
     private BroadcastReceiver connectionReceiver;
 
-    public UserResult userResult = new UserResult();
+    public UserResult userResult;
 
     public String cookie;
 
@@ -210,14 +212,14 @@ public class App extends Application {
             FileDataHelper.initDirectory();
             Logger.i(TAG, "成功初始化APP相关目录.");
 
+            //本地数据库
+            initDAOData();
+
             // 保存当前网络状态(在每次网络通信时可能需要判断当前网络状态)
             setCurrentNetworkStatus(NetworkUtil.getCurrentNextworkState(this));
             Logger.i(TAG, "保存当前网络状态:" + getCurrentNetworkStatus());
             //注册网络状态监听广播
             newConnectionReceiver();
-
-            //本地数据库
-            initDAOData();
 
             if (Constant.DEBUG) {
                 boolean API_STATE = SharedPreferencesHelper.getBoolean(this, "API_STATE", false);
@@ -230,8 +232,21 @@ public class App extends Application {
     private void initDAOData() {
         // 系统配置业务.
         ConfigManager.init(this);
+        //用户信息
+        initUserData();
         //约定
         AgreementDOManager.getInstance().init();
+    }
+
+    private void initUserData(){
+        userResult = new UserResult();
+        ParentDao parentDao = getDaoSession().getParentDao();
+        List<Parent> parents = parentDao.loadAll();
+        int size = parents == null ? 0 : parents.size();
+        if (size > 0) {
+            Parent parent = parents.get(0);
+            App.getInstance().userResult.setParent(parent);
+        }
     }
 
     //创建并注册网络状态监听广播
@@ -241,7 +256,7 @@ public class App extends Application {
             public void onReceive(Context context, Intent intent) {
                 setCurrentNetworkStatus(NetworkUtil.getCurrentNextworkState(context));
                 if (PushHelper.STATE_NORMAL != PushHelper.getInstance().pushState && !PushHelper.getInstance().UPLOAD_ID_SUCCESS) {
-                    PushHelper.getInstance().initPush(getApplicationContext());
+                    PushHelper.getInstance().bindPush(getApplicationContext());
                 }
             }
         };
