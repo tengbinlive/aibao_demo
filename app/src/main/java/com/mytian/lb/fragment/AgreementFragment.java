@@ -140,7 +140,7 @@ public class AgreementFragment extends AbsFragment {
             user_name.setText(name);
             user_phone.setText(phone);
         }
-        Glide.with(this).load(head)
+        Glide.with(mContext).load(head)
                 .asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .placeholder(R.mipmap.default_head)

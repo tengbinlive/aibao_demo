@@ -131,7 +131,7 @@ public class HabitFragment extends AbsFragment {
             user_name.setText(name);
             user_phone.setText(phone);
         }
-        Glide.with(this).load(head).asBitmap().diskCacheStrategy(DiskCacheStrategy.ALL)
+        Glide.with(mContext).load(head).asBitmap().diskCacheStrategy(DiskCacheStrategy.ALL)
                 .placeholder(R.mipmap.default_head).centerCrop().into(user_icon);
         arrayList = null;
         mAdapter.refresh(arrayList);

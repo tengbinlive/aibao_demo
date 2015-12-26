@@ -287,7 +287,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
             birthdayValue.setHint("选下咯");
         }
         user_icon.setVisibility(View.VISIBLE);
-        Glide.with(App.getInstance()).load(head).asBitmap()
+        Glide.with(mContext).load(head).asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .centerCrop().placeholder(R.mipmap.default_head).into(user_icon);
     }
@@ -580,7 +580,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         }
         if (isUpdateSuccess == 2) {
             String head = App.getInstance().userResult.getParent().getHeadThumb();
-            Glide.with(App.getInstance()).load(head).asBitmap()
+            Glide.with(mContext).load(head).asBitmap()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .centerCrop().placeholder(R.mipmap.default_head).into(user_icon);
         }

@@ -240,7 +240,7 @@ public class AddFollowActivity extends AbsActivity {
         final EditText desc_et = (EditText) convertView.findViewById(R.id.desc_et);
         ImageView background = (ImageView) convertView.findViewById(R.id.background);
 
-        Glide.with(this).load(followUser.getBaby().getHeadThumb()).asBitmap().into(background);
+        Glide.with(this.getBaseContext()).load(followUser.getBaby().getHeadThumb()).asBitmap().into(background);
         String nameStr = followUser.getBaby().getAlias();
         String phoneStr = followUser.getBaby().getPhone();
         if (StringUtil.isNotBlank(nameStr)) {
