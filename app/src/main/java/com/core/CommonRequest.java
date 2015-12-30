@@ -5,6 +5,7 @@ import com.alibaba.fastjson.TypeReference;
 import com.android.volley.*;
 import com.android.volley.Response.Listener;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.core.openapi.OpenApiBaseRequestAdapter;
 import com.mytian.lb.App;
 import com.mytian.lb.Constant;
 import com.core.enums.CodeEnum;
@@ -16,7 +17,12 @@ import com.core.util.CommonUtil;
 import com.orhanobut.logger.Logger;
 
 import org.apache.http.conn.ConnectTimeoutException;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.UnknownHostException;
@@ -34,6 +40,8 @@ public class CommonRequest extends Request<CommonResponse> {
 
     private static final String TAG = CommonRequest.class.getSimpleName();
 
+    private MultipartEntity entity = new MultipartEntity();
+
     /**
      * 本次请求的参数(进行处理后,已生成签名)
      */
@@ -43,11 +51,6 @@ public class CommonRequest extends Request<CommonResponse> {
      * 是否保留为转换的原始返回数据
      */
     private boolean mRawData = false;
-
-    /**
-     * 本次请求的参数(进行处理后,已生成签名)
-     */
-    private HashMap<String, String> mParam;
 
     /**
      * 返回的数据格式
@@ -119,7 +122,7 @@ public class CommonRequest extends Request<CommonResponse> {
         return response;
     }
 
-    public CommonRequest(OpenApiRequestInterface paramObj, final CommonCallback callback) {
+    public CommonRequest(OpenApiBaseRequestAdapter paramObj, final CommonCallback callback) {
         // 调用父类构造方法
         super(Method.POST, OpenApi.getApiPath(paramObj.getMethod()), new Response.ErrorListener() {
             // 通讯错误时的执行代码
@@ -133,8 +136,12 @@ public class CommonRequest extends Request<CommonResponse> {
             CommonDataLoader.callback(callback, new CommonResponse(CodeEnum.PARAM_REQUIRED));
             return;
         }
-        // 保存要传的参数, 发送时会调用getParams()方法获取
-        mParam = OpenApiParamHelper.PrepareParam2API(paramObj);
+        // 保存要传的参数, 发送时会调用getParams()方法获取 本次请求的参数(进行处理后,已生成签名)
+        HashMap<String, String> mParam = OpenApiParamHelper.PrepareParam2API(paramObj);
+        // flie 文件参数
+        HashMap<String, File> mFileParts  = paramObj.getParamFileMap();
+        // 编译参数
+        buildMultipartEntity(mParam,mFileParts);
         // 通讯正确的执行代码
         mListener = new Response.Listener<CommonResponse>() {
             @Override
@@ -154,16 +161,15 @@ public class CommonRequest extends Request<CommonResponse> {
         mTypeToken = paramObj.getParseTypeToken();
 
         if (Constant.DEBUG) {
+            long l = entity.getContentLength();
             StringBuffer buf = new StringBuffer();
-            StringBuffer buf2 = new StringBuffer();
-            buf2.append(OpenApi.getApiPath(paramObj.getMethod()));
-            buf2.append("?");
             for (String key : mParam.keySet()) {
                 buf.append(key).append("=").append(mParam.get(key)).append("\n");
-                buf2.append(key).append("=").append(mParam.get(key)).append("&");
             }
             Logger.d(buf.toString());
-            Logger.d(buf2.toString());
+            Logger.d(mFileParts.size() + "个File，长度：" + l);
+            Logger.d(mParam.size() + "个String，长度：" + l);
+            Logger.d(entity.toString());
         }
 
         // 设置该Request正确创建
@@ -177,7 +183,7 @@ public class CommonRequest extends Request<CommonResponse> {
      * @param handler        返回后的回调Handler
      * @param handlerMsgCode 返回后的回调Handler所需要的what参数值
      */
-    public CommonRequest(OpenApiRequestInterface paramObj, final Handler handler, final int handlerMsgCode) {
+    public CommonRequest(OpenApiBaseRequestAdapter paramObj, final Handler handler, final int handlerMsgCode) {
         // 调用父类构造方法
         super(Method.POST, OpenApi.getApiPath(paramObj.getMethod()), new Response.ErrorListener() {
             // 通讯错误时的执行代码
@@ -191,8 +197,12 @@ public class CommonRequest extends Request<CommonResponse> {
             CommonUtil.delivery2Handler(handler, handlerMsgCode, new CommonResponse(CodeEnum.PARAM_REQUIRED));
             return;
         }
-        // 保存要传的参数, 发送时会调用getParams()方法获取
-        mParam = OpenApiParamHelper.PrepareParam2API(paramObj);
+        // 保存要传的参数, 发送时会调用getParams()方法获取 本次请求的参数(进行处理后,已生成签名)
+        HashMap<String, String> mParam = OpenApiParamHelper.PrepareParam2API(paramObj);
+        // flie 文件参数
+        HashMap<String, File> mFileParts  = paramObj.getParamFileMap();
+        // 编译参数
+        buildMultipartEntity(mParam,mFileParts);
         // 通讯正确的执行代码
         mListener = new Response.Listener<CommonResponse>() {
             @Override
@@ -209,19 +219,6 @@ public class CommonRequest extends Request<CommonResponse> {
 
         // 数据转换目标类型
         mTypeToken = paramObj.getParseTypeToken();
-
-        if (Constant.DEBUG) {
-            StringBuffer buf = new StringBuffer();
-            StringBuffer buf2 = new StringBuffer();
-            buf2.append(OpenApi.getApiPath(paramObj.getMethod()));
-            buf2.append("?");
-            for (String key : mParam.keySet()) {
-                buf.append(key).append("=").append(mParam.get(key)).append("\n");
-                buf2.append(key).append("=").append(mParam.get(key)).append("&");
-            }
-            Logger.d(buf.toString());
-            Logger.d(buf2.toString());
-        }
 
         // 设置该Request正确创建
         mValid = true;
@@ -285,9 +282,48 @@ public class CommonRequest extends Request<CommonResponse> {
         }
     }
 
+    private void buildMultipartEntity(HashMap<String, String> mParam,HashMap<String, File> mFileParts) {
+        //添加字符串参数
+        if (mParam != null && mParam.size() > 0) {
+            Iterator iter = mParam.entrySet().iterator();
+            while (iter.hasNext()) {
+                Map.Entry entry = (Map.Entry) iter.next();
+                String key = entry.getKey().toString();
+                String val = entry.getValue().toString();
+                try {
+                    entity.addPart(key, new StringBody(val));
+                } catch (UnsupportedEncodingException e) {
+                }
+            }
+        }
+
+        //添加文件参数
+        if (mFileParts != null && mFileParts.size() > 0) {
+            Iterator iter = mFileParts.entrySet().iterator();
+            while (iter.hasNext()) {
+                Map.Entry entry = (Map.Entry) iter.next();
+                String key = entry.getKey().toString();
+                File val = (File) entry.getValue();
+                entity.addPart(key, new FileBody(val));
+            }
+        }
+
+    }
+
     @Override
-    protected Map<String, String> getParams() throws AuthFailureError {
-        return mParam;
+    public String getBodyContentType() {
+        return entity.getContentType().getValue();
+    }
+
+    @Override
+    public byte[] getBody() throws AuthFailureError {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        try {
+            entity.writeTo(bos);
+        } catch (IOException e) {
+            VolleyLog.e("IOException writing to ByteArrayOutputStream");
+        }
+        return bos.toByteArray();
     }
 
     @Override

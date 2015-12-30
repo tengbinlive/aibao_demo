@@ -1,6 +1,7 @@
 package com.mytian.lb.manager;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.PixelFormat;
@@ -124,28 +125,28 @@ public final class ShareManager {
             @Override
             public void onClick(View view) {
                 dialogDismiss();
-                sendShare(PlatformEnum.QQ_TENCENT);
+                sendShare(activity,PlatformEnum.QQ_TENCENT);
             }
         });
         share_weibo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialogDismiss();
-                sendShare(PlatformEnum.SINA);
+                sendShare(activity,PlatformEnum.SINA);
             }
         });
         share_weixin_friend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialogDismiss();
-                sendShare(PlatformEnum.WEIXIN_TIMELINE);
+                sendShare(activity,PlatformEnum.WEIXIN_TIMELINE);
             }
         });
         share_weixin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialogDismiss();
-                sendShare(PlatformEnum.WEIXIN);
+                sendShare(activity,PlatformEnum.WEIXIN);
             }
         });
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -196,11 +197,11 @@ public final class ShareManager {
      *
      * @param type
      */
-    private void sendShare(PlatformEnum type) {
+    private void sendShare(Context context,PlatformEnum type) {
         if (shareParams == null) {
             return;
         }
-        Platform platform = ShareSDK.getPlatform(type.getCode());
+        Platform platform = ShareSDK.getPlatform(context,type.getCode());
         platform.share(shareParams);
     }
 }

@@ -11,6 +11,11 @@ package com.core.openapi;
 public enum OpenApiMethodEnum {
 
     /**
+     * 上传头像
+     */
+    LOAD_UPDATEPARENTPORTRAIT("myt_file/portraitAction_updateParentPortrait.do", "openapi_json", OpenApi.URL_TYPE_DATA),
+
+    /**
      * 爱宝app更新
      */
     APP_UPGRADE("myt_file/clientPushAction_getLBAppInfo.do", "openapi_json", OpenApi.URL_TYPE_DATA),

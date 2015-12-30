@@ -1,12 +1,11 @@
 package com.mytian.lb.bean.push;
 
-import com.core.openapi.OpenApiBaseRequest;
-import com.core.openapi.OpenApiRequestInterface;
+import com.core.openapi.OpenApiBaseRequestAdapter;
 import com.core.util.StringUtil;
 
 import java.util.HashMap;
 
-public class UpdateChannelidParam extends OpenApiBaseRequest implements OpenApiRequestInterface {
+public class UpdateChannelidParam extends OpenApiBaseRequestAdapter {
 
     private String uid;
 

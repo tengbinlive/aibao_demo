@@ -1,12 +1,12 @@
 package com.mytian.lb.bean.follow;
 
-import com.core.openapi.OpenApiBaseRequest;
+import com.core.openapi.OpenApiBaseRequestAdapter;
 import com.core.openapi.OpenApiRequestInterface;
 import com.core.util.StringUtil;
 
 import java.util.HashMap;
 
-public class FollowAddParam extends OpenApiBaseRequest implements OpenApiRequestInterface {
+public class FollowAddParam extends OpenApiBaseRequestAdapter{
 
     private String token;
 

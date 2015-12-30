@@ -360,11 +360,11 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         if (StringUtil.isNotBlank(birthday)) {
             param.setBirthday(birthdayDate.getTimeInMillis());
         }
-        if (null != headIcon) {
-            byte[] bmData = Utils.Bitmap2Bytes(headIcon);
-            String pict = Utils.byte2hex(bmData);
-            param.setHeadThumb(pict);
-        }
+//        if (null != headIcon) {
+//            byte[] bmData = Utils.Bitmap2Bytes(headIcon);
+//            String pict = Utils.byte2hex(bmData);
+//            param.setHeadThumb(pict);
+//        }
         manager.updateParent(mContext, param, activityHandler, UPDATE_PARENT);
     }
 
@@ -553,6 +553,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
     private static final int UPDATE_PARENT = 0x04;//信息补全
     private static final int COUNT_MAX = 15;//加载数据最大值
     private static final int ANIMATION = 0x03;//user layout
+    private static final int UPDATE_PARENTPORTRAIT = 0x05;//更新头像
     private Handler activityHandler = new Handler() {
         public void handleMessage(Message msg) {
             int what = msg.what;
@@ -563,6 +564,9 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
                     break;
                 case UPDATE_PARENT:
                     loadUpdate((CommonResponse) msg.obj);
+                    break;
+                case UPDATE_PARENTPORTRAIT:
+                    loadUpdateParentPortrait((CommonResponse) msg.obj);
                     break;
                 case ANIMATION:
                     userAnimation(true);
@@ -610,6 +614,14 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
             ParentDao dao = App.getDaoSession().getParentDao();
             dao.deleteAll();
             dao.insertInTx(App.getInstance().userResult.getParent());
+        }
+    }
+
+    private void loadUpdateParentPortrait(CommonResponse resposne) {
+        if (resposne.isSuccess()) {
+            CommonUtil.showToast(resposne.getMsg());
+        }else{
+            CommonUtil.showToast(resposne.getMsg());
         }
     }
 
@@ -719,6 +731,8 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
                     headIcon = BitmapFactory.decodeFile(headPaht);
                     user_icon.setImageBitmap(headIcon);
                     isUpdateSuccess = 2;
+                    UserManager manager = new UserManager();
+                    manager.updateParentPortrait(mContext,new File(headPaht),activityHandler,UPDATE_PARENTPORTRAIT);
                 }
             }
         }

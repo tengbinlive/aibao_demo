@@ -45,7 +45,7 @@ public class Constant {
 	public static class WeiXin {
 
 		/** 微信-应用唯一标识 */
-		public static final String APP_ID = "wxaf410328237f1376";
+		public static final String APP_ID = "wx25f63c29962b8d0b";
 
 	}
 

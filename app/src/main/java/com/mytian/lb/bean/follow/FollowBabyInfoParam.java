@@ -1,12 +1,11 @@
 package com.mytian.lb.bean.follow;
 
-import com.core.openapi.OpenApiBaseRequest;
-import com.core.openapi.OpenApiRequestInterface;
+import com.core.openapi.OpenApiBaseRequestAdapter;
 import com.core.util.StringUtil;
 
 import java.util.HashMap;
 
-public class FollowBabyInfoParam extends OpenApiBaseRequest implements OpenApiRequestInterface {
+public class FollowBabyInfoParam extends OpenApiBaseRequestAdapter {
 
     private String token;
 

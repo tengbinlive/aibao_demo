@@ -3,13 +3,16 @@ package com.mytian.lb.bean.user;
 import com.core.openapi.OpenApiBaseRequestAdapter;
 import com.core.util.StringUtil;
 
+import java.io.File;
 import java.util.HashMap;
 
-public class SysAppUpgradeParam extends OpenApiBaseRequestAdapter {
+public class UpdateParentPortraitParam extends OpenApiBaseRequestAdapter {
 
     private String uid;
 
     private String token;
+
+    private File headPortrait;
 
     private String client_type;
 
@@ -29,6 +32,14 @@ public class SysAppUpgradeParam extends OpenApiBaseRequestAdapter {
         this.token = token;
     }
 
+    public File getHeadPortrait() {
+        return headPortrait;
+    }
+
+    public void setHeadPortrait(File headPortrait) {
+        this.headPortrait = headPortrait;
+    }
+
     public String getClient_type() {
         return client_type;
     }
@@ -41,7 +52,6 @@ public class SysAppUpgradeParam extends OpenApiBaseRequestAdapter {
     public boolean validate() {
         if (StringUtil.isBlank(this.uid)) return false;
         if (StringUtil.isBlank(this.token)) return false;
-        if (StringUtil.isBlank(this.client_type)) return false;
         return true;
     }
 
@@ -56,10 +66,17 @@ public class SysAppUpgradeParam extends OpenApiBaseRequestAdapter {
     }
 
     @Override
+    public void fill2FileMap(HashMap<String, File> param, boolean includeEmptyAttr) {
+        if (includeEmptyAttr || (!includeEmptyAttr && null != headPortrait))
+            param.put("headPortrait", headPortrait);
+    }
+
+    @Override
     public String toString() {
-        return "SysAppUpgradeParam{" +
+        return "UpdateParentPortraitParam{" +
                 "uid='" + uid + '\'' +
                 ", token='" + token + '\'' +
+                ", headPortrait=" + headPortrait +
                 ", client_type='" + client_type + '\'' +
                 '}';
     }

@@ -35,6 +35,7 @@ public class OpenApiParser {
      */
     public static Object parseFromJson(String str, TypeReference<?> typeToken, CommonResponse response, boolean rawData) {
         Object obj = null;
+        String mesg = "";
         if (str != null) {
             try {
                 if (rawData) response.setRawData(str);
@@ -42,7 +43,7 @@ public class OpenApiParser {
                 JSONObject jsonObject = JSON.parseObject(str);
 
                 String code = jsonObject.getString(JSON_ELEMENT_CODE);
-                String mesg = jsonObject.getString(JSON_ELEMENT_MESG);
+                mesg = jsonObject.getString(JSON_ELEMENT_MESG);
 
                 // 先判断code
                 if (StringUtil.isNotBlank(code) && JSON_VALUE_OUT_CODE.equals(code)) {
@@ -65,13 +66,15 @@ public class OpenApiParser {
             } catch (Exception e) {
                 response.setData(null);
                 response.setCode(CodeEnum.EXCEPTION.getCode());
-                response.setMsg(e.getLocalizedMessage());
+                String mes = StringUtil.isBlank(mesg)?e.getLocalizedMessage():mesg;
+                response.setMsg(mes);
                 Logger.d(str);
             } catch (OutOfMemoryError e) {
                 System.gc();
                 response.setData(null);
                 response.setCode(CodeEnum.EXCEPTION.getCode());
-                response.setMsg(e.getLocalizedMessage());
+                String mes = StringUtil.isBlank(mesg)?e.getLocalizedMessage():mesg;
+                response.setMsg(mes);
                 Logger.d(str);
             }
         }
