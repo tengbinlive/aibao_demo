@@ -118,10 +118,11 @@ public class ResetPassWordActivity extends AbsActivity {
 
     private void loadLogin(CommonResponse resposne) {
         if (resposne.isSuccess()) {
-            App.getInstance().userResult = (UserResult) resposne.getData();
+            UserResult result = (UserResult) resposne.getData();
+            App.getInstance().setUserResult(result);
             ParentDao dao = App.getDaoSession().getParentDao();
             dao.deleteAll();
-            dao.insertInTx(App.getInstance().userResult.getParent());
+            dao.insertInTx(result.getParent());
             toMainActivity();
         } else {
             CommonUtil.showToast(resposne.getMsg());

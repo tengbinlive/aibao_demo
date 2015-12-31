@@ -33,8 +33,8 @@ public class AgreementManager {
     public void sendAgreement(Context context, String babyUid, long time, String appointId, final Handler handler, final int handlerMsgCode) {
 
         AgreementParam param = new AgreementParam();
-        param.setUid(App.getInstance().userResult.getParent().getUid());
-        param.setToken(App.getInstance().userResult.getParent().getToken());
+        param.setUid(App.getInstance().getUserResult().getParent().getUid());
+        param.setToken(App.getInstance().getUserResult().getParent().getToken());
         param.setBabyUid(babyUid);
         param.setTime(time);
         param.setAppointId(appointId);
@@ -61,8 +61,8 @@ public class AgreementManager {
     public void cancleAgreement(Context context, String babyUid, String appointId, final Handler handler, final int handlerMsgCode) {
 
         AgreementParam param = new AgreementParam();
-        param.setUid(App.getInstance().userResult.getParent().getUid());
-        param.setToken(App.getInstance().userResult.getParent().getToken());
+        param.setUid(App.getInstance().getUserResult().getParent().getUid());
+        param.setToken(App.getInstance().getUserResult().getParent().getToken());
         param.setBabyUid(babyUid);
         param.setAppointId(appointId);
 

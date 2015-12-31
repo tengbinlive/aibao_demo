@@ -62,7 +62,7 @@ public class LauncherActivity extends AbsActivity {
     }
 
     private void toLogining() {
-        Parent parent = App.getInstance().userResult.getParent();
+        Parent parent = App.getInstance().getUserResult().getParent();
         if (null != parent) {
             toMain();
         } else {

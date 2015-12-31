@@ -63,9 +63,25 @@ public class App extends Application {
 
     private BroadcastReceiver connectionReceiver;
 
-    public UserResult userResult;
+    private UserResult userResult;
 
-    public String cookie;
+    private String cookie;
+
+    public String getCookie() {
+        return cookie;
+    }
+
+    public void setCookie(String cookie) {
+        this.cookie = cookie;
+    }
+
+    public UserResult getUserResult() {
+        return userResult;
+    }
+
+    public void setUserResult(UserResult userResult) {
+        this.userResult = userResult;
+    }
 
     /**
      * 获得本类的一个实例

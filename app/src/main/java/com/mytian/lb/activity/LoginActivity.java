@@ -114,8 +114,8 @@ public class LoginActivity extends AnimatedRectActivity {
         mInflater = LayoutInflater.from(this);
         ButterKnife.bind(this);
         setStatusBar();
-        if(App.getInstance().userResult.getParent()!=null) {
-            String phone = App.getInstance().userResult.getParent().getPhone();
+        if(App.getInstance().getUserResult().getParent()!=null) {
+            String phone = App.getInstance().getUserResult().getParent().getPhone();
             if (StringUtil.isNotBlank(phone)) {
                 phoneEt.setText(phone);
                 phoneEt.setSelection(phone.length());
@@ -177,10 +177,11 @@ public class LoginActivity extends AnimatedRectActivity {
     private void loadLogin(CommonResponse resposne) {
         dialogDismiss();
         if (resposne.isSuccess()) {
-            App.getInstance().userResult = (UserResult) resposne.getData();
+            UserResult result = (UserResult) resposne.getData();
+            App.getInstance().setUserResult(result);
             ParentDao dao = App.getDaoSession().getParentDao();
             dao.deleteAll();
-            dao.insertInTx(App.getInstance().userResult.getParent());
+            dao.insertInTx(result.getParent());
             toMain();
         } else {
             CommonUtil.showToast(resposne.getMsg());

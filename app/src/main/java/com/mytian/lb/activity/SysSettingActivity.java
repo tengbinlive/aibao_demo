@@ -75,7 +75,7 @@ public class SysSettingActivity extends AbsActivity {
     @OnClick(R.id.reset_password_bt)
     void toResetPassword() {
         Intent intent = new Intent(this, ResetPassWordActivity.class);
-        String phone = App.getInstance().userResult.getParent().getPhone();
+        String phone = App.getInstance().getUserResult().getParent().getPhone();
         if (StringUtil.isNotBlank(phone) && StringUtil.checkMobile(phone)) {
             intent.putExtra("phone", phone);
         }

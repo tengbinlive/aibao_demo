@@ -264,7 +264,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
     }
 
     private void setUserInfo() {
-        Parent parent = App.getInstance().userResult.getParent();
+        Parent parent = App.getInstance().getUserResult().getParent();
         String name = parent.getAlias();
         boolean isName = StringUtil.isBlank(name);
         if (isName) {
@@ -342,7 +342,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
             return;
         }
 
-        int sex = App.getInstance().userResult.getParent().getSex();
+        int sex = App.getInstance().getUserResult().getParent().getSex();
         if (woman_bt.isChecked()) {
             sex = WomanOrManEnum.WOMAN.getCode();
         } else if (man_bt.isChecked()) {
@@ -439,7 +439,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         revealAnim = createViewScale1(change_bt);
         animList.add(revealAnim);
 
-        int sex = App.getInstance().userResult.getParent().getSex();
+        int sex = App.getInstance().getUserResult().getParent().getSex();
 
         if (WomanOrManEnum.WOMAN.getCode() == sex) {
             woman_bt.setChecked(true);
@@ -583,7 +583,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
             headIcon = null;
         }
         if (isUpdateSuccess == 2) {
-            String head = App.getInstance().userResult.getParent().getHeadThumb();
+            String head = App.getInstance().getUserResult().getParent().getHeadThumb();
             Glide.with(mContext).load(head).asBitmap()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .centerCrop().placeholder(R.mipmap.default_head).into(user_icon);
@@ -603,17 +603,17 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
                 nameValue.setText("");
                 nameValue.setHint(name);
                 user_name.setText(name);
-                App.getInstance().userResult.getParent().setAlias(name);
+                App.getInstance().getUserResult().getParent().setAlias(name);
             }
             if (StringUtil.isNotBlank(birthday)) {
                 birthdayValue.setText("");
                 birthdayValue.setHint(birthday);
-                App.getInstance().userResult.getParent().setBirthday(birthdayDate.getTimeInMillis());
+                App.getInstance().getUserResult().getParent().setBirthday(birthdayDate.getTimeInMillis());
             }
-            App.getInstance().userResult.getParent().setSex(user_gender);
+            App.getInstance().getUserResult().getParent().setSex(user_gender);
             ParentDao dao = App.getDaoSession().getParentDao();
             dao.deleteAll();
-            dao.insertInTx(App.getInstance().userResult.getParent());
+            dao.insertInTx(App.getInstance().getUserResult().getParent());
         }
     }
 
@@ -733,6 +733,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
                     isUpdateSuccess = 2;
                     UserManager manager = new UserManager();
                     manager.updateParentPortrait(mContext,new File(headPaht),activityHandler,UPDATE_PARENTPORTRAIT);
+//                    manager.updateParentPortrait(mContext,new File(headPaht) );
                 }
             }
         }

@@ -5,30 +5,26 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
-import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.dao.Parent;
+import com.core.CommonResponse;
+import com.core.util.CommonUtil;
+import com.core.util.StringUtil;
 import com.dao.ParentDao;
 import com.gitonway.lee.niftymodaldialogeffects.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.NiftyDialogBuilder;
 import com.mytian.lb.AbsActivity;
 import com.mytian.lb.App;
-import com.mytian.lb.Constant;
 import com.mytian.lb.R;
 import com.mytian.lb.activityexpand.activity.AnimatedRectLayout;
 import com.mytian.lb.bean.user.UserResult;
 import com.mytian.lb.helper.AnimationHelper;
 import com.mytian.lb.helper.SMSContentObserver;
-import com.mytian.lb.helper.SharedPreferencesHelper;
 import com.mytian.lb.manager.LoginManager;
 import com.mytian.lb.mview.EditTextWithDelete;
-import com.core.CommonResponse;
-import com.core.util.CommonUtil;
-import com.core.util.StringUtil;
 import com.rey.material.widget.CheckBox;
 
 import java.util.Timer;
@@ -128,10 +124,11 @@ public class RegisterActivity extends AbsActivity {
 
     private void loadLogin(CommonResponse resposne) {
         if (resposne.isSuccess()) {
-            App.getInstance().userResult = (UserResult) resposne.getData();
+            UserResult result = (UserResult) resposne.getData();
+            App.getInstance().setUserResult(result);
             ParentDao dao = App.getDaoSession().getParentDao();
             dao.deleteAll();
-            dao.insertInTx(App.getInstance().userResult.getParent());
+            dao.insertInTx(result.getParent());
             toMainActivity();
         } else {
             CommonUtil.showToast(resposne.getMsg());
@@ -175,7 +172,7 @@ public class RegisterActivity extends AbsActivity {
             return;
         }
         dialogShow(R.string.register_ing);
-        loginManager.register(this,phone,verificationCode,password,activityHandler,REGISTER);
+        loginManager.register(this, phone, verificationCode, password, activityHandler, REGISTER);
     }
 
     private void toMainActivity() {
@@ -243,13 +240,13 @@ public class RegisterActivity extends AbsActivity {
         agree_cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b){
+                if (b) {
                     dialogAgreeValue("《用户使用协议》");
                 }
             }
         });
         phone = getIntent().getStringExtra("phone");
-        if(StringUtil.isNotBlank(phone)) {
+        if (StringUtil.isNotBlank(phone)) {
             phone_et.setText(phone);
             phone_et.setSelection(phone.length());
         }

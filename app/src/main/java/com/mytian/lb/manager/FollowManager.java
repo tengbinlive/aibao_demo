@@ -39,11 +39,11 @@ public class FollowManager {
     public void followList(Context context, String currentPage, String isFocus, final Handler handler, final int handlerMsgCode) {
 
         FollowListParam param = new FollowListParam();
-        param.setUid(App.getInstance().userResult.getParent().getUid());
-        param.setToken(App.getInstance().userResult.getParent().getToken());
+        param.setUid(App.getInstance().getUserResult().getParent().getUid());
+        param.setToken(App.getInstance().getUserResult().getParent().getToken());
         param.setClient_type("1");//0 MB端, 1 LB端
         param.setCurrentPage(currentPage);
-        param.setParentId(App.getInstance().userResult.getParent().getUid());
+        param.setParentId(App.getInstance().getUserResult().getParent().getUid());
         param.setIsFocus(isFocus);
         // 接口参数
         param.setMethod(OpenApiMethodEnum.LOAD_FOLLOW_LIST);
@@ -66,11 +66,11 @@ public class FollowManager {
     public void followAgree(Context context, String babyId, final Handler handler, final int handlerMsgCode) {
 
         FollowAgreeParam param = new FollowAgreeParam();
-        param.setUid(App.getInstance().userResult.getParent().getUid());
-        param.setToken(App.getInstance().userResult.getParent().getToken());
+        param.setUid(App.getInstance().getUserResult().getParent().getUid());
+        param.setToken(App.getInstance().getUserResult().getParent().getToken());
         param.setClient_type("1");//0 MB端, 1 LB端
         param.setBabyId(babyId);
-        param.setParentId(App.getInstance().userResult.getParent().getUid());
+        param.setParentId(App.getInstance().getUserResult().getParent().getUid());
         // 接口参数
         param.setMethod(OpenApiMethodEnum.LOAD_FOLLOW_AGREE);
         param.setParseTokenType(new TypeReference<OpenApiSimpleResult>() {
@@ -93,15 +93,15 @@ public class FollowManager {
     public void followAdd(Context context, String babyId, String other_relation, String relationId,final Handler handler, final int handlerMsgCode) {
 
         FollowAddParam param = new FollowAddParam();
-        param.setUid(App.getInstance().userResult.getParent().getUid());
-        param.setToken(App.getInstance().userResult.getParent().getToken());
+        param.setUid(App.getInstance().getUserResult().getParent().getUid());
+        param.setToken(App.getInstance().getUserResult().getParent().getToken());
         param.setClient_type("1");//0 MB端, 1 LB端
         param.setBabyId(babyId);
         param.setRelationId(relationId);
         if(StringUtil.isNotBlank(other_relation)) {
             param.setOther_relation(other_relation);
         }
-        param.setParentId(App.getInstance().userResult.getParent().getUid());
+        param.setParentId(App.getInstance().getUserResult().getParent().getUid());
         // 接口参数
         param.setMethod(OpenApiMethodEnum.LOAD_FOLLOW_ADD);
         param.setParseTokenType(new TypeReference<OpenApiSimpleResult>() {
@@ -123,8 +123,8 @@ public class FollowManager {
     public void followgetbaby(Context context, String phone, final Handler handler, final int handlerMsgCode) {
 
         FollowBabyInfoParam param = new FollowBabyInfoParam();
-        param.setUid(App.getInstance().userResult.getParent().getUid());
-        param.setToken(App.getInstance().userResult.getParent().getToken());
+        param.setUid(App.getInstance().getUserResult().getParent().getUid());
+        param.setToken(App.getInstance().getUserResult().getParent().getToken());
         param.setClient_type("1");//0 MB端, 1 LB端
         param.setPhone(phone);
 
@@ -149,11 +149,11 @@ public class FollowManager {
     public void followcancel(Context context, String babyId, final Handler handler, final int handlerMsgCode) {
 
         FollowCanCelParam param = new FollowCanCelParam();
-        param.setUid(App.getInstance().userResult.getParent().getUid());
-        param.setToken(App.getInstance().userResult.getParent().getToken());
+        param.setUid(App.getInstance().getUserResult().getParent().getUid());
+        param.setToken(App.getInstance().getUserResult().getParent().getToken());
         param.setClient_type("1");//0 MB端, 1 LB端
         param.setBabyId(babyId);
-        param.setParentId(App.getInstance().userResult.getParent().getUid());
+        param.setParentId(App.getInstance().getUserResult().getParent().getUid());
 
         // 接口参数
         param.setMethod(OpenApiMethodEnum.LOAD_FOLLOW_CANCEL);

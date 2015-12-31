@@ -1,19 +1,27 @@
 package com.core;
 
 import android.os.Handler;
+
 import com.alibaba.fastjson.TypeReference;
-import com.android.volley.*;
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.Response;
 import com.android.volley.Response.Listener;
+import com.android.volley.RetryPolicy;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
-import com.core.openapi.OpenApiBaseRequestAdapter;
-import com.mytian.lb.App;
-import com.mytian.lb.Constant;
 import com.core.enums.CodeEnum;
 import com.core.openapi.OpenApi;
+import com.core.openapi.OpenApiBaseRequestAdapter;
 import com.core.openapi.OpenApiParamHelper;
 import com.core.openapi.OpenApiParser;
-import com.core.openapi.OpenApiRequestInterface;
 import com.core.util.CommonUtil;
+import com.mytian.lb.App;
+import com.mytian.lb.Constant;
 import com.orhanobut.logger.Logger;
 
 import org.apache.http.conn.ConnectTimeoutException;
@@ -139,9 +147,9 @@ public class CommonRequest extends Request<CommonResponse> {
         // 保存要传的参数, 发送时会调用getParams()方法获取 本次请求的参数(进行处理后,已生成签名)
         HashMap<String, String> mParam = OpenApiParamHelper.PrepareParam2API(paramObj);
         // flie 文件参数
-        HashMap<String, File> mFileParts  = paramObj.getParamFileMap();
+        HashMap<String, File> mFileParts = paramObj.getParamFileMap();
         // 编译参数
-        buildMultipartEntity(mParam,mFileParts);
+        buildMultipartEntity(mParam, mFileParts);
         // 通讯正确的执行代码
         mListener = new Response.Listener<CommonResponse>() {
             @Override
@@ -200,9 +208,9 @@ public class CommonRequest extends Request<CommonResponse> {
         // 保存要传的参数, 发送时会调用getParams()方法获取 本次请求的参数(进行处理后,已生成签名)
         HashMap<String, String> mParam = OpenApiParamHelper.PrepareParam2API(paramObj);
         // flie 文件参数
-        HashMap<String, File> mFileParts  = paramObj.getParamFileMap();
+        HashMap<String, File> mFileParts = paramObj.getParamFileMap();
         // 编译参数
-        buildMultipartEntity(mParam,mFileParts);
+        buildMultipartEntity(mParam, mFileParts);
         // 通讯正确的执行代码
         mListener = new Response.Listener<CommonResponse>() {
             @Override
@@ -252,8 +260,8 @@ public class CommonRequest extends Request<CommonResponse> {
         // 获得字符串返回结果
         String jsonString;
         try {
-            App.getInstance().cookie  = networkResponse.headers.get(SET_COOKIE_KEY);
-            jsonString = new String(networkResponse.data, HttpHeaderParser.parseCharset(networkResponse.headers,"UTF-8"));
+            App.getInstance().setCookie(networkResponse.headers.get(SET_COOKIE_KEY));
+            jsonString = new String(networkResponse.data, HttpHeaderParser.parseCharset(networkResponse.headers, "UTF-8"));
             Logger.d(jsonString);
             // 转换返回结果为指定对象
             this.doParse(jsonString, mFormat, mTypeToken, response, mRawData);
@@ -282,7 +290,7 @@ public class CommonRequest extends Request<CommonResponse> {
         }
     }
 
-    private void buildMultipartEntity(HashMap<String, String> mParam,HashMap<String, File> mFileParts) {
+    private void buildMultipartEntity(HashMap<String, String> mParam, HashMap<String, File> mFileParts) {
         //添加字符串参数
         if (mParam != null && mParam.size() > 0) {
             Iterator iter = mParam.entrySet().iterator();
@@ -341,17 +349,18 @@ public class CommonRequest extends Request<CommonResponse> {
 
     @Override
     public Map<String, String> getHeaders() throws AuthFailureError {
-        Map<String,String> headers = super.getHeaders();
+        Map<String, String> headers = super.getHeaders();
         if (headers == null) {
-            headers = new HashMap<String,String>();
+            headers = new HashMap<>();
         }
-        String sessionId = App.getInstance().cookie;
-        if(sessionId!=null&&!sessionId.equals("")&&sessionId.length()>0){
+        String sessionId = App.getInstance().getCookie();
+        if (sessionId != null && !sessionId.equals("") && sessionId.length() > 0) {
             Iterator<Map.Entry<String, String>> it = headers.entrySet().iterator();
             while (it.hasNext()) {
                 Map.Entry<String, String> pairs = it.next();
-                if(pairs.getValue()==null){
-                    headers.put(SET_COOKIE_KEY, sessionId);                }
+                if (pairs.getValue() == null) {
+                    headers.put(SET_COOKIE_KEY, sessionId);
+                }
             }
         }
         return headers;

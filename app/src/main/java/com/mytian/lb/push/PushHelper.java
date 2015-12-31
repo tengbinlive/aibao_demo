@@ -66,7 +66,7 @@ public class PushHelper {
 
     private long delayedTime = 60 * 1000;
 
-    public void initPush(Context context){
+    public void initPush(Context context) {
         if (mContext == null) {
             mContext = context;
         }
@@ -98,7 +98,7 @@ public class PushHelper {
 
     public void sendPushState(int state) {
         pushState = state;
-        if (!App.isNetworkAvailable()||StringUtil.isBlank(channelId)) {
+        if (!App.isNetworkAvailable() || StringUtil.isBlank(channelId)) {
             return;
         }
         activityHandler.removeMessages(pushState);
@@ -121,11 +121,11 @@ public class PushHelper {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case STATE_UPLOAD_ID_NO:
-                    if (App.getInstance().userResult.getParent() == null) {
+                    if (App.getInstance().getUserResult().getParent() == null) {
                         sendPushState(STATE_UPLOAD_ID_FAILURE);
                         return;
                     }
-                    if(!UPLOAD_ING) {
+                    if (!UPLOAD_ING) {
                         UPLOAD_ING = true;
                         manager.updateChannelId(mContext, channelId, activityHandler, LOAD_DATA);
                     }
@@ -177,15 +177,15 @@ public class PushHelper {
     }
 
     public void updateContent(String content) {
-        if(Constant.DEBUG) {
+        if (Constant.DEBUG) {
             CommonUtil.showToast(content);
         }
         PushResult result = null;
         try {
             result = JSON.parseObject(content, PushResult.class);
-        }catch (Exception e){
+        } catch (Exception e) {
         }
-        UserResult userResult = App.getInstance().userResult;
+        UserResult userResult = App.getInstance().getUserResult();
         if (null != result && null != userResult && isSend(userResult, result)) {
             if (PushCode.FOLLOW_NOTICE.equals(result.getCmd())) {
                 String info = result.getInfo();

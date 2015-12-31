@@ -133,4 +133,13 @@ public class CommonDataLoader {
         }
     }
 
+    /**
+     * 进行通讯并加载数据.
+     *
+     * @param request 通用请求对象
+     */
+    public void load(Request request) {
+        mRequestQueue.add(request);
+    }
+
 }

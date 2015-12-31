@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Message;
@@ -104,7 +103,7 @@ public final class ShareManager {
         Rect r = drawable.getBounds();
         int width = r.width();
         int height = r.height();
-        Bitmap.Config config = drawable.getOpacity() != PixelFormat.OPAQUE ?Bitmap.Config.ARGB_8888:Bitmap.Config.RGB_565;// 取drawable的颜色格式
+        Bitmap.Config config = drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888 : Bitmap.Config.RGB_565;// 取drawable的颜色格式
         Bitmap bitmap = Bitmap.createBitmap(width, height, config);// 建立对应bitmap
         Canvas canvas = new Canvas(bitmap);// 建立对应bitmap的画布
         drawable.setBounds(0, 0, width, height);
@@ -125,28 +124,28 @@ public final class ShareManager {
             @Override
             public void onClick(View view) {
                 dialogDismiss();
-                sendShare(activity,PlatformEnum.QQ_TENCENT);
+                sendShare(activity, PlatformEnum.QQ_TENCENT);
             }
         });
         share_weibo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialogDismiss();
-                sendShare(activity,PlatformEnum.SINA);
+                sendShare(activity, PlatformEnum.SINA);
             }
         });
         share_weixin_friend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialogDismiss();
-                sendShare(activity,PlatformEnum.WEIXIN_TIMELINE);
+                sendShare(activity, PlatformEnum.WEIXIN_TIMELINE);
             }
         });
         share_weixin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialogDismiss();
-                sendShare(activity,PlatformEnum.WEIXIN);
+                sendShare(activity, PlatformEnum.WEIXIN);
             }
         });
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -197,11 +196,11 @@ public final class ShareManager {
      *
      * @param type
      */
-    private void sendShare(Context context,PlatformEnum type) {
+    private void sendShare(Context context, PlatformEnum type) {
         if (shareParams == null) {
             return;
         }
-        Platform platform = ShareSDK.getPlatform(context,type.getCode());
+        Platform platform = ShareSDK.getPlatform(context, type.getCode());
         platform.share(shareParams);
     }
 }

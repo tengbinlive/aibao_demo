@@ -31,8 +31,8 @@ public class PushMManager {
     public void updateChannelId(Context context, String channelId, final Handler handler, final int handlerMsgCode) {
         UpdateChannelidParam param = new UpdateChannelidParam();
         param.setChannelId(channelId);
-        param.setUid(App.getInstance().userResult.getParent().getUid());
-        param.setToken(App.getInstance().userResult.getParent().getToken());
+        param.setUid(App.getInstance().getUserResult().getParent().getUid());
+        param.setToken(App.getInstance().getUserResult().getParent().getToken());
         // 接口参数
         param.setMethod(OpenApiMethodEnum.LOAD_UPDATECHANNELID);
         param.setParseTokenType(new TypeReference<OpenApiSimpleResult>() {
