@@ -61,9 +61,9 @@
         SortId="1"
         AppKey="884925751"
         AppSecret="b834ce49cf265035cdb515b05553b318"
-        RedirectUrl="http://www.sharesdk.cn"
-        ShareByAppClient="false"
-        Enable="false" />
+        RedirectUrl="http://fir.im/5xv4"
+        ShareByAppClient="true"
+        Enable="true" />
 
     <!--
     	Wechat微信和WechatMoments微信朋友圈的appid是一样的；
@@ -82,7 +82,7 @@
         SortId="4"
         AppId="wx25f63c29962b8d0b"
         AppSecret="feaa0c78bd926b73289d919a00bef279"
-        BypassApproval="false"
+        BypassApproval="true"
         Enable="true" />
 
     <WechatMoments
@@ -90,7 +90,7 @@
         SortId="5"
         AppId="wx25f63c29962b8d0b"
         AppSecret="feaa0c78bd926b73289d919a00bef279"
-        BypassApproval="false"
+        BypassApproval="true"
         Enable="true" />
 
     <WechatFavorite
