@@ -38,7 +38,7 @@
                 android:layout_toRightOf="@+id/head"
                 android:singleLine="true"
                 android:text="user name"
-                android:textColor="@color/textcolor_222"
+                android:textColor="@color/textcolor_theme"
                 android:textSize="@dimen/font_btn" />
 
             <TextView

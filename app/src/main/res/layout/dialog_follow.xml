@@ -64,7 +64,7 @@
              android:background="@null"
              android:gravity="center_vertical"
              android:hint="@string/hint_addfollow"
-             android:textColor="@color/textcolor_222"
+             android:textColor="@color/textcolor_theme"
              android:textColorHint="@color/gray_hint"
              android:textCursorDrawable="@null"
              android:visibility="invisible"

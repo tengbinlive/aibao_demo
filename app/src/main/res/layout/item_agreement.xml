@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/icon"
         android:layout_centerHorizontal="true"
-        android:textColor="@color/textcolor_222"
+        android:textColor="@color/textcolor_theme"
         android:textSize="@dimen/font_small" />
 
 </RelativeLayout>

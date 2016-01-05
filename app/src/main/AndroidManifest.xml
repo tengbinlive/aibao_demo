@@ -111,13 +111,8 @@
 
         <!--好友列表-->
         <activity
-            android:name=".activity.FriendslistActivity"
+            android:name=".activity.UserDetailActivity"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustPan"></activity>
-
-        <!--系统设置-->
-        <activity
-            android:name=".activity.SysSettingActivity"
             android:windowSoftInputMode="adjustPan"></activity>
 
         <!--图片裁剪-->

@@ -38,6 +38,8 @@ import com.squareup.okhttp.OkHttpClient;
 import java.io.InputStream;
 import java.util.List;
 
+import im.fir.sdk.FIR;
+
 
 /**
  * App运行时上下文.
@@ -208,6 +210,7 @@ public class App extends Application {
 
         // 多进程情况只初始化一次
         if (ProcessUtil.isCurMainProcess(getApplicationContext())) {
+            FIR.init(getApplicationContext());
 
             Glide.get(this).register(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory(new OkHttpClient()));
             //初始化自定义Activity管理器

@@ -15,10 +15,11 @@
         android:layout_height="@dimen/actionbar_height"
         android:layout_toLeftOf="@+id/toolbar_intermediate_tv"
         android:drawablePadding="@dimen/content_gap_small"
-        android:gravity="center"
+        android:gravity="center_vertical"
         android:paddingLeft="@dimen/content_left_margin"
         android:singleLine="true"
-        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textColor="@color/textcolor_theme"
         android:textSize="@dimen/font_actionbar" />
 
     <TextView
@@ -29,19 +30,20 @@
         android:drawablePadding="@dimen/content_gap_small"
         android:gravity="center"
         android:singleLine="true"
-        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textColor="@color/textcolor_theme"
         android:textSize="@dimen/font_actionbar_title" />
 
     <cdflynn.android.library.crossview.CrossView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/add_bt"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:padding="@dimen/content_left_margin"
+        android:layout_width="@dimen/actionbar_height"
+        android:layout_height="@dimen/actionbar_height"
+        android:padding="@dimen/content_10dp"
         android:layout_alignParentRight="true"
         android:layout_marginRight="@dimen/content_left_margin"
         android:background="@color/transparent"
         android:elevation="@dimen/elevation_height"
-        app:lineColor="@color/white" />
+        app:lineColor="@color/textcolor_theme" />
 
     <include
         layout="@layout/layout_follow_search"

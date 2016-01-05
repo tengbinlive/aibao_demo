@@ -9,18 +9,19 @@
     <color name="transparent">#00000000</color>
     <color name="gray">#808080</color>
     <color name="match">#f12e40</color>
-    <color name="pink">#ff6699</color>
-    <color name="theme">#ffca0d</color>
+    <color name="pink">#FFFF6E86</color>
+    <color name="theme">#FFFFD704</color>
 
 
     <!--font -->
-    <color name="gray_hint">#bdbdbd</color>
-    <color name="textcolor_222">#222</color>
+    <color name="gray_hint">#8F000000</color>
+    <color name="textcolor_theme">#FF333333</color>
+    <color name="textcolor_match">#DE333333</color>
 
     <!-- dialog -->
     <color name="dialog_bg">#dd000000</color>
 
     <!--progress-->
-    <color name="theme_progress">#f12e40</color>
+    <color name="theme_progress">#FFFF6E86</color>
 
 </resources>

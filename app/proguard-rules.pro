@@ -35,15 +35,16 @@
 -keep public class * extends android.preference.Preference
 -keep public class com.android.vending.licensing.ILicensingService
 
--keepclasseswithmembers class * {                                               # 保持自定义控件类不被混淆
+ # 保持自定义控件类不被混淆
+-keepclasseswithmembers class * {
     public <init>(android.content.Context, android.util.AttributeSet);
 }
-
+# 保持自定义控件类不被混淆
 -keepclasseswithmembers class * {
-    public <init>(android.content.Context, android.util.AttributeSet, int);     # 保持自定义控件类不被混淆
+    public <init>(android.content.Context, android.util.AttributeSet, int);
 }
-
--keepclassmembers class * extends android.app.Activity {                        # 保持自定义控件类不被混淆
+# 保持自定义控件类不被混淆
+-keepclassmembers class * extends android.app.Activity {
    public void *(android.view.View);
 }
 
@@ -51,8 +52,12 @@
 -dontwarn android.support.v4.**
 -dontwarn android.annotation
 -dontwarn com.squareup.**
--dontwarn okio.**
 -keepattributes *Annotation*
+
+#okhttp
+-dontwarn com.squareup.okhttp.**
+-keep class com.squareup.okhttp.** { *;}
+-dontwarn okio.**
 
 -keepclassmembers class fqcn.of.javascript.interface.for.webview {
    public *;
@@ -72,21 +77,30 @@
 -dontwarn com.igexin.**
 -keep class com.igexin.**{*;}
 
-##      sharesdk
+#sharesdk
 -keep class android.net.http.SslError
 -keep class android.webkit.**{*;}
 -keep class cn.sharesdk.**{*;}
 -keep class com.sina.**{*;}
 -keep class m.framework.**{*;}
 
--keepnames class * implements java.io.Serializable
--keep class com.mytian.lb.bean.** { * ; }
+#保持javabean&自定义view&demo数据&eventbus type
 -keep class com.mytian.lb.mview.** { * ; }
+-keep class com.mytian.lb.demodata.** { * ; }
+-keep class com.mytian.lb.event.** { * ; }
 
--keep public class * implements java.io.Serializable {
-    public *;
+#不优化泛型和反射
+-keepattributes Signature
+
+#fastjson
+-dontwarn android.support.**
+-dontwarn com.alibaba.fastjson.**
+-dontskipnonpubliclibraryclassmembers
+-dontskipnonpubliclibraryclasses
+-keep class com.alibaba.fastjson.** { *; }
+-keepclassmembers class * {
+public <methods>;
 }
-
 -keepclassmembers class * implements java.io.Serializable {
     static final long serialVersionUID;
     private static final java.io.ObjectStreamField[] serialPersistentFields;
@@ -94,8 +108,14 @@
     private void readObject(java.io.ObjectInputStream);
     java.lang.Object writeReplace();
     java.lang.Object readResolve();
+    public <fields>;
 }
 
+-keep public class * implements java.io.Serializable {
+    public *;
+}
+
+#glide
 -keep public class * implements com.bumptech.glide.module.GlideModule
 
 -keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
@@ -116,7 +136,6 @@
 -keepclasseswithmembernames class * {
     @butterknife.* <methods>;
 }
-
 
 
 # #  ######## greenDao混淆  ##########

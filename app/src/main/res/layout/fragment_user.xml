@@ -2,46 +2,304 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include
-        android:id="@+id/layout_user"
-        layout="@layout/layout_user" />
 
-    <com.handmark.pulltorefresh.PullToRefreshListView xmlns:ptr="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/listview_pr"
+    <ScrollView
         android:layout_width="match_parent"
-        android:background="@color/theme_bg_layout"
         android:layout_height="match_parent"
-        android:layout_below="@+id/layout_user"
-        android:cacheColorHint="@color/transparent"
+        android:background="@color/white_item"
         android:clipChildren="false"
-        android:clipToPadding="false"
-        android:divider="@null"
-        android:fadingEdge="none"
-        android:fastScrollEnabled="false"
-        android:footerDividersEnabled="false"
-        android:headerDividersEnabled="false"
-        android:listSelector="@color/transparent"
-        android:paddingTop="@dimen/content_gap_small"
-        android:scrollbars="none"
-        android:smoothScrollbar="true"
-        ptr:ptrAnimationStyle="flip"
-        ptr:ptrMode="both" />
+        android:scrollbars="none">
 
-    <TextView
-        android:id="@+id/ll_listEmpty"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/layout_user"
-        android:gravity="center"
-        android:lineSpacingMultiplier="1.4"
-        android:text="@string/list_empty"
-        android:textColor="@color/gray"
-        android:textSize="@dimen/font_medium" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/content_gap"
+            android:paddingBottom="@dimen/content_gap"
+            android:orientation="vertical">
 
-    <include
-        layout="@layout/layout_setting_user"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/layout_user" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:paddingBottom="@dimen/content_gap_big"
+                android:paddingLeft="@dimen/content_gap"
+                android:paddingRight="@dimen/content_gap"
+                android:paddingTop="@dimen/content_gap_big"
+                android:layout_height="wrap_content">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/user_info"
+                    android:textColor="@color/textcolor_theme"
+                    android:textSize="@dimen/font_big"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/change_bt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/button_bg_theme"
+                    android:paddingLeft="@dimen/elevation_height"
+                    android:paddingRight="@dimen/elevation_height"
+                    android:layout_marginBottom="@dimen/elevation_height"
+                    android:text="@string/change_ok"
+                    android:textColor="@color/textcolor_theme"
+                    android:textSize="@dimen/font_medium" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/content_gap"
+                android:layout_marginRight="@dimen/content_gap"
+                android:background="@drawable/light_divide" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/content_gap">
+
+                <TextView
+                    android:id="@+id/head"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/head"
+                    android:textColor="@color/textcolor_match"
+                    android:textSize="@dimen/font_btn" />
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/user_icon"
+                    android:layout_width="@dimen/item_head_size"
+                    android:layout_height="@dimen/item_head_size"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:elevation="@dimen/elevation_height"
+                    app:riv_border_width="0dip"
+                    app:riv_corner_radius="@dimen/corner_radius"
+                    app:riv_mutate_background="true"
+                    app:riv_oval="false"
+                    app:riv_tile_mode="repeat" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/content_gap"
+                android:layout_marginRight="@dimen/content_gap"
+                android:background="@drawable/light_divide" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/content_gap">
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/hint_name"
+                    android:textColor="@color/textcolor_match"
+                    android:textSize="@dimen/font_btn" />
+
+                <EditText
+                    android:id="@+id/name_value"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:gravity="right"
+                    android:singleLine="true"
+                    android:textColor="@color/textcolor_match"
+                    android:textColorHint="@color/gray_hint"
+                    android:textCursorDrawable="@null"
+                    android:textSize="@dimen/font_btn" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/content_gap"
+                android:layout_marginRight="@dimen/content_gap"
+                android:background="@drawable/light_divide" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/content_gap">
+
+                <TextView
+                    android:id="@+id/phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/hint_phone"
+                    android:textColor="@color/textcolor_match"
+                    android:textSize="@dimen/font_btn" />
+
+                <TextView
+                    android:id="@+id/phone_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="right"
+                    android:singleLine="true"
+                    android:textColor="@color/gray_hint"
+                    android:textSize="@dimen/font_btn" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/content_gap"
+                android:layout_marginRight="@dimen/content_gap"
+                android:background="@drawable/light_divide" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/content_gap">
+
+                <TextView
+                    android:id="@+id/birthday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/hint_birthday"
+                    android:textColor="@color/textcolor_match"
+                    android:textSize="@dimen/font_btn" />
+
+                <TextView
+                    android:id="@+id/birthday_value"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:gravity="right"
+                    android:singleLine="true"
+                    android:textColor="@color/textcolor_match"
+                    android:textColorHint="@color/gray_hint"
+                    android:textSize="@dimen/font_btn" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/content_gap"
+                android:layout_marginRight="@dimen/content_gap"
+                android:background="@drawable/light_divide" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/gender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:padding="@dimen/content_gap"
+                    android:text="@string/hint_gender"
+                    android:textColor="@color/textcolor_match"
+                    android:textSize="@dimen/font_btn" />
+
+                <com.rey.material.widget.RadioButton xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/woman_bt"
+                    style="@style/RadioButtonDrawable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginBottom="25dp"
+                    android:layout_marginRight="@dimen/content_gap"
+                    android:layout_toLeftOf="@+id/man_bt"
+                    android:checked="true"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/content_gap_small"
+                    android:text="@string/woman"
+                    android:textColor="@color/gray_hint"
+                    android:textSize="@dimen/font_btn"
+                    app:rbd_strokeColor="@color/theme" />
+
+                <com.rey.material.widget.RadioButton xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/man_bt"
+                    style="@style/RadioButtonDrawable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginBottom="25dp"
+                    android:layout_marginRight="@dimen/content_gap"
+                    android:checked="false"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/content_gap_small"
+                    android:text="@string/man"
+                    android:textColor="@color/gray_hint"
+                    android:textSize="@dimen/font_btn"
+                    app:rbd_strokeColor="@color/theme" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/content_gap"
+                android:layout_marginRight="@dimen/content_gap"
+                android:background="@drawable/light_divide" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:paddingBottom="@dimen/content_gap_big"
+                android:paddingLeft="@dimen/content_gap"
+                android:paddingRight="@dimen/content_gap"
+                android:paddingTop="@dimen/content_gap_big"
+                android:text="@string/setting_sys"
+                android:textColor="@color/textcolor_theme"
+                android:textSize="@dimen/font_big"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/content_gap"
+                android:layout_marginRight="@dimen/content_gap"
+                android:background="@drawable/light_divide" />
+
+            <TextView
+                android:id="@+id/reset_password_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/content_gap"
+                android:text="@string/change_password"
+                android:textColor="@color/textcolor_match"
+                android:textSize="@dimen/font_btn" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/content_gap"
+                android:layout_marginRight="@dimen/content_gap"
+                android:background="@drawable/light_divide" />
+
+            <TextView
+                android:id="@+id/exit_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/content_gap"
+                android:text="@string/exit_account"
+                android:textColor="@color/textcolor_match"
+                android:textSize="@dimen/font_btn" />
+
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

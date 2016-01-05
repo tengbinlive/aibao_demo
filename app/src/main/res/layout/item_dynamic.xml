@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:singleLine="true"
             android:text="user name"
-            android:textColor="@color/textcolor_222"
+            android:textColor="@color/textcolor_theme"
             android:textSize="@dimen/font_btn" />
 
         <TextView
@@ -65,7 +65,7 @@
         android:layout_below="@+id/head"
         android:lineSpacingMultiplier="1.3"
         android:paddingTop="@dimen/content_gap_small"
-        android:textColor="@color/textcolor_222"
+        android:textColor="@color/textcolor_theme"
         android:textSize="@dimen/font_small" />
 </RelativeLayout>
 

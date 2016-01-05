@@ -20,8 +20,8 @@
     <string name="loading">正在加载中</string>
     <string name="logining">正在登录</string>
     <string name="menu_dynamic">动态</string>
-    <string name="menu_agreement">爱的约定</string>
-    <string name="menu_habit">行为养成</string>
+    <string name="menu_follow">关注宝宝</string>
+    <string name="menu_kindle">Kindle</string>
     <string name="menu_user">帐号管理</string>
     <string name="new_follow">新的关注</string>
     <string name="follow_me_user">我关注的人</string>
@@ -48,16 +48,21 @@
     <string name="cancel_attention">取消关注</string>
     <string name="accepat_ing">正在同意</string>
     <string name="cancel_ing">正在取消</string>
-    <string name="select_friends">选择用户</string>
+    <string name="remark">备注</string>
     <string name="habit_executive">执行习惯</string>
     <string name="change_ok">确定修改</string>
+    <string name="change_password">修改密码</string>
+    <string name="exit_account">退出帐号</string>
     <string name="ok">确定</string>
     <string name="woman">女</string>
     <string name="man">男</string>
-    <string name="select_user">请先选择用户</string>
-    <string name="setting_sys">系统设置</string>
+    <string name="setting_sys">设置</string>
     <string name="forgot_password">忘记密码？</string>
     <string name="user_agreement">我已阅读并同意《用户使用协议》</string>
     <string name="save">保存</string>
+    <string name="agreement">爱的约定</string>
+    <string name="habit">习惯养成</string>
+    <string name="user_info">个人信息</string>
+    <string name="head">头像</string>
 
 </resources>

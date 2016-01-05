@@ -1,32 +1,18 @@
 package com.mytian.lb.fragment;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.util.ArrayMap;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewAnimationUtils;
-import android.view.ViewGroup;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
-import android.view.animation.OvershootInterpolator;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -38,46 +24,28 @@ import com.core.util.FileDataHelper;
 import com.core.util.StringUtil;
 import com.dao.Parent;
 import com.dao.ParentDao;
-import com.handmark.pulltorefresh.PullToRefreshBase;
-import com.handmark.pulltorefresh.PullToRefreshListView;
 import com.makeramen.roundedimageview.RoundedImageView;
-import com.mytian.lb.AbsActivity;
 import com.mytian.lb.AbsFragment;
 import com.mytian.lb.App;
 import com.mytian.lb.Constant;
 import com.mytian.lb.R;
-import com.mytian.lb.activity.AddFollowActivity;
 import com.mytian.lb.activity.AuthClipPictureActivity;
-import com.mytian.lb.adapter.UserAdapter;
-import com.mytian.lb.bean.follow.FollowListResult;
-import com.mytian.lb.bean.follow.FollowUser;
+import com.mytian.lb.activity.ResetPassWordActivity;
 import com.mytian.lb.bean.user.UpdateParentParam;
 import com.mytian.lb.enums.WomanOrManEnum;
-import com.mytian.lb.event.PushStateEventType;
-import com.mytian.lb.event.PushUserEventType;
-import com.mytian.lb.event.SettingEventType;
 import com.mytian.lb.helper.AnimationHelper;
-import com.mytian.lb.helper.AnimatorUtils;
-import com.mytian.lb.helper.Utils;
-import com.mytian.lb.manager.FollowManager;
 import com.mytian.lb.manager.UserManager;
 import com.mytian.lb.mview.BottomView;
-import com.mytian.lb.mview.ClipRevealFrame;
-import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
-import com.nineoldandroids.animation.ValueAnimator;
 import com.rey.material.widget.RadioButton;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.BindColor;
-import butterknife.BindDimen;
 import butterknife.OnClick;
 
 public class UserFragment extends AbsFragment implements DatePickerDialog.OnDateSetListener {
@@ -88,12 +56,6 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
     TextView phoneValue;
     @Bind(R.id.birthday_value)
     TextView birthdayValue;
-    @Bind(R.id.integral_value)
-    TextView integralValue;
-    @Bind(R.id.layout_setting)
-    ClipRevealFrame layoutSetting;
-    @Bind(R.id.change_bt)
-    Button change_bt;
     @Bind(R.id.woman_bt)
     RadioButton woman_bt;
     @Bind(R.id.man_bt)
@@ -102,21 +64,6 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
     @BindColor(R.color.theme)
     int accentColor;
     private Calendar birthdayDate;
-
-    public static boolean isSettingShow;
-
-    @Bind(R.id.listview_pr)
-    PullToRefreshListView listview;
-    @Bind(R.id.ll_listEmpty)
-    View llListEmpty;
-
-    private ListView mActualListView;
-    private UserAdapter mAdapter;
-
-    private ArrayMap<String, FollowUser> arrayList;
-    private FollowManager manager = new FollowManager();
-    private int currentPager = 1;
-    private View settingAchor;
 
     /**
      * 图片地址
@@ -139,19 +86,8 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
      */
     private static final int FLAG_CHOOSE_CAMERA = 0x17;
 
-    //user
-    private static boolean isOpenUser;//只执行一次动画
-    @Bind(R.id.user_phone)
-    TextView user_phone;
     @Bind(R.id.user_icon)
     RoundedImageView user_icon;
-    @Bind(R.id.user_name)
-    TextView user_name;
-    @Bind(R.id.layout_user)
-    LinearLayout layout_user;
-    @BindDimen(R.dimen.actionbar_user_height)
-    float EDITEXT_OFFER;
-    private final OvershootInterpolator mInterpolator = new OvershootInterpolator();
 
     private int user_gender = -1;
 
@@ -159,82 +95,13 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
 
     private int isUpdateSuccess;
 
-    private void initListView() {
-
-        listview.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
-            @Override
-            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-                getListData(INIT_LIST);
-            }
-
-            @Override
-            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-                getListData(LOAD_DATA);
-            }
-        });
-
-        listview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mAdapter.closeAllItems();
-            }
-        });
-
-        View headView = mInflater.inflate(R.layout.layout_user_new_messge, null);
-
-        mActualListView = listview.getRefreshableView();
-
-        // Need to use the Actual ListView when registering for Context Menu
-        registerForContextMenu(mActualListView);
-
-        mAdapter = new UserAdapter((AbsActivity) getActivity(), arrayList);
-
-        SwingBottomInAnimationAdapter animationAdapter = new SwingBottomInAnimationAdapter(mAdapter);
-
-        animationAdapter.setAbsListView(mActualListView);
-
-        mActualListView.setAdapter(animationAdapter);
-
-        mActualListView.addHeaderView(headView);
-
-        headView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toAddFollowActivity();
-            }
-        });
-
-    }
-
-    private void getListData(int state) {
-        if (state == INIT_LIST) {
-            currentPager = 1;
-            listview.setMode(PullToRefreshBase.Mode.BOTH);
-            arrayList = null;
-        }
-        manager.followList(getActivity(), "" + currentPager, "1", activityHandler, state);
-    }
-
-    private void toAddFollowActivity() {
-        Intent intent = new Intent(getActivity(), AddFollowActivity.class);
-        startActivity(intent);
-    }
-
     @Override
     public int getContentView() {
         return R.layout.fragment_user;
     }
 
     @Override
-    public void EResetInit() {
-        super.EResetInit();
-        sendActionBarAnim();
-    }
-
-    @Override
     public void EInit() {
-        isSettingShow = false;
-        isOpenUser = false;
         birthdayDate = Calendar.getInstance();
         CompoundButton.OnCheckedChangeListener listener = new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -245,20 +112,13 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
                 }
             }
         };
-
         woman_bt.setOnCheckedChangeListener(listener);
         man_bt.setOnCheckedChangeListener(listener);
-        initListView();
         setUserInfo();
         user_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!isSettingShow) {
-                    settingAchor = view;
-                    toggleShowSetting(view);
-                } else {
-                    selectPict();
-                }
+                selectPict();
             }
         });
     }
@@ -272,59 +132,21 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         } else {
             nameValue.setHint(name);
         }
-        name = !isName ? name : "你猜.";
         String phone = parent.getPhone();
         phone = StringUtil.isNotBlank(phone) ? phone : "...";
         String head = parent.getHeadThumb();
-        user_name.setText(name);
-        user_phone.setText(phone);
         phoneValue.setText(phone);
         long bir = parent.getBirthday();
         if (bir > 0) {
             String birthday = DateUtil.ConverToString(bir, DateUtil.YYYY_MM_DD);
             birthdayValue.setHint(birthday);
         } else {
-            birthdayValue.setHint("选下咯");
+            birthdayValue.setHint("未选择");
         }
         user_icon.setVisibility(View.VISIBLE);
         Glide.with(mContext).load(head).asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .centerCrop().placeholder(R.mipmap.default_head).into(user_icon);
-    }
-
-    public void onEvent(SettingEventType event) {
-        settingAchor = event.mView;
-        toggleShowSetting(event.mView);
-    }
-
-    /**
-     * 线上状态更新
-     *
-     * @param event
-     */
-    public void onEvent(PushStateEventType event) {
-        String babyUid = event.babyUid;
-        if (arrayList != null && arrayList.containsKey(babyUid)) {
-            FollowUser followUser = arrayList.get(babyUid);
-            followUser.setIs_online(event.is_online);
-            arrayList.put(babyUid, followUser);
-            mAdapter.refresh(babyUid, followUser);
-        }
-    }
-
-    public void onEvent(PushUserEventType event) {
-        if (event == null) {
-            return;
-        }
-        if (mAdapter == null) {
-            return;
-        }
-        if (arrayList == null) {
-            arrayList = new ArrayMap<String, FollowUser>();
-        }
-        arrayList.put(event.user.getUid(), event.user);
-        mAdapter.refresh(arrayList);
-        setEmpty();
     }
 
     @OnClick(R.id.change_bt)
@@ -368,209 +190,20 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         manager.updateParent(mContext, param, activityHandler, UPDATE_PARENT);
     }
 
-    /**
-     * 设置界面
-     */
-    public void toggleShowSetting(View v) {
-        int x = layoutSetting.getLeft() + layoutSetting.getRight();
-        int y = 0;
-        float radiusOf = 1f * v.getWidth() / 2f;
-        float radiusFromToRoot = (float) Math.hypot(
-                Math.max(x, layoutSetting.getWidth() - x),
-                Math.max(y, layoutSetting.getHeight() - y));
 
-        if (!isSettingShow) {
-            isSettingShow = true;
-            showMenu(x, y, radiusOf, radiusFromToRoot);
-        } else {
-            isSettingShow = false;
-            hideMenu(x, y, radiusFromToRoot, radiusOf);
-        }
-    }
-
-    private void sendActionBarAnim() {
-        if (!isOpenUser) {
-            isOpenUser = true;
-            activityHandler.sendEmptyMessageDelayed(ANIMATION, 1000);
-        }
-    }
-
-
-    /**
-     * actionbar user info animation
-     */
-    private void userAnimation(boolean is) {
-        ValueAnimator animation = ValueAnimator.ofFloat(is ? 0 : EDITEXT_OFFER, is ? EDITEXT_OFFER : 0);
-        if (is) {
-            animation.setInterpolator(mInterpolator);
-            animation.setDuration(450);
-        } else {
-            animation.setDuration(300);
-        }
-        animation.addListener(new com.nineoldandroids.animation.AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(com.nineoldandroids.animation.Animator animation) {
-                super.onAnimationEnd(animation);
-                getListData(INIT_LIST);
-            }
-        });
-        animation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                float value = (Float) animation.getAnimatedValue();
-                ViewGroup.LayoutParams lp = layout_user.getLayoutParams();
-                lp.height = (int) value;
-                layout_user.setLayoutParams(lp);
-            }
-
-        });
-        animation.start();
-    }
-
-    private void showMenu(int cx, int cy, float startRadius, float endRadius) {
-        List<Animator> animList = new ArrayList<Animator>();
-
-        layoutSetting.setVisibility(View.VISIBLE);
-        Animator revealAnim = createCircularReveal(layoutSetting, cx, cy, startRadius, endRadius);
-        revealAnim.setInterpolator(new AccelerateDecelerateInterpolator());
-        revealAnim.setDuration(500);
-        animList.add(revealAnim);
-
-        revealAnim = createViewScale1(change_bt);
-        animList.add(revealAnim);
-
-        int sex = App.getInstance().getUserResult().getParent().getSex();
-
-        if (WomanOrManEnum.WOMAN.getCode() == sex) {
-            woman_bt.setChecked(true);
-            man_bt.setChecked(false);
-        } else {
-            man_bt.setChecked(true);
-            woman_bt.setChecked(false);
-        }
-
-        AnimatorSet animSet = new AnimatorSet();
-        animSet.playSequentially(animList);
-        animSet.start();
-    }
-
-    private void hideMenu(int cx, int cy, float startRadius, float endRadius) {
-        List<Animator> animList = new ArrayList<>();
-
-        Animator revealAnim = createCircularReveal(layoutSetting, cx, cy, startRadius, endRadius);
-        revealAnim.setInterpolator(new AccelerateDecelerateInterpolator());
-        revealAnim.setDuration(500);
-        revealAnim.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
-                resetData();
-                layoutSetting.setVisibility(View.INVISIBLE);
-            }
-        });
-        animList.add(revealAnim);
-
-        revealAnim = createViewScale0(change_bt);
-        animList.add(revealAnim);
-
-        AnimatorSet animSet = new AnimatorSet();
-        animSet.playSequentially(animList);
-        animSet.start();
-    }
-
-    private Animator createViewScale1(final View view) {
-        Animator revealAnim = ObjectAnimator.ofPropertyValuesHolder(
-                view,
-                AnimatorUtils.scaleX(0f, 1f),
-                AnimatorUtils.scaleY(0f, 1f)
-        );
-        revealAnim.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-                super.onAnimationStart(animation);
-                view.setVisibility(View.VISIBLE);
-            }
-        });
-        revealAnim.setDuration(100);
-        revealAnim.setInterpolator(new DecelerateInterpolator());
-        return revealAnim;
-    }
-
-    private Animator createViewScale0(final View view) {
-        Animator revealAnim = ObjectAnimator.ofPropertyValuesHolder(
-                view,
-                AnimatorUtils.scaleX(1f, 0f),
-                AnimatorUtils.scaleY(1f, 0f)
-        );
-        revealAnim.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
-                view.setVisibility(View.INVISIBLE);
-            }
-        });
-        revealAnim.setDuration(100);
-        revealAnim.setInterpolator(new DecelerateInterpolator());
-        return revealAnim;
-    }
-
-    private Animator createCircularReveal(final ClipRevealFrame view, int x, int y, float startRadius,
-                                          float endRadius) {
-        final Animator reveal;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            reveal = ViewAnimationUtils.createCircularReveal(view, x, y, startRadius, endRadius);
-        } else {
-            view.setClipOutLines(true);
-            view.setClipCenter(x, y);
-            reveal = ObjectAnimator.ofFloat(view, "ClipRadius", startRadius, endRadius);
-            reveal.addListener(new Animator.AnimatorListener() {
-                @Override
-                public void onAnimationStart(Animator animation) {
-
-                }
-
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    view.setClipOutLines(false);
-                }
-
-                @Override
-                public void onAnimationCancel(Animator animation) {
-
-                }
-
-                @Override
-                public void onAnimationRepeat(Animator animation) {
-
-                }
-            });
-        }
-        return reveal;
-    }
-
-    private static final int INIT_LIST = 0x01;//初始化数据处理
-    private static final int LOAD_DATA = 0x02;//加载数据处理
     private static final int UPDATE_PARENT = 0x04;//信息补全
-    private static final int COUNT_MAX = 15;//加载数据最大值
-    private static final int ANIMATION = 0x03;//user layout
     private static final int UPDATE_PARENTPORTRAIT = 0x05;//更新头像
     private Handler activityHandler = new Handler() {
         public void handleMessage(Message msg) {
             int what = msg.what;
             switch (what) {
-                case INIT_LIST:
-                case LOAD_DATA:
-                    loadData((CommonResponse) msg.obj);
-                    break;
                 case UPDATE_PARENT:
                     loadUpdate((CommonResponse) msg.obj);
                     break;
                 case UPDATE_PARENTPORTRAIT:
                     loadUpdateParentPortrait((CommonResponse) msg.obj);
                     break;
-                case ANIMATION:
-                    userAnimation(true);
-                    break;
+
                 default:
                     break;
             }
@@ -602,7 +235,6 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
             if (StringUtil.isNotBlank(name)) {
                 nameValue.setText("");
                 nameValue.setHint(name);
-                user_name.setText(name);
                 App.getInstance().getUserResult().getParent().setAlias(name);
             }
             if (StringUtil.isNotBlank(birthday)) {
@@ -615,48 +247,30 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
             dao.deleteAll();
             dao.insertInTx(App.getInstance().getUserResult().getParent());
         }
+        resetData();
     }
 
     private void loadUpdateParentPortrait(CommonResponse resposne) {
         if (resposne.isSuccess()) {
             CommonUtil.showToast(resposne.getMsg());
-        }else{
+        } else {
             CommonUtil.showToast(resposne.getMsg());
         }
     }
 
-    private void loadData(CommonResponse resposne) {
-        if (resposne.isSuccess()) {
-            FollowListResult result = (FollowListResult) resposne.getData();
-            ArrayList<FollowUser> list = result.getList();
-            int size = list == null ? 0 : list.size();
-            if (arrayList == null) {
-                arrayList = new ArrayMap<>();
-            }
-            if (size > 0) {
-                for (FollowUser followUser : list) {
-                    arrayList.put(followUser.getUid(), followUser);
-                }
-            }
-            if (size >= COUNT_MAX) {
-                currentPager++;
-            } else {
-                listview.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
-            }
-            mAdapter.refresh(arrayList);
-        } else {
-            //避免第一次应用启动时 创建fragment加载数据多次提示
+    @OnClick(R.id.reset_password_tv)
+    void toResetPassword() {
+        Intent intent = new Intent(getActivity(), ResetPassWordActivity.class);
+        String phone = App.getInstance().getUserResult().getParent().getPhone();
+        if (StringUtil.isNotBlank(phone) && StringUtil.checkMobile(phone)) {
+            intent.putExtra("phone", phone);
         }
-        listview.onRefreshComplete();
-        setEmpty();
+        startActivity(intent);
     }
 
-    private void setEmpty() {
-        if (arrayList == null || arrayList.size() <= 0) {
-            llListEmpty.setVisibility(View.VISIBLE);
-        } else {
-            llListEmpty.setVisibility(View.GONE);
-        }
+    @OnClick(R.id.exit_tv)
+    void exitAccount() {
+        App.getInstance().changeAccount(true);
     }
 
     /**
@@ -682,10 +296,6 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
 
     @Override
     public boolean onBackPressed() {
-        if (isSettingShow) {
-            toggleShowSetting(settingAchor);
-            return true;
-        }
         return false;
     }
 
@@ -732,7 +342,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
                     user_icon.setImageBitmap(headIcon);
                     isUpdateSuccess = 2;
                     UserManager manager = new UserManager();
-                    manager.updateParentPortrait(mContext,new File(headPaht),activityHandler,UPDATE_PARENTPORTRAIT);
+                    manager.updateParentPortrait(mContext, new File(headPaht), activityHandler, UPDATE_PARENTPORTRAIT);
 //                    manager.updateParentPortrait(mContext,new File(headPaht) );
                 }
             }

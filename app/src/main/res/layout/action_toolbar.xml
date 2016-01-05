@@ -3,48 +3,68 @@
     android:id="@+id/action_bar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="@dimen/statusBar_height"
     android:background="@color/theme"
     android:elevation="@dimen/elevation_height"
-    android:minHeight="@dimen/actionbar_height">
+    android:minHeight="@dimen/actionbar_height"
+    android:paddingTop="@dimen/statusBar_height">
 
     <TextView
         android:id="@+id/toolbar_left_btn"
         android:layout_width="match_parent"
         android:layout_height="@dimen/actionbar_height"
-        android:layout_toLeftOf="@+id/toolbar_intermediate_tv"
         android:layout_gravity="center_vertical"
-        android:gravity="center_vertical"
+        android:layout_toLeftOf="@+id/toolbar_intermediate_tv"
         android:drawableLeft="@mipmap/icon_back"
         android:drawablePadding="@dimen/content_gap_small"
+        android:gravity="center_vertical"
         android:paddingLeft="@dimen/content_left_margin"
         android:singleLine="true"
-        android:textColor="@color/white"
-        android:textSize="@dimen/font_actionbar" />
+        android:textColor="@color/textcolor_theme"
+        android:textSize="@dimen/font_actionbar"
+        android:textStyle="bold" />
 
 
     <TextView
         android:id="@+id/toolbar_intermediate_tv"
         android:layout_width="100dp"
-        android:layout_centerHorizontal="true"
         android:layout_height="@dimen/actionbar_height"
+        android:layout_centerHorizontal="true"
         android:drawablePadding="@dimen/content_gap_small"
         android:gravity="center"
         android:singleLine="true"
-        android:textColor="@color/white"
-        android:textSize="@dimen/font_actionbar_title" />
+        android:textColor="@color/textcolor_theme"
+        android:textSize="@dimen/font_actionbar_title"
+        android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/toolbar_right_tv"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_toRightOf="@+id/toolbar_intermediate_tv"
         android:layout_height="@dimen/actionbar_height"
         android:layout_alignParentRight="true"
-        android:paddingRight="@dimen/content_left_margin"
-        android:drawablePadding="@dimen/content_gap_small"
-        android:gravity="center_vertical|right"
-        android:singleLine="true"
-        android:textColor="@color/white"
-        android:textSize="@dimen/font_actionbar" />
+        android:layout_toRightOf="@+id/toolbar_intermediate_tv">
+
+        <TextView
+            android:id="@+id/toolbar_right_tv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawablePadding="@dimen/content_gap_small"
+            android:gravity="center_vertical|right"
+            android:paddingRight="@dimen/content_left_margin"
+            android:singleLine="true"
+            android:textColor="@color/textcolor_theme"
+            android:textSize="@dimen/font_actionbar"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/toolbar_tips_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/skin_tips_message_red"
+            android:paddingTop="@dimen/content_gap_small"
+            android:paddingRight="@dimen/content_10dp"
+            android:visibility="gone"
+            android:scaleType="centerInside" />
+
+    </RelativeLayout>
 
 </RelativeLayout>

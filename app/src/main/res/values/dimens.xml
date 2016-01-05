@@ -21,13 +21,15 @@
     <dimen name="content_1px">1px</dimen>
 
     <dimen name="tab_height">60dp</dimen>
+    <dimen name="tab_2_height">45dp</dimen>
 
     <!--font-->
-    <dimen name="font_actionbar">15sp</dimen>
+    <dimen name="font_actionbar">17sp</dimen>
     <dimen name="font_actionbar_title">17sp</dimen>
     <dimen name="font_medium">14sp</dimen>
-    <dimen name="font_least">11sp</dimen>
+    <dimen name="font_least">12sp</dimen>
     <dimen name="font_small">13sp</dimen>
+    <dimen name="font_big">16sp</dimen>
     <dimen name="font_btn">15sp</dimen>
 
     <!--layout_drawer-->

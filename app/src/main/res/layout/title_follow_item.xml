@@ -10,7 +10,7 @@
     android:paddingRight="@dimen/content_gap"
     android:paddingTop="@dimen/content_10dp"
     android:paddingBottom="@dimen/content_10dp"
-    android:textColor="@color/textcolor_222"
+    android:textColor="@color/textcolor_theme"
     android:text="@string/follow_me_user"
     android:textSize="@dimen/font_btn" />
 

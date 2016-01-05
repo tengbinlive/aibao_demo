@@ -3,7 +3,6 @@ package com.mytian.lb.fragment;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
-import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Build;
 import android.os.Handler;
@@ -17,18 +16,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.core.CommonResponse;
 import com.core.util.CommonUtil;
 import com.dao.Agreement;
-import com.makeramen.roundedimageview.RoundedImageView;
 import com.mytian.lb.AbsFragment;
 import com.mytian.lb.R;
-import com.mytian.lb.activity.FriendslistActivity;
+import com.mytian.lb.activity.UserDetailActivity;
 import com.mytian.lb.adapter.AgreementAdapter;
 import com.mytian.lb.bean.follow.FollowUser;
-import com.mytian.lb.event.AgreementUserType;
 import com.mytian.lb.event.TimeEventType;
 import com.mytian.lb.helper.AnimationHelper;
 import com.mytian.lb.manager.AgreementDOManager;
@@ -49,13 +44,6 @@ public class AgreementFragment extends AbsFragment {
     GridView gridview;
     @Bind(R.id.ll_listEmpty)
     LinearLayout llListEmpty;
-
-    @Bind(R.id.user_phone)
-    TextView user_phone;
-    @Bind(R.id.user_icon)
-    RoundedImageView user_icon;
-    @Bind(R.id.user_name)
-    TextView user_name;
 
     @Bind(R.id.layout_agreement)
     ClipRevealFrame layoutClip;
@@ -106,10 +94,9 @@ public class AgreementFragment extends AbsFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (null == cureentParent) {
-                    toFriendslist();
                     return;
                 }
-                if (!isSettingShow&&sendCount<=0) {
+                if (!isSettingShow && sendCount <= 0) {
                     sendCount++;
                     AnimationHelper.getInstance().viewAnimationScal(view);
                     tempClip = view;
@@ -128,23 +115,6 @@ public class AgreementFragment extends AbsFragment {
 
     private void initData() {
         arrayList = AgreementDOManager.getInstance().getArrayList();
-    }
-
-    private void setUserInfo(FollowUser userInfo) {
-        String head = "";
-        if (null != userInfo) {
-            cureentParent = userInfo;
-            String name = cureentParent.getAlias();
-            head = cureentParent.getHead_thumb();
-            String phone = cureentParent.getPhone();
-            user_name.setText(name);
-            user_phone.setText(phone);
-        }
-        Glide.with(mContext).load(head)
-                .asBitmap()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(R.mipmap.default_head)
-                .centerCrop().into(user_icon);
     }
 
     private void startTimeAnimation() {
@@ -168,7 +138,7 @@ public class AgreementFragment extends AbsFragment {
     }
 
     Handler myHander = new Handler() {
-        public void handleMessage(android.os.Message msg) {
+        public void handleMessage(Message msg) {
             if (msg.what == 0) {
                 long TimeUsed = System.currentTimeMillis() - DKEY_START_TIME;
                 setTimeText(TimeUsed);
@@ -225,25 +195,12 @@ public class AgreementFragment extends AbsFragment {
 
     @Override
     public void EInit() {
+        cureentParent = (FollowUser) getArguments().getSerializable(UserDetailActivity.USER);
         isSettingShow = false;
         initGridView();
         startThread();
         animationDrawable = (AnimationDrawable) getResources().getDrawable(R.drawable.animation_time);
         animaitonNum = animationDrawable.getNumberOfFrames();
-        setUserInfo(null);
-    }
-
-    @OnClick(R.id.user_icon)
-    void toFriendslist() {
-        Intent intent = new Intent(getActivity(), FriendslistActivity.class);
-        startActivity(intent);
-    }
-
-    public void onEvent(AgreementUserType event) {
-        Message message = new Message();
-        message.what = INIT_USER_INFO;
-        message.obj = event.cureentParent;
-        activityHandler.sendMessage(message);
     }
 
     public void onEvent(TimeEventType event) {
@@ -331,14 +288,10 @@ public class AgreementFragment extends AbsFragment {
 
     private static final int AGREEMENT = 0x01;//约定
     private static final int AGREEMENT_CANCLE = 0x02;//取消约定
-    private static final int INIT_USER_INFO = 0x03;//设置用户信息
     private Handler activityHandler = new Handler() {
         public void handleMessage(Message msg) {
             int what = msg.what;
             switch (what) {
-                case INIT_USER_INFO:
-                    setUserInfo((FollowUser) msg.obj);
-                    break;
                 case AGREEMENT:
                     loadAgreement((CommonResponse) msg.obj);
                     break;

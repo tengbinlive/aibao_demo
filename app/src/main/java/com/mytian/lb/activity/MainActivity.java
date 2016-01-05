@@ -17,10 +17,10 @@ import com.mytian.lb.App;
 import com.mytian.lb.R;
 import com.mytian.lb.adapter.MainViewPagerAdapter;
 import com.mytian.lb.enums.BottomMenu;
-import com.mytian.lb.event.SettingEventType;
-import com.mytian.lb.fragment.AgreementFragment;
+import com.mytian.lb.event.PushUserEventType;
 import com.mytian.lb.fragment.DtnameicFragment;
-import com.mytian.lb.fragment.HabitFragment;
+import com.mytian.lb.fragment.FriendslistFragment;
+import com.mytian.lb.fragment.KindleFragment;
 import com.mytian.lb.fragment.UserFragment;
 import com.mytian.lb.push.PushHelper;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
@@ -28,20 +28,21 @@ import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import java.util.ArrayList;
 
 import butterknife.Bind;
-import de.greenrobot.event.EventBus;
 
 
 public class MainActivity extends AbsActivity {
 
     public final static int DYNAMIC = 0;
-    public final static int AGREEMENT = DYNAMIC + 1;
-    public final static int HABIT = AGREEMENT + 1;
-    public final static int USER = HABIT + 1;
+    public final static int FRIENDS = DYNAMIC + 1;
+    public final static int KINDLE = FRIENDS + 1;
+    public final static int USER = KINDLE + 1;
 
     @Bind(R.id.view_pager)
     ViewPager viewPager;
     @Bind(R.id.viewpager_tab)
     SmartTabLayout viewPagerTab;
+    @Bind(R.id.toolbar_tips_message)
+    ImageView toolbarTipsMessage;
 
     public ArrayList<AbsFragment> fragments;
 
@@ -58,11 +59,7 @@ public class MainActivity extends AbsActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (UserFragment.isSettingShow) {
-                toggleSetting();
-            } else {
-                doubleTouchToExit();
-            }
+            doubleTouchToExit();
             return true;
         }
         return super.onKeyDown(keyCode, event);
@@ -104,8 +101,8 @@ public class MainActivity extends AbsActivity {
     private void initViewPager() {
         fragments = new ArrayList<>();
         fragments.add(new DtnameicFragment());
-        fragments.add(new AgreementFragment());
-        fragments.add(new HabitFragment());
+        fragments.add(new FriendslistFragment());
+        fragments.add(new KindleFragment());
         fragments.add(new UserFragment());
         MainViewPagerAdapter adapter = new MainViewPagerAdapter(getSupportFragmentManager(), fragments);
         viewPager.setAdapter(adapter);
@@ -117,11 +114,11 @@ public class MainActivity extends AbsActivity {
                     case DYNAMIC:
                         setIconInfo(custom_ly, BottomMenu.DYNAMIC, true);
                         break;
-                    case AGREEMENT:
+                    case FRIENDS:
                         setIconInfo(custom_ly, BottomMenu.AGREEMENT);
                         break;
-                    case HABIT:
-                        setIconInfo(custom_ly, BottomMenu.HABIT);
+                    case KINDLE:
+                        setIconInfo(custom_ly, BottomMenu.KINDLE);
                         break;
                     case USER:
                         setIconInfo(custom_ly, BottomMenu.USER);
@@ -155,31 +152,14 @@ public class MainActivity extends AbsActivity {
     }
 
     private void actionbarIcon(final int position) {
-        if (position == USER) {
-            setToolbarRight(R.mipmap.icon_settings);
+        if (position == FRIENDS) {
+            setToolbarRightStrID(R.string.new_follow);
             setToolbarRightVisbility(View.VISIBLE);
             setToolbarRightOnClick(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    toSysSettingActivity();
-                }
-            });
-        } else if (position == AGREEMENT || position == HABIT) {
-            setToolbarRight(R.mipmap.icon_friendslist);
-            setToolbarRightVisbility(View.VISIBLE);
-            setToolbarRightOnClick(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (position == AGREEMENT) {
-                        if (!AgreementFragment.isSettingShow) {
-                            Intent intent = new Intent(MainActivity.this, FriendslistActivity.class);
-                            startActivity(intent);
-                        }
-                    } else if (position == HABIT) {
-                        Intent intent = new Intent(MainActivity.this, FriendslistActivity.class);
-                        intent.putExtra("TYPE", position);
-                        startActivity(intent);
-                    }
+                    toAddFollowActivity();
+                    toolbarTipsMessage.setVisibility(View.GONE);
                 }
             });
         } else {
@@ -187,20 +167,19 @@ public class MainActivity extends AbsActivity {
         }
     }
 
-    private void toSysSettingActivity() {
-        Intent intent = new Intent(this, SysSettingActivity.class);
+    /**
+     * 新的关注
+     *
+     * @param event
+     */
+    public void onEvent(PushUserEventType event) {
+        toolbarTipsMessage.setVisibility(View.VISIBLE);
+    }
+
+    private void toAddFollowActivity() {
+        Intent intent = new Intent(this, AddFollowActivity.class);
         startActivity(intent);
     }
-
-    private void toggleSetting() {
-        if (null == settingEventType) {
-            View settingView = getToolbar().findViewById(R.id.toolbar_right_tv);
-            settingEventType = new SettingEventType(settingView);
-        }
-        EventBus.getDefault().post(settingEventType);
-    }
-
-    private SettingEventType settingEventType;
 
     private void setActionBar() {
         setToolbarLeft(0);

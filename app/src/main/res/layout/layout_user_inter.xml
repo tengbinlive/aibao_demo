@@ -4,9 +4,8 @@
     android:id="@+id/layout_user"
     android:gravity="center_vertical"
     android:elevation="@dimen/elevation_height"
-    android:background="@color/theme"
     android:orientation="vertical"
-    android:padding="@dimen/content_gap" >
+    android:paddingTop="@dimen/content_gap" >
 
     <com.makeramen.roundedimageview.RoundedImageView
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -24,28 +23,49 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_gravity="center_horizontal"
-        android:paddingTop="@dimen/content_gap"
+        android:paddingTop="@dimen/content_10dp"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
+
         <TextView
-            android:id="@+id/user_name"
+            android:id="@+id/user_remark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:singleLine="true"
             android:layout_centerHorizontal="true"
-            android:text="@string/select_user"
-            android:textColor="@color/white"
+            android:text="@string/remark"
+            android:textColor="@color/textcolor_theme"
             android:textSize="@dimen/font_btn" />
+
+        <TextView
+            android:id="@+id/user_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:layout_toRightOf="@+id/user_remark"
+            android:layout_marginLeft="@dimen/content_left_margin"
+            android:textColor="@color/textcolor_match"
+            android:textSize="@dimen/font_least" />
 
         <TextView
             android:id="@+id/user_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/user_name"
+            android:layout_below="@+id/user_remark"
             android:layout_marginTop="@dimen/content_10dp"
             android:layout_centerHorizontal="true"
-            android:textColor="@color/white"
+            android:textColor="@color/textcolor_match"
+            android:textSize="@dimen/font_least" />
+
+        <TextView
+            android:id="@+id/user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/user_phone"
+            android:layout_marginTop="@dimen/content_10dp"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/textcolor_match"
             android:textSize="@dimen/font_least" />
 
     </RelativeLayout>

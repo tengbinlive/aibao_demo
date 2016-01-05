@@ -42,7 +42,7 @@
                 android:gravity="center_vertical"
                 android:hint="@string/hint_username"
                 android:inputType="phone"
-                android:textColor="@color/textcolor_222"
+                android:textColor="@color/textcolor_theme"
                 android:textColorHint="@color/gray_hint"
                 android:textCursorDrawable="@null"
                 android:textSize="@dimen/font_medium" />
@@ -65,7 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/password"
-                android:textColor="@color/textcolor_222"
+                android:textColor="@color/textcolor_theme"
                 android:textSize="@dimen/font_medium" />
 
             <com.mytian.lb.mview.EditTextWithDelete
@@ -77,7 +77,7 @@
                 android:gravity="center_vertical"
                 android:hint="@string/hint_password"
                 android:password="true"
-                android:textColor="@color/textcolor_222"
+                android:textColor="@color/textcolor_theme"
                 android:textColorHint="@color/gray_hint"
                 android:textCursorDrawable="@null"
                 android:textSize="@dimen/font_medium" />
@@ -104,7 +104,7 @@
                 android:layout_weight="3"
                 android:background="@drawable/button_bg_theme"
                 android:text="@string/login"
-                android:textColor="@color/white"
+                android:textColor="@color/textcolor_theme"
                 android:textSize="@dimen/font_btn" />
 
             <Button
@@ -114,7 +114,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/button_bg_theme"
                 android:text="@string/register"
-                android:textColor="@color/white"
+                android:textColor="@color/textcolor_theme"
                 android:textSize="@dimen/font_btn" />
         </LinearLayout>
 

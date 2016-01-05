@@ -16,7 +16,7 @@
         android:padding="@dimen/content_gap"
         android:gravity="center_horizontal"
         android:background="@drawable/button_bg_white"
-        android:textColor="@color/textcolor_222"
+        android:textColor="@color/textcolor_theme"
         android:textSize="@dimen/font_btn" />
 
 </LinearLayout>

@@ -35,7 +35,7 @@
             android:layout_marginLeft="@dimen/content_gap"
             android:singleLine="true"
             android:text="@string/seach_aibao"
-            android:textColor="@color/textcolor_222"
+            android:textColor="@color/textcolor_theme"
             android:textSize="@dimen/font_btn" />
 
         <TextView
@@ -45,7 +45,7 @@
             android:layout_marginLeft="@dimen/content_gap"
             android:singleLine="true"
             android:text=""
-            android:textColor="@color/textcolor_222"
+            android:textColor="@color/textcolor_theme"
             android:textSize="@dimen/font_btn" />
 
     </LinearLayout>
@@ -77,7 +77,7 @@
             android:layout_marginLeft="@dimen/content_gap"
             android:singleLine="true"
             android:text="@string/seach_maibao"
-            android:textColor="@color/textcolor_222"
+            android:textColor="@color/textcolor_theme"
             android:textSize="@dimen/font_btn" />
 
         <TextView
@@ -87,7 +87,7 @@
             android:layout_marginLeft="@dimen/content_gap"
             android:singleLine="true"
             android:text=""
-            android:textColor="@color/textcolor_222"
+            android:textColor="@color/textcolor_theme"
             android:textSize="@dimen/font_btn" />
 
     </LinearLayout>

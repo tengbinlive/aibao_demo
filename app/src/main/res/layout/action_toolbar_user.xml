@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/action_bar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/theme"
+    android:elevation="@dimen/elevation_height"
+    android:minHeight="@dimen/actionbar_height">
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="@dimen/elevation_height"
+        android:scaleType="centerCrop"
+        android:layout_alignBottom="@+id/layout_user"
+        android:src="@mipmap/user_bg" />
+
+    <TextView
+        android:id="@+id/toolbar_left_btn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/actionbar_height"
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="@dimen/statusBar_height"
+        android:layout_toLeftOf="@+id/toolbar_intermediate_tv"
+        android:drawableLeft="@mipmap/icon_back"
+        android:drawablePadding="@dimen/content_gap_small"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/content_left_margin"
+        android:singleLine="true"
+        android:textColor="@color/textcolor_theme"
+        android:textSize="@dimen/font_actionbar"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/toolbar_intermediate_tv"
+        android:layout_width="100dp"
+        android:layout_height="@dimen/actionbar_height"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/statusBar_height"
+        android:drawablePadding="@dimen/content_gap_small"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textColor="@color/textcolor_theme"
+        android:textSize="@dimen/font_actionbar_title"
+        android:textStyle="bold" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/actionbar_height"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/statusBar_height"
+        android:layout_toRightOf="@+id/toolbar_intermediate_tv">
+
+        <TextView
+            android:id="@+id/toolbar_right_tv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawablePadding="@dimen/content_gap_small"
+            android:gravity="center_vertical|right"
+            android:paddingRight="@dimen/content_left_margin"
+            android:singleLine="true"
+            android:textColor="@color/textcolor_theme"
+            android:textSize="@dimen/font_actionbar"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/layout_user"
+        layout="@layout/layout_user_inter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar_left_btn" />
+
+</RelativeLayout>

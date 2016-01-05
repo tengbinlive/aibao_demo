@@ -30,7 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/bottom_bt_height"
                 android:gravity="center"
-                android:textColor="@color/textcolor_222"
+                android:textColor="@color/textcolor_theme"
                 android:textSize="@dimen/font_medium"/>
 
         <View
@@ -45,7 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/bottom_bt_height"
                 android:gravity="center"
-                android:textColor="@color/textcolor_222"
+                android:textColor="@color/textcolor_theme"
                 android:textSize="@dimen/font_medium"/>
     </LinearLayout>
     <TextView
@@ -55,7 +55,7 @@
             android:layout_height="@dimen/bottom_bt_height"
             android:gravity="center"
             android:text="@string/cancel"
-            android:textColor="@color/textcolor_222"
+            android:textColor="@color/textcolor_theme"
             android:background="@drawable/button_bg_white"
             android:textSize="@dimen/font_medium"/>
 

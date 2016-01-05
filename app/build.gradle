@@ -11,8 +11,8 @@ android {
 //        解决Android L上通知显示异常问题，targetSdkVersion需要设置成22
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 31
-        versionName "v1.4.1"
+        versionCode 32
+        versionName "v1.4.2"
         manifestPlaceholders = [
                 GETUI_APP_ID    : "kvuUWGiv0c6sHXaYA8JzT7",
                 GETUI_APP_KEY   : "PO0la0IdOd8vTKnFl4Ftq2",
@@ -41,7 +41,7 @@ android {
         debug {
             minifyEnabled false
             zipAlignEnabled false
-            shrinkResources false
+            proguardFiles 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
 

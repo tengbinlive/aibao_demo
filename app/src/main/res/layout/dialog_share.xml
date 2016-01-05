@@ -14,7 +14,7 @@
         android:layout_marginTop="@dimen/content_gap_big"
         android:layout_marginLeft="@dimen/content_gap_big"
         android:text="@string/app_name"
-        android:textColor="@color/textcolor_222"
+        android:textColor="@color/textcolor_theme"
         android:textSize="@dimen/font_actionbar_title" />
 
     <LinearLayout

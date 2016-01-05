@@ -169,6 +169,14 @@ public abstract class AbsActivity extends SwipeBackActivity implements EInitDate
             toolbar_right_tv.setOnClickListener(onClick);
     }
 
+    /**
+     * 设置actionbar 右部标题
+     *
+     * @param rId
+     */
+    public void setToolbarRightStrID(int rId) {
+        toolbar_right_tv.setText(rId);
+    }
 
     /**
      * 设置标题

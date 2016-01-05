@@ -1,13 +1,15 @@
 package com.mytian.lb.bean.follow;
 
-import com.mytian.lb.demodata.DemoUserInfo;
 import com.mytian.lb.demodata.DemoManger;
+import com.mytian.lb.demodata.DemoUserInfo;
+
+import java.io.Serializable;
 
 /**
  * Created by bin.teng on 2015/10/28.
  */
 
-public class FollowUser {
+public class FollowUser implements Serializable {
     public final static String MB = "0";
     public final static String LB = "1";
 

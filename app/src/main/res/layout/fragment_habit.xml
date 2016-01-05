@@ -6,7 +6,6 @@
         android:id="@+id/listview_pr"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/layout_user"
         android:background="@color/theme_bg_layout"
         android:cacheColorHint="@color/transparent"
         android:divider="@null"
