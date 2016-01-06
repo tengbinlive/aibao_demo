@@ -19,11 +19,9 @@ import de.greenrobot.dao.internal.DaoConfig;
 public class DaoSession extends AbstractDaoSession {
 
     private final DaoConfig configDaoConfig;
-    private final DaoConfig agreementDaoConfig;
     private final DaoConfig parentDaoConfig;
 
     private final ConfigDao configDao;
-    private final AgreementDao agreementDao;
     private final ParentDao parentDao;
 
     public DaoSession(SQLiteDatabase db, IdentityScopeType type, Map<Class<? extends AbstractDao<?, ?>>, DaoConfig>
@@ -33,33 +31,23 @@ public class DaoSession extends AbstractDaoSession {
         configDaoConfig = daoConfigMap.get(ConfigDao.class).clone();
         configDaoConfig.initIdentityScope(type);
 
-        agreementDaoConfig = daoConfigMap.get(AgreementDao.class).clone();
-        agreementDaoConfig.initIdentityScope(type);
-
         parentDaoConfig = daoConfigMap.get(ParentDao.class).clone();
         parentDaoConfig.initIdentityScope(type);
 
         configDao = new ConfigDao(configDaoConfig, this);
-        agreementDao = new AgreementDao(agreementDaoConfig, this);
         parentDao = new ParentDao(parentDaoConfig, this);
 
         registerDao(Config.class, configDao);
-        registerDao(Agreement.class, agreementDao);
         registerDao(Parent.class, parentDao);
     }
     
     public void clear() {
         configDaoConfig.getIdentityScope().clear();
-        agreementDaoConfig.getIdentityScope().clear();
         parentDaoConfig.getIdentityScope().clear();
     }
 
     public ConfigDao getConfigDao() {
         return configDao;
-    }
-
-    public AgreementDao getAgreementDao() {
-        return agreementDao;
     }
 
     public ParentDao getParentDao() {

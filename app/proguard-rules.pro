@@ -86,7 +86,6 @@
 
 #保持javabean&自定义view&demo数据&eventbus type
 -keep class com.mytian.lb.mview.** { * ; }
--keep class com.mytian.lb.demodata.** { * ; }
 -keep class com.mytian.lb.event.** { * ; }
 
 #不优化泛型和反射

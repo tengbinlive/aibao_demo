@@ -10,9 +10,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.dao.Agreement;
 import com.mytian.lb.R;
-import com.mytian.lb.helper.Utils;
+import com.mytian.lb.bean.user.UserAction;
 
 import java.util.ArrayList;
 
@@ -23,11 +22,17 @@ public class AgreementAdapter extends BaseAdapter {
 
     private LayoutInflater mInflater;
 
-    private ArrayList<Agreement> list;
+    private ArrayList<UserAction> list;
 
     private Context mContext;
 
-    public AgreementAdapter(Context context, ArrayList<Agreement> _list) {
+    private boolean isOFFLINE;
+
+    public void setIsOFFLINE(boolean isOFFLINE) {
+        this.isOFFLINE = isOFFLINE;
+    }
+
+    public AgreementAdapter(Context context, ArrayList<UserAction> _list) {
         this.list = _list;
         mContext = context;
         mInflater = LayoutInflater.from(context);
@@ -48,11 +53,6 @@ public class AgreementAdapter extends BaseAdapter {
         return 0;
     }
 
-    public void refresh(ArrayList<Agreement> _list) {
-        list = _list;
-        notifyDataSetChanged();
-    }
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
@@ -63,10 +63,12 @@ public class AgreementAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        Agreement bean = list.get(position);
-        int iconID = Utils.getResource(mContext, bean.getIcon(), "mipmap");
-        Glide.with(mContext).load(iconID).asBitmap().diskCacheStrategy(DiskCacheStrategy.ALL).into(viewHolder.icon);
-        viewHolder.title.setText(bean.getTitle());
+        UserAction bean = list.get(position);
+
+        String iconUrl = isOFFLINE ? bean.getUrl() : bean.getUrl();
+
+        Glide.with(mContext).load(iconUrl).asBitmap().diskCacheStrategy(DiskCacheStrategy.ALL).into(viewHolder.icon);
+        viewHolder.title.setText(bean.getDes());
         return convertView;
     }
 

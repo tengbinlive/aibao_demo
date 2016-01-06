@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.core.util.CommonUtil;
 import com.mytian.lb.R;
-import com.mytian.lb.bean.AgreementBean;
+import com.mytian.lb.bean.user.UserAction;
 import com.mytian.lb.enums.ItemButton;
 import com.mytian.lb.helper.AnimationHelper;
 
@@ -25,13 +25,17 @@ public class HabitAdapter extends BaseAdapter {
 
     private LayoutInflater mInflater;
 
-    private ArrayList<AgreementBean> list;
+    private ArrayList<UserAction> list;
 
     private Context mContext;
 
-    private int stateHead;// 是否在 没数据时显示head  1 时需要显示&数据list.size = 0 添加占位符;
+    private boolean isOFFLINE;
 
-    public HabitAdapter(Context context, ArrayList<AgreementBean> _list) {
+    public void setIsOFFLINE(boolean isOFFLINE) {
+        this.isOFFLINE = isOFFLINE;
+    }
+
+    public HabitAdapter(Context context, ArrayList<UserAction> _list) {
         this.list = _list;
         mContext = context;
         mInflater = LayoutInflater.from(context);
@@ -39,18 +43,7 @@ public class HabitAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        /**
-         * 因为listview header 在adapter count <= 0 时是跟随listview一起隐藏的 ，
-         * 为让 header 一直保持显示设置 1 个空占位。
-         */
-        int size = list == null ? 0 : list.size();
-        if(size<=0){
-            size++;
-            stateHead = 1;
-        }else{
-            stateHead = 0;
-        }
-        return null == list ? 1 : list.size() + 1;
+        return list == null ? 0 : list.size();
     }
 
     @Override
@@ -63,11 +56,6 @@ public class HabitAdapter extends BaseAdapter {
         return 0;
     }
 
-    public void refresh(ArrayList<AgreementBean> _list) {
-        list = _list;
-        notifyDataSetChanged();
-    }
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
@@ -78,27 +66,20 @@ public class HabitAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        /**
-         * 为让 header 一直保持显示设置 1 个空占位。
-         * 所以 position 需要 减掉 1 。
-         */
-        if (stateHead==1) {
-            convertView.setVisibility(View.GONE);
-            return convertView;
-        }else{
-            convertView.setVisibility(View.VISIBLE);
-        }
 
-        AgreementBean bean = list.get(position);
-        Glide.with(mContext).load(bean.getIcon()).asBitmap()
+        UserAction bean = list.get(position);
+
+        String iconUrl = isOFFLINE ? bean.getUrl() : bean.getUrl();
+
+        Glide.with(mContext).load(iconUrl).asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.ALL).into(viewHolder.head);
-        viewHolder.name.setText(bean.getTitle());
+        viewHolder.name.setText(bean.getDes());
 
         int record = bean.getRecord();
-        if (record == AgreementBean.GREAT) {
+        if (record == UserAction.GREAT) {
             setIconInfo(viewHolder.like, ItemButton.RECORD_LIKE, true);
             setIconInfo(viewHolder.dislike, ItemButton.RECORD_DISLIKE, false);
-        } else if (record == AgreementBean.BAD) {
+        } else if (record == UserAction.BAD) {
             setIconInfo(viewHolder.like, ItemButton.RECORD_LIKE, false);
             setIconInfo(viewHolder.dislike, ItemButton.RECORD_DISLIKE, true);
         } else {
@@ -114,7 +95,7 @@ public class HabitAdapter extends BaseAdapter {
                 CommonUtil.showToast("记录成功");
                 int index = (int) v.getTag(R.id.item_habit_index);
                 ImageView dislike = (ImageView) v.getTag(R.id.item_habit_view);
-                list.get(index).setRecord(AgreementBean.GREAT);
+                list.get(index).setRecord(UserAction.GREAT);
                 setIconInfo((ImageView) v, ItemButton.RECORD_LIKE, true);
                 setIconInfo(dislike, ItemButton.RECORD_DISLIKE, false);
             }
@@ -128,7 +109,7 @@ public class HabitAdapter extends BaseAdapter {
                 CommonUtil.showToast("记录成功");
                 int index = (int) v.getTag(R.id.item_habit_index);
                 ImageView like = (ImageView) v.getTag(R.id.item_habit_view);
-                list.get(index).setRecord(AgreementBean.BAD);
+                list.get(index).setRecord(UserAction.BAD);
                 setIconInfo((ImageView) v, ItemButton.RECORD_DISLIKE, true);
                 setIconInfo(like, ItemButton.RECORD_LIKE, false);
             }

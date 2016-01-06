@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -62,17 +63,11 @@ public class FriendslistAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.item_friendslist, null);
+            convertView = mInflater.inflate(R.layout.item_friends_list, null);
             viewHolder = new ViewHolder(convertView);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
-        }
-
-        if (position == 0) {
-            viewHolder.title.setVisibility(View.VISIBLE);
-        } else {
-            viewHolder.title.setVisibility(View.GONE);
         }
 
         FollowUser bean = list.valueAt(position);
@@ -80,28 +75,34 @@ public class FriendslistAdapter extends BaseAdapter {
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .placeholder(R.mipmap.icon_contact)
                 .into(viewHolder.head);
-        String is_online = FollowUser.ONLINE.equals(bean.getIs_online()) ? "   [在线]" : "   [离线]";
-        viewHolder.name.setText(bean.getAlias() + is_online);
-        viewHolder.phone.setText(bean.getPhone());
+        viewHolder.name.setText(bean.getAlias());
+        if (FollowUser.ONLINE.equals(bean.getIs_online())) {
+            viewHolder.stateTv.setVisibility(View.GONE);
+            viewHolder.stateIv.setVisibility(View.VISIBLE);
+        } else {
+            viewHolder.stateIv.setVisibility(View.GONE);
+            viewHolder.stateTv.setVisibility(View.VISIBLE);
+            viewHolder.stateTv.setText(R.string.offline);
+        }
         return convertView;
     }
 
 
     /**
-     * This class contains all butterknife-injected Views & Layouts from layout file 'item_friendslist.xml'
+     * This class contains all butterknife-injected Views & Layouts from layout file 'item_friends_list.xml'
      * for easy to all layout elements.
      *
      * @author ButterKnifeZelezny, plugin for Android Studio by Avast Developers (http://github.com/avast)
      */
     static class ViewHolder {
-        @Bind(R.id.title)
-        TextView title;
         @Bind(R.id.head)
         RoundedImageView head;
         @Bind(R.id.name)
         TextView name;
-        @Bind(R.id.phone)
-        TextView phone;
+        @Bind(R.id.state_tv)
+        TextView stateTv;
+        @Bind(R.id.state_iv)
+        ImageView stateIv;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);

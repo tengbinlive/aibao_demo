@@ -34,7 +34,6 @@
             android:layout_height="wrap_content"
             android:singleLine="true"
             android:layout_centerHorizontal="true"
-            android:text="@string/remark"
             android:textColor="@color/textcolor_theme"
             android:textSize="@dimen/font_btn" />
 

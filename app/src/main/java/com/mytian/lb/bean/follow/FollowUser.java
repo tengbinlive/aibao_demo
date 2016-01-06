@@ -1,8 +1,5 @@
 package com.mytian.lb.bean.follow;
 
-import com.mytian.lb.demodata.DemoManger;
-import com.mytian.lb.demodata.DemoUserInfo;
-
 import java.io.Serializable;
 
 /**
@@ -195,14 +192,6 @@ public class FollowUser implements Serializable {
 
     public void setOther_relation(String other_relation) {
         this.other_relation = other_relation;
-    }
-
-    public static FollowUser testData(String index) {
-        DemoUserInfo demoUserInfo = DemoManger.getInstance().getDemoUserInfo(index);
-        FollowUser result = demoUserInfo.getParent();
-        result.head_id = demoUserInfo.getHeadid();
-        result.uid = demoUserInfo.getId();
-        return result;
     }
 
     @Override

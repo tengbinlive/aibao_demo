@@ -56,12 +56,12 @@
 
         <ImageView
             android:id="@+id/toolbar_tips_message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/message_size"
+            android:layout_height="@dimen/message_size"
             android:layout_alignParentRight="true"
             android:src="@mipmap/skin_tips_message_red"
-            android:paddingTop="@dimen/content_gap_small"
-            android:paddingRight="@dimen/content_10dp"
+            android:layout_marginTop="@dimen/content_10dp"
+            android:layout_marginRight="@dimen/content_10dp"
             android:visibility="gone"
             android:scaleType="centerInside" />
 

@@ -20,6 +20,15 @@ public enum OpenApiMethodEnum {
      */
     APP_UPGRADE("myt_file/clientPushAction_getLBAppInfo.do", "openapi_json", OpenApi.URL_TYPE_DATA),
 
+    /**
+     * 爱的约定更新
+     */
+    LOAD_LBAPPOINTLIST("myt_file/clientPushAction_getLBAppointList.do", "openapi_json", OpenApi.URL_TYPE_DATA),
+
+    /**
+     * 行为习惯更新
+     */
+    LOAD_LBHABITLIST("myt_file/clientPushAction_getLBHabitList.do", "openapi_json", OpenApi.URL_TYPE_DATA),
 
     /**
      * 取消爱的约定

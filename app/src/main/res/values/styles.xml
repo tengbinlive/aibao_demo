@@ -68,4 +68,21 @@
         <item name="android:windowExitAnimation">@anim/push_translate_out</item>
     </style>
 
+    <style name="ScrollbarTheme">
+        <item name="android:scrollbarAlwaysDrawVerticalTrack">true</item>
+        <item name="android:scrollbarStyle">outsideOverlay</item>
+        <item name="android:scrollbars">vertical</item>
+        <item name="android:fadeScrollbars">false</item>
+        <item name="android:fastScrollEnabled">false</item>
+        <item name="android:footerDividersEnabled">false</item>
+        <item name="android:headerDividersEnabled">false</item>
+        <item name="android:divider">@null</item>
+        <item name="android:fadingEdge">none</item>
+        <item name="android:smoothScrollbar">true</item>
+        <item name="android:scrollbarSize">@dimen/content_gap_small</item>
+        <item name="android:cacheColorHint">@color/transparent</item>
+        <item name="android:listSelector">@color/transparent</item>
+        <item name="android:scrollbarThumbVertical">@drawable/scrollbars_bg_theme</item>
+    </style>
+
 </resources>

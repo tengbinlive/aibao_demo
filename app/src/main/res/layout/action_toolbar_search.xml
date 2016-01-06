@@ -34,7 +34,8 @@
         android:textColor="@color/textcolor_theme"
         android:textSize="@dimen/font_actionbar_title" />
 
-    <cdflynn.android.library.crossview.CrossView xmlns:app="http://schemas.android.com/apk/res-auto"
+    <cdflynn.android.library.crossview.CrossView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/add_bt"
         android:layout_width="@dimen/actionbar_height"
         android:layout_height="@dimen/actionbar_height"

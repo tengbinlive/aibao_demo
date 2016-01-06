@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/content_gap"
+        android:layout_marginRight="@dimen/content_gap"
+        android:background="@drawable/light_divide" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white_item"
+        android:padding="@dimen/content_gap">
+
+        <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/head"
+            android:layout_width="@dimen/item_head_size_small"
+            android:layout_height="@dimen/item_head_size_small"
+            android:layout_marginRight="@dimen/content_gap"
+            app:riv_border_width="0dip"
+            app:riv_corner_radius="@dimen/corner_radius"
+            app:riv_mutate_background="true"
+            app:riv_oval="false"
+            app:riv_tile_mode="repeat" />
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/head"
+            android:singleLine="true"
+            android:layout_centerVertical="true"
+            android:text="user name"
+            android:textColor="@color/textcolor_theme"
+            android:textSize="@dimen/font_big" />
+
+        <TextView
+            android:id="@+id/state_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:visibility="gone"
+            android:textColor="@color/textcolor_match"
+            android:textSize="@dimen/font_small" />
+
+        <ImageView
+            android:id="@+id/state_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_more" />
+
+    </RelativeLayout>
+</LinearLayout>
+

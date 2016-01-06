@@ -11,14 +11,14 @@
 
     <RelativeLayout
         android:layout_width="280dp"
-        android:background="@color/theme"
         android:layout_height="280dp">
 
         <ImageView
             android:id="@+id/background"
             android:layout_width="match_parent"
-            android:scaleType="fitCenter"
-            android:src="@mipmap/icon_contact_l"
+            android:scaleType="centerCrop"
+            android:background="@color/theme"
+            android:src="@mipmap/user_bg"
             android:layout_height="match_parent" />
 
             <TextView
@@ -40,7 +40,6 @@
                 android:layout_marginTop="@dimen/content_gap_small"
                 android:layout_marginBottom="@dimen/content_10dp"
                 android:layout_marginLeft="@dimen/content_10dp"
-                android:text="18888888888"
                 android:textColor="@color/white"
                 android:textSize="@dimen/font_small" />
 
@@ -73,7 +72,7 @@
          <TextView
              android:id="@+id/cancel"
              android:layout_width="0dp"
-             android:layout_weight="1"
+             android:layout_weight="1.1"
              android:gravity="center"
              android:layout_height="wrap_content"
              android:text="@string/cancel"
@@ -83,8 +82,8 @@
          <TextView
              android:id="@+id/addfollow"
              android:layout_width="0dp"
-             android:gravity="right"
-             android:layout_weight="1"
+             android:gravity="center"
+             android:layout_weight="1.1"
              android:layout_height="wrap_content"
              android:text="@string/follow_add"
              android:textColor="@color/theme"

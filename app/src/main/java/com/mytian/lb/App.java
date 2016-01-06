@@ -29,7 +29,6 @@ import com.mytian.lb.bean.user.UserResult;
 import com.mytian.lb.manager.ShareManager;
 import com.mytian.lb.manager.ActivityManager;
 import com.mytian.lb.helper.SharedPreferencesHelper;
-import com.mytian.lb.manager.AgreementDOManager;
 import com.mytian.lb.push.PushHelper;
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
@@ -257,8 +256,6 @@ public class App extends Application {
         ConfigManager.init(this);
         //用户信息
         initUserData();
-        //约定
-        AgreementDOManager.getInstance().init();
     }
 
     private void initUserData(){

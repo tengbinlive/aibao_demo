@@ -32,7 +32,6 @@
         android:textSize="@dimen/font_actionbar"
         android:textStyle="bold" />
 
-
     <TextView
         android:id="@+id/toolbar_intermediate_tv"
         android:layout_width="100dp"

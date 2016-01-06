@@ -31,7 +31,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.Bind;
-import butterknife.BindColor;
 import butterknife.BindString;
 import butterknife.OnClick;
 
@@ -60,8 +59,6 @@ public class RegisterActivity extends AbsActivity {
 
     private final static int LOGIN_DATA = 2; //登录
 
-    @BindColor(R.color.white)
-    int whiteColos;
     @BindString(R.string.get_verification)
     String login_verification_title;
     @BindString(R.string.reget_verification)
@@ -226,11 +223,9 @@ public class RegisterActivity extends AbsActivity {
         int TimeSeconds = (59) - (int) TimeUsed / 1000;
         if (TimeUsed < DKEY_TIME) {
             verification_bt.setText(reget_verification + TimeSeconds + "'");
-            verification_bt.setTextColor(whiteColos);
         } else {
             isVer = false;
             verification_bt.setText(login_verification_title);
-            verification_bt.setTextColor(whiteColos);
         }
     }
 

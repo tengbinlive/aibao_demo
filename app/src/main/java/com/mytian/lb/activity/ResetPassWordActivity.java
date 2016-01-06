@@ -13,13 +13,11 @@ import com.core.util.StringUtil;
 import com.dao.ParentDao;
 import com.mytian.lb.AbsActivity;
 import com.mytian.lb.App;
-import com.mytian.lb.Constant;
 import com.mytian.lb.R;
 import com.mytian.lb.activityexpand.activity.AnimatedRectLayout;
 import com.mytian.lb.bean.user.UserResult;
 import com.mytian.lb.helper.AnimationHelper;
 import com.mytian.lb.helper.SMSContentObserver;
-import com.mytian.lb.helper.SharedPreferencesHelper;
 import com.mytian.lb.manager.LoginManager;
 import com.mytian.lb.mview.EditTextWithDelete;
 
@@ -27,7 +25,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.Bind;
-import butterknife.BindColor;
 import butterknife.BindString;
 import butterknife.OnClick;
 
@@ -56,8 +53,6 @@ public class ResetPassWordActivity extends AbsActivity {
 
     private final static int LOGIN_DATA = 2; //登录
 
-    @BindColor(R.color.white)
-    int whiteColos;
     @BindString(R.string.get_verification)
     String login_verification_title;
     @BindString(R.string.reget_verification)
@@ -217,11 +212,9 @@ public class ResetPassWordActivity extends AbsActivity {
         int TimeSeconds = (59) - (int) TimeUsed / 1000;
         if (TimeUsed < DKEY_TIME) {
             verification_bt.setText(reget_verification + TimeSeconds + "'");
-            verification_bt.setTextColor(whiteColos);
         } else {
             isVer = false;
             verification_bt.setText(login_verification_title);
-            verification_bt.setTextColor(whiteColos);
         }
     }
 
@@ -229,7 +222,7 @@ public class ResetPassWordActivity extends AbsActivity {
     public void EInit() {
         super.EInit();
         phone = getIntent().getStringExtra("phone");
-        if(StringUtil.isNotBlank(phone)) {
+        if (StringUtil.isNotBlank(phone)) {
             phone_et.setText(phone);
             phone_et.setSelection(phone.length());
         }

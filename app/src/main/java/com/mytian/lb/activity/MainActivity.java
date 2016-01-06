@@ -43,6 +43,7 @@ public class MainActivity extends AbsActivity {
     SmartTabLayout viewPagerTab;
     @Bind(R.id.toolbar_tips_message)
     ImageView toolbarTipsMessage;
+    ImageView menuFriendsTipsMessage;
 
     public ArrayList<AbsFragment> fragments;
 
@@ -116,6 +117,7 @@ public class MainActivity extends AbsActivity {
                         break;
                     case FRIENDS:
                         setIconInfo(custom_ly, BottomMenu.AGREEMENT);
+                        menuFriendsTipsMessage = (ImageView) custom_ly.findViewById(R.id.menu_message);
                         break;
                     case KINDLE:
                         setIconInfo(custom_ly, BottomMenu.KINDLE);
@@ -160,6 +162,7 @@ public class MainActivity extends AbsActivity {
                 public void onClick(View v) {
                     toAddFollowActivity();
                     toolbarTipsMessage.setVisibility(View.GONE);
+                    menuFriendsTipsMessage.setVisibility(View.GONE);
                 }
             });
         } else {
@@ -174,6 +177,7 @@ public class MainActivity extends AbsActivity {
      */
     public void onEvent(PushUserEventType event) {
         toolbarTipsMessage.setVisibility(View.VISIBLE);
+        menuFriendsTipsMessage.setVisibility(View.VISIBLE);
     }
 
     private void toAddFollowActivity() {

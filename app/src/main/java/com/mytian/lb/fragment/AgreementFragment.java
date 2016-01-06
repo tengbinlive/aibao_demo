@@ -13,21 +13,23 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.core.CommonResponse;
 import com.core.util.CommonUtil;
-import com.dao.Agreement;
+import com.handmark.pulltorefresh.PullToRefreshBase;
+import com.handmark.pulltorefresh.PullToRefreshGridView;
 import com.mytian.lb.AbsFragment;
 import com.mytian.lb.R;
 import com.mytian.lb.activity.UserDetailActivity;
 import com.mytian.lb.adapter.AgreementAdapter;
 import com.mytian.lb.bean.follow.FollowUser;
+import com.mytian.lb.bean.user.UpdateActionResult;
+import com.mytian.lb.bean.user.UserAction;
 import com.mytian.lb.event.TimeEventType;
 import com.mytian.lb.helper.AnimationHelper;
-import com.mytian.lb.manager.AgreementDOManager;
 import com.mytian.lb.manager.AgreementManager;
+import com.mytian.lb.manager.UserManager;
 import com.mytian.lb.mview.ClipRevealFrame;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
 
@@ -41,9 +43,9 @@ import butterknife.OnClick;
 public class AgreementFragment extends AbsFragment {
 
     @Bind(R.id.gridview)
-    GridView gridview;
+    PullToRefreshGridView gridview;
     @Bind(R.id.ll_listEmpty)
-    LinearLayout llListEmpty;
+    View llListEmpty;
 
     @Bind(R.id.layout_agreement)
     ClipRevealFrame layoutClip;
@@ -58,9 +60,8 @@ public class AgreementFragment extends AbsFragment {
     private View tempClip;
 
     private AgreementManager manager = new AgreementManager();
-    private ArrayList<Agreement> arrayList;
-    private AgreementAdapter mAdapter;
-    private Agreement cureentAgreement;
+    private ArrayList<UserAction> arrayList;
+    private UserAction cureentAction;
     private FollowUser cureentParent;
     private final Timer timer = new Timer();
 
@@ -76,52 +77,66 @@ public class AgreementFragment extends AbsFragment {
 
     private static int sendCount = 0;
 
+    private GridView mActualGridView;
+
     private void initGridView() {
 
-        initData();
+        gridview.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<GridView>() {
+            @Override
+            public void onRefresh(PullToRefreshBase<GridView> pullToRefreshBase) {
+                arrayList = null;
+                updateAgreement();
+            }
+        });
 
-        mAdapter = new AgreementAdapter(getActivity(), arrayList);
+        mActualGridView = gridview.getRefreshableView();
 
-        SwingBottomInAnimationAdapter animationAdapter = new SwingBottomInAnimationAdapter(mAdapter);
-
-        animationAdapter.setAbsListView(gridview);
-
-        gridview.setAdapter(animationAdapter);
-
-        gridview.setEmptyView(llListEmpty);
+        // Need to use the Actual ListView when registering for Context Menu
+        registerForContextMenu(mActualGridView);
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (null == cureentParent) {
+                if (FollowUser.OFFLINE.equals(cureentParent.getIs_online())) {
+                    CommonUtil.showToast(R.string.state_offline);
                     return;
                 }
                 if (!isSettingShow && sendCount <= 0) {
                     sendCount++;
                     AnimationHelper.getInstance().viewAnimationScal(view);
                     tempClip = view;
-                    cureentAgreement = arrayList.get(position);
-                    DKEY_TIME = cureentAgreement.getDate().getTime();
-                    manager.sendAgreement(getActivity(), cureentParent.getUid(), cureentAgreement.getDate().getTime(), cureentAgreement.getAppointId(), activityHandler, AGREEMENT);
+                    cureentAction = arrayList.get(position);
+                    manager.sendAgreement(getActivity(), cureentParent.getUid(), DKEY_TIME, cureentAction.getCfg_id(), activityHandler, AGREEMENT);
                 }
             }
         });
     }
 
-    @OnClick(R.id.agreement_cancle)
-    public void cancleAgreement() {
-        manager.cancleAgreement(getActivity(), cureentParent.getUid(), cureentAgreement.getAppointId(), activityHandler, AGREEMENT_CANCLE);
+    private void initGridViewData(ArrayList<UserAction> _arrayList) {
+
+        arrayList = _arrayList;
+
+        AgreementAdapter mAdapter = new AgreementAdapter(getActivity(), arrayList);
+
+        mAdapter.setIsOFFLINE(FollowUser.OFFLINE.equals(cureentParent.getIs_online()));
+
+        SwingBottomInAnimationAdapter animationAdapter = new SwingBottomInAnimationAdapter(mAdapter);
+
+        animationAdapter.setAbsListView(mActualGridView);
+
+        mActualGridView.setAdapter(animationAdapter);
     }
 
-    private void initData() {
-        arrayList = AgreementDOManager.getInstance().getArrayList();
+    @OnClick(R.id.agreement_cancle)
+    public void cancleAgreement() {
+        manager.cancleAgreement(getActivity(), cureentParent.getUid(), cureentAction.getCfg_id(), activityHandler, AGREEMENT_CANCLE);
     }
 
     private void startTimeAnimation() {
         agreementAnimation.setImageDrawable(animationDrawable);
         animationDrawable.start();
         isTimeUsed = false;
-        agreementTitle.setText(cureentAgreement.getTitle());
+        agreementTitle.setText(cureentAction.getDes());
         if (System.currentTimeMillis() - DKEY_START_TIME > DKEY_TIME) {
             DKEY_START_TIME = System.currentTimeMillis();
         }
@@ -201,6 +216,19 @@ public class AgreementFragment extends AbsFragment {
         startThread();
         animationDrawable = (AnimationDrawable) getResources().getDrawable(R.drawable.animation_time);
         animaitonNum = animationDrawable.getNumberOfFrames();
+        updateAgreement();
+    }
+
+    /**
+     * 获取约定
+     */
+    private void updateAgreement() {
+        if (cureentParent == null) {
+            setEndState();
+            return;
+        }
+        UserManager manager = new UserManager();
+        manager.updateAgreement(getActivity(), cureentParent.getUid(), activityHandler, LOAD_AGREEMENT);
     }
 
     public void onEvent(TimeEventType event) {
@@ -288,10 +316,14 @@ public class AgreementFragment extends AbsFragment {
 
     private static final int AGREEMENT = 0x01;//约定
     private static final int AGREEMENT_CANCLE = 0x02;//取消约定
+    private static final int LOAD_AGREEMENT = 0x03;//获取
     private Handler activityHandler = new Handler() {
         public void handleMessage(Message msg) {
             int what = msg.what;
             switch (what) {
+                case LOAD_AGREEMENT:
+                    loadData((CommonResponse) msg.obj);
+                    break;
                 case AGREEMENT:
                     loadAgreement((CommonResponse) msg.obj);
                     break;
@@ -303,6 +335,15 @@ public class AgreementFragment extends AbsFragment {
             }
         }
     };
+
+    private void loadData(CommonResponse resposne) {
+        if (resposne.isSuccess()) {
+            UpdateActionResult result = (UpdateActionResult) resposne.getData();
+            initGridViewData(result.getList());
+        }
+        setEndState();
+    }
+
 
     private void loadAgreement(CommonResponse resposne) {
         dialogDismiss();
@@ -325,6 +366,15 @@ public class AgreementFragment extends AbsFragment {
             }
         } else {
             CommonUtil.showToast(resposne.getMsg());
+        }
+    }
+
+    private void setEndState() {
+        gridview.onRefreshComplete();
+        if (arrayList == null || arrayList.size() <= 0) {
+            llListEmpty.setVisibility(View.VISIBLE);
+        } else {
+            llListEmpty.setVisibility(View.GONE);
         }
     }
 

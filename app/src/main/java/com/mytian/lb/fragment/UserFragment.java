@@ -341,8 +341,8 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
                     headIcon = BitmapFactory.decodeFile(headPaht);
                     user_icon.setImageBitmap(headIcon);
                     isUpdateSuccess = 2;
-                    UserManager manager = new UserManager();
-                    manager.updateParentPortrait(mContext, new File(headPaht), activityHandler, UPDATE_PARENTPORTRAIT);
+//                    UserManager manager = new UserManager();
+//                    manager.updateParentPortrait(mContext, new File(headPaht), activityHandler, UPDATE_PARENTPORTRAIT);
 //                    manager.updateParentPortrait(mContext,new File(headPaht) );
                 }
             }

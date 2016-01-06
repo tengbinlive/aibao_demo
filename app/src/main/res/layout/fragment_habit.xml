@@ -2,22 +2,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.handmark.pulltorefresh.PullToRefreshListView xmlns:ptr="http://schemas.android.com/apk/res-auto"
+    <com.handmark.pulltorefresh.PullToRefreshListView
+        xmlns:ptr="http://schemas.android.com/apk/res-auto"
+        style="@style/ScrollbarTheme"
         android:id="@+id/listview_pr"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/theme_bg_layout"
-        android:cacheColorHint="@color/transparent"
-        android:divider="@null"
-        android:fadingEdge="none"
-        android:fastScrollEnabled="false"
-        android:footerDividersEnabled="false"
-        android:headerDividersEnabled="false"
-        android:listSelector="@color/transparent"
-        android:scrollbars="none"
-        android:smoothScrollbar="true"
         ptr:ptrAnimationStyle="flip"
-        ptr:ptrMode="both" />
+        ptr:ptrMode="pullFromStart" />
 
     <TextView
         android:id="@+id/ll_listEmpty"
@@ -25,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:lineSpacingMultiplier="1.4"
-        android:text="@string/list_empty"
+        android:text="@string/list_empty_habit"
         android:textColor="@color/gray"
         android:textSize="@dimen/font_medium" />
 

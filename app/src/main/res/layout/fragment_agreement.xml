@@ -2,20 +2,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <GridView
+    <com.handmark.pulltorefresh.PullToRefreshGridView
+        xmlns:ptr="http://schemas.android.com/apk/res-auto"
         android:id="@+id/gridview"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white_item"
+        android:background="@color/theme_bg_layout"
         android:listSelector="@color/transparent"
         android:numColumns="3"
         android:scrollbars="none"
-        android:stretchMode="columnWidth" />
+        android:stretchMode="columnWidth"
+        ptr:ptrAnimationStyle="flip"
+        ptr:ptrMode="pullFromStart"/>
 
-    <include
-        layout="@layout/list_empty"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <TextView
+        android:id="@+id/ll_listEmpty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:lineSpacingMultiplier="1.4"
+        android:text="@string/list_empty_agreement"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/font_medium" />
 
     <include
         layout="@layout/layout_agreement_menu"

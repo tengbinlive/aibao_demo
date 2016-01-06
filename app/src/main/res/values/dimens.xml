@@ -22,6 +22,7 @@
 
     <dimen name="tab_height">60dp</dimen>
     <dimen name="tab_2_height">45dp</dimen>
+    <dimen name="message_size">8dp</dimen>
 
     <!--font-->
     <dimen name="font_actionbar">17sp</dimen>
