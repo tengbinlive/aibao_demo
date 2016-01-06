@@ -68,7 +68,7 @@ public class UserDetailActivity extends AbsActivity {
             head = cureentParent.getHead_thumb();
             String phone = cureentParent.getPhone();
             userRemark.setText(remark);
-            userName.setText(name);
+            userName.setText("昵称："+name);
             userPhone.setText(phone);
             String state = "";
             if (FollowUser.OFFLINE.equals(userInfo.getIs_online())) {
