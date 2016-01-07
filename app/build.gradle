@@ -19,7 +19,7 @@ android {
         targetSdkVersion 22
 
         versionCode versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
-        versionName "${versionMajor}.${versionMinor}.${versionPatch}"
+        versionName "v${versionMajor}.${versionMinor}.${versionPatch}"
 
         manifestPlaceholders = [
                 GETUI_APP_ID    : "kvuUWGiv0c6sHXaYA8JzT7",
