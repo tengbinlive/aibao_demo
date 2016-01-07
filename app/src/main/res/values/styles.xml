@@ -85,4 +85,15 @@
         <item name="android:scrollbarThumbVertical">@drawable/scrollbars_bg_theme</item>
     </style>
 
+    <style name="MCircularProgressBar">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="stroke_width">5dp</item>
+        <item name="progress" format="float">0.1</item>
+        <item name="progress_color">@color/pink</item>
+        <item name="progress_background_color">#ffd9cdc6</item>
+        <item name="marker_visible">true</item>
+        <item name="thumb_visible">true</item>
+    </style>
+
 </resources>

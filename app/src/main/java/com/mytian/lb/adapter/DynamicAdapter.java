@@ -1,7 +1,6 @@
 package com.mytian.lb.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,7 +86,7 @@ public class DynamicAdapter extends BaseAdapter {
         viewHolder.share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Platform.ShareParams shareParams = ShareManager.getInstance().getParams("test_title","test_content",null,"http://img0.pcgames.com.cn/pcgames/1106/16/2239524_00018.gif",bean.getDrawable());
+                Platform.ShareParams shareParams = ShareManager.getInstance().getParams("test_title", "test_content", null, "http://img0.pcgames.com.cn/pcgames/1106/16/2239524_00018.gif", bean.getDrawable());
                 ShareManager.getInstance().share(shareParams);
             }
         });

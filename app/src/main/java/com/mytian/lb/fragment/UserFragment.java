@@ -128,7 +128,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         String name = parent.getAlias();
         boolean isName = StringUtil.isBlank(name);
         if (isName) {
-            nameValue.setHint("请输入您的昵称");
+            nameValue.setHint(R.string.enter_nickname);
         } else {
             nameValue.setHint(name);
         }
@@ -141,7 +141,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
             String birthday = DateUtil.ConverToString(bir, DateUtil.YYYY_MM_DD);
             birthdayValue.setHint(birthday);
         } else {
-            birthdayValue.setHint("未选择");
+            birthdayValue.setHint(R.string.not_selected);
         }
         user_icon.setVisibility(View.VISIBLE);
         Glide.with(mContext).load(head).asBitmap()
@@ -316,8 +316,8 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         View divider1 = mBottomView.getView().findViewById(R.id.divider1);
         bt1.setVisibility(View.GONE);
         divider1.setVisibility(View.GONE);
-        bt2.setText("拍照");
-        bt3.setText("从相册获取");
+        bt2.setText(R.string.photograph);
+        bt3.setText(R.string.being_from_album);
         PictButtonOnClickListener listener = new PictButtonOnClickListener();
         bt2.setOnClickListener(listener);
         bt3.setOnClickListener(listener);

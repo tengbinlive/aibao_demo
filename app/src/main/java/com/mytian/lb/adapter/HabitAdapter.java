@@ -92,7 +92,7 @@ public class HabitAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 AnimationHelper.getInstance().viewAnimationScal(v);
-                CommonUtil.showToast("记录成功");
+                CommonUtil.showToast(R.string.success_record);
                 int index = (int) v.getTag(R.id.item_habit_index);
                 ImageView dislike = (ImageView) v.getTag(R.id.item_habit_view);
                 list.get(index).setRecord(UserAction.GREAT);
@@ -106,7 +106,7 @@ public class HabitAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 AnimationHelper.getInstance().viewAnimationScal(v);
-                CommonUtil.showToast("记录成功");
+                CommonUtil.showToast(R.string.success_record);
                 int index = (int) v.getTag(R.id.item_habit_index);
                 ImageView like = (ImageView) v.getTag(R.id.item_habit_view);
                 list.get(index).setRecord(UserAction.BAD);

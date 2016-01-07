@@ -13,12 +13,14 @@ import android.widget.ListView;
 import com.core.CommonResponse;
 import com.handmark.pulltorefresh.PullToRefreshBase;
 import com.handmark.pulltorefresh.PullToRefreshListView;
+import com.mytian.lb.AbsActivity;
 import com.mytian.lb.AbsFragment;
 import com.mytian.lb.R;
 import com.mytian.lb.activity.UserDetailActivity;
 import com.mytian.lb.adapter.FriendslistAdapter;
 import com.mytian.lb.bean.follow.FollowListResult;
 import com.mytian.lb.bean.follow.FollowUser;
+import com.mytian.lb.event.AgreementStateEventType;
 import com.mytian.lb.event.PushStateEventType;
 import com.mytian.lb.manager.FollowManager;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
@@ -68,7 +70,7 @@ public class FriendslistFragment extends AbsFragment {
         // Need to use the Actual ListView when registering for Context Menu
         registerForContextMenu(mActualListView);
 
-        mAdapter = new FriendslistAdapter(getContext(), arrayList);
+        mAdapter = new FriendslistAdapter((AbsActivity) getActivity(), arrayList);
 
         SwingBottomInAnimationAdapter animationAdapter = new SwingBottomInAnimationAdapter(mAdapter);
 
@@ -134,6 +136,21 @@ public class FriendslistFragment extends AbsFragment {
         if (arrayList != null && arrayList.containsKey(babyUid)) {
             FollowUser followUser = arrayList.get(babyUid);
             followUser.setIs_online(event.is_online);
+            arrayList.put(babyUid, followUser);
+            mAdapter.refresh(babyUid, followUser);
+        }
+    }
+
+    /**
+     * 约定状态更新
+     *
+     * @param event
+     */
+    public void onEvent(AgreementStateEventType event) {
+        String babyUid = event.babyUid;
+        if (arrayList != null && arrayList.containsKey(babyUid)) {
+            FollowUser followUser = arrayList.get(babyUid);
+            followUser.setAgreement_state(event.state);
             arrayList.put(babyUid, followUser);
             mAdapter.refresh(babyUid, followUser);
         }

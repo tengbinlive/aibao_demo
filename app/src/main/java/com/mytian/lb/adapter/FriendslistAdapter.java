@@ -1,32 +1,43 @@
 package com.mytian.lb.adapter;
 
-import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.util.ArrayMap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.core.CommonResponse;
+import com.core.util.CommonUtil;
+import com.daimajia.swipe.SimpleSwipeListener;
+import com.daimajia.swipe.SwipeLayout;
+import com.daimajia.swipe.adapters.BaseSwipeAdapter;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.mytian.lb.AbsActivity;
 import com.mytian.lb.R;
 import com.mytian.lb.bean.follow.FollowUser;
+import com.mytian.lb.event.AgreementStateEventType;
+import com.mytian.lb.manager.FollowManager;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class FriendslistAdapter extends BaseAdapter {
+public class FriendslistAdapter extends BaseSwipeAdapter {
 
     private LayoutInflater mInflater;
 
     private ArrayMap<String, FollowUser> list;
 
-    private Context mContext;
+    private AbsActivity mContext;
 
-    public FriendslistAdapter(Context context, ArrayMap<String, FollowUser> _list) {
+    private FollowManager manager = new FollowManager();
+
+    public FriendslistAdapter(AbsActivity context, ArrayMap<String, FollowUser> _list) {
         this.list = _list;
         mContext = context;
         mInflater = LayoutInflater.from(context);
@@ -60,33 +71,80 @@ public class FriendslistAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder viewHolder;
-        if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.item_friends_list, null);
-            viewHolder = new ViewHolder(convertView);
-            convertView.setTag(viewHolder);
-        } else {
-            viewHolder = (ViewHolder) convertView.getTag();
-        }
+    public int getSwipeLayoutResourceId(int i) {
+        return R.id.swipe;
+    }
 
+    @Override
+    public View generateView(int i, ViewGroup viewGroup) {
+        View convertView;
+        convertView = mInflater.inflate(R.layout.item_friends_list, viewGroup, false);
+        final ViewHolder holder = new ViewHolder(convertView);
+        holder.deleteLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                closeAllItems();
+                int index = (Integer) view.getTag();
+                FollowUser user = list.valueAt(index);
+                mContext.dialogShow(R.string.cancel_ing);
+                manager.followcancel(mContext, user.getUid(), handler, CANCEL);
+            }
+        });
+        holder.deleteLayout.setClickable(false);
+        holder.swipeLayout.addSwipeListener(new SimpleSwipeListener() {
+            @Override
+            public void onOpen(SwipeLayout layout) {
+                super.onOpen(layout);
+                holder.deleteLayout.setClickable(true);
+            }
+
+            @Override
+            public void onClose(SwipeLayout layout) {
+                super.onClose(layout);
+                holder.deleteLayout.setClickable(false);
+            }
+        });
+        convertView.setTag(holder);
+        return convertView;
+    }
+
+    @Override
+    public void fillValues(int position, View convertView) {
+        ViewHolder viewHolder = (ViewHolder) convertView.getTag();
         FollowUser bean = list.valueAt(position);
         Glide.with(mContext).load(bean.getHead_id()).asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .placeholder(R.mipmap.icon_contact)
                 .into(viewHolder.head);
         viewHolder.name.setText(bean.getAlias());
-        if (FollowUser.ONLINE.equals(bean.getIs_online())) {
-            viewHolder.stateTv.setVisibility(View.GONE);
-            viewHolder.stateIv.setVisibility(View.VISIBLE);
-        } else {
-            viewHolder.stateIv.setVisibility(View.GONE);
-            viewHolder.stateTv.setVisibility(View.VISIBLE);
-            viewHolder.stateTv.setText(R.string.offline);
-        }
-        return convertView;
+        boolean isOnline = FollowUser.ONLINE.equals(bean.getIs_online());
+        setState(viewHolder.stateTv, viewHolder.stateIv, bean.getAgreement_state(), isOnline);
+        viewHolder.deleteLayout.setTag(position);
     }
 
+    /**
+     * 用户状态显示设置
+     *
+     * @param textView
+     * @param imageView
+     * @param ag_state
+     * @param isOnline
+     */
+    private void setState(TextView textView, ImageView imageView, int ag_state, boolean isOnline) {
+        if (isOnline) {
+            if (ag_state == AgreementStateEventType.AGREEMENT_ING) {
+                textView.setVisibility(View.VISIBLE);
+                textView.setText(R.string.state_agreement);
+            } else {
+                textView.setVisibility(View.GONE);
+            }
+            imageView.setVisibility(View.VISIBLE);
+        } else {
+            imageView.setVisibility(View.GONE);
+            textView.setVisibility(View.VISIBLE);
+            textView.setText(R.string.state_offline);
+        }
+    }
 
     /**
      * This class contains all butterknife-injected Views & Layouts from layout file 'item_friends_list.xml'
@@ -103,9 +161,29 @@ public class FriendslistAdapter extends BaseAdapter {
         TextView stateTv;
         @Bind(R.id.state_iv)
         ImageView stateIv;
+        @Bind(R.id.delete_layout)
+        RelativeLayout deleteLayout;
+        @Bind(R.id.swipe)
+        SwipeLayout swipeLayout;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
         }
     }
+
+    private static final int CANCEL = 1;//取消关注
+    private Handler handler = new Handler() {
+        public void handleMessage(Message msg) {
+            int what = msg.what;
+            switch (what) {
+                case CANCEL:
+                    mContext.dialogDismiss();
+                    CommonResponse resposne = (CommonResponse) msg.obj;
+                    CommonUtil.showToast(resposne.getMsg());
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 }

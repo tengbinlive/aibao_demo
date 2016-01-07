@@ -56,7 +56,7 @@ public class HabitFragment extends AbsFragment {
      */
     private void updateHabit() {
         if (cureentParent == null) {
-            setEndState();
+            loadEndState();
             return;
         }
         UserManager manager = new UserManager();
@@ -99,7 +99,7 @@ public class HabitFragment extends AbsFragment {
             UpdateActionResult result = (UpdateActionResult) resposne.getData();
             initListViewData(result.getList());
         }
-        setEndState();
+        loadEndState();
     }
 
     private void initListViewData(ArrayList<UserAction> _arrayList) {
@@ -119,7 +119,10 @@ public class HabitFragment extends AbsFragment {
         mActualListView.setAdapter(animationAdapter);
     }
 
-    private void setEndState() {
+    /**
+     * 数据加载结束
+     */
+    private void loadEndState() {
         listview.onRefreshComplete();
         if (arrayList == null || arrayList.size() <= 0) {
             llListEmpty.setVisibility(View.VISIBLE);

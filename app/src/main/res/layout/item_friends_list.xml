@@ -11,52 +11,83 @@
         android:layout_marginRight="@dimen/content_gap"
         android:background="@drawable/light_divide" />
 
-    <RelativeLayout
+    <com.daimajia.swipe.SwipeLayout
+        xmlns:swipe="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/swipe"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white_item"
-        android:padding="@dimen/content_gap">
+        android:layout_height="match_parent"
+        swipe:leftEdgeSwipeOffset="0dp"
+        swipe:rightEdgeSwipeOffset="0dp">
 
-        <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/head"
-            android:layout_width="@dimen/item_head_size_small"
-            android:layout_height="@dimen/item_head_size_small"
-            android:layout_marginRight="@dimen/content_gap"
-            app:riv_border_width="0dip"
-            app:riv_corner_radius="@dimen/corner_radius"
-            app:riv_mutate_background="true"
-            app:riv_oval="false"
-            app:riv_tile_mode="repeat" />
+        <RelativeLayout
+            android:id="@+id/delete_layout"
+            android:layout_width="90dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:background="@color/match">
 
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/back_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="@string/cancel_attention"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_medium" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/head"
-            android:singleLine="true"
-            android:layout_centerVertical="true"
-            android:text="user name"
-            android:textColor="@color/textcolor_theme"
-            android:textSize="@dimen/font_big" />
+            android:background="@color/white_item"
+            android:padding="@dimen/content_gap">
 
-        <TextView
-            android:id="@+id/state_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:visibility="gone"
-            android:textColor="@color/textcolor_match"
-            android:textSize="@dimen/font_small" />
+            <com.makeramen.roundedimageview.RoundedImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/head"
+                android:layout_width="@dimen/item_head_size_small"
+                android:layout_height="@dimen/item_head_size_small"
+                android:layout_marginRight="@dimen/content_gap"
+                app:riv_border_width="0dip"
+                app:riv_corner_radius="@dimen/corner_radius"
+                app:riv_mutate_background="true"
+                app:riv_oval="false"
+                app:riv_tile_mode="repeat" />
 
-        <ImageView
-            android:id="@+id/state_iv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/icon_more" />
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/head"
+                android:singleLine="true"
+                android:text="user name"
+                android:textColor="@color/textcolor_theme"
+                android:textSize="@dimen/font_big" />
 
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/state_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:textColor="@color/textcolor_match"
+                android:textSize="@dimen/font_small"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/state_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/icon_more" />
+
+        </RelativeLayout>
+
+    </com.daimajia.swipe.SwipeLayout>
+
 </LinearLayout>
 

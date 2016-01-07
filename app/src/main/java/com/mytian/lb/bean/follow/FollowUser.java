@@ -33,6 +33,15 @@ public class FollowUser implements Serializable {
     private String searchKey;
     private boolean focus;
     private int head_id;
+    private int agreement_state;
+
+    public int getAgreement_state() {
+        return agreement_state;
+    }
+
+    public void setAgreement_state(int agreement_state) {
+        this.agreement_state = agreement_state;
+    }
 
     public String getAlias() {
         return alias;

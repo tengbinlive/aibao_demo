@@ -6,17 +6,19 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <com.roger.match.library.MatchTextView xmlns:match="http://schemas.android.com/apk/res-auto"
+    <com.roger.match.library.MatchTextView
+        xmlns:match="http://schemas.android.com/apk/res-auto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         match:text="WELCOME USE"
-        match:textColor="#ffffff" />
+        match:textColor="@color/textcolor_theme" />
 
-    <com.roger.match.library.MatchTextView xmlns:match="http://schemas.android.com/apk/res-auto"
+    <com.roger.match.library.MatchTextView
+        xmlns:match="http://schemas.android.com/apk/res-auto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/content_gap"
         match:text="AIBAO"
-        match:textColor="#ffffff" />
+        match:textColor="@color/textcolor_theme" />
 
 </LinearLayout>

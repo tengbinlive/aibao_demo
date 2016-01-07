@@ -66,9 +66,17 @@
     <string name="habit">习惯养成</string>
     <string name="user_info">个人信息</string>
     <string name="head">头像</string>
-
     <string name="state_offline">当前用户未在线</string>
+    <string name="state_agreement">约定中</string>
     <string name="offline">离线</string>
     <string name="online">在线</string>
+    <string name="offline_brackets">   [离线]</string>
+    <string name="online_brackets">   [在线]</string>
+    <string name="not_selected">未选择</string>
+    <string name="enter_nickname">请输入您的昵称</string>
+    <string name="photograph">拍照</string>
+    <string name="being_from_album">从相册获取</string>
+    <string name="and_agreement">与%s的约定</string>
+    <string name="success_record">记录成功</string>
 
 </resources>

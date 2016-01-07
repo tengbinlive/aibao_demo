@@ -89,7 +89,7 @@ public class FollowAddAdapter extends BaseAdapter {
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .placeholder(R.mipmap.icon_contact)
                 .into(viewHolder.head);
-        String is_online = FollowUser.ONLINE.equals(bean.getIs_online()) ? "   [在线]" : "   [离线]";
+        String is_online = FollowUser.ONLINE.equals(bean.getIs_online()) ? mContext.getString(R.string.online_brackets) : mContext.getString(R.string.offline_brackets);
         viewHolder.name.setText(bean.getAlias() + is_online);
         if (FollowUser.LB.equals(bean.getFocus_from())) {
             setAccepatView(viewHolder.accept_bt, false);

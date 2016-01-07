@@ -60,7 +60,7 @@
             android:layout_height="@dimen/button_height"
             android:background="@drawable/button_bg_theme"
             android:text="@string/accept"
-            android:textColor="@color/white"
+            android:textColor="@color/textcolor_theme"
             android:textSize="@dimen/font_btn" />
 
     </RelativeLayout>

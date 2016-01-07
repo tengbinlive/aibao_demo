@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.core.util.StringUtil;
 import com.gitonway.lee.niftymodaldialogeffects.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.NiftyDialogBuilder;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -18,6 +19,7 @@ import com.mytian.lb.AbsActivity;
 import com.mytian.lb.R;
 import com.mytian.lb.adapter.MainViewPagerAdapter;
 import com.mytian.lb.bean.follow.FollowUser;
+import com.mytian.lb.event.PushStateEventType;
 import com.mytian.lb.fragment.AgreementFragment;
 import com.mytian.lb.fragment.HabitFragment;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
@@ -67,20 +69,42 @@ public class UserDetailActivity extends AbsActivity {
             String name = cureentParent.getAlias();
             head = cureentParent.getHead_thumb();
             String phone = cureentParent.getPhone();
-            userRemark.setText(remark);
-            userName.setText("昵称："+name);
-            userPhone.setText(phone);
-            String state = "";
-            if (FollowUser.OFFLINE.equals(userInfo.getIs_online())) {
-                state = "离线";
+            if(StringUtil.isBlank(remark)){
+                userRemark.setText(name);
+                userName.setVisibility(View.GONE);
+            }else {
+                userName.setVisibility(View.VISIBLE);
+                userRemark.setText(remark);
+                userName.setText("昵称：" + name);
             }
-            userState.setText(state);
+            userPhone.setText(phone);
+            setState(userInfo.getIs_online());
         }
         Glide.with(mContext).load(head)
                 .asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .placeholder(R.mipmap.default_head)
                 .centerCrop().into(userIcon);
+    }
+
+    private void setState(String isOnline){
+        String state = "";
+        if (FollowUser.OFFLINE.equals(isOnline)) {
+            state = "离线";
+        }
+        userState.setText(state);
+    }
+
+    /**
+     * 线上状态更新
+     *
+     * @param event
+     */
+    public void onEvent(PushStateEventType event) {
+        String babyUid = event.babyUid;
+        if (babyUid.equals(cureentParent.getUid())) {
+            setState(event.is_online);
+        }
     }
 
     @Override
