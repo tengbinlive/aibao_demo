@@ -1,6 +1,12 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.droidtitan.lintcleaner'
 
+// Manifest version information!
+def versionMajor = 2
+def versionMinor = 0
+def versionPatch = 0
+def versionBuild = 35 // bump for dogfood builds, public betas, etc.
+
 android {
 
     compileSdkVersion 22
@@ -11,8 +17,10 @@ android {
 //        解决Android L上通知显示异常问题，targetSdkVersion需要设置成22
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 34
-        versionName "v1.5.1"
+
+        versionCode versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
+        versionName "${versionMajor}.${versionMinor}.${versionPatch}"
+
         manifestPlaceholders = [
                 GETUI_APP_ID    : "kvuUWGiv0c6sHXaYA8JzT7",
                 GETUI_APP_KEY   : "PO0la0IdOd8vTKnFl4Ftq2",
@@ -22,13 +30,7 @@ android {
     }
 
     signingConfigs {
-        debug {
-            storeFile file("../aibao.jks");
-            storePassword "aibaoaibao"
-            keyAlias "aibao"
-            keyPassword "aibaoaibao"
-        }
-        release {
+        aibao {
             storeFile file("../aibao.jks");
             storePassword "aibaoaibao"
             keyAlias "aibao"
@@ -36,20 +38,31 @@ android {
         }
     }
 
+//    "http://114.215.108.49/" /** 正式环境OpenAPI地址 */
+//    "http://10.0.1.15/" /** 调试环境OpenAPI地址 */
     buildTypes {
 
         debug {
+            buildConfigField "String", "API_HOST", "\"http://114.215.108.49/\""//API Host
+            buildConfigField "boolean", "LOG_DEBUG", "true"// log info
+
             minifyEnabled false
             zipAlignEnabled false
+            shrinkResources false
             proguardFiles 'proguard-rules.pro'
-            signingConfig signingConfigs.release
+            signingConfig signingConfigs.aibao
         }
 
         release {
-            minifyEnabled false
+            buildConfigField "String", "API_HOST", "\"http://114.215.108.49/\""//API Host
+            buildConfigField "boolean", "LOG_DEBUG", "false"//log info
+
+            minifyEnabled true
             zipAlignEnabled true
+            // 移除无用的resource文件
+            shrinkResources true
             proguardFiles 'proguard-rules.pro'
-            signingConfig signingConfigs.release
+            signingConfig signingConfigs.aibao
         }
 
     }

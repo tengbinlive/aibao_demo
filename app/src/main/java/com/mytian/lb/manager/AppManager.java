@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -42,7 +43,7 @@ public class AppManager {
      * 版本更新
      */
     public void updateVersion() {
-        if(!isChecking) {
+        if (!isChecking) {
             isChecking = true;
             manager.checkNewVersion(App.getInstance(), activityHandler, APP_UPDATE);
         }
@@ -52,9 +53,9 @@ public class AppManager {
      * 重新登录
      */
     public void reLoginApp() {
-        if(!isOUT) {
+        if (!isOUT) {
             isOUT = true;
-            activityHandler.sendEmptyMessage(APP_RELOGIN);
+            activityHandler.sendEmptyMessageDelayed(APP_RELOGIN, 1500);
         }
     }
 
@@ -64,7 +65,7 @@ public class AppManager {
     private final static int DIALOGSHOW = 2;
     private final static int DIALOGDISMISS = 3;
 
-    private Handler activityHandler = new Handler() {
+    private Handler activityHandler = new Handler(Looper.getMainLooper()) {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case APP_UPDATE:
@@ -94,7 +95,7 @@ public class AppManager {
             SysAppUpgradeResult result = (SysAppUpgradeResult) resposne.getData();
             if (result.getVersion() > App.getAppVersionCode()) {
                 downloadUrl = result.getUrl();
-                activityHandler.sendEmptyMessage(APP_DOWNLOAD);
+                activityHandler.sendEmptyMessageDelayed(APP_DOWNLOAD, 1500);
             } else {
                 CommonUtil.showToast("已是最新版");
             }
@@ -103,8 +104,8 @@ public class AppManager {
         }
     }
 
-    private void dialogDownload(){
-        if(StringUtil.isNotBlank(downloadUrl)) {
+    private void dialogDownload() {
+        if (StringUtil.isNotBlank(downloadUrl)) {
             StringBuffer versionInfo = new StringBuffer();
             versionInfo.append("爱宝.").append("\n\n")
                     .append("点击下载最新版").append("\n\n")

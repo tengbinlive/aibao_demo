@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/action_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/button_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/line_cancle"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_height"
+            android:layout_marginLeft="@dimen/content_left_margin"
+            android:layout_marginTop="@dimen/content_10dp"
+            android:layout_marginBottom="@dimen/content_10dp"
+            android:layout_marginRight="@dimen/content_right_margin"
+            android:layout_weight="1"
+            android:background="@drawable/button_bg_theme"
+            android:text="@string/cancel"
+            android:textColor="@color/textcolor_theme"
+            android:textSize="@dimen/font_btn" />
+
+        <Button
+            android:id="@+id/sure"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_height"
+            android:layout_marginLeft="@dimen/content_left_margin"
+            android:layout_marginRight="@dimen/content_right_margin"
+            android:layout_weight="1"
+            android:background="@drawable/button_bg_theme"
+            android:text="@string/save"
+            android:textColor="@color/textcolor_theme"
+            android:textSize="@dimen/font_btn" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/src_pic"
+        android:layout_below="@+id/toolbar"
+        android:layout_above="@+id/button_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#2b2b2b"
+        android:scaleType="centerInside" />
+</RelativeLayout>

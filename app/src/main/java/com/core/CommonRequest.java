@@ -261,7 +261,7 @@ public class CommonRequest extends Request<CommonResponse> {
         String jsonString;
         try {
             App.getInstance().setCookie(networkResponse.headers.get(SET_COOKIE_KEY));
-            jsonString = new String(networkResponse.data, HttpHeaderParser.parseCharset(networkResponse.headers, "UTF-8"));
+            jsonString = new String(networkResponse.data, HttpHeaderParser.parseCharset(networkResponse.headers, OpenApi.CHARSET_UTF8));
             Logger.d(jsonString);
             // 转换返回结果为指定对象
             this.doParse(jsonString, mFormat, mTypeToken, response, mRawData);

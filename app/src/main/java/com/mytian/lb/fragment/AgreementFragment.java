@@ -85,7 +85,7 @@ public class AgreementFragment extends AbsFragment {
 
     private long DKEY_START_TIME = 0;
 
-    private static int MINUTE_TIME = 5;
+    private static int MINUTE_TIME = 15;
 
     private static long DKEY_TIME = MINUTE_TIME * 60 * 1000;
 

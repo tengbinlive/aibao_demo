@@ -91,9 +91,9 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
 
     private int user_gender = -1;
 
-    private Bitmap headIcon;
-
     private int isUpdateSuccess;
+
+    private String headPath;
 
     @Override
     public int getContentView() {
@@ -182,14 +182,11 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         if (StringUtil.isNotBlank(birthday)) {
             param.setBirthday(birthdayDate.getTimeInMillis());
         }
-//        if (null != headIcon) {
-//            byte[] bmData = Utils.Bitmap2Bytes(headIcon);
-//            String pict = Utils.byte2hex(bmData);
-//            param.setHeadThumb(pict);
-//        }
+        if (StringUtil.isBlank(headPath)) {
+            manager.updateParentPortrait(mContext, new File(headPath), activityHandler, UPDATE_PARENTPORTRAIT);
+        }
         manager.updateParent(mContext, param, activityHandler, UPDATE_PARENT);
     }
-
 
     private static final int UPDATE_PARENT = 0x04;//信息补全
     private static final int UPDATE_PARENTPORTRAIT = 0x05;//更新头像
@@ -203,7 +200,6 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
                 case UPDATE_PARENTPORTRAIT:
                     loadUpdateParentPortrait((CommonResponse) msg.obj);
                     break;
-
                 default:
                     break;
             }
@@ -211,9 +207,9 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
     };
 
     private void resetData() {
-        if (null != headIcon) {
+        if (StringUtil.isNotBlank(headPath)) {
             FileDataHelper.deleteDirectory(FileDataHelper.getFilePath(Constant.Dir.IMAGE_TEMP));
-            headIcon = null;
+            headPath = null;
         }
         if (isUpdateSuccess == 2) {
             String head = App.getInstance().getUserResult().getParent().getHeadThumb();
@@ -228,7 +224,6 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         dialogDismiss();
         CommonUtil.showToast(resposne.getMsg());
         if (resposne.isSuccess()) {
-            isUpdateSuccess = 1;
             String name = nameValue.getText().toString();
             String birthday = birthdayValue.getText().toString();
             nameValue.clearFocus();
@@ -247,15 +242,15 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
             dao.deleteAll();
             dao.insertInTx(App.getInstance().getUserResult().getParent());
         }
-        resetData();
     }
 
     private void loadUpdateParentPortrait(CommonResponse resposne) {
         if (resposne.isSuccess()) {
-            CommonUtil.showToast(resposne.getMsg());
+            isUpdateSuccess = 1;
         } else {
-            CommonUtil.showToast(resposne.getMsg());
+            CommonUtil.showToast(R.string.failure_head_update);
         }
+        resetData();
     }
 
     @OnClick(R.id.reset_password_tv)
@@ -337,13 +332,12 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
                 processCamera();
             } else if (requestCode == FLAG_MODIFY_FINISH && resultCode == activity.RESULT_OK) {
                 if (data != null) {
-                    String headPaht = data.getStringExtra(STR_PATH);
-                    headIcon = BitmapFactory.decodeFile(headPaht);
-                    user_icon.setImageBitmap(headIcon);
-                    isUpdateSuccess = 2;
-//                    UserManager manager = new UserManager();
-//                    manager.updateParentPortrait(mContext, new File(headPaht), activityHandler, UPDATE_PARENTPORTRAIT);
-//                    manager.updateParentPortrait(mContext,new File(headPaht) );
+                    headPath = data.getStringExtra(STR_PATH);
+                    if(StringUtil.isNotBlank(headPath)) {
+                        Bitmap headIcon = BitmapFactory.decodeFile(headPath);
+                        user_icon.setImageBitmap(headIcon);
+                        isUpdateSuccess = 2;
+                    }
                 }
             }
         }

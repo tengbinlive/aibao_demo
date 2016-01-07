@@ -15,13 +15,19 @@ import android.view.View;
  * @date 2015-1-12
  */
 public class ClipView extends View {
-    private Paint paint = new Paint();
-    public Paint borderPaint = new Paint();
+    private Paint paint;
+    public Paint borderPaint;
 
     /**
      * 自定义顶部栏高度，如不是自定义，则默认为0即可
      */
     private int customTopBarHeight = 0;
+
+    /**
+     * 自定义低部栏高度，如不是自定义，则默认为0即可
+     */
+    private int customBottomBarHeight = 0;
+
     /**
      * 裁剪框长宽比，默认4：3
      */
@@ -51,14 +57,23 @@ public class ClipView extends View {
 
     public ClipView(Context context) {
         super(context);
+        init();
     }
 
     public ClipView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init();
     }
 
     public ClipView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        init();
+    }
+
+    private void init(){
+        paint = new Paint();
+        borderPaint = new Paint();
+        paint.setAlpha(100);
     }
 
     @Override
@@ -82,8 +97,8 @@ public class ClipView extends View {
             clipLeftMargin = (width - clipWidth) / 2;
             clipTopMargin = (height - clipHeight) / 2;
         }
-        // 画阴影
-        paint.setAlpha(100);
+
+        // 画四边
         // top
         canvas.drawRect(0, customTopBarHeight, width, clipTopMargin, paint);
         // left
@@ -93,7 +108,7 @@ public class ClipView extends View {
         canvas.drawRect(clipLeftMargin + clipWidth, clipTopMargin, width,
                 clipTopMargin + clipHeight, paint);
         // bottom
-        canvas.drawRect(0, clipTopMargin + clipHeight, width, height, paint);
+        canvas.drawRect(0, clipTopMargin + clipHeight, width, customBottomBarHeight, paint);
 
         // 画边框
         borderPaint.setStyle(Style.STROKE);
@@ -105,6 +120,14 @@ public class ClipView extends View {
         if (listenerComplete != null) {
             listenerComplete.onDrawCompelete();
         }
+    }
+
+    public int getCustomBottomBarHeight() {
+        return customBottomBarHeight;
+    }
+
+    public void setCustomBottomBarHeight(int customBottomBarHeight) {
+        this.customBottomBarHeight = customBottomBarHeight;
     }
 
     public int getCustomTopBarHeight() {

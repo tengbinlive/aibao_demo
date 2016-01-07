@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/content_gap_big"
         android:layout_marginLeft="@dimen/content_gap_big"
-        android:text="@string/remark"
+        android:text="@string/setting_remark"
         android:textColor="@color/textcolor_theme"
         android:textSize="@dimen/font_actionbar_title" />
 

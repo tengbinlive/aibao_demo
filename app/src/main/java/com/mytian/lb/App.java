@@ -209,6 +209,9 @@ public class App extends Application {
 
         // 多进程情况只初始化一次
         if (ProcessUtil.isCurMainProcess(getApplicationContext())) {
+
+            Constant.DEBUG = BuildConfig.DEBUG;
+
             FIR.init(getApplicationContext());
 
             Glide.get(this).register(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory(new OkHttpClient()));
@@ -219,11 +222,13 @@ public class App extends Application {
             PushHelper.getInstance().UPLOAD_ID_SUCCESS = SharedPreferencesHelper.getBoolean(this, PushHelper.CHANNEL_STATE, false);
 
             // 初始化日志类,如果不是调试状态则不输出日志
+            LogLevel logLevel = BuildConfig.LOG_DEBUG ?LogLevel.FULL:LogLevel.NONE;
+
             Logger.init("bin.teng")               // default PRETTYLOGGER or use just init()
                     .setMethodCount(3)            // default 2
                     .hideThreadInfo()             // default shown
                     .setMethodOffset(2)        // default 0
-                    .setLogLevel(LogLevel.FULL);  // default LogLevel.FULL
+                    .setLogLevel(logLevel);  // default LogLevel.FULL
 
             Logger.i(TAG, "成功初始化LOG日志.");
 
@@ -243,11 +248,6 @@ public class App extends Application {
             //初始分享
             ShareManager.getInstance().initShare();
 
-            if (Constant.DEBUG) {
-                boolean API_STATE = SharedPreferencesHelper.getBoolean(this, "API_STATE", false);
-                // 初始化OpenAPI
-                OpenApi.init(API_STATE); // 设置OpenAPI的调试状态
-            }
         }
     }
 

@@ -15,6 +15,7 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.ViewTreeObserver;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
@@ -46,11 +47,11 @@ public class AuthClipPictureActivity extends AbsActivity implements OnTouchListe
     /**
      * 保存按钮
      */
-    private LinearLayout saveLayout;
+    private Button saveLayout;
     /**
      * 取消
      */
-    private LinearLayout line_cancle;
+    private Button line_cancle;
     private ClipView clipview;
 
     private Matrix matrix = new Matrix();
@@ -117,11 +118,11 @@ public class AuthClipPictureActivity extends AbsActivity implements OnTouchListe
             @SuppressWarnings("deprecation")
             public void onGlobalLayout() {
                 srcPic.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                initClipView(srcPic.getTop(), bitmap);
+                initClipView(srcPic.getTop(),srcPic.getBottom(), bitmap);
             }
         });
-        saveLayout = (LinearLayout) this.findViewById(R.id.sure);
-        line_cancle = (LinearLayout) this.findViewById(R.id.line_cancle);
+        saveLayout = (Button) this.findViewById(R.id.sure);
+        line_cancle = (Button) this.findViewById(R.id.line_cancle);
         line_cancle.setOnClickListener(this);
         saveLayout.setOnClickListener(this);
         File f = new File(mFilePath);
@@ -134,7 +135,12 @@ public class AuthClipPictureActivity extends AbsActivity implements OnTouchListe
 
     @Override
     public int getContentView() {
-        return R.layout.clip_image;
+        return R.layout.activity_clip_image;
+    }
+
+    @Override
+    public void initActionBar() {
+        setToolbarIntermediateStrID(R.string.auth_clip_pic);
     }
 
     /**
@@ -194,11 +200,12 @@ public class AuthClipPictureActivity extends AbsActivity implements OnTouchListe
      * @param top
      * @param bitmap
      */
-    private void initClipView(int top, final Bitmap bitmap) {
+    private void initClipView(int top,int bottom, final Bitmap bitmap) {
         clipview = new ClipView(AuthClipPictureActivity.this);
         clipview.setClipRatio(getIntent().getDoubleExtra("clipRatio", 0.5));
         clipview.setClipWidth(screenWidth);
         clipview.setCustomTopBarHeight(top);
+        clipview.setCustomBottomBarHeight(bottom);
         clipview.addOnDrawCompleteListener(new ClipView.OnDrawListenerComplete() {
 
             public void onDrawCompelete() {

@@ -52,6 +52,8 @@ public class UpdateParentPortraitParam extends OpenApiBaseRequestAdapter {
     public boolean validate() {
         if (StringUtil.isBlank(this.uid)) return false;
         if (StringUtil.isBlank(this.token)) return false;
+        if (StringUtil.isBlank(this.client_type)) return false;
+        if (null == headPortrait) return false;
         return true;
     }
 

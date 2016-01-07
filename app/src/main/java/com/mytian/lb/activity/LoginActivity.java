@@ -66,6 +66,12 @@ public class LoginActivity extends AnimatedRectActivity {
         App.getInstance().activityManager.popOneActivityExcept(MainActivity.class);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
+    }
+
     @OnClick(R.id.register_bt)
     void toRegister() {
         Intent intent = new Intent(this, RegisterActivity.class);

@@ -106,6 +106,8 @@ public class RegisterActivity extends AbsActivity {
             CommonUtil.showToast("验证码已发送，请注意查收。");
         } else {
             CommonUtil.showToast(resposne.getMsg());
+            DKEY_START_TIME = 0;
+            setDKeyBtnText(DKEY_TIME);
         }
     }
 

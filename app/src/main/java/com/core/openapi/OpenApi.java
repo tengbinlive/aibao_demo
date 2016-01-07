@@ -1,62 +1,36 @@
 package com.core.openapi;
 
+import com.mytian.lb.BuildConfig;
+
 /**
  * OpenAPI管理类
- * 
- * @author  bin.teng
+ *
+ * @author bin.teng
  */
 public class OpenApi {
 
-	private static boolean DEBUG = true;
+    public final static String URL_TYPE_IMAGE = "URL_TYPE_IMAGE";
 
-	public final static String URL_TYPE_IMAGE = "URL_TYPE_IMAGE";
+    public final static String URL_TYPE_DATA = "URL_TYPE_DATA";
 
-	public final static String URL_TYPE_DATA = "URL_TYPE_DATA";
+    public static final String CHARSET_UTF8 = "UTF-8";
 
-	/** 调试环境OpenAPI地址 */
-	private static final String DEBUG_API_PATH = "http://10.0.1.15/";
+    public static final String MD5 = "md5";
 
-	/** 正式环境OpenAPI地址 */
-	private static final String PROD_API_PATH = "http://114.215.108.49/";
+    public static final String FORMAT_JSON = "openapi_json";
 
-	private static final String CHARSET_UTF8 = "UTF-8";
+    public static final String FORMAT_XML = "openapi_xml";
 
-	private static final String MD5 = "md5";
-
-	public static final String FORMAT_JSON = "openapi_json";
-
-	public static final String FORMAT_XML = "openapi_xml";
-
-	public static boolean isDEBUG() {
-		return DEBUG;
-	}
-
-	/**
-	 * 初始化OpenAPI
-	 * 
-	 * @param debug
-	 */
-	public static void init(boolean debug) {
-		OpenApi.DEBUG = debug;
-	}
-
-	/**
-	 * 根据OpenAPI方法名称枚举给出对应的API地址.
-	 *
-	 * @param method OpenAPI方法名称枚举
-	 * @return
-	 */
-	public static String getApiPath(OpenApiMethodEnum method) {
-		// 根据是否为DEBUG环境返回对应的URL
-		String url = (DEBUG) ? DEBUG_API_PATH : PROD_API_PATH;
-		// 正式环境中, 如果为特殊方法名称,需要替换http为https
-		if (!DEBUG) {
-			switch (method) {
-			default:
-				break;
-			}
-		}
-		return url+method.getCode();
-	}
+    /**
+     * 根据OpenAPI方法名称枚举给出对应的API地址.
+     *
+     * @param method OpenAPI方法名称枚举
+     * @return
+     */
+    public static String getApiPath(OpenApiMethodEnum method) {
+        // 根据是否为DEBUG环境返回对应的URL
+        String url = BuildConfig.API_HOST;
+        return url + method.getCode();
+    }
 
 }

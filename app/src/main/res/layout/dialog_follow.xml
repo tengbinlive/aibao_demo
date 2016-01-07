@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:text="user name"
                 android:layout_above="@+id/phone"
-                android:textColor="@color/white"
+                android:textColor="@color/textcolor_theme"
                 android:layout_marginLeft="@dimen/content_10dp"
                 android:textSize="@dimen/font_btn" />
 
@@ -40,7 +40,7 @@
                 android:layout_marginTop="@dimen/content_gap_small"
                 android:layout_marginBottom="@dimen/content_10dp"
                 android:layout_marginLeft="@dimen/content_10dp"
-                android:textColor="@color/white"
+                android:textColor="@color/textcolor_theme"
                 android:textSize="@dimen/font_small" />
 
     </RelativeLayout>
@@ -76,7 +76,7 @@
              android:gravity="center"
              android:layout_height="wrap_content"
              android:text="@string/cancel"
-             android:textColor="@color/theme"
+             android:textColor="@color/textcolor_theme"
              android:textSize="@dimen/font_actionbar" />
 
          <TextView
@@ -86,7 +86,7 @@
              android:layout_weight="1.1"
              android:layout_height="wrap_content"
              android:text="@string/follow_add"
-             android:textColor="@color/theme"
+             android:textColor="@color/textcolor_theme"
              android:textSize="@dimen/font_actionbar" />
 
      </LinearLayout>

@@ -13,7 +13,7 @@ package com.mytian.lb;
 public class Constant {
 
 	/** 调试模式(将会输出日志,自动解析到对应的测试环境API) */
-	public static final boolean DEBUG = true;
+	public static boolean DEBUG = true;
 
 	public static final String DB_NAME = "mytian_db";
 
@@ -35,9 +35,9 @@ public class Constant {
 		/** 图片目录 */
 		public static final String IMAGE_DIR = ROOT_DIR + "/images";
 		/** 临时图片文件位置 */
-		public static final String IMAGE_TEMP = ROOT_DIR + "/images/temp.jpg";
+		public static final String IMAGE_TEMP = ROOT_DIR + "/images/temp";
 		/** 临时拍照文件位置 */
-		public static final String CAMERA_TEMP = ROOT_DIR + "/images/camera_temp.jpg";
+		public static final String CAMERA_TEMP = ROOT_DIR + "/images/camera_temp";
 	}
 
 

@@ -51,6 +51,7 @@
     <string name="accepat_ing">正在同意</string>
     <string name="cancel_ing">正在取消</string>
     <string name="remark">备注</string>
+    <string name="setting_remark">设置备注</string>
     <string name="habit_executive">执行习惯</string>
     <string name="change_ok">确定修改</string>
     <string name="change_password">修改密码</string>
@@ -78,5 +79,7 @@
     <string name="being_from_album">从相册获取</string>
     <string name="and_agreement">与%s的约定</string>
     <string name="success_record">记录成功</string>
+    <string name="auth_clip_pic">裁切图片</string>
+    <string name="failure_head_update">头像更新失败啦</string>
 
 </resources>

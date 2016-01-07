@@ -115,8 +115,8 @@
             android:inputType="phone"
             android:maxLength="11"
             android:hint="@string/hint_seach"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
+            android:textColor="@color/textcolor_theme"
+            android:textColorHint="@color/textcolor_theme"
             android:textCursorDrawable="@null"
             android:textSize="@dimen/font_btn" />
 

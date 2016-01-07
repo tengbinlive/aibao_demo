@@ -195,6 +195,7 @@ public abstract class AbsActivity extends SwipeBackActivity implements EInitDate
         activityFinish = true;
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+        ButterKnife.unbind(this);
         EDestroy();
         if (Constant.DEBUG) {
             ViewServer.get(this).removeWindow(this);
