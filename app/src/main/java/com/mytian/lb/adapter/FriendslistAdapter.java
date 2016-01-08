@@ -134,7 +134,7 @@ public class FriendslistAdapter extends BaseSwipeAdapter {
         if (isOnline) {
             if (ag_state == AgreementStateEventType.AGREEMENT_ING) {
                 textView.setVisibility(View.VISIBLE);
-                textView.setText(R.string.state_agreement);
+                textView.setText(R.string.agreementing);
             } else {
                 textView.setVisibility(View.GONE);
             }
@@ -142,7 +142,7 @@ public class FriendslistAdapter extends BaseSwipeAdapter {
         } else {
             imageView.setVisibility(View.GONE);
             textView.setVisibility(View.VISIBLE);
-            textView.setText(R.string.state_offline);
+            textView.setText(R.string.offline);
         }
     }
 

@@ -68,7 +68,7 @@
     <string name="user_info">个人信息</string>
     <string name="head">头像</string>
     <string name="state_offline">当前用户未在线</string>
-    <string name="state_agreement">约定中</string>
+    <string name="agreementing">约定中</string>
     <string name="offline">离线</string>
     <string name="online">在线</string>
     <string name="offline_brackets">   [离线]</string>
