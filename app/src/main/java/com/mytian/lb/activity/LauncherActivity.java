@@ -6,9 +6,13 @@ import android.os.Handler;
 import android.os.Message;
 import android.widget.LinearLayout;
 
+import com.core.util.CommonUtil;
+import com.core.util.StringUtil;
 import com.dao.Parent;
+import com.debug.ChannelUtil;
 import com.mytian.lb.AbsActivity;
 import com.mytian.lb.App;
+import com.mytian.lb.BuildConfig;
 import com.mytian.lb.R;
 import com.mytian.lb.activityexpand.activity.AnimatedRectLayout;
 import com.mytian.lb.push.PushHelper;
@@ -28,6 +32,12 @@ public class LauncherActivity extends AbsActivity {
 
     @Override
     public void EInit() {
+        if (BuildConfig.CHANNEL_DEBUG) {
+            String channel_id = ChannelUtil.getChannel(this);
+            if (StringUtil.isNotBlank(channel_id)) {
+                CommonUtil.showToast(channel_id);
+            }
+        }
         PushHelper.getInstance().initPush(getApplicationContext());
         super.EInit();
         setSwipeBackEnable(false);

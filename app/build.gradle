@@ -45,6 +45,7 @@ android {
         debug {
             buildConfigField "String", "API_HOST", "\"http://114.215.108.49/\""//API Host
             buildConfigField "boolean", "LOG_DEBUG", "true"// log info
+            buildConfigField "boolean", "CHANNEL_DEBUG", "true"// log info
 
             minifyEnabled false
             zipAlignEnabled false
@@ -56,6 +57,7 @@ android {
         release {
             buildConfigField "String", "API_HOST", "\"http://114.215.108.49/\""//API Host
             buildConfigField "boolean", "LOG_DEBUG", "false"//log info
+            buildConfigField "boolean", "CHANNEL_DEBUG", "false"//log info
 
             minifyEnabled true
             zipAlignEnabled true
