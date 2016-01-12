@@ -54,6 +54,18 @@ android {
             signingConfig signingConfigs.aibao
         }
 
+        alpha {
+            buildConfigField "String", "API_HOST", "\"http://114.215.108.49/\""//API Host
+            buildConfigField "boolean", "LOG_DEBUG", "false"// log info
+            buildConfigField "boolean", "CHANNEL_DEBUG", "false"// channel info
+
+            minifyEnabled false
+            zipAlignEnabled false
+            shrinkResources false
+            proguardFiles 'proguard-rules.pro'
+            signingConfig signingConfigs.aibao
+        }
+
         release {
             buildConfigField "String", "API_HOST", "\"http://114.215.108.49/\""//API Host
             buildConfigField "boolean", "LOG_DEBUG", "false"//log info
