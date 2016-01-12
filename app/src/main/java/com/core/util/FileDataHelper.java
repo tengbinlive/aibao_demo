@@ -37,7 +37,7 @@ public final class FileDataHelper {
 
             // 如果没有找到SDCard
             if (root == null) {
-                rootFile = new File("/mytian");
+                rootFile = new File(Constant.Dir.ROOT_DIR);
                 if (rootFile.exists()) {
                     root = rootFile.toString();
                     Logger.i("/flase is using!");
@@ -80,10 +80,9 @@ public final class FileDataHelper {
 
     public static String getFilePath(String path) {
         if (hasSdcard()) {
-            return Environment
-                    .getExternalStorageDirectory().getAbsolutePath() + path;
+            return Environment.getExternalStorageDirectory().getAbsolutePath() + path;
         } else {
-            return "/mytian" + path;
+            return Constant.Dir.ROOT_DIR + path;
         }
     }
 

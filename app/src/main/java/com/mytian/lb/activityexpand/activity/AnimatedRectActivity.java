@@ -53,6 +53,7 @@ public abstract class AnimatedRectActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        App.getInstance().setCurrentActivity(this);
         if (Constant.DEBUG) {
             ViewServer.get(this).setFocusedWindow(this);
         }

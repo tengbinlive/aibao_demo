@@ -56,6 +56,8 @@ public class App extends Application {
 
     public ActivityManager activityManager = null;
 
+    private Activity currentActivity;
+
     private static App instance;
 
     private static DaoMaster daoMaster;
@@ -67,6 +69,14 @@ public class App extends Application {
     private UserResult userResult;
 
     private String cookie;
+
+    public Activity getCurrentActivity() {
+        return currentActivity;
+    }
+
+    public void setCurrentActivity(Activity currentActivity) {
+        this.currentActivity = currentActivity;
+    }
 
     public String getCookie() {
         return cookie;

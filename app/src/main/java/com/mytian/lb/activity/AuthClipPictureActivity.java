@@ -18,7 +18,6 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
-import android.widget.LinearLayout;
 
 import com.core.util.FileDataHelper;
 import com.mytian.lb.AbsActivity;
@@ -94,8 +93,6 @@ public class AuthClipPictureActivity extends AbsActivity implements OnTouchListe
      */
     public String filename;
 
-    public final static String KEY_TIMESTAMP = "KEY_TIMESTAMP";
-
     public static String mFilePath = FileDataHelper.getFilePath(Constant.Dir.IMAGE_TEMP);
 
     @Override
@@ -118,7 +115,7 @@ public class AuthClipPictureActivity extends AbsActivity implements OnTouchListe
             @SuppressWarnings("deprecation")
             public void onGlobalLayout() {
                 srcPic.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                initClipView(srcPic.getTop(),srcPic.getBottom(), bitmap);
+                initClipView(srcPic.getTop(), srcPic.getBottom(), bitmap);
             }
         });
         saveLayout = (Button) this.findViewById(R.id.sure);
@@ -157,8 +154,8 @@ public class AuthClipPictureActivity extends AbsActivity implements OnTouchListe
         try {
             BitmapFactory.Options opts = new BitmapFactory.Options();
             opts.inJustDecodeBounds = true;
-            // 这里是整个方法的关键，inJustDecodeBounds设为true时将不为图片分配内存。
-            BitmapFactory.decodeFile(path, opts);
+            Bitmap bitmap = BitmapFactory.decodeFile(path, opts);
+            opts.inJustDecodeBounds = false;
             int srcWidth = opts.outWidth;// 获取图片的原始宽度
             int srcHeight = opts.outHeight;// 获取图片原始高度
             int destWidth = 0;
@@ -200,7 +197,7 @@ public class AuthClipPictureActivity extends AbsActivity implements OnTouchListe
      * @param top
      * @param bitmap
      */
-    private void initClipView(int top,int bottom, final Bitmap bitmap) {
+    private void initClipView(int top, int bottom, final Bitmap bitmap) {
         clipview = new ClipView(AuthClipPictureActivity.this);
         clipview.setClipRatio(getIntent().getDoubleExtra("clipRatio", 0.5));
         clipview.setClipWidth(screenWidth);

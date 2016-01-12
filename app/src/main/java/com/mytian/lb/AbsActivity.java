@@ -212,6 +212,7 @@ public abstract class AbsActivity extends SwipeBackActivity implements EInitDate
     public void onResume() {
         activityFinish = false;
         super.onResume();
+        App.getInstance().setCurrentActivity(this);
         if (Constant.DEBUG) {
             ViewServer.get(this).setFocusedWindow(this);
         }

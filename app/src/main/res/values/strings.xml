@@ -39,6 +39,7 @@
     <string name="already_pull">已发送</string>
     <string name="exit">切换帐号</string>
     <string name="update">检查更新</string>
+    <string name="evaluate">正在评价</string>
     <string name="hint_addfollow">说些什么吧.</string>
     <string name="hint_seach">请输入手机号码.</string>
     <string name="seach_aibao">搜索爱宝：</string>

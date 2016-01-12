@@ -1,5 +1,6 @@
 package com.mytian.lb.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -8,7 +9,6 @@ import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
-import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -333,21 +333,17 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        //结果码不等于取消时候
-        FragmentActivity activity = getActivity();
-        if (resultCode != activity.RESULT_CANCELED) {
-            if (requestCode == FLAG_CHOOSE_IMG && resultCode == activity.RESULT_OK) {
-                processGalleryIMG(data);
-            } else if (requestCode == FLAG_CHOOSE_CAMERA && resultCode == activity.RESULT_OK) {
-                processCamera();
-            } else if (requestCode == FLAG_MODIFY_FINISH && resultCode == activity.RESULT_OK) {
-                if (data != null) {
-                    headPath = data.getStringExtra(STR_PATH);
-                    if (StringUtil.isNotBlank(headPath)) {
-                        Bitmap headIcon = BitmapFactory.decodeFile(headPath);
-                        user_icon.setImageBitmap(headIcon);
-                        isUpdateSuccess = 2;
-                    }
+        if (requestCode == FLAG_CHOOSE_CAMERA) {
+            processCamera();
+        } else if (requestCode == FLAG_CHOOSE_IMG && resultCode == Activity.RESULT_OK) {
+            processGalleryIMG(data);
+        } else if (requestCode == FLAG_MODIFY_FINISH && resultCode == Activity.RESULT_OK) {
+            if (data != null) {
+                headPath = data.getStringExtra(STR_PATH);
+                if (StringUtil.isNotBlank(headPath)) {
+                    Bitmap headIcon = BitmapFactory.decodeFile(headPath);
+                    user_icon.setImageBitmap(headIcon);
+                    isUpdateSuccess = 2;
                 }
             }
         }
@@ -391,6 +387,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         Intent intentFromCapture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (FileDataHelper.hasSdcard()) {
             intentFromCapture.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+            intentFromCapture.putExtra("return-data", true);
         }
         startActivityForResult(intentFromCapture, FLAG_CHOOSE_CAMERA);
     }
@@ -400,7 +397,12 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
         String origFileName = "osc_" + timeStamp + ".jpg";
         String path = FileDataHelper.getFilePath(Constant.Dir.IMAGE_TEMP);
-        imageUri = Uri.fromFile(new File(path, origFileName));
+        File tempFile = new File(path);
+        if (!tempFile.exists()) {
+            tempFile.mkdirs();
+        }
+        File imageFile = new File(path, origFileName);
+        imageUri = Uri.fromFile(imageFile);
     }
 
     private void processGalleryIMG(Intent data) {

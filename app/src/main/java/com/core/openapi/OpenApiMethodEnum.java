@@ -11,6 +11,12 @@ package com.core.openapi;
 public enum OpenApiMethodEnum {
 
     /**
+     * 行为习惯表扬
+     */
+    LOAD_MBHABIT("myt_das/habitAction_praiseMbHabit.do", "openapi_json", OpenApi.URL_TYPE_DATA),
+
+
+    /**
      * 上传头像
      */
     LOAD_UPDATEPARENTPORTRAIT("myt_file/portraitAction_updateParentPortrait.do", "openapi_json", OpenApi.URL_TYPE_DATA),

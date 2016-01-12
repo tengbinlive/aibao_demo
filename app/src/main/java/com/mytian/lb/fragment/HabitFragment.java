@@ -3,6 +3,7 @@ package com.mytian.lb.fragment;
 import android.widget.ListView;
 
 import com.dao.UserAction;
+import com.mytian.lb.AbsActivity;
 import com.mytian.lb.AbsFragment;
 import com.mytian.lb.R;
 import com.mytian.lb.activity.UserDetailActivity;
@@ -40,9 +41,7 @@ public class HabitFragment extends AbsFragment {
 
     private void initListViewData(ArrayList<UserAction> _arrayList) {
 
-        HabitAdapter mAdapter = new HabitAdapter(getActivity(), _arrayList);
-
-        mAdapter.setIsOFFLINE(FollowUser.OFFLINE.equals(cureentParent.getIs_online()));
+        HabitAdapter mAdapter = new HabitAdapter((AbsActivity) getActivity(), cureentParent, _arrayList);
 
         SwingBottomInAnimationAdapter animationAdapter = new SwingBottomInAnimationAdapter(mAdapter);
 

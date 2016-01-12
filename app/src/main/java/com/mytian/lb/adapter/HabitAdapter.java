@@ -1,6 +1,7 @@
 package com.mytian.lb.adapter;
 
-import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,12 +11,16 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.core.CommonResponse;
 import com.core.util.CommonUtil;
 import com.dao.UserAction;
+import com.mytian.lb.AbsActivity;
 import com.mytian.lb.R;
+import com.mytian.lb.bean.follow.FollowUser;
 import com.mytian.lb.enums.ItemButton;
 import com.mytian.lb.helper.AnimationHelper;
 import com.mytian.lb.helper.Utils;
+import com.mytian.lb.manager.UserActionManager;
 
 import java.util.ArrayList;
 
@@ -28,19 +33,21 @@ public class HabitAdapter extends BaseAdapter {
 
     private ArrayList<UserAction> list;
 
-    private Context mContext;
+    private AbsActivity mContext;
 
-    private boolean isOFFLINE;
+    private View habitView;
 
-    public void setIsOFFLINE(boolean isOFFLINE) {
-        this.isOFFLINE = isOFFLINE;
-    }
+    private UserActionManager manager = new UserActionManager();
 
-    public HabitAdapter(Context context, ArrayList<UserAction> _list) {
+    private FollowUser followUser;
+
+    public HabitAdapter(AbsActivity context, FollowUser cureentParent, ArrayList<UserAction> _list) {
         this.list = _list;
         mContext = context;
+        followUser = cureentParent;
         mInflater = LayoutInflater.from(context);
     }
+
 
     @Override
     public int getCount() {
@@ -70,17 +77,17 @@ public class HabitAdapter extends BaseAdapter {
 
         UserAction bean = list.get(position);
 
-        int icon_id = Utils.getResource(mContext, isOFFLINE ? bean.getIcon_disabled() : bean.getIcon(), "mipmap");
+        int icon_id = Utils.getResource(mContext, bean.getIcon(), "mipmap");
 
         Glide.with(mContext).load(icon_id).asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.ALL).into(viewHolder.head);
         viewHolder.name.setText(bean.getTitle());
 
-        int record = bean.getRecord();
-        if (record == UserAction.GREAT) {
+        String record = bean.getRecord();
+        if (UserAction.GREAT.equals(record)) {
             setIconInfo(viewHolder.like, ItemButton.RECORD_LIKE, true);
             setIconInfo(viewHolder.dislike, ItemButton.RECORD_DISLIKE, false);
-        } else if (record == UserAction.BAD) {
+        } else if (UserAction.BAD.equals(record)) {
             setIconInfo(viewHolder.like, ItemButton.RECORD_LIKE, false);
             setIconInfo(viewHolder.dislike, ItemButton.RECORD_DISLIKE, true);
         } else {
@@ -93,12 +100,8 @@ public class HabitAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 AnimationHelper.getInstance().viewAnimationScal(v);
-                CommonUtil.showToast(R.string.success_record);
-                int index = (int) v.getTag(R.id.item_habit_index);
-                ImageView dislike = (ImageView) v.getTag(R.id.item_habit_view);
-                list.get(index).setRecord(UserAction.GREAT);
-                setIconInfo((ImageView) v, ItemButton.RECORD_LIKE, true);
-                setIconInfo(dislike, ItemButton.RECORD_DISLIKE, false);
+                habitView = v;
+                sendHabit(v, UserAction.GREAT);
             }
         });
         viewHolder.dislike.setTag(R.id.item_habit_index, position);
@@ -107,12 +110,8 @@ public class HabitAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 AnimationHelper.getInstance().viewAnimationScal(v);
-                CommonUtil.showToast(R.string.success_record);
-                int index = (int) v.getTag(R.id.item_habit_index);
-                ImageView like = (ImageView) v.getTag(R.id.item_habit_view);
-                list.get(index).setRecord(UserAction.BAD);
-                setIconInfo((ImageView) v, ItemButton.RECORD_DISLIKE, true);
-                setIconInfo(like, ItemButton.RECORD_LIKE, false);
+                habitView = v;
+                sendHabit(v, UserAction.BAD);
             }
         });
 
@@ -147,5 +146,70 @@ public class HabitAdapter extends BaseAdapter {
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
         }
+    }
+
+    private static final int HABIT_GREAT = 0x01;//赞
+    private static final int HABIT_BAD = 0x02;//贬
+    private Handler activityHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            int what = msg.what;
+            switch (what) {
+                case HABIT_GREAT:
+                case HABIT_BAD:
+                    loadData((CommonResponse) msg.obj, what);
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
+    /**
+     * 数据返回
+     *
+     * @param resposne
+     */
+    private void loadData(CommonResponse resposne, int what) {
+        mContext.dialogDismiss();
+        CommonUtil.showToast(resposne.getMsg());
+        if (resposne.isSuccess()) {
+            setHabitView(habitView, what);
+        }
+    }
+
+    /**
+     * 设置评价结果
+     * @param v
+     * @param type
+     */
+    private void setHabitView(View v, int type) {
+        int index = (int) v.getTag(R.id.item_habit_index);
+        ImageView imageView = (ImageView) v.getTag(R.id.item_habit_view);
+        if (type == HABIT_GREAT) {
+            list.get(index).setRecord(UserAction.GREAT);
+            setIconInfo((ImageView) v, ItemButton.RECORD_LIKE, true);
+            setIconInfo(imageView, ItemButton.RECORD_DISLIKE, false);
+        }
+        if (type == HABIT_BAD) {
+            list.get(index).setRecord(UserAction.BAD);
+            setIconInfo((ImageView) v, ItemButton.RECORD_DISLIKE, true);
+            setIconInfo(imageView, ItemButton.RECORD_LIKE, false);
+        }
+    }
+
+    /**
+     * 发生评价
+     * @param v
+     * @param isPraise
+     */
+    private void sendHabit(View v, String isPraise) {
+        int index = (int) v.getTag(R.id.item_habit_index);
+        String record=list.get(index).getRecord();
+        if(isPraise.equals(record)){
+            return;
+        }
+        int state = UserAction.GREAT.equals(isPraise) ? HABIT_GREAT : HABIT_BAD;
+        mContext.dialogShow(R.string.evaluate);
+        manager.sendHabit(mContext, followUser.getUid(), list.get(index).getAppointId(), isPraise, activityHandler, state);
     }
 }

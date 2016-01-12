@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -54,7 +55,7 @@ public class AppManager {
     public void reLoginApp() {
         if (!isOUT) {
             isOUT = true;
-            activityHandler.sendEmptyMessage(APP_RELOGIN);
+            activityHandler.sendEmptyMessageDelayed(APP_RELOGIN, 1500);
         }
     }
 
@@ -64,7 +65,7 @@ public class AppManager {
     private final static int DIALOGSHOW = 2;
     private final static int DIALOGDISMISS = 3;
 
-    private Handler activityHandler = new Handler() {
+    private Handler activityHandler = new Handler(Looper.getMainLooper()) {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case APP_UPDATE:
@@ -94,7 +95,7 @@ public class AppManager {
             SysAppUpgradeResult result = (SysAppUpgradeResult) resposne.getData();
             if (result.getVersion() > App.getAppVersionCode()) {
                 downloadUrl = result.getUrl();
-                activityHandler.sendEmptyMessage(APP_DOWNLOAD);
+                activityHandler.sendEmptyMessageDelayed(APP_DOWNLOAD, 1500);
             } else {
                 CommonUtil.showToast("已是最新版");
             }
@@ -115,7 +116,7 @@ public class AppManager {
 
     private void dialogOUT() {
         dialogDismiss();
-        Activity activity = App.getInstance().activityManager.currentActivity();
+        Activity activity = App.getInstance().getCurrentActivity();
         LinearLayout convertView = (LinearLayout) LayoutInflater.from(activity).inflate(R.layout.dialog_out, null);
         TextView ok = (TextView) convertView.findViewById(R.id.tv_ok);
         ok.setOnClickListener(new View.OnClickListener() {
@@ -147,7 +148,7 @@ public class AppManager {
             return;
         }
         dialogDismiss();
-        final Activity activity = App.getInstance().activityManager.currentActivity();
+        final Activity activity = App.getInstance().getCurrentActivity();
         LinearLayout convertView = (LinearLayout) LayoutInflater.from(activity).inflate(R.layout.dialog_prompt, null);
         TextView valueTv = (TextView) convertView.findViewById(R.id.value);
         valueTv.setText(value);

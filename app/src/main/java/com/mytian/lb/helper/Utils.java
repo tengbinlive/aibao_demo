@@ -10,7 +10,7 @@ import java.io.ByteArrayOutputStream;
  */
 public class Utils {
 
-    public static int getResource(Context ctx, String imageName,String defType) {
+    public static int getResource(Context ctx, String imageName, String defType) {
         int resId = ctx.getResources().getIdentifier(imageName, defType, ctx.getPackageName());
         return resId;
     }

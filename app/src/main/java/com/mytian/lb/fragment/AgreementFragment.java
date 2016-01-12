@@ -31,7 +31,7 @@ import com.mytian.lb.bean.follow.FollowUser;
 import com.mytian.lb.event.AgreementStateEventType;
 import com.mytian.lb.event.PushStateEventType;
 import com.mytian.lb.helper.AnimationHelper;
-import com.mytian.lb.manager.AgreementManager;
+import com.mytian.lb.manager.UserActionManager;
 import com.mytian.lb.manager.UserActionDOManager;
 import com.mytian.lb.mview.ClipRevealFrame;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
@@ -70,7 +70,7 @@ public class AgreementFragment extends AbsFragment {
 
     private View tempClip;
 
-    private AgreementManager manager = new AgreementManager();
+    private UserActionManager manager = new UserActionManager();
     private ArrayList<UserAction> arrayList;
     private UserAction cureentAction;
     private FollowUser cureentParent;
@@ -129,6 +129,9 @@ public class AgreementFragment extends AbsFragment {
 
     @OnClick(R.id.agreement_cancle)
     public void cancleAgreement() {
+        if(cureentAction==null){
+            return;
+        }
         manager.cancleAgreement(getActivity(), cureentParent.getUid(), cureentAction.getAppointId(), activityHandler, AGREEMENT_CANCLE);
     }
 
