@@ -4,8 +4,6 @@
 
     <string name="app_name">爱宝</string>
     <string name="list_empty">不用看了. 什么都没有</string>
-    <string name="list_empty_agreement">没找到相关约定，下拉刷新试试吧</string>
-    <string name="list_empty_habit">没找到相关习惯，下拉刷新试试吧</string>
     <string name="press_more_times_for_exit">再按一次退出客户端</string>
     <string name="username">手机</string>
     <string name="password">密码</string>

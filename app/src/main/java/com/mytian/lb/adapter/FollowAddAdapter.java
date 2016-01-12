@@ -87,7 +87,7 @@ public class FollowAddAdapter extends BaseAdapter {
         Glide.with(mContext).load(bean.getHead_thumb())
                 .asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(R.mipmap.icon_contact)
+                .placeholder(R.mipmap.default_head)
                 .into(viewHolder.head);
         String is_online = FollowUser.ONLINE.equals(bean.getIs_online()) ? mContext.getString(R.string.online_brackets) : mContext.getString(R.string.offline_brackets);
         viewHolder.name.setText(bean.getAlias() + is_online);

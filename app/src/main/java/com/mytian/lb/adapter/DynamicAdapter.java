@@ -77,7 +77,7 @@ public class DynamicAdapter extends BaseAdapter {
             Glide.with(mContext).load(heandurl).asBitmap()
                     .transform(transform)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .placeholder(R.mipmap.icon_contact).into(viewHolder.head);
+                    .placeholder(R.mipmap.default_head).into(viewHolder.head);
         }
         viewHolder.name.setText(bean.getAlias());
         viewHolder.date.setText(bean.getDate());

@@ -10,8 +10,8 @@ import android.os.Message;
 import com.bigkoo.alertview.AlertView;
 import com.bigkoo.alertview.AlertView.Style;
 import com.bigkoo.alertview.OnItemClickListener;
-import com.mytian.lb.activity.RegisterActivity;
 import com.core.util.StringUtil;
+import com.mytian.lb.activity.RegisterActivity;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -30,6 +30,7 @@ public class SMSContentObserver extends ContentObserver {
     }
 
     Cursor c;
+
     @Override
     public void onChange(boolean selfChange) {
         if (!isStart) {
@@ -39,16 +40,16 @@ public class SMSContentObserver extends ContentObserver {
                 public void run() {
                     try {
                         Uri uri = Uri.parse("content://sms/");
-                         c = mContext.getContentResolver().query(uri, null, null, null, "date desc");
+                        c = mContext.getContentResolver().query(uri, null, null, null, "date desc");
                         if (c != null) {
                             c.moveToPosition(0);
                             String smsBody = c.getString(c.getColumnIndex("body"));
                             setSms(smsBody);
                         }
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         handler.sendEmptyMessage(SMS);
-                    }finally {
-                        if (null!=c) {
+                    } finally {
+                        if (null != c) {
                             c.close();
                         }
                     }
@@ -67,11 +68,11 @@ public class SMSContentObserver extends ContentObserver {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case SMS:
-                    if(alertView==null){
-                        alertView = new AlertView("温馨提示","请您允许自动获取验证码，" +
+                    if (alertView == null) {
+                        alertView = new AlertView("温馨提示", "请您允许自动获取验证码，" +
                                 "\n或是填写验证，谢谢."
-                                ,null,new String[]{"确定"},null,mContext, Style.Alert,
-                                new OnItemClickListener(){
+                                , null, new String[]{"确定"}, null, mContext, Style.Alert,
+                                new OnItemClickListener() {
                                     @Override
                                     public void onItemClick(Object o, int i) {
                                         alertView.dismiss();

@@ -4,8 +4,8 @@ apply plugin: 'com.droidtitan.lintcleaner'
 // Manifest version information!
 def versionMajor = 2
 def versionMinor = 0
-def versionPatch = 0
-def versionBuild = 35 // bump for dogfood builds, public betas, etc.
+def versionPatch = 1
+def versionBuild = 36 // bump for dogfood builds, public betas, etc.
 
 android {
 
@@ -45,7 +45,7 @@ android {
         debug {
             buildConfigField "String", "API_HOST", "\"http://114.215.108.49/\""//API Host
             buildConfigField "boolean", "LOG_DEBUG", "true"// log info
-            buildConfigField "boolean", "CHANNEL_DEBUG", "true"// log info
+            buildConfigField "boolean", "CHANNEL_DEBUG", "false"// channel info
 
             minifyEnabled false
             zipAlignEnabled false
@@ -57,7 +57,7 @@ android {
         release {
             buildConfigField "String", "API_HOST", "\"http://114.215.108.49/\""//API Host
             buildConfigField "boolean", "LOG_DEBUG", "false"//log info
-            buildConfigField "boolean", "CHANNEL_DEBUG", "false"//log info
+            buildConfigField "boolean", "CHANNEL_DEBUG", "false"//channel info
 
             minifyEnabled true
             zipAlignEnabled true

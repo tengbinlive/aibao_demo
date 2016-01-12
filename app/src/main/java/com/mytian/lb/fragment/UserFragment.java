@@ -32,6 +32,7 @@ import com.mytian.lb.R;
 import com.mytian.lb.activity.AuthClipPictureActivity;
 import com.mytian.lb.activity.ResetPassWordActivity;
 import com.mytian.lb.bean.user.UpdateParentParam;
+import com.mytian.lb.bean.user.UpdateParentPortraitResult;
 import com.mytian.lb.enums.WomanOrManEnum;
 import com.mytian.lb.helper.AnimationHelper;
 import com.mytian.lb.manager.UserManager;
@@ -182,7 +183,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         if (StringUtil.isNotBlank(birthday)) {
             param.setBirthday(birthdayDate.getTimeInMillis());
         }
-        if (StringUtil.isBlank(headPath)) {
+        if (StringUtil.isNotBlank(headPath)) {
             manager.updateParentPortrait(mContext, new File(headPath), activityHandler, UPDATE_PARENTPORTRAIT);
         }
         manager.updateParent(mContext, param, activityHandler, UPDATE_PARENT);
@@ -224,29 +225,38 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         dialogDismiss();
         CommonUtil.showToast(resposne.getMsg());
         if (resposne.isSuccess()) {
+            Parent parent = App.getInstance().getUserResult().getParent();
             String name = nameValue.getText().toString();
             String birthday = birthdayValue.getText().toString();
             nameValue.clearFocus();
             if (StringUtil.isNotBlank(name)) {
                 nameValue.setText("");
                 nameValue.setHint(name);
-                App.getInstance().getUserResult().getParent().setAlias(name);
+                parent.setAlias(name);
             }
             if (StringUtil.isNotBlank(birthday)) {
                 birthdayValue.setText("");
                 birthdayValue.setHint(birthday);
-                App.getInstance().getUserResult().getParent().setBirthday(birthdayDate.getTimeInMillis());
+                parent.setBirthday(birthdayDate.getTimeInMillis());
             }
-            App.getInstance().getUserResult().getParent().setSex(user_gender);
+            parent.setSex(user_gender);
+            App.getInstance().getUserResult().setParent(parent);
             ParentDao dao = App.getDaoSession().getParentDao();
             dao.deleteAll();
-            dao.insertInTx(App.getInstance().getUserResult().getParent());
+            dao.insertInTx(parent);
         }
     }
 
     private void loadUpdateParentPortrait(CommonResponse resposne) {
         if (resposne.isSuccess()) {
+            UpdateParentPortraitResult result = (UpdateParentPortraitResult) resposne.getData();
             isUpdateSuccess = 1;
+            Parent parent = App.getInstance().getUserResult().getParent();
+            parent.setHeadThumb(result.getHeadPortraitUrl());
+            App.getInstance().getUserResult().setParent(parent);
+            ParentDao dao = App.getDaoSession().getParentDao();
+            dao.deleteAll();
+            dao.insertInTx(parent);
         } else {
             CommonUtil.showToast(R.string.failure_head_update);
         }
@@ -333,7 +343,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
             } else if (requestCode == FLAG_MODIFY_FINISH && resultCode == activity.RESULT_OK) {
                 if (data != null) {
                     headPath = data.getStringExtra(STR_PATH);
-                    if(StringUtil.isNotBlank(headPath)) {
+                    if (StringUtil.isNotBlank(headPath)) {
                         Bitmap headIcon = BitmapFactory.decodeFile(headPath);
                         user_icon.setImageBitmap(headIcon);
                         isUpdateSuccess = 2;

@@ -5,8 +5,8 @@ package com.mytian.lb.event;
  */
 public class AgreementStateEventType {
 
-    public final static int AGREEMENT_ING = 0;
-    public final static int AGREEMENT_END = AGREEMENT_ING+1;
+    public final static int AGREEMENT_END = 0;
+    public final static int AGREEMENT_ING = AGREEMENT_END+1;
     public int state;
     public String babyUid;
 

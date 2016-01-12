@@ -10,8 +10,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.dao.UserAction;
 import com.mytian.lb.R;
-import com.mytian.lb.bean.user.UserAction;
+import com.mytian.lb.helper.Utils;
 
 import java.util.ArrayList;
 
@@ -65,10 +66,10 @@ public class AgreementAdapter extends BaseAdapter {
         }
         UserAction bean = list.get(position);
 
-        String iconUrl = isOFFLINE ? bean.getUrl() : bean.getUrl();
+        int icon_id = Utils.getResource(mContext, isOFFLINE ?  bean.getIcon_disabled():bean.getIcon(), "mipmap");
 
-        Glide.with(mContext).load(iconUrl).asBitmap().diskCacheStrategy(DiskCacheStrategy.ALL).into(viewHolder.icon);
-        viewHolder.title.setText(bean.getDes());
+        Glide.with(mContext).load(icon_id).asBitmap().diskCacheStrategy(DiskCacheStrategy.ALL).into(viewHolder.icon);
+        viewHolder.title.setText(bean.getTitle());
         return convertView;
     }
 

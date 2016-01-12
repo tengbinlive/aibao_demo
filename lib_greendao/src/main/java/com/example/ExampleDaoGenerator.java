@@ -30,8 +30,9 @@ import de.greenrobot.daogenerator.ToMany;
 public class ExampleDaoGenerator {
 
     public static void main(String[] args) throws Exception {
-        Schema schema = new Schema(4, "com.example");
+        Schema schema = new Schema(5, "com.example");
         addConfig(schema);
+        addUserAction(schema);
         addParent(schema);
         new DaoGenerator().generateAll(schema, "D:\\tengbin\\project\\kndle\\lib_greendao\\src\\main\\java\\dao");
     }
@@ -43,10 +44,11 @@ public class ExampleDaoGenerator {
         note.addStringProperty("value").notNull();
     }
 
-    //约定
-    private static void addAreement(Schema schema) {
-        Entity note = schema.addEntity("Agreement");
+    //约定&行为 动作
+    private static void addUserAction(Schema schema) {
+        Entity note = schema.addEntity("UserAction");
         note.addIdProperty();
+        note.addStringProperty("type");
         note.addStringProperty("title");
         note.addStringProperty("appointId");
         note.addStringProperty("icon");

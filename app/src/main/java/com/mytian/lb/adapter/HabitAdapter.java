@@ -11,10 +11,11 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.core.util.CommonUtil;
+import com.dao.UserAction;
 import com.mytian.lb.R;
-import com.mytian.lb.bean.user.UserAction;
 import com.mytian.lb.enums.ItemButton;
 import com.mytian.lb.helper.AnimationHelper;
+import com.mytian.lb.helper.Utils;
 
 import java.util.ArrayList;
 
@@ -69,11 +70,11 @@ public class HabitAdapter extends BaseAdapter {
 
         UserAction bean = list.get(position);
 
-        String iconUrl = isOFFLINE ? bean.getUrl() : bean.getUrl();
+        int icon_id = Utils.getResource(mContext, isOFFLINE ? bean.getIcon_disabled() : bean.getIcon(), "mipmap");
 
-        Glide.with(mContext).load(iconUrl).asBitmap()
+        Glide.with(mContext).load(icon_id).asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.ALL).into(viewHolder.head);
-        viewHolder.name.setText(bean.getDes());
+        viewHolder.name.setText(bean.getTitle());
 
         int record = bean.getRecord();
         if (record == UserAction.GREAT) {

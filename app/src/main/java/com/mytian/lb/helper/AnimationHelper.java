@@ -53,6 +53,7 @@ public class AnimationHelper {
 
     /**
      * 缩放动画
+     *
      * @param view
      */
     public void viewAnimationScal(final View view) {

@@ -13,7 +13,6 @@ import com.bumptech.glide.integration.okhttp.OkHttpUrlLoader;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.core.enums.ConfigKeyEnum;
 import com.core.manager.ConfigManager;
-import com.core.openapi.OpenApi;
 import com.core.util.FileDataHelper;
 import com.core.util.NetworkUtil;
 import com.core.util.NetworkUtil.NetworkClassEnum;
@@ -26,9 +25,10 @@ import com.dao.ParentDao;
 import com.mytian.lb.activity.LoginActivity;
 import com.mytian.lb.activityexpand.activity.AnimatedRectLayout;
 import com.mytian.lb.bean.user.UserResult;
-import com.mytian.lb.manager.ShareManager;
-import com.mytian.lb.manager.ActivityManager;
 import com.mytian.lb.helper.SharedPreferencesHelper;
+import com.mytian.lb.manager.ActivityManager;
+import com.mytian.lb.manager.ShareManager;
+import com.mytian.lb.manager.UserActionDOManager;
 import com.mytian.lb.push.PushHelper;
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
@@ -222,7 +222,7 @@ public class App extends Application {
             PushHelper.getInstance().UPLOAD_ID_SUCCESS = SharedPreferencesHelper.getBoolean(this, PushHelper.CHANNEL_STATE, false);
 
             // 初始化日志类,如果不是调试状态则不输出日志
-            LogLevel logLevel = BuildConfig.LOG_DEBUG ?LogLevel.FULL:LogLevel.NONE;
+            LogLevel logLevel = BuildConfig.LOG_DEBUG ? LogLevel.FULL : LogLevel.NONE;
 
             Logger.init("bin.teng")               // default PRETTYLOGGER or use just init()
                     .setMethodCount(3)            // default 2
@@ -256,9 +256,11 @@ public class App extends Application {
         ConfigManager.init(this);
         //用户信息
         initUserData();
+        //用户动作
+        UserActionDOManager.getInstance().init();
     }
 
-    private void initUserData(){
+    private void initUserData() {
         userResult = new UserResult();
         ParentDao parentDao = getDaoSession().getParentDao();
         List<Parent> parents = parentDao.loadAll();

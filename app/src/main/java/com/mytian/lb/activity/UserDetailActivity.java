@@ -65,7 +65,7 @@ public class UserDetailActivity extends AbsActivity {
         String head = "";
         if (null != userInfo) {
             cureentParent = userInfo;
-            String remark = cureentParent.getAlias();
+            String remark = "";
             String name = cureentParent.getAlias();
             head = cureentParent.getHead_thumb();
             String phone = cureentParent.getPhone();

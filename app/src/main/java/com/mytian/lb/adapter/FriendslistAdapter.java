@@ -112,9 +112,10 @@ public class FriendslistAdapter extends BaseSwipeAdapter {
     public void fillValues(int position, View convertView) {
         ViewHolder viewHolder = (ViewHolder) convertView.getTag();
         FollowUser bean = list.valueAt(position);
-        Glide.with(mContext).load(bean.getHead_id()).asBitmap()
+        Glide.with(mContext).load(bean.getHead_thumb()).asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(R.mipmap.icon_contact)
+                .placeholder(R.mipmap.default_head)
+                .centerCrop()
                 .into(viewHolder.head);
         viewHolder.name.setText(bean.getAlias());
         boolean isOnline = FollowUser.ONLINE.equals(bean.getIs_online());
@@ -134,11 +135,12 @@ public class FriendslistAdapter extends BaseSwipeAdapter {
         if (isOnline) {
             if (ag_state == AgreementStateEventType.AGREEMENT_ING) {
                 textView.setVisibility(View.VISIBLE);
+                imageView.setVisibility(View.GONE);
                 textView.setText(R.string.agreementing);
-            } else {
+            }else{
                 textView.setVisibility(View.GONE);
+                imageView.setVisibility(View.VISIBLE);
             }
-            imageView.setVisibility(View.VISIBLE);
         } else {
             imageView.setVisibility(View.GONE);
             textView.setVisibility(View.VISIBLE);

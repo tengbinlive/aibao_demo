@@ -20,8 +20,7 @@ import com.core.CommonResponse;
 import com.core.util.CommonUtil;
 import com.core.util.StringUtil;
 import com.dao.Parent;
-import com.handmark.pulltorefresh.PullToRefreshBase;
-import com.handmark.pulltorefresh.PullToRefreshGridView;
+import com.dao.UserAction;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mytian.lb.AbsFragment;
 import com.mytian.lb.App;
@@ -29,13 +28,11 @@ import com.mytian.lb.R;
 import com.mytian.lb.activity.UserDetailActivity;
 import com.mytian.lb.adapter.AgreementAdapter;
 import com.mytian.lb.bean.follow.FollowUser;
-import com.mytian.lb.bean.user.UpdateActionResult;
-import com.mytian.lb.bean.user.UserAction;
 import com.mytian.lb.event.AgreementStateEventType;
 import com.mytian.lb.event.PushStateEventType;
 import com.mytian.lb.helper.AnimationHelper;
 import com.mytian.lb.manager.AgreementManager;
-import com.mytian.lb.manager.UserManager;
+import com.mytian.lb.manager.UserActionDOManager;
 import com.mytian.lb.mview.ClipRevealFrame;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
 import com.pascalwelsch.holocircularprogressbar.HoloCircularProgressBar;
@@ -51,9 +48,7 @@ import de.greenrobot.event.EventBus;
 public class AgreementFragment extends AbsFragment {
 
     @Bind(R.id.gridview)
-    PullToRefreshGridView gridview;
-    @Bind(R.id.ll_listEmpty)
-    View llListEmpty;
+    GridView gridview;
 
     @Bind(R.id.layout_agreement)
     ClipRevealFrame layoutClip;
@@ -89,28 +84,15 @@ public class AgreementFragment extends AbsFragment {
 
     private static long DKEY_TIME = MINUTE_TIME * 60 * 1000;
 
-    private final static String STR_GAP= "  ";
+    private final static String STR_GAP = "  ";
 
-    private final static String STR_INIT_TIME= "15  00";
+    private final static String STR_INIT_TIME = "15  00";
 
     private static int sendCount = 0; //避免用户快速点击
 
-    private GridView mActualGridView;
-
     private void initGridView() {
 
-        gridview.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<GridView>() {
-            @Override
-            public void onRefresh(PullToRefreshBase<GridView> pullToRefreshBase) {
-                arrayList = null;
-                updateAgreement();
-            }
-        });
-
-        mActualGridView = gridview.getRefreshableView();
-
-        // Need to use the Actual ListView when registering for Context Menu
-        registerForContextMenu(mActualGridView);
+        initGridViewData(UserActionDOManager.getInstance().getArrayListAgreement());
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -124,7 +106,7 @@ public class AgreementFragment extends AbsFragment {
                     AnimationHelper.getInstance().viewAnimationScal(view);
                     tempClip = view;
                     cureentAction = arrayList.get(position);
-                    manager.sendAgreement(getActivity(), cureentParent.getUid(), DKEY_TIME, cureentAction.getCfg_id(), activityHandler, AGREEMENT);
+                    manager.sendAgreement(getActivity(), cureentParent.getUid(), DKEY_TIME, cureentAction.getAppointId(), activityHandler, AGREEMENT);
                 }
             }
         });
@@ -134,20 +116,20 @@ public class AgreementFragment extends AbsFragment {
 
         arrayList = _arrayList;
 
-        AgreementAdapter mAdapter = new AgreementAdapter(getActivity(), arrayList);
+        AgreementAdapter mAdapter = new AgreementAdapter(getActivity(), _arrayList);
 
         mAdapter.setIsOFFLINE(FollowUser.OFFLINE.equals(cureentParent.getIs_online()));
 
         SwingBottomInAnimationAdapter animationAdapter = new SwingBottomInAnimationAdapter(mAdapter);
 
-        animationAdapter.setAbsListView(mActualGridView);
+        animationAdapter.setAbsListView(gridview);
 
-        mActualGridView.setAdapter(animationAdapter);
+        gridview.setAdapter(animationAdapter);
     }
 
     @OnClick(R.id.agreement_cancle)
     public void cancleAgreement() {
-        manager.cancleAgreement(getActivity(), cureentParent.getUid(), cureentAction.getCfg_id(), activityHandler, AGREEMENT_CANCLE);
+        manager.cancleAgreement(getActivity(), cureentParent.getUid(), cureentAction.getAppointId(), activityHandler, AGREEMENT_CANCLE);
     }
 
     /**
@@ -243,7 +225,6 @@ public class AgreementFragment extends AbsFragment {
         isSettingShow = false;
         initGridView();
         startThread();
-        updateAgreement();
     }
 
     /**
@@ -255,7 +236,7 @@ public class AgreementFragment extends AbsFragment {
     private void startTimeAnimation(Parent parent, String time) {
         setAgreementObject(parent);
         agreementTime.setText(time);
-        agreementTitle.setText(cureentAction.getDes());
+        agreementTitle.setText(cureentAction.getTitle());
     }
 
     /**
@@ -269,16 +250,14 @@ public class AgreementFragment extends AbsFragment {
             desTv.setVisibility(View.GONE);
             headRIV.setVisibility(View.GONE);
         } else {
-            desTv.setVisibility(View.GONE);
-            headRIV.setVisibility(View.GONE);
+            desTv.setVisibility(View.VISIBLE);
+            headRIV.setVisibility(View.VISIBLE);
         }
         if (null != parent) {
             String remark = parent.getAlias();
             String name = parent.getAlias();
             String des = StringUtil.isBlank(remark) ? name : remark;
             String head = parent.getHeadThumb();
-            desTv.setVisibility(View.VISIBLE);
-            headRIV.setVisibility(View.VISIBLE);
             desTv.setText(String.format(mContext.getString(R.string.and_agreement), des));
             Glide.with(mContext).load(head)
                     .asBitmap()
@@ -314,18 +293,6 @@ public class AgreementFragment extends AbsFragment {
         if (babyUid.equals(cureentParent.getUid())) {
             setCancleState(cureentParent.getIs_online());
         }
-    }
-
-    /**
-     * 获取约定
-     */
-    private void updateAgreement() {
-        if (cureentParent == null) {
-            loadEndState();
-            return;
-        }
-        UserManager manager = new UserManager();
-        manager.updateAgreement(getActivity(), cureentParent.getUid(), activityHandler, LOAD_AGREEMENT);
     }
 
     /**
@@ -442,14 +409,10 @@ public class AgreementFragment extends AbsFragment {
 
     private static final int AGREEMENT = 0x01;//约定
     private static final int AGREEMENT_CANCLE = 0x02;//取消约定
-    private static final int LOAD_AGREEMENT = 0x03;//获取
     private Handler activityHandler = new Handler() {
         public void handleMessage(Message msg) {
             int what = msg.what;
             switch (what) {
-                case LOAD_AGREEMENT:
-                    loadData((CommonResponse) msg.obj);
-                    break;
                 case AGREEMENT:
                     loadAgreement((CommonResponse) msg.obj);
                     break;
@@ -463,19 +426,6 @@ public class AgreementFragment extends AbsFragment {
     };
 
     /**
-     * 获取约定项目
-     *
-     * @param resposne
-     */
-    private void loadData(CommonResponse resposne) {
-        if (resposne.isSuccess()) {
-            UpdateActionResult result = (UpdateActionResult) resposne.getData();
-            initGridViewData(result.getList());
-        }
-        loadEndState();
-    }
-
-    /**
      * 开始约定
      *
      * @param parent
@@ -483,7 +433,7 @@ public class AgreementFragment extends AbsFragment {
      */
     private void startAgreement(Parent parent, String time) {
         if (!isSettingShow) {
-            toggleShowSetting(llListEmpty);
+            toggleShowSetting(tempClip);
             startTimeAnimation(parent, time);
         }
     }
@@ -520,18 +470,6 @@ public class AgreementFragment extends AbsFragment {
             }
         } else {
             CommonUtil.showToast(resposne.getMsg());
-        }
-    }
-
-    /**
-     * 数据加载结束
-     */
-    private void loadEndState() {
-        gridview.onRefreshComplete();
-        if (arrayList == null || arrayList.size() <= 0) {
-            llListEmpty.setVisibility(View.VISIBLE);
-        } else {
-            llListEmpty.setVisibility(View.GONE);
         }
     }
 

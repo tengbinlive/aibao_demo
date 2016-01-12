@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/white_item">
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/head"
@@ -44,6 +43,7 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:padding="@dimen/content_gap"
+        android:layout_marginRight="@dimen/content_gap"
         android:scaleType="centerInside"
         android:src="@mipmap/icon_dislike_normal" />
 

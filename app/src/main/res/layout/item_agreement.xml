@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:scaleType="centerInside"
-        android:layout_margin="@dimen/content_gap_big" />
+        android:layout_margin="@dimen/content_10dp" />
 
     <TextView
         android:id="@+id/title"
