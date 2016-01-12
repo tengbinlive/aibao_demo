@@ -224,7 +224,7 @@ public class App extends Application {
             // 初始化日志类,如果不是调试状态则不输出日志
             LogLevel logLevel = BuildConfig.LOG_DEBUG ? LogLevel.FULL : LogLevel.NONE;
 
-            Logger.init("bin.teng")               // default PRETTYLOGGER or use just init()
+            Logger.init("BIN.TENG")               // default PRETTYLOGGER or use just init()
                     .setMethodCount(3)            // default 2
                     .hideThreadInfo()             // default shown
                     .setMethodOffset(2)        // default 0
