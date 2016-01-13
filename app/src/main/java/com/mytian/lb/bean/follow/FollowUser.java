@@ -31,16 +31,16 @@ public class FollowUser implements Serializable {
     private String relation_name;
     private String other_relation;
     private String searchKey;
+    private String appointing;
     private boolean focus;
     private int head_id;
-    private int agreement_state;
 
-    public int getAgreement_state() {
-        return agreement_state;
+    public String getAppointing() {
+        return appointing;
     }
 
-    public void setAgreement_state(int agreement_state) {
-        this.agreement_state = agreement_state;
+    public void setAppointing(String appointing) {
+        this.appointing = appointing;
     }
 
     public String getAlias() {
@@ -208,6 +208,7 @@ public class FollowUser implements Serializable {
         return "FollowUser{" +
                 "uid='" + uid + '\'' +
                 ", name='" + name + '\'' +
+                ", alias='" + alias + '\'' +
                 ", sex='" + sex + '\'' +
                 ", category='" + category + '\'' +
                 ", phone='" + phone + '\'' +
@@ -221,9 +222,11 @@ public class FollowUser implements Serializable {
                 ", focus_time='" + focus_time + '\'' +
                 ", relation_id='" + relation_id + '\'' +
                 ", relation_name='" + relation_name + '\'' +
-                ", focus='" + focus + '\'' +
                 ", other_relation='" + other_relation + '\'' +
                 ", searchKey='" + searchKey + '\'' +
+                ", appointing='" + appointing + '\'' +
+                ", focus=" + focus +
+                ", head_id=" + head_id +
                 '}';
     }
 }

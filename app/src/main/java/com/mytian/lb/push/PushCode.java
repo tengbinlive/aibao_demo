@@ -8,4 +8,5 @@ public class PushCode {
     public final static String FOLLOW_ONLINE  = "100207"; //麦宝上线 cmd
     public final static String FOLLOW_OFFLINE = "100208"; //麦宝离线 cmd
     public final static String AIBAO_UPDATE = "100002"; //爱宝app更新通知推送 cmd
+    public final static String APPOINT_STATUS = "100209"; //爱的约定状态 cmd
 }

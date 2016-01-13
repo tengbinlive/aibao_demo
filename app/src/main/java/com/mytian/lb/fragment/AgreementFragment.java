@@ -267,8 +267,10 @@ public class AgreementFragment extends AbsFragment {
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .placeholder(R.mipmap.default_head)
                     .centerCrop().into(headRIV);
+            setCancleState(FollowUser.OFFLINE);
+        }else {
+            setCancleState(cureentParent.getIs_online());
         }
-        setCancleState(cureentParent.getIs_online());
     }
 
     /**
@@ -277,7 +279,7 @@ public class AgreementFragment extends AbsFragment {
      * @param isOline
      */
     private void setCancleState(String isOline) {
-        if (!FollowUser.OFFLINE.equals(isOline)) {
+        if (FollowUser.ONLINE.equals(isOline)) {
             agreementCancle.setBackgroundResource(R.drawable.button_bg_theme);
             agreementCancle.setEnabled(true);
         } else {
@@ -449,7 +451,7 @@ public class AgreementFragment extends AbsFragment {
     private void loadAgreement(CommonResponse resposne) {
         dialogDismiss();
         if (resposne.isSuccess()) {
-            EventBus.getDefault().post(new AgreementStateEventType(cureentParent.getUid(), AgreementStateEventType.AGREEMENT_ING));
+            EventBus.getDefault().postSticky(new AgreementStateEventType(cureentParent.getUid(), AgreementStateEventType.AGREEMENT_ING));
             Parent parent = App.getInstance().getUserResult().getParent();
             startAgreement(parent, STR_INIT_TIME);
         } else {
@@ -467,7 +469,7 @@ public class AgreementFragment extends AbsFragment {
         dialogDismiss();
         sendCount = 0;
         if (resposne.isSuccess()) {
-            EventBus.getDefault().post(new AgreementStateEventType(cureentParent.getUid(), AgreementStateEventType.AGREEMENT_END));
+            EventBus.getDefault().postSticky(new AgreementStateEventType(cureentParent.getUid(), AgreementStateEventType.AGREEMENT_END));
             if (isSettingShow) {
                 toggleShowSetting(tempClip);
             }

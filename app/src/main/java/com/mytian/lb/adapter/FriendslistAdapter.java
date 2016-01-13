@@ -119,7 +119,7 @@ public class FriendslistAdapter extends BaseSwipeAdapter {
                 .into(viewHolder.head);
         viewHolder.name.setText(bean.getAlias());
         boolean isOnline = FollowUser.ONLINE.equals(bean.getIs_online());
-        setState(viewHolder.stateTv, viewHolder.stateIv, bean.getAgreement_state(), isOnline);
+        setState(viewHolder.stateTv, viewHolder.stateIv, bean.getAppointing(), isOnline);
         viewHolder.deleteLayout.setTag(position);
     }
 
@@ -131,13 +131,13 @@ public class FriendslistAdapter extends BaseSwipeAdapter {
      * @param ag_state
      * @param isOnline
      */
-    private void setState(TextView textView, ImageView imageView, int ag_state, boolean isOnline) {
+    private void setState(TextView textView, ImageView imageView, String ag_state, boolean isOnline) {
         if (isOnline) {
-            if (ag_state == AgreementStateEventType.AGREEMENT_ING) {
+            if (AgreementStateEventType.AGREEMENT_ING.equals(ag_state)) {
                 textView.setVisibility(View.VISIBLE);
                 imageView.setVisibility(View.GONE);
                 textView.setText(R.string.agreementing);
-            }else{
+            } else {
                 textView.setVisibility(View.GONE);
                 imageView.setVisibility(View.VISIBLE);
             }

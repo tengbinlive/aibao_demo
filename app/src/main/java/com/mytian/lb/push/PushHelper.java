@@ -18,6 +18,7 @@ import com.mytian.lb.Constant;
 import com.mytian.lb.bean.follow.FollowUser;
 import com.mytian.lb.bean.push.PushResult;
 import com.mytian.lb.bean.user.UserResult;
+import com.mytian.lb.event.AgreementStateEventType;
 import com.mytian.lb.event.PushStateEventType;
 import com.mytian.lb.event.PushUserEventType;
 import com.mytian.lb.helper.SharedPreferencesHelper;
@@ -213,6 +214,19 @@ public class PushHelper {
             } else if (PushCode.AIBAO_UPDATE.equals(result.getCmd())) {
                 AppManager manager = new AppManager();
                 manager.updateVersion();
+            } else if (PushCode.APPOINT_STATUS.equals(result.getCmd())) {
+                String info = result.getInfo();
+                String babyUid = "";
+                String appoint_status = "";
+                try {
+                    JSONObject jsonObject = new JSONObject(info);
+                    babyUid = jsonObject.optString("babyUid");
+                    appoint_status = jsonObject.optString("appoint_status");
+                } catch (JSONException e) {
+                }
+                if (StringUtil.isNotBlank(babyUid)) {
+                    EventBus.getDefault().postSticky(new AgreementStateEventType(babyUid, appoint_status));
+                }
             }
         }
     }

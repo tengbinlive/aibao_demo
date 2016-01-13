@@ -150,7 +150,7 @@ public class FriendslistFragment extends AbsFragment {
         String babyUid = event.babyUid;
         if (arrayList != null && arrayList.containsKey(babyUid)) {
             FollowUser followUser = arrayList.get(babyUid);
-            followUser.setAgreement_state(event.state);
+            followUser.setAppointing(event.appointing);
             arrayList.put(babyUid, followUser);
             mAdapter.refresh(babyUid, followUser);
         }

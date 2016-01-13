@@ -16,7 +16,7 @@ public class PushResult implements Serializable {
     private String cmd;
 
     /**
-     *  "当前用户uid", //用于百度推送区分
+     * "当前用户uid", //用于百度推送区分
      */
     private String uid;
 
