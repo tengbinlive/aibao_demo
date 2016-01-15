@@ -8,12 +8,13 @@ import com.core.CommonDataLoader;
 import com.core.CommonRequest;
 import com.core.openapi.OpenApiMethodEnum;
 import com.core.openapi.OpenApiSimpleResult;
+import com.dao.Parent;
 import com.mytian.lb.App;
 import com.mytian.lb.bean.action.AgreementParam;
 import com.mytian.lb.bean.action.HabitParam;
 
 /**
- *  约定业务类.
+ * 约定业务类.
  *
  * @author bin.teng
  */
@@ -34,8 +35,10 @@ public class UserActionManager {
     public void sendAgreement(Context context, String babyUid, long time, String appointId, final Handler handler, final int handlerMsgCode) {
 
         AgreementParam param = new AgreementParam();
-        param.setUid(App.getInstance().getUserResult().getParent().getUid());
-        param.setToken(App.getInstance().getUserResult().getParent().getToken());
+        Parent parent = App.getInstance().getUserResult().getParent();
+
+        param.setUid(parent.getUid());
+        param.setToken(parent.getToken());
         param.setBabyUid(babyUid);
         param.setTime(time);
         param.setAppointId(appointId);
@@ -62,8 +65,9 @@ public class UserActionManager {
     public void cancleAgreement(Context context, String babyUid, String appointId, final Handler handler, final int handlerMsgCode) {
 
         AgreementParam param = new AgreementParam();
-        param.setUid(App.getInstance().getUserResult().getParent().getUid());
-        param.setToken(App.getInstance().getUserResult().getParent().getToken());
+        Parent parent = App.getInstance().getUserResult().getParent();
+        param.setUid(parent.getUid());
+        param.setToken(parent.getToken());
         param.setBabyUid(babyUid);
         param.setAppointId(appointId);
 
@@ -82,15 +86,16 @@ public class UserActionManager {
      *
      * @param context
      * @param babyUid
-     * @param isPraise 0 贬,1 赞
+     * @param isPraise       0 贬,1 赞
      * @param handler
      * @param handlerMsgCode
      */
-    public void sendHabit(Context context, String babyUid,String appointId, String isPraise, final Handler handler, final int handlerMsgCode) {
+    public void sendHabit(Context context, String babyUid, String appointId, String isPraise, final Handler handler, final int handlerMsgCode) {
 
         HabitParam param = new HabitParam();
-        param.setUid(App.getInstance().getUserResult().getParent().getUid());
-        param.setToken(App.getInstance().getUserResult().getParent().getToken());
+        Parent parent = App.getInstance().getUserResult().getParent();
+        param.setUid(parent.getUid());
+        param.setToken(parent.getToken());
         param.setBabyUid(babyUid);
         param.setHabitId(appointId);
         param.setIsPraise(isPraise);

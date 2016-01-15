@@ -37,10 +37,15 @@ public class FriendslistAdapter extends BaseSwipeAdapter {
 
     private FollowManager manager = new FollowManager();
 
+    private int pinkColor;
+    private int textMatchColor;
+
     public FriendslistAdapter(AbsActivity context, ArrayMap<String, FollowUser> _list) {
         this.list = _list;
         mContext = context;
         mInflater = LayoutInflater.from(context);
+        pinkColor = mContext.getResources().getColor(R.color.pink);
+        textMatchColor = mContext.getResources().getColor(R.color.textcolor_match);
     }
 
     @Override
@@ -137,6 +142,8 @@ public class FriendslistAdapter extends BaseSwipeAdapter {
                 textView.setVisibility(View.VISIBLE);
                 imageView.setVisibility(View.GONE);
                 textView.setText(R.string.agreementing);
+                textView.setTextColor(pinkColor);
+                return;
             } else {
                 textView.setVisibility(View.GONE);
                 imageView.setVisibility(View.VISIBLE);
@@ -146,6 +153,7 @@ public class FriendslistAdapter extends BaseSwipeAdapter {
             textView.setVisibility(View.VISIBLE);
             textView.setText(R.string.offline);
         }
+        textView.setTextColor(textMatchColor);
     }
 
     /**

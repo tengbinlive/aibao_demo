@@ -8,6 +8,7 @@ import com.core.CommonDataLoader;
 import com.core.CommonRequest;
 import com.core.openapi.OpenApiMethodEnum;
 import com.core.openapi.OpenApiSimpleResult;
+import com.dao.Parent;
 import com.mytian.lb.App;
 import com.mytian.lb.bean.push.UpdateChannelidParam;
 
@@ -30,9 +31,12 @@ public class PushMManager {
      */
     public void updateChannelId(Context context, String channelId, final Handler handler, final int handlerMsgCode) {
         UpdateChannelidParam param = new UpdateChannelidParam();
+        Parent parent = App.getInstance().getUserResult().getParent();
+
+        param.setUid(parent.getUid());
+        param.setToken(parent.getToken());
         param.setChannelId(channelId);
-        param.setUid(App.getInstance().getUserResult().getParent().getUid());
-        param.setToken(App.getInstance().getUserResult().getParent().getToken());
+
         // 接口参数
         param.setMethod(OpenApiMethodEnum.LOAD_UPDATECHANNELID);
         param.setParseTokenType(new TypeReference<OpenApiSimpleResult>() {

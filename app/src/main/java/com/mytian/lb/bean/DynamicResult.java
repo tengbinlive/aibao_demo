@@ -1,47 +1,24 @@
 package com.mytian.lb.bean;
 
-import com.amulyakhare.textdrawable.TextDrawable;
 import com.core.openapi.OpenApiSimpleResult;
-import com.core.util.StringUtil;
-import com.mytian.lb.App;
-import com.mytian.lb.R;
 
 /**
  * Created by bin.teng on 2015/10/28.
  */
 public class DynamicResult extends OpenApiSimpleResult {
-    public final static int TYPE_SYS = 2;
-    public final static int TYPE_MAIBAO = 3;
-    public final static int TYPE_AIBAO = 4;
+    private String uid;
     private String alias;
     private String head;
     private String date;
     private String desc;
     private String content;
-    private int type;
-    private TextDrawable drawable;
 
-    public int getType() {
-        return type;
+    public String getUid() {
+        return uid;
     }
 
-    public void setType(int type) {
-        this.type = type;
-    }
-
-    public TextDrawable getDrawable() {
-        if (null==drawable) {
-            setDrawable();
-        }
-        return drawable;
-    }
-
-    private void setDrawable() {
-        int radius = (int) App.getInstance().getResources().getDimension(R.dimen.rounded_size);
-        String name = alias.substring(0, 1);
-        int color = type == TYPE_SYS ? 0xfff12e40 : 0xffff6699;
-        this.drawable = TextDrawable.builder()
-                .buildRoundRect(name, color, radius);
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public String getAlias() {
@@ -92,8 +69,6 @@ public class DynamicResult extends OpenApiSimpleResult {
                 ", date='" + date + '\'' +
                 ", desc='" + desc + '\'' +
                 ", content='" + content + '\'' +
-                ", type=" + type +
-                ", drawable=" + drawable +
                 '}';
     }
 }

@@ -26,7 +26,7 @@ public class ParentDao extends AbstractDao<Parent, Long> {
         public final static Property Uid = new Property(1, String.class, "uid", false, "UID");
         public final static Property Token = new Property(2, String.class, "token", false, "TOKEN");
         public final static Property Phone = new Property(3, String.class, "phone", false, "PHONE");
-        public final static Property Alias = new Property(4, String.class, "alias", false, "ALIAS");
+        public final static Property Name = new Property(4, String.class, "name", false, "NAME");
         public final static Property Sex = new Property(5, Integer.class, "sex", false, "SEX");
         public final static Property Birthday = new Property(6, Long.class, "birthday", false, "BIRTHDAY");
         public final static Property HeadThumb = new Property(7, String.class, "headThumb", false, "HEAD_THUMB");
@@ -49,7 +49,7 @@ public class ParentDao extends AbstractDao<Parent, Long> {
                 "\"UID\" TEXT," + // 1: uid
                 "\"TOKEN\" TEXT," + // 2: token
                 "\"PHONE\" TEXT," + // 3: phone
-                "\"ALIAS\" TEXT," + // 4: alias
+                "\"NAME\" TEXT," + // 4: name
                 "\"SEX\" INTEGER," + // 5: sex
                 "\"BIRTHDAY\" INTEGER," + // 6: birthday
                 "\"HEAD_THUMB\" TEXT);"); // 7: headThumb
@@ -86,9 +86,9 @@ public class ParentDao extends AbstractDao<Parent, Long> {
             stmt.bindString(4, phone);
         }
  
-        String alias = entity.getAlias();
-        if (alias != null) {
-            stmt.bindString(5, alias);
+        String name = entity.getName();
+        if (name != null) {
+            stmt.bindString(5, name);
         }
  
         Integer sex = entity.getSex();
@@ -121,7 +121,7 @@ public class ParentDao extends AbstractDao<Parent, Long> {
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // uid
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // token
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // phone
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // alias
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // name
             cursor.isNull(offset + 5) ? null : cursor.getInt(offset + 5), // sex
             cursor.isNull(offset + 6) ? null : cursor.getLong(offset + 6), // birthday
             cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7) // headThumb
@@ -136,7 +136,7 @@ public class ParentDao extends AbstractDao<Parent, Long> {
         entity.setUid(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setToken(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setPhone(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setAlias(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setName(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
         entity.setSex(cursor.isNull(offset + 5) ? null : cursor.getInt(offset + 5));
         entity.setBirthday(cursor.isNull(offset + 6) ? null : cursor.getLong(offset + 6));
         entity.setHeadThumb(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));

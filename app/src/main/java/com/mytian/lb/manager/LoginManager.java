@@ -4,17 +4,17 @@ import android.content.Context;
 import android.os.Handler;
 
 import com.alibaba.fastjson.TypeReference;
-import com.mytian.lb.bean.user.UserResult;
-import com.mytian.lb.bean.login.AuthCodeParam;
-import com.mytian.lb.bean.login.LoginParam;
-import com.mytian.lb.bean.login.RegisterParam;
-import com.mytian.lb.bean.login.RegisterResult;
 import com.core.CommonDataLoader;
 import com.core.CommonRequest;
 import com.core.openapi.OpenApiMethodEnum;
 import com.core.openapi.OpenApiSimpleResult;
+import com.mytian.lb.bean.login.AuthCodeParam;
+import com.mytian.lb.bean.login.LoginParam;
+import com.mytian.lb.bean.login.RegisterParam;
+import com.mytian.lb.bean.login.RegisterResult;
 import com.mytian.lb.bean.login.ResetPassWordParam;
 import com.mytian.lb.bean.login.ResetPassWordResult;
+import com.mytian.lb.bean.user.UserResult;
 
 /**
  * 登录业务类.
@@ -49,13 +49,14 @@ public class LoginManager {
 
     /**
      * 登录
+     *
      * @param context
-     * @param phone 手机号码
-     * @param password 密码
+     * @param phone          手机号码
+     * @param password       密码
      * @param handler
      * @param handlerMsgCode
      */
-    public void login(Context context, String phone,String password, final Handler handler, final int handlerMsgCode) {
+    public void login(Context context, String phone, String password, final Handler handler, final int handlerMsgCode) {
         LoginParam param = new LoginParam();
         param.setPhone(phone);
         param.setPassword(password);
@@ -71,14 +72,15 @@ public class LoginManager {
 
     /**
      * 注册
+     *
      * @param context
-     * @param phone 手机号码
-     * @param verification 验证码
-     * @param password 密码
+     * @param phone          手机号码
+     * @param verification   验证码
+     * @param password       密码
      * @param handler
      * @param handlerMsgCode
      */
-    public void register(Context context, String phone,String verification,String password, final Handler handler, final int handlerMsgCode) {
+    public void register(Context context, String phone, String verification, String password, final Handler handler, final int handlerMsgCode) {
 
         RegisterParam param = new RegisterParam();
         param.setPhone(phone);
@@ -96,14 +98,15 @@ public class LoginManager {
 
     /**
      * 注册
+     *
      * @param context
-     * @param phone 手机号码
-     * @param verification 验证码
-     * @param password 密码
+     * @param phone          手机号码
+     * @param verification   验证码
+     * @param password       密码
      * @param handler
      * @param handlerMsgCode
      */
-    public void resetpassword(Context context, String phone,String password,String verification, final Handler handler, final int handlerMsgCode) {
+    public void resetpassword(Context context, String phone, String password, String verification, final Handler handler, final int handlerMsgCode) {
 
         ResetPassWordParam param = new ResetPassWordParam();
         param.setPhone(phone);

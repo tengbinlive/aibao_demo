@@ -32,8 +32,26 @@ public class FollowUser implements Serializable {
     private String other_relation;
     private String searchKey;
     private String appointing;
+    private String appointer;
+    private String baby_alias;
     private boolean focus;
     private int head_id;
+
+    public String getAppointer() {
+        return appointer;
+    }
+
+    public void setAppointer(String appointer) {
+        this.appointer = appointer;
+    }
+
+    public String getBaby_alias() {
+        return baby_alias;
+    }
+
+    public void setBaby_alias(String baby_alias) {
+        this.baby_alias = baby_alias;
+    }
 
     public String getAppointing() {
         return appointing;
@@ -225,6 +243,8 @@ public class FollowUser implements Serializable {
                 ", other_relation='" + other_relation + '\'' +
                 ", searchKey='" + searchKey + '\'' +
                 ", appointing='" + appointing + '\'' +
+                ", appointer='" + appointer + '\'' +
+                ", baby_alias='" + baby_alias + '\'' +
                 ", focus=" + focus +
                 ", head_id=" + head_id +
                 '}';

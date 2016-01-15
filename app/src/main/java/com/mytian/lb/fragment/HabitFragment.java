@@ -12,6 +12,11 @@ import com.mytian.lb.bean.follow.FollowUser;
 import com.mytian.lb.manager.UserActionDOManager;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -22,6 +27,8 @@ public class HabitFragment extends AbsFragment {
     ListView listview;
 
     private FollowUser cureentParent;
+
+    private ArrayList<UserAction> arrayList;
 
     @Override
     public boolean onBackPressed() {
@@ -36,7 +43,35 @@ public class HabitFragment extends AbsFragment {
     @Override
     public void EInit() {
         cureentParent = (FollowUser) getArguments().getSerializable(UserDetailActivity.USER);
-        initListViewData(UserActionDOManager.getInstance().getArrayListHabit());
+        try {
+            arrayList = deepCopy(UserActionDOManager.getInstance().getArrayListHabit());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        initListViewData(arrayList);
+    }
+
+    /**
+     *
+     * 深度拷贝 行为习惯
+     * 拷贝对象 需要 序列号
+     * implements Serializable
+     * @param src
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    public ArrayList deepCopy(ArrayList src) throws IOException, ClassNotFoundException {
+        ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
+        ObjectOutputStream out = new ObjectOutputStream(byteOut);
+        out.writeObject(src);
+
+        ByteArrayInputStream byteIn = new ByteArrayInputStream(byteOut.toByteArray());
+        ObjectInputStream in = new ObjectInputStream(byteIn);
+        ArrayList dest = (ArrayList) in.readObject();
+        return dest;
     }
 
     private void initListViewData(ArrayList<UserAction> _arrayList) {

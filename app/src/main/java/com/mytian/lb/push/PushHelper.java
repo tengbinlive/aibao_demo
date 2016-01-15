@@ -11,6 +11,7 @@ import com.alibaba.fastjson.JSON;
 import com.core.CommonResponse;
 import com.core.util.CommonUtil;
 import com.core.util.StringUtil;
+import com.dao.Parent;
 import com.igexin.sdk.PushManager;
 import com.igexin.sdk.Tag;
 import com.mytian.lb.App;
@@ -187,7 +188,14 @@ public class PushHelper {
         } catch (Exception e) {
         }
         UserResult userResult = App.getInstance().getUserResult();
-        if (null != result && null != userResult && isSend(userResult, result)) {
+        if(null != userResult){
+            return;
+        }
+        Parent parent = App.getInstance().getUserResult().getParent();
+        if(null != parent){
+            return;
+        }
+        if (null != result && isSend(parent, result)) {
             if (PushCode.FOLLOW_NOTICE.equals(result.getCmd())) {
                 String info = result.getInfo();
                 FollowUser user = JSON.parseObject(info, FollowUser.class);
@@ -217,22 +225,24 @@ public class PushHelper {
             } else if (PushCode.APPOINT_STATUS.equals(result.getCmd())) {
                 String info = result.getInfo();
                 String babyUid = "";
-                String appoint_status = "";
+                String appointStatus = "";
+                String appointer = "";
                 try {
                     JSONObject jsonObject = new JSONObject(info);
                     babyUid = jsonObject.optString("babyUid");
-                    appoint_status = jsonObject.optString("appoint_status");
+                    appointStatus = jsonObject.optString("appointStatus");
+                    appointer = jsonObject.optString("appointer");
                 } catch (JSONException e) {
                 }
                 if (StringUtil.isNotBlank(babyUid)) {
-                    EventBus.getDefault().postSticky(new AgreementStateEventType(babyUid, appoint_status));
+                    EventBus.getDefault().postSticky(new AgreementStateEventType(babyUid, appointStatus,appointer));
                 }
             }
         }
     }
 
-    private boolean isSend(UserResult userResult, PushResult result) {
-        String uid = userResult.getParent().getUid();
+    private boolean isSend(Parent parent, PushResult result) {
+        String uid = parent.getUid();
         return "*".equals(result.getUid()) || uid.equals(result.getUid());
     }
 

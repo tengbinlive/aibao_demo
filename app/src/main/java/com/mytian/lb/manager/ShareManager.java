@@ -8,6 +8,7 @@ import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -94,26 +95,9 @@ public final class ShareManager {
         return shareParams;
     }
 
-    public Platform.ShareParams getParams(String title, String contents, String url, String urlIcon, Drawable icon) {
-        Bitmap bitmap = drawableToBitamp(icon);
-        return getParams(title, contents, url, urlIcon, bitmap);
-    }
-
-    private Bitmap drawableToBitamp(Drawable drawable) {
-        Rect r = drawable.getBounds();
-        int width = r.width();
-        int height = r.height();
-        Bitmap.Config config = drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888 : Bitmap.Config.RGB_565;// 取drawable的颜色格式
-        Bitmap bitmap = Bitmap.createBitmap(width, height, config);// 建立对应bitmap
-        Canvas canvas = new Canvas(bitmap);// 建立对应bitmap的画布
-        drawable.setBounds(0, 0, width, height);
-        drawable.draw(canvas);// 把drawable内容画到画布中
-        return bitmap;
-    }
-
     private void showShareView() {
         dialogDismiss();
-        final Activity activity = App.getInstance().activityManager.currentActivity();
+        final Activity activity = App.getInstance().getCurrentActivity();
         LinearLayout convertView = (LinearLayout) LayoutInflater.from(activity).inflate(R.layout.dialog_share, null);
         ImageView share_qq = (ImageView) convertView.findViewById(R.id.share_qq);
         ImageView share_weibo = (ImageView) convertView.findViewById(R.id.share_weibo);
@@ -172,7 +156,7 @@ public final class ShareManager {
     private final static int DIALOGSHOW = 2;
     private final static int DIALOGDISMISS = 1;
 
-    private Handler activityHandler = new Handler() {
+    private Handler activityHandler = new Handler(Looper.getMainLooper()) {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case SHOW_SHAER:

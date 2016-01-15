@@ -70,11 +70,14 @@ public class DynamicAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         final DynamicResult bean = list.get(position);
-        String heandurl = bean.getHead();
-        if (StringUtil.isBlank(heandurl)) {
-            viewHolder.head.setImageDrawable(bean.getDrawable());
-        } else {
-            Glide.with(mContext).load(heandurl).asBitmap()
+        int headid = getHeadResid(bean.getUid());
+        if(headid!=-1){
+            Glide.with(mContext).load(headid).asBitmap()
+                    .transform(transform)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .placeholder(R.mipmap.head_default).into(viewHolder.head);
+        }else{
+            Glide.with(mContext).load(bean.getHead()).asBitmap()
                     .transform(transform)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .placeholder(R.mipmap.default_head).into(viewHolder.head);
@@ -86,11 +89,21 @@ public class DynamicAdapter extends BaseAdapter {
         viewHolder.share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Platform.ShareParams shareParams = ShareManager.getInstance().getParams("test_title", "test_content", null, "http://img0.pcgames.com.cn/pcgames/1106/16/2239524_00018.gif", bean.getDrawable());
+                Platform.ShareParams shareParams = ShareManager.getInstance().getParams("test_title", "test_content", null, "http://img0.pcgames.com.cn/pcgames/1106/16/2239524_00018.gif", null);
                 ShareManager.getInstance().share(shareParams);
             }
         });
         return convertView;
+    }
+
+    private int getHeadResid(String uid){
+        if("100101".equals(uid))return R.mipmap.head_default;
+        if("100102".equals(uid))return R.mipmap.head_sys_1;
+        if("100103".equals(uid))return R.mipmap.head_sys_2;
+        if("100104".equals(uid))return R.mipmap.head_sys_3;
+        if("100105".equals(uid))return R.mipmap.head_sys_4;
+        if("100106".equals(uid))return R.mipmap.head_default;
+        return -1;
     }
 
 

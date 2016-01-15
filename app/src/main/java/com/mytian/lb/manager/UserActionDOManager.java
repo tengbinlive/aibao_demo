@@ -80,6 +80,7 @@ public class UserActionDOManager {
          * 习惯
          */
         startIndex = 1000;
+        length = habitTitle.length;
         for (int i = 0; i < length; i++) {
             UserAction bean = new UserAction();
             int appointid = startIndex + (i + 1);

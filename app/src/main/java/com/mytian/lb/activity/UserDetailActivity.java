@@ -1,6 +1,8 @@
 package com.mytian.lb.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -11,6 +13,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.core.CommonResponse;
+import com.core.util.CommonUtil;
 import com.core.util.StringUtil;
 import com.gitonway.lee.niftymodaldialogeffects.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.NiftyDialogBuilder;
@@ -19,14 +23,19 @@ import com.mytian.lb.AbsActivity;
 import com.mytian.lb.R;
 import com.mytian.lb.adapter.MainViewPagerAdapter;
 import com.mytian.lb.bean.follow.FollowUser;
+import com.mytian.lb.event.AgreementStateEventType;
 import com.mytian.lb.event.PushStateEventType;
+import com.mytian.lb.event.UpdateBabyAliasEventType;
 import com.mytian.lb.fragment.AgreementFragment;
 import com.mytian.lb.fragment.HabitFragment;
+import com.mytian.lb.manager.UserManager;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
+import butterknife.BindColor;
+import de.greenrobot.event.EventBus;
 
 public class UserDetailActivity extends AbsActivity {
 
@@ -48,7 +57,15 @@ public class UserDetailActivity extends AbsActivity {
     SmartTabLayout viewpagerTab;
     @Bind(R.id.view_pager)
     ViewPager viewPager;
+
+    @BindColor(R.color.pink)
+    int pinkColor;
+    @BindColor(R.color.textcolor_match)
+    int textMatchColor;
+
     private FollowUser cureentParent;
+    private String remarkName;
+
 
     @Override
     public void initActionBar() {
@@ -65,20 +82,20 @@ public class UserDetailActivity extends AbsActivity {
         String head = "";
         if (null != userInfo) {
             cureentParent = userInfo;
-            String remark = "";
+            String remark = cureentParent.getBaby_alias();
             String name = cureentParent.getAlias();
             head = cureentParent.getHead_thumb();
             String phone = cureentParent.getPhone();
-            if(StringUtil.isBlank(remark)){
+            if (StringUtil.isBlank(remark)) {
                 userRemark.setText(name);
                 userName.setVisibility(View.GONE);
-            }else {
+            } else {
                 userName.setVisibility(View.VISIBLE);
                 userRemark.setText(remark);
                 userName.setText("昵称：" + name);
             }
             userPhone.setText(phone);
-            setState(userInfo.getIs_online());
+            setUserState(userInfo.getIs_online(), userInfo.getAppointing(), userInfo.getAppointer());
         }
         Glide.with(mContext).load(head)
                 .asBitmap()
@@ -87,12 +104,49 @@ public class UserDetailActivity extends AbsActivity {
                 .centerCrop().into(userIcon);
     }
 
-    private void setState(String isOnline){
-        String state = "";
+    /**
+     * 设置用户状态
+     *
+     * @param isOnline
+     */
+    private void setUserState(String isOnline, String appointing, String appointer) {
         if (FollowUser.OFFLINE.equals(isOnline)) {
-            state = "离线";
+            String state = getString(R.string.offline);
+            userState.setTextColor(textMatchColor);
+            userState.setText(state);
+        } else {
+            setIsAgreementState(appointing, appointer);
+        }
+    }
+
+    /**
+     * 设置约定状态
+     *
+     * @param appointing
+     * @param appointer
+     */
+    private void setIsAgreementState(String appointing, String appointer) {
+        String state = "";
+        if (AgreementStateEventType.AGREEMENT_ING.equals(appointing)) {
+            state = String.format(mContext.getString(R.string.and_agreement), appointer);
+            userState.setTextColor(pinkColor);
         }
         userState.setText(state);
+    }
+
+    /**
+     * 约定状态更新
+     *
+     * @param event
+     */
+    public void onEventMainThread(AgreementStateEventType event) {
+        String babyUid = event.babyUid;
+        if (cureentParent.getUid().equals(babyUid)) {
+            String appointing = event.appointing;
+            cureentParent.setAppointing(appointing);
+            cureentParent.setAppointer(event.appointer);
+            setUserState(cureentParent.getIs_online(), appointing, event.appointer);
+        }
     }
 
     /**
@@ -103,7 +157,8 @@ public class UserDetailActivity extends AbsActivity {
     public void onEvent(PushStateEventType event) {
         String babyUid = event.babyUid;
         if (babyUid.equals(cureentParent.getUid())) {
-            setState(event.is_online);
+            cureentParent.setAppointing(event.is_online);
+            setUserState(event.is_online, cureentParent.getAppointing(), cureentParent.getAppointer());
         }
     }
 
@@ -161,8 +216,14 @@ public class UserDetailActivity extends AbsActivity {
         change_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dialogDismiss();
-                userRemark.setText(name.getText());
+                remarkName = name.getText().toString();
+                if (StringUtil.isBlank(remarkName)) {
+                    CommonUtil.showToast(R.string.remark_no);
+                    return;
+                }
+                dialogShow(R.string.update_remark);
+                UserManager manager = new UserManager();
+                manager.updateRemarkName(mContext, cureentParent.getUid(), remarkName, activityHandler, UPDATE_REMARKNAME);
             }
         });
         dialogBuilder = NiftyDialogBuilder.getInstance(this);
@@ -171,6 +232,34 @@ public class UserDetailActivity extends AbsActivity {
                 .withEffect(Effectstype.Fadein) // def Effectstype.Slidetop
                 .setCustomView(convertView, this); // .setCustomView(View
         dialogBuilder.show();
+    }
+
+    private static final int UPDATE_REMARKNAME = 0x01;//更新备注
+    private Handler activityHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            int what = msg.what;
+            switch (what) {
+                case UPDATE_REMARKNAME:
+                    loadData((CommonResponse) msg.obj);
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
+    /**
+     * 数据返回
+     *
+     * @param resposne
+     */
+    private void loadData(CommonResponse resposne) {
+        dialogDismiss();
+        CommonUtil.showToast(resposne.getMsg());
+        if (resposne.isSuccess()) {
+            userRemark.setText(remarkName);
+            EventBus.getDefault().post(new UpdateBabyAliasEventType(cureentParent.getUid(), remarkName));
+        }
     }
 
 }

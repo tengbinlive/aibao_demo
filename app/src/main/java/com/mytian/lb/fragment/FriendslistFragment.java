@@ -22,6 +22,7 @@ import com.mytian.lb.bean.follow.FollowListResult;
 import com.mytian.lb.bean.follow.FollowUser;
 import com.mytian.lb.event.AgreementStateEventType;
 import com.mytian.lb.event.PushStateEventType;
+import com.mytian.lb.event.UpdateBabyAliasEventType;
 import com.mytian.lb.manager.FollowManager;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
 
@@ -142,6 +143,20 @@ public class FriendslistFragment extends AbsFragment {
     }
 
     /**
+     * 更新关注对象备注昵称
+     *
+     * @param event
+     */
+    public void onEvent(UpdateBabyAliasEventType event) {
+        String babyUid = event.babyUid;
+        if (arrayList != null && arrayList.containsKey(babyUid)) {
+            FollowUser followUser = arrayList.get(babyUid);
+            followUser.setBaby_alias(event.baby_alias);
+            arrayList.put(babyUid, followUser);
+        }
+    }
+
+    /**
      * 约定状态更新
      *
      * @param event
@@ -169,8 +184,8 @@ public class FriendslistFragment extends AbsFragment {
                 for (FollowUser followUser : list) {
                     arrayList.put(followUser.getUid(), followUser);
                 }
-                mAdapter.refresh(arrayList);
             }
+            mAdapter.refresh(arrayList);
             if (size >= COUNT_MAX) {
                 currentPager++;
             } else {

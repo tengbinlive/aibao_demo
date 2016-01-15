@@ -29,8 +29,16 @@ public class AgreementAdapter extends BaseAdapter {
 
     private boolean isOFFLINE;
 
+    private boolean isAGREEMENTING;
+
+    public void setIsAGREEMENTING(boolean isAGREEMENTING) {
+        this.isAGREEMENTING = isAGREEMENTING;
+        notifyDataSetChanged();
+    }
+
     public void setIsOFFLINE(boolean isOFFLINE) {
         this.isOFFLINE = isOFFLINE;
+        notifyDataSetChanged();
     }
 
     public AgreementAdapter(Context context, ArrayList<UserAction> _list) {
@@ -66,7 +74,7 @@ public class AgreementAdapter extends BaseAdapter {
         }
         UserAction bean = list.get(position);
 
-        int icon_id = Utils.getResource(mContext, isOFFLINE ?  bean.getIcon_disabled():bean.getIcon(), "mipmap");
+        int icon_id = Utils.getResource(mContext, (isOFFLINE||isAGREEMENTING) ?  bean.getIcon_disabled():bean.getIcon(), "mipmap");
 
         Glide.with(mContext).load(icon_id).asBitmap().diskCacheStrategy(DiskCacheStrategy.ALL).into(viewHolder.icon);
         viewHolder.title.setText(bean.getTitle());

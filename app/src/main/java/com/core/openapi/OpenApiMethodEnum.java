@@ -11,6 +11,11 @@ package com.core.openapi;
 public enum OpenApiMethodEnum {
 
     /**
+     * 修改麦宝备注名称
+     */
+    LOAD_REMARK_NAME("myt_focus/babyParentFocusAction_updateBabyAlias.do", "openapi_json", OpenApi.URL_TYPE_DATA),
+
+    /**
      * 行为习惯表扬
      */
     LOAD_MBHABIT("myt_das/habitAction_praiseMbHabit.do", "openapi_json", OpenApi.URL_TYPE_DATA),
@@ -52,7 +57,7 @@ public enum OpenApiMethodEnum {
      */
     LOAD_FOLLOW_CANCEL("myt_focus/babyParentFocusAction_parentReleaseFocusBaby.do", "openapi_json", OpenApi.URL_TYPE_DATA),
 
-      /**
+    /**
      * 查找麦宝账户信息
      */
     LOAD_FOLLOW_BABY("myt_baby/babyAction_getBabyByPhone.do", "openapi_json", OpenApi.URL_TYPE_DATA),

@@ -30,7 +30,7 @@ import de.greenrobot.daogenerator.ToMany;
 public class ExampleDaoGenerator {
 
     public static void main(String[] args) throws Exception {
-        Schema schema = new Schema(5, "com.example");
+        Schema schema = new Schema(6, "com.example");
         addConfig(schema);
         addUserAction(schema);
         addParent(schema);
@@ -63,7 +63,7 @@ public class ExampleDaoGenerator {
         note.addStringProperty("uid");
         note.addStringProperty("token");
         note.addStringProperty("phone");
-        note.addStringProperty("alias");
+        note.addStringProperty("name");
         note.addIntProperty("sex");
         note.addLongProperty("birthday");
         note.addStringProperty("headThumb");
