@@ -506,7 +506,7 @@ public class AgreementFragment extends AbsFragment {
         dialogDismiss();
         if (resposne.isSuccess()) {
             Parent parent = App.getInstance().getUserResult().getParent();
-            EventBus.getDefault().postSticky(new AgreementStateEventType(cureentParent.getUid(), AgreementStateEventType.AGREEMENT_ING, parent.getName()));
+            EventBus.getDefault().postSticky(new AgreementStateEventType(cureentParent.getUid(), AgreementStateEventType.AGREEMENT_ING, parent.getAlias()));
         } else {
             sendCount = 0;
             CommonUtil.showToast(resposne.getMsg());

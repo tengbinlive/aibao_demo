@@ -322,6 +322,7 @@ public class App extends Application {
             ParentDao dao = getDaoSession().getParentDao();
             dao.deleteAll();
         }
+        SharedPreferencesHelper.setBoolean(App.getInstance(), PushHelper.CHANNEL_STATE, false);
         Activity activity = activityManager.currentActivity();
         Intent intent = new Intent(activity, LoginActivity.class);
         intent.putExtra("animation_type", AnimatedRectLayout.ANIMATION_WAVE_TL);

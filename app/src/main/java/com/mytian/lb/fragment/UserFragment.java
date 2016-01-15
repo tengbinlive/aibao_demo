@@ -126,7 +126,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
 
     private void setUserInfo() {
         Parent parent = App.getInstance().getUserResult().getParent();
-        String name = parent.getName();
+        String name = parent.getAlias();
         boolean isName = StringUtil.isBlank(name);
         if (isName) {
             nameValue.setHint(R.string.enter_nickname);
@@ -232,7 +232,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
             if (StringUtil.isNotBlank(name)) {
                 nameValue.setText("");
                 nameValue.setHint(name);
-                parent.setName(name);
+                parent.setAlias(name);
             }
             if (StringUtil.isNotBlank(birthday)) {
                 birthdayValue.setText("");

@@ -10,7 +10,7 @@ public class Parent {
     private String uid;
     private String token;
     private String phone;
-    private String name;
+    private String alias;
     private Integer sex;
     private Long birthday;
     private String headThumb;
@@ -22,12 +22,12 @@ public class Parent {
         this.id = id;
     }
 
-    public Parent(Long id, String uid, String token, String phone, String name, Integer sex, Long birthday, String headThumb) {
+    public Parent(Long id, String uid, String token, String phone, String alias, Integer sex, Long birthday, String headThumb) {
         this.id = id;
         this.uid = uid;
         this.token = token;
         this.phone = phone;
-        this.name = name;
+        this.alias = alias;
         this.sex = sex;
         this.birthday = birthday;
         this.headThumb = headThumb;
@@ -65,12 +65,12 @@ public class Parent {
         this.phone = phone;
     }
 
-    public String getName() {
-        return name;
+    public String getAlias() {
+        return alias;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setAlias(String alias) {
+        this.alias = alias;
     }
 
     public Integer getSex() {
