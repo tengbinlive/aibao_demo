@@ -40,6 +40,8 @@ public class FriendslistAdapter extends BaseSwipeAdapter {
     private int pinkColor;
     private int textMatchColor;
 
+    private int deleteIndex;
+
     public FriendslistAdapter(AbsActivity context, ArrayMap<String, FollowUser> _list) {
         this.list = _list;
         mContext = context;
@@ -89,8 +91,8 @@ public class FriendslistAdapter extends BaseSwipeAdapter {
             @Override
             public void onClick(View view) {
                 closeAllItems();
-                int index = (Integer) view.getTag();
-                FollowUser user = list.valueAt(index);
+                deleteIndex = (Integer) view.getTag();
+                FollowUser user = list.valueAt(deleteIndex);
                 mContext.dialogShow(R.string.cancel_ing);
                 manager.followcancel(mContext, user.getUid(), handler, CANCEL);
             }
@@ -190,6 +192,8 @@ public class FriendslistAdapter extends BaseSwipeAdapter {
                     mContext.dialogDismiss();
                     CommonResponse resposne = (CommonResponse) msg.obj;
                     CommonUtil.showToast(resposne.getMsg());
+                    list.removeAt(deleteIndex);
+                    notifyDataSetChanged();
                     break;
                 default:
                     break;

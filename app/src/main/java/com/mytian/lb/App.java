@@ -323,6 +323,7 @@ public class App extends Application {
             dao.deleteAll();
         }
         SharedPreferencesHelper.setBoolean(App.getInstance(), PushHelper.CHANNEL_STATE, false);
+        cookie = null;
         Activity activity = activityManager.currentActivity();
         Intent intent = new Intent(activity, LoginActivity.class);
         intent.putExtra("animation_type", AnimatedRectLayout.ANIMATION_WAVE_TL);

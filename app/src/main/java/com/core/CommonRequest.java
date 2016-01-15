@@ -228,6 +228,18 @@ public class CommonRequest extends Request<CommonResponse> {
         // 数据转换目标类型
         mTypeToken = paramObj.getParseTypeToken();
 
+        if (Constant.DEBUG) {
+            long l = entity.getContentLength();
+            StringBuffer buf = new StringBuffer();
+            for (String key : mParam.keySet()) {
+                buf.append(key).append("=").append(mParam.get(key)).append("\n");
+            }
+            Logger.d(buf.toString());
+            Logger.d(mFileParts.size() + "个File，长度：" + l);
+            Logger.d(mParam.size() + "个String，长度：" + l);
+            Logger.d(entity.toString());
+        }
+
         // 设置该Request正确创建
         mValid = true;
     }

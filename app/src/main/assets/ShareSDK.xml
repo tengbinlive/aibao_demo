@@ -78,31 +78,31 @@
 		默认值为false。此外，微信收藏不支持此字段。
 	-->
     <Wechat
-        Id="4"
-        SortId="4"
+        Id="2"
+        SortId="2"
         AppId="wx25f63c29962b8d0b"
-        AppSecret="feaa0c78bd926b73289d919a00bef279"
-        BypassApproval="true"
+        AppSecret="5697971f7f49ba14c9e9f2672a1bd6b5"
+        BypassApproval="false"
         Enable="true" />
 
     <WechatMoments
-        Id="5"
-        SortId="5"
+        Id="3"
+        SortId="3"
         AppId="wx25f63c29962b8d0b"
-        AppSecret="feaa0c78bd926b73289d919a00bef279"
-        BypassApproval="true"
+        AppSecret="5697971f7f49ba14c9e9f2672a1bd6b5"
+        BypassApproval="false"
         Enable="true" />
 
     <WechatFavorite
-        Id="6"
-        SortId="6"
+        Id="4"
+        SortId="4"
         AppId="wx25f63c29962b8d0b"
-        AppSecret="feaa0c78bd926b73289d919a00bef279"
+        AppSecret="5697971f7f49ba14c9e9f2672a1bd6b5"
         Enable="true" />
 
     <QQ
-        Id="7"
-        SortId="7"
+        Id="5"
+        SortId="5"
         AppId="1105046638"
         AppKey="nHG1UCvmLyVNjelM"
         ShareByAppClient="true"
