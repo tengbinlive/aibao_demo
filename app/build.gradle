@@ -5,7 +5,7 @@ apply plugin: 'com.droidtitan.lintcleaner'
 def versionMajor = 2
 def versionMinor = 0
 def versionPatch = 1
-def versionBuild = 39 // bump for dogfood builds, public betas, etc.
+def versionBuild = 40 // bump for dogfood builds, public betas, etc.
 
 android {
 
@@ -38,8 +38,6 @@ android {
         }
     }
 
-//    "http://114.215.108.49/" /** 正式环境OpenAPI地址 */
-//    "http://10.0.1.15/" /** 调试环境OpenAPI地址 */
     buildTypes {
 
         debug {

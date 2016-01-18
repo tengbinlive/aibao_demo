@@ -29,8 +29,9 @@ import de.greenrobot.daogenerator.ToMany;
  */
 public class ExampleDaoGenerator {
 
+    private final static int verison = 7;
     public static void main(String[] args) throws Exception {
-        Schema schema = new Schema(7, "com.example");
+        Schema schema = new Schema(verison, "com.example");
         addConfig(schema);
         addUserAction(schema);
         addParent(schema);

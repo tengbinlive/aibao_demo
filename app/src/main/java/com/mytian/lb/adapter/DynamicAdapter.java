@@ -89,7 +89,7 @@ public class DynamicAdapter extends BaseAdapter {
         viewHolder.share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Platform.ShareParams shareParams = ShareManager.getInstance().getParams("test_title", "test_content", null, "http://img0.pcgames.com.cn/pcgames/1106/16/2239524_00018.gif", null);
+                Platform.ShareParams shareParams = ShareManager.getInstance().getParams("test_title", "test_content", "http://fir.im/5xv4", "http://git.oschina.net/alexyu.yxj/MyTmpFiles/raw/master/kmk_pic_fld/273.JPG", null);
                 ShareManager.getInstance().share(shareParams);
             }
         });

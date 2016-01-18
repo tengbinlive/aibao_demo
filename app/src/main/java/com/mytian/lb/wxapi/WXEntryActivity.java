@@ -1,4 +1,4 @@
-package com.wxapi;
+package com.mytian.lb.wxapi;
 
 import android.app.Activity;
 import android.content.Intent;

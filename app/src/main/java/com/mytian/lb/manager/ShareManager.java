@@ -3,10 +3,6 @@ package com.mytian.lb.manager;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.PixelFormat;
-import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -27,6 +23,7 @@ import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.Platform.ShareParams;
 import cn.sharesdk.framework.ShareSDK;
 
 public final class ShareManager {
@@ -37,7 +34,7 @@ public final class ShareManager {
 
     public NiftyDialogBuilder dialogBuilder;
 
-    private Platform.ShareParams shareParams;
+    private ShareParams shareParams;
 
     public static ShareManager getInstance() {
         if (instance == null) {
@@ -66,7 +63,7 @@ public final class ShareManager {
     /**
      * 分享到第三方
      */
-    public void share(final Platform.ShareParams module) {
+    public void share(final ShareParams module) {
         if (module == null) {
             return;
         }
@@ -74,8 +71,8 @@ public final class ShareManager {
         activityHandler.sendEmptyMessage(SHOW_SHAER);
     }
 
-    public Platform.ShareParams getParams(String title, String contents, String url, String urlIcon, Bitmap icon) {
-        Platform.ShareParams shareParams = new Platform.ShareParams();
+    public ShareParams getParams(String title, String contents, String url, String urlIcon, Bitmap icon) {
+        ShareParams shareParams = new ShareParams();
         if (StringUtil.isNotBlank(title)) {
             shareParams.setTitle(title);
         }
