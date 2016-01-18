@@ -27,7 +27,7 @@ SinaWeibo
     
     AppKey="884925751"
     AppSecret="b834ce49cf265035cdb515b05553b318"
-    RedirectUrl="http://fir.im/5xv4"
+    RedirectUrl="http://www.mytian.com.cn"
     
 QQ
 
