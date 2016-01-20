@@ -5,7 +5,7 @@ apply plugin: 'com.droidtitan.lintcleaner'
 def versionMajor = 2
 def versionMinor = 0
 def versionPatch = 1
-def versionBuild = 40 // bump for dogfood builds, public betas, etc.
+def versionBuild = 42 // bump for dogfood builds, public betas, etc.
 
 android {
 
@@ -27,6 +27,7 @@ android {
                 GETUI_APP_SECRET: "bGqQIpUdU69rpr74CTX3t2",
                 PACKAGE_NAME    : applicationId
         ]
+
     }
 
     signingConfigs {
@@ -43,7 +44,7 @@ android {
         debug {
             buildConfigField "String", "API_HOST", "\"http://114.215.108.49/\""//API Host
             buildConfigField "boolean", "LOG_DEBUG", "true"// log info
-            buildConfigField "boolean", "CHANNEL_DEBUG", "false"// channel info
+            buildConfigField "boolean", "CHANNEL_DEBUG", "true"// channel info
 
             minifyEnabled false
             zipAlignEnabled false
@@ -54,7 +55,7 @@ android {
 
         alpha {
             buildConfigField "String", "API_HOST", "\"http://114.215.108.49/\""//API Host
-            buildConfigField "boolean", "LOG_DEBUG", "false"// log info
+            buildConfigField "boolean", "LOG_DEBUG", "true"// log info
             buildConfigField "boolean", "CHANNEL_DEBUG", "false"// channel info
 
             minifyEnabled false

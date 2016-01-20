@@ -13,6 +13,15 @@ appkey - aibao.jks
     keyAlias "aibao"
     keyPassword "aibaoaibao"
     
+getui
+    
+     manifestPlaceholders = [
+                    GETUI_APP_ID    : "kvuUWGiv0c6sHXaYA8JzT7",
+                    GETUI_APP_KEY   : "PO0la0IdOd8vTKnFl4Ftq2",
+                    GETUI_APP_SECRET: "bGqQIpUdU69rpr74CTX3t2",
+                    PACKAGE_NAME    : applicationId
+            ]
+    
 sharesdk
 
     AppKey = "dd995e0d9818"

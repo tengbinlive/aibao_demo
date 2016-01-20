@@ -135,6 +135,8 @@ public class AgreementFragment extends AbsFragment {
 
         mAdapter.setIsOFFLINE(FollowUser.OFFLINE.equals(cureentParent.getIs_online()));
 
+        mAdapter.setIsAGREEMENTING(AgreementStateEventType.AGREEMENT_ING.equals(cureentParent.getAppointing()));
+
         SwingBottomInAnimationAdapter animationAdapter = new SwingBottomInAnimationAdapter(mAdapter);
 
         animationAdapter.setAbsListView(gridview);

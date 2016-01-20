@@ -188,11 +188,11 @@ public class PushHelper {
         } catch (Exception e) {
         }
         UserResult userResult = App.getInstance().getUserResult();
-        if(null != userResult){
+        if(null == userResult){
             return;
         }
         Parent parent = App.getInstance().getUserResult().getParent();
-        if(null != parent){
+        if(null == parent){
             return;
         }
         if (null != result && isSend(parent, result)) {

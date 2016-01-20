@@ -34,5 +34,4 @@ public class PushMessageReceiver extends BroadcastReceiver {
         }
     }
 
-
 }
