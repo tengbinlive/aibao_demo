@@ -21,6 +21,9 @@ import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 
+/**
+ * 图片压缩
+ */
 public class NativeUtil {
 
     public static int DEFAULT_QUALITY = 55;

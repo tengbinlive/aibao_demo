@@ -158,6 +158,10 @@ public class PushHelper {
         }
     }
 
+    /**
+     * 推送通知显示
+     * @param content
+     */
     private void showNotification(String content) {
         String ns = Context.NOTIFICATION_SERVICE;
         CharSequence tickerText = "aibao..";
@@ -178,6 +182,10 @@ public class PushHelper {
         mNotificationManager.notify(1, notification);
     }
 
+    /**
+     * 推送数据更新
+     * @param content
+     */
     public void updateContent(String content) {
         if (Constant.DEBUG) {
             CommonUtil.showToast(content);

@@ -19,6 +19,9 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+/**
+ * 约定界面
+ */
 public class AgreementAdapter extends BaseAdapter {
 
     private LayoutInflater mInflater;

@@ -34,6 +34,9 @@ import butterknife.Bind;
 import butterknife.BindString;
 import butterknife.OnClick;
 
+/**
+ * 用户注册界面
+ */
 public class RegisterActivity extends AbsActivity {
 
     public static final long DKEY_TIME = 60 * 1000;// 获取动态验证码的时间间隔 60 秒

@@ -28,6 +28,9 @@ import butterknife.Bind;
 import butterknife.BindString;
 import butterknife.OnClick;
 
+/**
+ * 密码重置界面
+ */
 public class ResetPassWordActivity extends AbsActivity {
 
     public static final long DKEY_TIME = 60 * 1000;// 获取动态验证码的时间间隔 60 秒

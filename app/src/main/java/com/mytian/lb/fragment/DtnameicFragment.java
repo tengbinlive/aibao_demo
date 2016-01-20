@@ -18,6 +18,9 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 
+/**
+ * 动态界面
+ */
 public class DtnameicFragment extends AbsFragment {
 
     @Bind(R.id.listview_pr)

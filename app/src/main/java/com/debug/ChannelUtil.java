@@ -13,6 +13,9 @@ import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+/**
+ * 多渠道打包
+ */
 public class ChannelUtil {
 
     private static final String CHANNEL_KEY = "cztchannel";

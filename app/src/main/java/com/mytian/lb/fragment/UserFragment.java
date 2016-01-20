@@ -49,6 +49,9 @@ import butterknife.Bind;
 import butterknife.BindColor;
 import butterknife.OnClick;
 
+/**
+ * 用户设置界面
+ */
 public class UserFragment extends AbsFragment implements DatePickerDialog.OnDateSetListener {
 
     @Bind(R.id.name_value)

@@ -1,7 +1,7 @@
 package com.mytian.lb.enums;
 
 /**
- * 是非值枚举类.
+ * 男女值枚举类.
  *
  * @author
  */

@@ -20,6 +20,9 @@ import com.mytian.lb.push.PushHelper;
 import butterknife.Bind;
 import butterknife.OnClick;
 
+/**
+ * 启动界面
+ */
 public class LauncherActivity extends AbsActivity {
 
     private final static int TO_LOGIN = 0;

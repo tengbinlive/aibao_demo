@@ -30,6 +30,9 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 
+/**
+ * 关注的人界面
+ */
 public class FriendslistFragment extends AbsFragment {
 
     @Bind(R.id.listview_pr)

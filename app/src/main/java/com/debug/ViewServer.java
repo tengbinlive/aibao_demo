@@ -105,6 +105,7 @@ import android.view.ViewDebug;
  *     }
  * }
  * </pre>
+ * 界面优化，用于界面捕获
  */
 public class ViewServer implements Runnable {
   /**

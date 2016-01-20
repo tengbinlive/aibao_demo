@@ -21,6 +21,9 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 
+/**
+ * 习惯界面
+ */
 public class HabitFragment extends AbsFragment {
 
     @Bind(R.id.listview_pr)

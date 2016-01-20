@@ -29,7 +29,9 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 
-
+/**
+ * （动态&关注&kindle&帐号管理）主界面
+ */
 public class MainActivity extends AbsActivity {
 
     public final static int DYNAMIC = 0;

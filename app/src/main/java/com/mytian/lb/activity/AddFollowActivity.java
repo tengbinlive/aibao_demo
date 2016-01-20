@@ -41,6 +41,9 @@ import butterknife.Bind;
 import butterknife.BindDimen;
 import cdflynn.android.library.crossview.CrossView;
 
+/**
+ * 查找关注对象界面
+ */
 public class AddFollowActivity extends AbsActivity {
 
     @Bind(R.id.listview_pr)

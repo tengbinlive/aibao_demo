@@ -1,6 +1,7 @@
 package com.mytian.lb.event;
 
 /**
+ * 约定状态
  * Created by bin on 15/7/23.
  */
 public class AgreementStateEventType {

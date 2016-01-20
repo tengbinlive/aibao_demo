@@ -37,6 +37,9 @@ import butterknife.Bind;
 import butterknife.BindColor;
 import de.greenrobot.event.EventBus;
 
+/**
+ * 用户详情界面
+ */
 public class UserDetailActivity extends AbsActivity {
 
     public final static String USER = "USER";
