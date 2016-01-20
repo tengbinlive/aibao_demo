@@ -4,8 +4,7 @@
 
 服务器url:
 
-    "http://114.215.108.49/" /** 正式环境OpenAPI地址 */
-    "http://10.0.1.15/" /** 调试环境OpenAPI地址 */
+    "http://114.215.108.49/" /** 调试环境OpenAPI地址 */
 
 appkey - aibao.jks
 
@@ -46,10 +45,13 @@ QQ
 ##lib_greendao
 
 lib_greendao为本地数据库dao-生成项目
-用于生成greendao，生成app本地缓存用javabean （app配置属性，用户登录属性，约定项目数据，习惯项目数据）
+
+用于生成greendao，生成app本地缓存用javabean 
+
+（app配置属性，用户登录属性，约定项目数据，习惯项目数据）
 
 
-##*注意*
+##*注意事项*
 
 1.每次生成新dao时需要提升数据版本version
 
