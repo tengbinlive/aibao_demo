@@ -267,6 +267,12 @@ public class RegisterActivity extends AbsActivity {
     @Override
     public void finish() {
         super.finish();
+        if(null!=timer){
+            timer.cancel();
+        }
+        if(null!=myHander){
+            myHander.removeMessages(0);
+        }
         if (smsContentObserver != null) {
             this.getContentResolver().unregisterContentObserver(smsContentObserver);
             smsContentObserver = null;

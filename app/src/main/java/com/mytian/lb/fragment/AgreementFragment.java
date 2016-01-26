@@ -227,7 +227,9 @@ public class AgreementFragment extends AbsFragment {
         if (null != timer) {
             timer.cancel();
         }
-        myHander.removeMessages(0);
+        if(null!=myHander) {
+            myHander.removeMessages(0);
+        }
     }
 
     @Override
