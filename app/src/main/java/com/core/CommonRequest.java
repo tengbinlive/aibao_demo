@@ -34,6 +34,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.UnknownHostException;
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -311,7 +312,7 @@ public class CommonRequest extends Request<CommonResponse> {
                 String key = entry.getKey().toString();
                 String val = entry.getValue().toString();
                 try {
-                    entity.addPart(key, new StringBody(val));
+                    entity.addPart(key, new StringBody(val, Charset.forName(OpenApi.CHARSET_UTF8)));
                 } catch (UnsupportedEncodingException e) {
                 }
             }
