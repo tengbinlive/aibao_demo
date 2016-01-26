@@ -2,6 +2,12 @@
 
 [download](http://fir.im/5xv4)
 
+build
+
+    debug 调试版本
+    alpha 测试版本
+    release 发表版本
+
 服务器url:
 
     "http://114.215.108.49/" /** 调试环境OpenAPI地址 */
@@ -86,3 +92,8 @@ lib_greendao为本地数据库dao-生成项目
 4.WXEntryActivity 必须在包名+wxapi目录下 且必须
 
     android:exported="true"
+    
+5.发表APP时，三星系列需要
+
+    debuggable false
+    
