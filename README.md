@@ -93,7 +93,7 @@ lib_greendao为本地数据库dao-生成项目
 
     android:exported="true"
     
-5.发表APP时，三星系列需要
+5.发布APP时，三星系列需要
 
     debuggable false
     
