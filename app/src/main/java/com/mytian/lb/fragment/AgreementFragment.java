@@ -12,6 +12,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -20,6 +21,8 @@ import com.core.util.CommonUtil;
 import com.core.util.StringUtil;
 import com.dao.Parent;
 import com.dao.UserAction;
+import com.gitonway.lee.niftymodaldialogeffects.Effectstype;
+import com.gitonway.lee.niftymodaldialogeffects.NiftyDialogBuilder;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mytian.lb.AbsFragment;
 import com.mytian.lb.App;
@@ -37,6 +40,7 @@ import com.mytian.lb.manager.UserActionManager;
 import com.mytian.lb.mview.ClipRevealFrame;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
 import com.pascalwelsch.holocircularprogressbar.HoloCircularProgressBar;
+import com.rey.material.widget.Slider;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -54,7 +58,6 @@ public class AgreementFragment extends AbsFragment {
     @Bind(R.id.layout_agreement)
     ClipRevealFrame layoutClip;
 
-    public static boolean isSettingShow;
     @Bind(R.id.circular_progressbar)
     HoloCircularProgressBar circularProgressbar;
     @Bind(R.id.agreement_title)
@@ -70,6 +73,7 @@ public class AgreementFragment extends AbsFragment {
     Button agreementCancle;
 
     private View tempClip;
+    private boolean isSettingShow;
 
     private UserActionManager manager = new UserActionManager();
     private ArrayList<UserAction> arrayList;
@@ -80,7 +84,11 @@ public class AgreementFragment extends AbsFragment {
 
     private float PROGRESS_MAX = 1.0f;
 
-    private static long DKEY_TIME = 15 * 60 * 1000;
+    private int DEF_TIME = 15;
+
+    private long DKEY_TIME;
+
+    private final static long MINUTE_TIME = 60 * 1000;
 
     private final static String STR_GAP = "  ";
 
@@ -88,7 +96,7 @@ public class AgreementFragment extends AbsFragment {
 
     private final static String SHAREDPREFERENCES_TIME = "START_TIME";
 
-    private static int sendCount = 0; //避免用户快速点击
+    private int sendCount = 0; //避免用户快速点击
 
     private long actionEndTime;
 
@@ -111,7 +119,7 @@ public class AgreementFragment extends AbsFragment {
                     sendCount++;
                     tempClip = view;
                     cureentAction = arrayList.get(position);
-                    manager.sendAgreement(getActivity(), cureentParent.getUid(), DKEY_TIME, cureentAction.getAppointId(), activityHandler, AGREEMENT);
+                    showTimeDialog(cureentAction.getTitle());
                 }
             }
         });
@@ -209,6 +217,8 @@ public class AgreementFragment extends AbsFragment {
             String sharedKey = SHAREDPREFERENCES_TIME + uid;
             SharedPreferencesHelper.setString(mContext, sharedKey, "");
             actionEndTime = 0;
+            sendCount = 0;
+            DKEY_TIME = 0;
             timer.cancel();
             resetProgressBar();
             toggleShowSetting(tempClip);
@@ -255,13 +265,65 @@ public class AgreementFragment extends AbsFragment {
         if (StringUtil.isNotBlank(content)) {
             String[] strings = StringUtil.split(content, SPLIT_KEY);
             actionEndTime = Long.valueOf(strings[0]);
-            cureentAction = JSON.parseObject(strings[1], UserAction.class);
+            DKEY_TIME = Long.valueOf(strings[1]);
+            cureentAction = JSON.parseObject(strings[2], UserAction.class);
             long currentTime = System.currentTimeMillis();
             if (currentTime < actionEndTime) {
                 Parent parent = App.getInstance().getUserResult().getParent();
                 startAgreement(parent, actionEndTime);
             }
         }
+    }
+
+    /**
+     * 约定时间设置
+     */
+    private void showTimeDialog(String agreementName) {
+        dialogDismiss();
+        LinearLayout convertView = (LinearLayout) mInflater.inflate(R.layout.dialog_time_select, null);
+        final TextView title = (TextView) convertView.findViewById(R.id.title);
+        final TextView value = (TextView) convertView.findViewById(R.id.value);
+        final Slider time_select = (Slider) convertView.findViewById(R.id.time_select);
+        Button ok = (Button) convertView.findViewById(R.id.ok);
+        Button cancel = (Button) convertView.findViewById(R.id.cancel);
+        title.setText(agreementName);
+        String timeSelectStr = getResources().getString(R.string.time_select);
+        value.setText(String.format(timeSelectStr, DEF_TIME));
+        time_select.setValue(DEF_TIME, false);
+        time_select.setOnPositionChangeListener(new Slider.OnPositionChangeListener() {
+            @Override
+            public void onPositionChanged(Slider view, boolean fromUser, float oldPos, float newPos, int oldValue, int newValue) {
+                String timeSelectStr = getResources().getString(R.string.time_select);
+                value.setText(String.format(timeSelectStr, newValue));
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogDismiss();
+                sendCount = 0;
+            }
+        });
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int sliderValue = time_select.getValue();
+                if (sliderValue <= 0) {
+                    CommonUtil.showToast(R.string.no_time);
+                    return;
+                }
+                dialogDismiss();
+                DKEY_TIME = MINUTE_TIME * sliderValue;
+                manager.sendAgreement(getActivity(), cureentParent.getUid(), DKEY_TIME, cureentAction.getAppointId(), activityHandler, AGREEMENT);
+            }
+        });
+        dialogBuilder = NiftyDialogBuilder.getInstance(getActivity());
+        dialogBuilder.withDuration(700) // def
+                .isCancelableOnTouchOutside(false) // def | isCancelable(true)
+                .withEffect(Effectstype.Fadein) // def Effectstype.Slidetop
+                .setCustomView(convertView, getActivity()); // .setCustomView(View
+        dialogBuilder.show();
     }
 
     /**
@@ -507,7 +569,7 @@ public class AgreementFragment extends AbsFragment {
     private void saveTime(long time) {
         StringBuffer contentBf = new StringBuffer();
         String action = JSON.toJSONString(cureentAction);
-        contentBf.append(time).append(SPLIT_KEY).append(action);
+        contentBf.append(time).append(SPLIT_KEY).append(DKEY_TIME).append(SPLIT_KEY).append(action);
         String uid = cureentParent.getUid();
         String sharedKey = SHAREDPREFERENCES_TIME + uid;
         SharedPreferencesHelper.setString(mContext, sharedKey, contentBf.toString());

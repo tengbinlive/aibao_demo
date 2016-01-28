@@ -138,9 +138,10 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
             nameValue.setHint(name);
         }
         String phone = parent.getPhone();
-        phone = StringUtil.isNotBlank(phone) ? phone : "...";
         String head = parent.getHeadThumb();
-        phoneValue.setText(phone);
+        if (StringUtil.isNotBlank(phone)) {
+            phoneValue.setText(phone);
+        }
         long bir = parent.getBirthday();
         if (bir > 0) {
             String birthday = DateUtil.ConverToString(bir, DateUtil.YYYY_MM_DD);
@@ -154,7 +155,6 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
 
     @OnClick(R.id.change_bt)
     void onChangeInfo() {
-
         String name = nameValue.getText().toString();
         String nameHint = nameValue.getHint().toString();
         String birthday = birthdayValue.getText().toString();

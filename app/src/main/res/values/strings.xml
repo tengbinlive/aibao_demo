@@ -55,6 +55,7 @@
     <string name="setting_remark">设置备注</string>
     <string name="setting_name">设置昵称</string>
     <string name="no_name">昵称不能为空</string>
+    <string name="no_time">时间不能为 0 哦</string>
     <string name="habit_executive">执行习惯</string>
     <string name="change_ok">确定修改</string>
     <string name="change_password">修改密码</string>
@@ -84,5 +85,6 @@
     <string name="auth_clip_pic">裁切图片</string>
     <string name="failure_head_update">头像更新失败啦</string>
     <string name="no_change">暂无修改</string>
+    <string name="time_select">约定 %d 分钟内完成</string>
 
 </resources>
