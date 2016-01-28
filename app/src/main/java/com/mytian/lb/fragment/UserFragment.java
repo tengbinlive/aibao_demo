@@ -13,6 +13,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -24,6 +25,8 @@ import com.core.util.FileDataHelper;
 import com.core.util.StringUtil;
 import com.dao.Parent;
 import com.dao.ParentDao;
+import com.gitonway.lee.niftymodaldialogeffects.Effectstype;
+import com.gitonway.lee.niftymodaldialogeffects.NiftyDialogBuilder;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mytian.lb.AbsFragment;
 import com.mytian.lb.App;
@@ -35,6 +38,7 @@ import com.mytian.lb.bean.user.UpdateParentParam;
 import com.mytian.lb.bean.user.UpdateParentPortraitResult;
 import com.mytian.lb.enums.WomanOrManEnum;
 import com.mytian.lb.helper.AnimationHelper;
+import com.mytian.lb.manager.AppManager;
 import com.mytian.lb.manager.UserManager;
 import com.mytian.lb.mview.BottomView;
 import com.rey.material.widget.RadioButton;
@@ -55,7 +59,7 @@ import butterknife.OnClick;
 public class UserFragment extends AbsFragment implements DatePickerDialog.OnDateSetListener {
 
     @Bind(R.id.name_value)
-    EditText nameValue;
+    TextView nameValue;
     @Bind(R.id.phone_value)
     TextView phoneValue;
     @Bind(R.id.birthday_value)
@@ -130,10 +134,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
     private void setUserInfo() {
         Parent parent = App.getInstance().getUserResult().getParent();
         String name = parent.getAlias();
-        boolean isName = StringUtil.isBlank(name);
-        if (isName) {
-            nameValue.setHint(R.string.enter_nickname);
-        } else {
+        if (StringUtil.isNotBlank(name)) {
             nameValue.setHint(name);
         }
         String phone = parent.getPhone();
@@ -144,8 +145,6 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         if (bir > 0) {
             String birthday = DateUtil.ConverToString(bir, DateUtil.YYYY_MM_DD);
             birthdayValue.setHint(birthday);
-        } else {
-            birthdayValue.setHint(R.string.not_selected);
         }
         user_icon.setVisibility(View.VISIBLE);
         Glide.with(mContext).load(head).asBitmap()
@@ -155,24 +154,33 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
 
     @OnClick(R.id.change_bt)
     void onChangeInfo() {
+
         String name = nameValue.getText().toString();
         String nameHint = nameValue.getHint().toString();
         String birthday = birthdayValue.getText().toString();
-        String birthdayHint = birthdayValue.getHint().toString();
+
+        boolean isName = StringUtil.isNotBlank(name);
+        boolean isBirthday = StringUtil.isNotBlank(birthday);
+        boolean isHeadPath = StringUtil.isNotBlank(headPath);
+
         if (StringUtil.isBlank(name) && StringUtil.isBlank(nameHint)) {
             AnimationHelper.getInstance().viewAnimationQuiver(nameValue);
             return;
         }
-        if (StringUtil.isBlank(birthday) && StringUtil.isBlank(birthdayHint)) {
-            AnimationHelper.getInstance().viewAnimationQuiver(birthdayValue);
-            return;
-        }
 
-        int sex = App.getInstance().getUserResult().getParent().getSex();
+        int sex_src = App.getInstance().getUserResult().getParent().getSex();
+        int sex = sex_src;
         if (woman_bt.isChecked()) {
             sex = WomanOrManEnum.WOMAN.getCode();
         } else if (man_bt.isChecked()) {
             sex = WomanOrManEnum.MAN.getCode();
+        }
+
+        boolean isSex = sex_src != sex;
+
+        if (!isName && !isBirthday && !isHeadPath && !isSex) {
+            CommonUtil.showToast(R.string.no_change);
+            return;
         }
 
         user_gender = sex;
@@ -180,13 +188,13 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         UserManager manager = new UserManager();
         UpdateParentParam param = new UpdateParentParam();
         param.setSex(sex);
-        if (StringUtil.isNotBlank(name)) {
+        if (isName) {
             param.setAlias(name);
         }
-        if (StringUtil.isNotBlank(birthday)) {
+        if (isBirthday) {
             param.setBirthday(birthdayDate.getTimeInMillis());
         }
-        if (StringUtil.isNotBlank(headPath)) {
+        if (isHeadPath) {
             manager.updateParentPortrait(mContext, new File(headPath), activityHandler, UPDATE_PARENTPORTRAIT);
         }
         manager.updateParent(mContext, param, activityHandler, UPDATE_PARENT);
@@ -231,7 +239,6 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
             Parent parent = App.getInstance().getUserResult().getParent();
             String name = nameValue.getText().toString();
             String birthday = birthdayValue.getText().toString();
-            nameValue.clearFocus();
             if (StringUtil.isNotBlank(name)) {
                 nameValue.setText("");
                 nameValue.setHint(name);
@@ -266,6 +273,12 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         resetData();
     }
 
+    @OnClick(R.id.update_tv)
+    void toUpdateApp() {
+        AppManager manager = new AppManager();
+        manager.updateVersion();
+    }
+
     @OnClick(R.id.reset_password_tv)
     void toResetPassword() {
         Intent intent = new Intent(getActivity(), ResetPassWordActivity.class);
@@ -284,7 +297,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
     /**
      * 时间选择
      */
-    @OnClick(R.id.birthday_value)
+    @OnClick(R.id.birthday_layout)
     void showDateDialog() {
         Calendar now = Calendar.getInstance();
         Date time = now.getTime();
@@ -300,6 +313,44 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         dpd.setAccentColor(accentColor);
         dpd.show(getActivity().getFragmentManager(), "Datepickerdialog");
 
+    }
+
+    /**
+     * 昵称输入
+     */
+    @OnClick(R.id.name_layout)
+    void showNameDialog() {
+        dialogDismiss();
+        LinearLayout convertView = (LinearLayout) mInflater.inflate(R.layout.dialog_remark, null);
+        final TextView title = (TextView) convertView.findViewById(R.id.title);
+        final EditText nameEt = (EditText) convertView.findViewById(R.id.desc_et);
+        TextView change_ok = (TextView) convertView.findViewById(R.id.change_ok);
+        title.setText(R.string.setting_name);
+        Parent parent = App.getInstance().getUserResult().getParent();
+        String alias = parent.getAlias();
+        nameEt.setHint(R.string.hint_name);
+        nameEt.setText(alias);
+        if (StringUtil.isNotBlank(alias)) {
+            nameEt.setSelection(alias.length());
+        }
+        change_ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String nameStr = nameEt.getText().toString();
+                if (StringUtil.isBlank(nameStr)) {
+                    CommonUtil.showToast(R.string.no_name);
+                    return;
+                }
+                dialogDismiss();
+                nameValue.setText(nameStr);
+            }
+        });
+        dialogBuilder = NiftyDialogBuilder.getInstance(getActivity());
+        dialogBuilder.withDuration(700) // def
+                .isCancelableOnTouchOutside(true) // def | isCancelable(true)
+                .withEffect(Effectstype.Fadein) // def Effectstype.Slidetop
+                .setCustomView(convertView, getActivity()); // .setCustomView(View
+        dialogBuilder.show();
     }
 
     @Override

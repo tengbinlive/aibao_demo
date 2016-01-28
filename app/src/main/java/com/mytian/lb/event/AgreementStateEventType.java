@@ -11,10 +11,12 @@ public class AgreementStateEventType {
     public String appointing;
     public String appointer;
     public String babyUid;
+    public String appoint_time;
 
-    public AgreementStateEventType(String babyUid, String appointing,String appointer) {
+    public AgreementStateEventType(String babyUid, String appointing,String appointer,String appoint_time) {
         this.babyUid = babyUid;
         this.appointing = appointing;
         this.appointer = appointer;
+        this.appoint_time = appoint_time;
     }
 }

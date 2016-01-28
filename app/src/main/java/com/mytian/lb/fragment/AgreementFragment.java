@@ -26,6 +26,7 @@ import com.mytian.lb.App;
 import com.mytian.lb.R;
 import com.mytian.lb.activity.UserDetailActivity;
 import com.mytian.lb.adapter.AgreementAdapter;
+import com.mytian.lb.bean.action.AgreementResult;
 import com.mytian.lb.bean.follow.FollowUser;
 import com.mytian.lb.event.AgreementStateEventType;
 import com.mytian.lb.event.PushStateEventType;
@@ -91,6 +92,8 @@ public class AgreementFragment extends AbsFragment {
 
     private long actionEndTime;
 
+    public String appoint_time;
+
     private void initGridView() {
 
         initGridViewData(UserActionDOManager.getInstance().getArrayListAgreement());
@@ -100,7 +103,7 @@ public class AgreementFragment extends AbsFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 AnimationHelper.getInstance().viewAnimationScal(view);
                 int resid = isSendEffect();
-                if (resid!=-1) {
+                if (resid != -1) {
                     CommonUtil.showToast(resid);
                     return;
                 }
@@ -116,7 +119,8 @@ public class AgreementFragment extends AbsFragment {
 
     /**
      * -1 表示 可以发送约定
-     *  其他 返回 提示用字符串 resid
+     * 其他 返回 提示用字符串 resid
+     *
      * @return
      */
     private int isSendEffect() {
@@ -200,10 +204,13 @@ public class AgreementFragment extends AbsFragment {
     }
 
     private void endTimeAnimation() {
-        actionEndTime = 0;
-        timer.cancel();
-        resetProgressBar();
         if (isSettingShow) {
+            String uid = cureentParent.getUid();
+            String sharedKey = SHAREDPREFERENCES_TIME + uid;
+            SharedPreferencesHelper.setString(mContext, sharedKey, "");
+            actionEndTime = 0;
+            timer.cancel();
+            resetProgressBar();
             toggleShowSetting(tempClip);
         }
     }
@@ -227,7 +234,7 @@ public class AgreementFragment extends AbsFragment {
         if (null != timer) {
             timer.cancel();
         }
-        if(null!=myHander) {
+        if (null != myHander) {
             myHander.removeMessages(0);
         }
     }
@@ -242,7 +249,9 @@ public class AgreementFragment extends AbsFragment {
         cureentParent = (FollowUser) getArguments().getSerializable(UserDetailActivity.USER);
         isSettingShow = false;
         initGridView();
-        String content = SharedPreferencesHelper.getString(mContext, SHAREDPREFERENCES_TIME, "");
+        String uid = cureentParent.getUid();
+        String sharedKey = SHAREDPREFERENCES_TIME + uid;
+        String content = SharedPreferencesHelper.getString(mContext, sharedKey, "");
         if (StringUtil.isNotBlank(content)) {
             String[] strings = StringUtil.split(content, SPLIT_KEY);
             actionEndTime = Long.valueOf(strings[0]);
@@ -319,18 +328,19 @@ public class AgreementFragment extends AbsFragment {
      */
     public void onEventMainThread(AgreementStateEventType event) {
         String babyUid = event.babyUid;
+        String time = event.appoint_time;
         if (cureentParent.getUid().equals(babyUid)) {
             cureentParent.setAppointing(event.appointing);
             cureentParent.setAppointer(event.appointer);
             boolean isAgreement = AgreementStateEventType.AGREEMENT_ING.equals(event.appointing);
             mAdapter.setIsAGREEMENTING(isAgreement);
-            if (isAgreement) {
-                Parent parent = App.getInstance().getUserResult().getParent();
-                actionEndTime = System.currentTimeMillis() + DKEY_TIME;
-                startAgreementAni(parent, actionEndTime);
-            } else {
-                if (isSettingShow) {
-                    toggleShowSetting(tempClip);
+            if (StringUtil.isNotBlank(appoint_time) && time.equals(appoint_time)) {
+                if (isAgreement) {
+                    Parent parent = App.getInstance().getUserResult().getParent();
+                    actionEndTime = System.currentTimeMillis() + DKEY_TIME;
+                    startAgreementAni(parent, actionEndTime);
+                } else {
+                    endTimeAnimation();
                 }
             }
         }
@@ -498,7 +508,9 @@ public class AgreementFragment extends AbsFragment {
         StringBuffer contentBf = new StringBuffer();
         String action = JSON.toJSONString(cureentAction);
         contentBf.append(time).append(SPLIT_KEY).append(action);
-        SharedPreferencesHelper.setString(mContext, SHAREDPREFERENCES_TIME, contentBf.toString());
+        String uid = cureentParent.getUid();
+        String sharedKey = SHAREDPREFERENCES_TIME + uid;
+        SharedPreferencesHelper.setString(mContext, sharedKey, contentBf.toString());
     }
 
     /**
@@ -509,8 +521,11 @@ public class AgreementFragment extends AbsFragment {
     private void loadAgreement(CommonResponse resposne) {
         dialogDismiss();
         if (resposne.isSuccess()) {
+            AgreementResult result = (AgreementResult) resposne.getData();
             Parent parent = App.getInstance().getUserResult().getParent();
-            EventBus.getDefault().postSticky(new AgreementStateEventType(cureentParent.getUid(), AgreementStateEventType.AGREEMENT_ING, parent.getAlias()));
+            appoint_time = result.getAppoint_time();
+            AgreementStateEventType eventType = new AgreementStateEventType(cureentParent.getUid(), AgreementStateEventType.AGREEMENT_ING, parent.getAlias(), appoint_time);
+            EventBus.getDefault().postSticky(eventType);
         } else {
             sendCount = 0;
             CommonUtil.showToast(resposne.getMsg());
@@ -526,8 +541,10 @@ public class AgreementFragment extends AbsFragment {
         dialogDismiss();
         sendCount = 0;
         if (resposne.isSuccess()) {
-            SharedPreferencesHelper.setString(mContext, SHAREDPREFERENCES_TIME, "");
-            EventBus.getDefault().postSticky(new AgreementStateEventType(cureentParent.getUid(), AgreementStateEventType.AGREEMENT_END, null));
+            AgreementResult result = (AgreementResult) resposne.getData();
+            appoint_time = result.getAppoint_time();
+            AgreementStateEventType eventType = new AgreementStateEventType(cureentParent.getUid(), AgreementStateEventType.AGREEMENT_END, null, appoint_time);
+            EventBus.getDefault().postSticky(eventType);
         } else {
             CommonUtil.showToast(resposne.getMsg());
         }

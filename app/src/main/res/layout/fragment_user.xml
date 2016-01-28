@@ -13,17 +13,17 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/content_gap"
+            android:orientation="vertical"
             android:paddingBottom="@dimen/content_gap"
-            android:orientation="vertical">
+            android:paddingTop="@dimen/content_gap">
 
             <RelativeLayout
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:paddingBottom="@dimen/content_gap_big"
                 android:paddingLeft="@dimen/content_gap"
                 android:paddingRight="@dimen/content_gap"
-                android:paddingTop="@dimen/content_gap_big"
-                android:layout_height="wrap_content">
+                android:paddingTop="@dimen/content_gap_big">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -40,10 +40,10 @@
                     android:layout_height="35dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
+                    android:layout_marginBottom="@dimen/elevation_height"
                     android:background="@drawable/button_bg_theme"
                     android:paddingLeft="@dimen/elevation_height"
                     android:paddingRight="@dimen/elevation_height"
-                    android:layout_marginBottom="@dimen/elevation_height"
                     android:text="@string/change_ok"
                     android:textColor="@color/textcolor_theme"
                     android:textSize="@dimen/font_medium" />
@@ -71,8 +71,7 @@
                     android:textColor="@color/textcolor_match"
                     android:textSize="@dimen/font_btn" />
 
-                <com.makeramen.roundedimageview.RoundedImageView
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/user_icon"
                     android:layout_width="@dimen/item_head_size"
                     android:layout_height="@dimen/item_head_size"
@@ -95,6 +94,7 @@
                 android:background="@drawable/light_divide" />
 
             <RelativeLayout
+                android:id="@+id/name_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/content_gap">
@@ -103,21 +103,20 @@
                     android:id="@+id/name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:text="@string/hint_name"
                     android:textColor="@color/textcolor_match"
                     android:textSize="@dimen/font_btn" />
 
-                <EditText
+                <TextView
                     android:id="@+id/name_value"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@null"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
                     android:gravity="right"
+                    android:maxLength="22"
                     android:singleLine="true"
-                    android:textColor="@color/textcolor_match"
+                    android:textColor="@color/textcolor_theme"
                     android:textColorHint="@color/gray_hint"
-                    android:textCursorDrawable="@null"
                     android:textSize="@dimen/font_btn" />
 
             </RelativeLayout>
@@ -138,7 +137,6 @@
                     android:id="@+id/phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:text="@string/hint_phone"
                     android:textColor="@color/textcolor_match"
                     android:textSize="@dimen/font_btn" />
@@ -148,7 +146,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
                     android:gravity="right"
                     android:singleLine="true"
                     android:textColor="@color/gray_hint"
@@ -164,6 +161,7 @@
                 android:background="@drawable/light_divide" />
 
             <RelativeLayout
+                android:id="@+id/birthday_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/content_gap">
@@ -172,19 +170,18 @@
                     android:id="@+id/birthday"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:text="@string/hint_birthday"
                     android:textColor="@color/textcolor_match"
                     android:textSize="@dimen/font_btn" />
 
                 <TextView
                     android:id="@+id/birthday_value"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:gravity="right"
                     android:singleLine="true"
-                    android:textColor="@color/textcolor_match"
+                    android:textColor="@color/textcolor_theme"
                     android:textColorHint="@color/gray_hint"
                     android:textSize="@dimen/font_btn" />
 
@@ -265,6 +262,24 @@
                 android:textColor="@color/textcolor_theme"
                 android:textSize="@dimen/font_big"
                 android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/content_gap"
+                android:layout_marginRight="@dimen/content_gap"
+                android:background="@drawable/light_divide" />
+
+            <TextView
+                android:id="@+id/update_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/content_gap"
+                android:text="@string/update"
+                android:textColor="@color/textcolor_match"
+                android:textSize="@dimen/font_btn" />
+
 
             <View
                 android:layout_width="match_parent"

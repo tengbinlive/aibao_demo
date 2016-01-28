@@ -53,6 +53,8 @@
     <string name="remark_no">不能设置空白的备注哦</string>
     <string name="update_remark">正在修改备注</string>
     <string name="setting_remark">设置备注</string>
+    <string name="setting_name">设置昵称</string>
+    <string name="no_name">昵称不能为空</string>
     <string name="habit_executive">执行习惯</string>
     <string name="change_ok">确定修改</string>
     <string name="change_password">修改密码</string>
@@ -75,13 +77,12 @@
     <string name="online">在线</string>
     <string name="offline_brackets">   [离线]</string>
     <string name="online_brackets">   [在线]</string>
-    <string name="not_selected">未选择</string>
-    <string name="enter_nickname">请输入您的昵称</string>
     <string name="photograph">拍照</string>
     <string name="being_from_album">从相册获取</string>
     <string name="and_agreement">与%s约定中</string>
     <string name="success_record">记录成功</string>
     <string name="auth_clip_pic">裁切图片</string>
     <string name="failure_head_update">头像更新失败啦</string>
+    <string name="no_change">暂无修改</string>
 
 </resources>

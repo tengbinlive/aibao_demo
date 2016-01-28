@@ -4,11 +4,14 @@
     android:layout_height="wrap_content"
     android:layout_marginLeft="35dp"
     android:layout_marginRight="35dp"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:background="@drawable/button_bg_white"
     android:layout_gravity="center"
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/content_gap_big"
@@ -21,6 +24,7 @@
         android:id="@+id/desc_et"
         android:layout_width="240dp"
         android:layout_height="@dimen/bottom_bt_height"
+        android:layout_marginTop="@dimen/content_10dp"
         android:layout_marginRight="@dimen/content_gap_big"
         android:layout_marginLeft="@dimen/content_gap_big"
         android:background="@null"
@@ -29,7 +33,14 @@
         android:textColor="@color/textcolor_theme"
         android:textColorHint="@color/gray_hint"
         android:textCursorDrawable="@null"
-        android:textSize="@dimen/font_actionbar_title" />
+        android:textSize="@dimen/font_btn" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/content_gap_big"
+        android:layout_marginRight="@dimen/content_gap_big"
+        android:background="@drawable/light_divide" />
 
     <TextView
         android:id="@+id/change_ok"

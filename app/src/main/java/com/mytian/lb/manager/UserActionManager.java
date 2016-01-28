@@ -11,6 +11,7 @@ import com.core.openapi.OpenApiSimpleResult;
 import com.dao.Parent;
 import com.mytian.lb.App;
 import com.mytian.lb.bean.action.AgreementParam;
+import com.mytian.lb.bean.action.AgreementResult;
 import com.mytian.lb.bean.action.HabitParam;
 
 /**
@@ -45,7 +46,7 @@ public class UserActionManager {
 
         // 接口参数
         param.setMethod(OpenApiMethodEnum.LOAD_LOVEAPPOINT);
-        param.setParseTokenType(new TypeReference<OpenApiSimpleResult>() {
+        param.setParseTokenType(new TypeReference<AgreementResult>() {
         });
         // 请求对象
         CommonRequest request = new CommonRequest(param, handler, handlerMsgCode);
@@ -73,7 +74,7 @@ public class UserActionManager {
 
         // 接口参数
         param.setMethod(OpenApiMethodEnum.LOAD_CANCELLOVEAPPOINT);
-        param.setParseTokenType(new TypeReference<OpenApiSimpleResult>() {
+        param.setParseTokenType(new TypeReference<AgreementResult>() {
         });
         // 请求对象
         CommonRequest request = new CommonRequest(param, handler, handlerMsgCode);
@@ -82,7 +83,7 @@ public class UserActionManager {
     }
 
     /**
-     * 取消爱的约定
+     * 行为习惯
      *
      * @param context
      * @param babyUid

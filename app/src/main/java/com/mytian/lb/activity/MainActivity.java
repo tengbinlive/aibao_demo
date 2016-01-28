@@ -49,6 +49,10 @@ public class MainActivity extends AbsActivity {
 
     public ArrayList<AbsFragment> fragments;
 
+    private int currentPosition;
+
+    private boolean isToolbarTipsMessage; //是否显示红点
+
     /**
      * 两次点击返回之间的间隔时间, 这个时间内算为双击
      */
@@ -143,8 +147,10 @@ public class MainActivity extends AbsActivity {
 
             @Override
             public void onPageSelected(int position) {
+                currentPosition = position;
                 fragments.get(position).EResetInit();
                 setSelectedTabBg(position);
+                actionbarIcon(position);
             }
 
             @Override
@@ -163,12 +169,17 @@ public class MainActivity extends AbsActivity {
                 @Override
                 public void onClick(View v) {
                     toAddFollowActivity();
+                    isToolbarTipsMessage = false;
                     toolbarTipsMessage.setVisibility(View.GONE);
                     menuFriendsTipsMessage.setVisibility(View.GONE);
                 }
             });
+            if(isToolbarTipsMessage){
+                toolbarTipsMessage.setVisibility(View.VISIBLE);
+            }
         } else {
             setToolbarRightVisbility(View.GONE);
+            toolbarTipsMessage.setVisibility(View.GONE);
         }
     }
 
@@ -178,7 +189,10 @@ public class MainActivity extends AbsActivity {
      * @param event
      */
     public void onEvent(PushUserEventType event) {
-        toolbarTipsMessage.setVisibility(View.VISIBLE);
+        isToolbarTipsMessage = true;
+        if (currentPosition == FRIENDS) {
+            toolbarTipsMessage.setVisibility(View.VISIBLE);
+        }
         menuFriendsTipsMessage.setVisibility(View.VISIBLE);
     }
 
@@ -220,11 +234,11 @@ public class MainActivity extends AbsActivity {
         int count = fragments.size();
         for (int i = 0; i < count; i++) {
             ViewGroup view = (ViewGroup) viewPagerTab.getTabAt(i);
-            setTabViewBackground(view, i == position, position);
+            setTabViewBackground(view, i == position);
         }
     }
 
-    private void setTabViewBackground(ViewGroup custom_ly, boolean isSelect, int position) {
+    private void setTabViewBackground(ViewGroup custom_ly, boolean isSelect) {
         BottomMenu menu = (BottomMenu) custom_ly.getTag(R.id.main_tab_menu);
         ImageView icon = (ImageView) custom_ly.findViewById(R.id.menu_icon);
         TextView title = (TextView) custom_ly.findViewById(R.id.menu_title);
@@ -237,7 +251,6 @@ public class MainActivity extends AbsActivity {
             icon.setImageResource(menu.getResid_press());
             title.setTextColor(menu.getTitle_colos_press());
             setToolbarLeftStrID(titleStr);
-            actionbarIcon(position);
         }
     }
 

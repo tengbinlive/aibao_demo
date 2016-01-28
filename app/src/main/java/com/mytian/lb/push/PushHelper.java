@@ -160,6 +160,7 @@ public class PushHelper {
 
     /**
      * 推送通知显示
+     *
      * @param content
      */
     private void showNotification(String content) {
@@ -184,6 +185,7 @@ public class PushHelper {
 
     /**
      * 推送数据更新
+     *
      * @param content
      */
     public void updateContent(String content) {
@@ -196,11 +198,11 @@ public class PushHelper {
         } catch (Exception e) {
         }
         UserResult userResult = App.getInstance().getUserResult();
-        if(null == userResult){
+        if (null == userResult) {
             return;
         }
         Parent parent = App.getInstance().getUserResult().getParent();
-        if(null == parent){
+        if (null == parent) {
             return;
         }
         if (null != result && isSend(parent, result)) {
@@ -235,6 +237,7 @@ public class PushHelper {
                 String babyUid = "";
                 String appointStatus = "";
                 String appointer = "";
+                String appoint_time = "";
                 try {
                     JSONObject jsonObject = new JSONObject(info);
                     babyUid = jsonObject.optString("babyUid");
@@ -243,7 +246,23 @@ public class PushHelper {
                 } catch (JSONException e) {
                 }
                 if (StringUtil.isNotBlank(babyUid)) {
-                    EventBus.getDefault().postSticky(new AgreementStateEventType(babyUid, appointStatus,appointer));
+                    EventBus.getDefault().postSticky(new AgreementStateEventType(babyUid, appointStatus, appointer,appoint_time));
+                }
+            } else if (PushCode.APPOINT_CANCEL.equals(result.getCmd())) {
+                String info = result.getInfo();
+                String babyUid = "";
+                String appoint_time = "";
+                String appointStatus = AgreementStateEventType.AGREEMENT_END;
+                String appointer = "";
+                try {
+                    JSONObject jsonObject = new JSONObject(info);
+                    babyUid = jsonObject.optString("babyUid");
+                    appoint_time = jsonObject.optString("appoint_time");
+                } catch (JSONException e) {
+                }
+                if (StringUtil.isNotBlank(babyUid)) {
+                    AgreementStateEventType eventType = new AgreementStateEventType(babyUid, appointStatus, appointer,appoint_time);
+                    EventBus.getDefault().postSticky(eventType);
                 }
             }
         }

@@ -85,18 +85,9 @@ public class UserDetailActivity extends AbsActivity {
         String head = "";
         if (null != userInfo) {
             cureentParent = userInfo;
-            String remark = cureentParent.getBaby_alias();
-            String name = cureentParent.getAlias();
+            setUserRemark();
             head = cureentParent.getHead_thumb();
             String phone = cureentParent.getPhone();
-            if (StringUtil.isBlank(remark)) {
-                userRemark.setText(name);
-                userName.setVisibility(View.GONE);
-            } else {
-                userName.setVisibility(View.VISIBLE);
-                userRemark.setText(remark);
-                userName.setText("昵称：" + name);
-            }
             userPhone.setText(phone);
             setUserState(userInfo.getIs_online(), userInfo.getAppointing(), userInfo.getAppointer());
         }
@@ -105,6 +96,19 @@ public class UserDetailActivity extends AbsActivity {
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .placeholder(R.mipmap.default_head)
                 .centerCrop().into(userIcon);
+    }
+
+    private void setUserRemark(){
+        String remark = cureentParent.getBaby_alias();
+        String name = cureentParent.getAlias();
+        if (StringUtil.isBlank(remark)) {
+            userRemark.setText(name);
+            userName.setVisibility(View.GONE);
+        } else {
+            userName.setVisibility(View.VISIBLE);
+            userRemark.setText(remark);
+            userName.setText("昵称：" + name);
+        }
     }
 
     /**
@@ -220,10 +224,6 @@ public class UserDetailActivity extends AbsActivity {
             @Override
             public void onClick(View view) {
                 remarkName = name.getText().toString();
-                if (StringUtil.isBlank(remarkName)) {
-                    CommonUtil.showToast(R.string.remark_no);
-                    return;
-                }
                 dialogShow(R.string.update_remark);
                 UserManager manager = new UserManager();
                 manager.updateRemarkName(mContext, cureentParent.getUid(), remarkName, activityHandler, UPDATE_REMARKNAME);
@@ -260,7 +260,8 @@ public class UserDetailActivity extends AbsActivity {
         dialogDismiss();
         CommonUtil.showToast(resposne.getMsg());
         if (resposne.isSuccess()) {
-            userRemark.setText(remarkName);
+            cureentParent.setBaby_alias(remarkName);
+            setUserRemark();
             EventBus.getDefault().post(new UpdateBabyAliasEventType(cureentParent.getUid(), remarkName));
         }
     }
