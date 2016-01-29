@@ -11,6 +11,11 @@ package com.core.openapi;
 public enum OpenApiMethodEnum {
 
     /**
+     * 获取最新动态
+     */
+    LOAD_DYMICLIST("myt_nf/dynamicAction_getDymicList.do", "openapi_json", OpenApi.URL_TYPE_DATA),
+
+    /**
      * 修改麦宝备注名称
      */
     LOAD_REMARK_NAME("myt_focus/babyParentFocusAction_updateBabyAlias.do", "openapi_json", OpenApi.URL_TYPE_DATA),

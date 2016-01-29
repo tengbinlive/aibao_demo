@@ -82,8 +82,6 @@ public class FriendslistFragment extends AbsFragment {
 
         mActualListView.setAdapter(animationAdapter);
 
-        listview.setEmptyView(llListEmpty);
-
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

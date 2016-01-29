@@ -1,6 +1,11 @@
 package com.mytian.lb.fragment;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -11,6 +16,8 @@ import android.os.Message;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -38,6 +45,7 @@ import com.mytian.lb.bean.user.UpdateParentParam;
 import com.mytian.lb.bean.user.UpdateParentPortraitResult;
 import com.mytian.lb.enums.WomanOrManEnum;
 import com.mytian.lb.helper.AnimationHelper;
+import com.mytian.lb.helper.AnimatorUtils;
 import com.mytian.lb.manager.AppManager;
 import com.mytian.lb.manager.UserManager;
 import com.mytian.lb.mview.BottomView;
@@ -46,6 +54,7 @@ import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -68,6 +77,11 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
     RadioButton woman_bt;
     @Bind(R.id.man_bt)
     RadioButton man_bt;
+
+    @Bind(R.id.cancel_bt)
+    Button cancel_bt;
+    @Bind(R.id.change_bt)
+    Button change_bt;
 
     @BindColor(R.color.theme)
     int accentColor;
@@ -103,6 +117,8 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
 
     private String headPath;
 
+    private boolean isChangeButton;
+
     @Override
     public int getContentView() {
         return R.layout.fragment_user;
@@ -114,6 +130,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         CompoundButton.OnCheckedChangeListener listener = new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                setButtonState(true);
                 if (isChecked) {
                     woman_bt.setChecked(woman_bt == buttonView);
                     man_bt.setChecked(man_bt == buttonView);
@@ -153,8 +170,38 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
                 .centerCrop().placeholder(R.mipmap.default_head).into(user_icon);
     }
 
+    /**
+     * 设置 确定 & 取消按钮 显示状态
+     *
+     * @param is true 显示，false 隐藏
+     */
+    private void setButtonState(boolean is) {
+        if(isChangeButton){
+            return;
+        }
+        isChangeButton = true;
+        ArrayList<Animator> animList = new ArrayList<>();
+        Animator revealAnim;
+        if (is) {
+            revealAnim = createViewScale1(change_bt);
+            animList.add(revealAnim);
+            revealAnim = createViewScale1(cancel_bt);
+            animList.add(revealAnim);
+        } else {
+            revealAnim = createViewScale0(cancel_bt);
+            animList.add(revealAnim);
+            revealAnim = createViewScale0(change_bt);
+            animList.add(revealAnim);
+        }
+        AnimatorSet animSet = new AnimatorSet();
+        animSet.playSequentially(animList);
+        animSet.start();
+    }
+
     @OnClick(R.id.change_bt)
     void onChangeInfo() {
+        isChangeButton = false;
+        setButtonState(false);
         String name = nameValue.getText().toString();
         String nameHint = nameValue.getHint().toString();
         String birthday = birthdayValue.getText().toString();
@@ -198,6 +245,18 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
             manager.updateParentPortrait(mContext, new File(headPath), activityHandler, UPDATE_PARENTPORTRAIT);
         }
         manager.updateParent(mContext, param, activityHandler, UPDATE_PARENT);
+    }
+
+    @OnClick(R.id.cancel_bt)
+    void onCancelInfo() {
+        isChangeButton = false;
+        setButtonState(false);
+        isChangeButton = false;
+        setUserInfo();
+        if (StringUtil.isNotBlank(headPath)) {
+            FileDataHelper.deleteDirectory(FileDataHelper.getFilePath(Constant.Dir.IMAGE_TEMP));
+            headPath = null;
+        }
     }
 
     private static final int UPDATE_PARENT = 0x04;//信息补全
@@ -312,7 +371,6 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         dpd.setMaxDate(now);
         dpd.setAccentColor(accentColor);
         dpd.show(getActivity().getFragmentManager(), "Datepickerdialog");
-
     }
 
     /**
@@ -343,6 +401,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
                 }
                 dialogDismiss();
                 nameValue.setText(nameStr);
+                setButtonState(true);
             }
         });
         dialogBuilder = NiftyDialogBuilder.getInstance(getActivity());
@@ -363,6 +422,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         birthdayDate.set(year, monthOfYear, dayOfMonth);
         String dateStr = DateUtil.ConverToString(birthdayDate.getTime());
         birthdayValue.setText(dateStr);
+        setButtonState(true);
     }
 
     private void selectPict() {
@@ -398,6 +458,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
                     Bitmap headIcon = BitmapFactory.decodeFile(headPath);
                     user_icon.setImageBitmap(headIcon);
                     isUpdateSuccess = 2;
+                    setButtonState(true);
                 }
             }
         }
@@ -493,6 +554,42 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         intent.putExtra(STR_PATH, imageUri.getPath());
         intent.putExtra(STR_CLIPRATIO, clipRatio);
         startActivityForResult(intent, FLAG_MODIFY_FINISH);
+    }
+
+    private Animator createViewScale1(final View view) {
+        Animator revealAnim = ObjectAnimator.ofPropertyValuesHolder(
+                view,
+                AnimatorUtils.scaleX(0f, 1f),
+                AnimatorUtils.scaleY(0f, 1f)
+        );
+        revealAnim.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                super.onAnimationStart(animation);
+                view.setVisibility(View.VISIBLE);
+            }
+        });
+        revealAnim.setDuration(100);
+        revealAnim.setInterpolator(new DecelerateInterpolator());
+        return revealAnim;
+    }
+
+    private Animator createViewScale0(final View view) {
+        Animator revealAnim = ObjectAnimator.ofPropertyValuesHolder(
+                view,
+                AnimatorUtils.scaleX(1f, 0f),
+                AnimatorUtils.scaleY(1f, 0f)
+        );
+        revealAnim.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                view.setVisibility(View.INVISIBLE);
+            }
+        });
+        revealAnim.setDuration(100);
+        revealAnim.setInterpolator(new DecelerateInterpolator());
+        return revealAnim;
     }
 
 }

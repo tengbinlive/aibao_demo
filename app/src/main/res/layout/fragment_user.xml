@@ -45,6 +45,23 @@
                     android:paddingLeft="@dimen/elevation_height"
                     android:paddingRight="@dimen/elevation_height"
                     android:text="@string/change_ok"
+                    android:visibility="gone"
+                    android:textColor="@color/textcolor_theme"
+                    android:textSize="@dimen/font_medium" />
+
+                <Button
+                    android:id="@+id/cancel_bt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:visibility="gone"
+                    android:layout_toLeftOf="@+id/change_bt"
+                    android:layout_marginRight="@dimen/content_gap"
+                    android:layout_centerVertical="true"
+                    android:layout_marginBottom="@dimen/elevation_height"
+                    android:background="@drawable/button_bg_theme"
+                    android:paddingLeft="@dimen/elevation_height"
+                    android:paddingRight="@dimen/elevation_height"
+                    android:text="@string/cancel"
                     android:textColor="@color/textcolor_theme"
                     android:textSize="@dimen/font_medium" />
 

@@ -2,7 +2,6 @@ package com.mytian.lb.manager;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -18,6 +17,7 @@ import com.gitonway.lee.niftymodaldialogeffects.NiftyDialogBuilder;
 import com.mytian.lb.App;
 import com.mytian.lb.Constant;
 import com.mytian.lb.R;
+import com.mytian.lb.bean.dymic.DynamicContent;
 import com.mytian.lb.enums.PlatformEnum;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
@@ -34,7 +34,7 @@ public final class ShareManager {
 
     public NiftyDialogBuilder dialogBuilder;
 
-    private ShareParams shareParams;
+    private DynamicContent dynamicContent;
 
     public static ShareManager getInstance() {
         if (instance == null) {
@@ -63,33 +63,70 @@ public final class ShareManager {
     /**
      * 分享到第三方
      */
-    public void share(final ShareParams module) {
-        if (module == null) {
+    public void share(DynamicContent dynamicContent) {
+        if (null == dynamicContent) {
             return;
         }
-        shareParams = module;
+        this.dynamicContent = dynamicContent;
         activityHandler.sendEmptyMessage(SHOW_SHAER);
     }
 
-    public ShareParams getParams(String title, String contents, String url, String urlIcon, Bitmap icon) {
+    public ShareParams getParams(DynamicContent dynamicContent, String name) {
+        int titleConut = titleConut(name);
+        int contentConut = contentConut(name);
         ShareParams shareParams = new ShareParams();
-        if (StringUtil.isNotBlank(title)) {
+        String title = dynamicContent.getTitle();
+        String contents = dynamicContent.getText();
+        String urlImage = dynamicContent.getImageUrl();
+        String url = dynamicContent.getUrl();
+        if (StringUtil.isNotBlank(title) && titleConut != -1) {
+            if (title.length() > titleConut) {
+                title = title.substring(0, titleConut);
+            }
             shareParams.setTitle(title);
         }
-        if (StringUtil.isNotBlank(contents)) {
+        if (StringUtil.isNotBlank(contents) && contentConut != -1) {
+            if (contents.length() > contentConut) {
+                contents = contents.substring(0, contentConut);
+            }
             shareParams.setText(contents);
         }
-        if (StringUtil.isNotBlank(urlIcon)) {
-            shareParams.setImageUrl(urlIcon);
-        }
-        if (null != icon) {
-            shareParams.setImageData(icon);
+        if (StringUtil.isNotBlank(urlImage)) {
+            shareParams.setImageUrl(urlImage);
         }
         if (StringUtil.isNotBlank(url)) {
             shareParams.setUrl(url);
+            shareParams.setShareType(Platform.SHARE_WEBPAGE);
+        } else {
+            shareParams.setShareType(Platform.SHARE_IMAGE);
         }
-        shareParams.setShareType(Platform.SHARE_WEBPAGE);
         return shareParams;
+    }
+
+    private int titleConut(String name) {
+        if (PlatformEnum.WEIXIN.getCode().equals(name)) {
+            return 200;
+        } else if (PlatformEnum.WEIXIN_TIMELINE.getCode().equals(name)) {
+            return 200;
+        } else if (PlatformEnum.QQ_TENCENT.getCode().equals(name)) {
+            return 30;
+        } else if (PlatformEnum.SINA.getCode().equals(name)) {
+            return -1;
+        }
+        return -1;
+    }
+
+    private int contentConut(String name) {
+        if (PlatformEnum.WEIXIN.getCode().equals(name)) {
+            return 450;
+        } else if (PlatformEnum.WEIXIN_TIMELINE.getCode().equals(name)) {
+            return 450;
+        } else if (PlatformEnum.QQ_TENCENT.getCode().equals(name)) {
+            return 40;
+        } else if (PlatformEnum.SINA.getCode().equals(name)) {
+            return 140;
+        }
+        return -1;
     }
 
     private void showShareView() {
@@ -178,9 +215,7 @@ public final class ShareManager {
      * @param type
      */
     private void sendShare(Context context, PlatformEnum type) {
-        if (shareParams == null) {
-            return;
-        }
+        Platform.ShareParams shareParams = getParams(dynamicContent, type.getCode());
         Platform platform = ShareSDK.getPlatform(context, type.getCode());
         platform.share(shareParams);
     }

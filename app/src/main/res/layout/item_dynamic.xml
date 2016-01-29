@@ -7,6 +7,7 @@
 
     <ImageView
         android:id="@+id/head"
+        android:scaleType="centerCrop"
         android:layout_width="@dimen/item_head_size"
         android:layout_height="@dimen/item_head_size" />
 
@@ -59,7 +60,7 @@
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/content"
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/head"
@@ -67,6 +68,37 @@
         android:paddingTop="@dimen/content_gap_small"
         android:textColor="@color/textcolor_theme"
         android:textSize="@dimen/font_small" />
+
+    <LinearLayout
+        android:id="@+id/content_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:layout_marginTop="@dimen/content_gap_small"
+        android:background="@color/gray_background"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/image"
+            android:scaleType="fitCenter"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:lineSpacingMultiplier="1.3"
+            android:padding="@dimen/content_10dp"
+            android:textColor="@color/textcolor_theme"
+            android:textSize="@dimen/font_small"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
 </RelativeLayout>
 
 

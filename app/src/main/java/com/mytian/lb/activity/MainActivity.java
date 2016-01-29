@@ -18,7 +18,7 @@ import com.mytian.lb.R;
 import com.mytian.lb.adapter.MainViewPagerAdapter;
 import com.mytian.lb.enums.BottomMenu;
 import com.mytian.lb.event.PushUserEventType;
-import com.mytian.lb.fragment.DtnameicFragment;
+import com.mytian.lb.fragment.DynameicFragment;
 import com.mytian.lb.fragment.FriendslistFragment;
 import com.mytian.lb.fragment.KindleFragment;
 import com.mytian.lb.fragment.UserFragment;
@@ -107,7 +107,7 @@ public class MainActivity extends AbsActivity {
     // 初始化资源
     private void initViewPager() {
         fragments = new ArrayList<>();
-        fragments.add(new DtnameicFragment());
+        fragments.add(new DynameicFragment());
         fragments.add(new FriendslistFragment());
         fragments.add(new KindleFragment());
         fragments.add(new UserFragment());

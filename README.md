@@ -32,7 +32,7 @@ sharesdk
     AppKey = "dd995e0d9818"
     App Secret : 79225ccb8d3db5d604757f4d2d491ebf
     
-Wechat
+Wechat  如果分享类型跟数据填充不匹配，将无法调启微信客服端，如（url ="",分享类型为 = SHARE_WEBPAGE,会无法调启客服端）
 
     AppId="wx25f63c29962b8d0b"
     AppSecret="5697971f7f49ba14c9e9f2672a1bd6b5"
