@@ -5,7 +5,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -78,6 +77,9 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
     @Bind(R.id.man_bt)
     RadioButton man_bt;
 
+    @Bind(R.id.update_tv)
+    TextView updatetv;
+
     @Bind(R.id.cancel_bt)
     Button cancel_bt;
     @Bind(R.id.change_bt)
@@ -146,6 +148,9 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
                 selectPict();
             }
         });
+        String updateStr = mContext.getString(R.string.update);
+        updateStr = updateStr + "      " + App.getAppVersionName();
+        updatetv.setText(updateStr);
     }
 
     private void setUserInfo() {
@@ -176,7 +181,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
      * @param is true 显示，false 隐藏
      */
     private void setButtonState(boolean is) {
-        if(isChangeButton){
+        if (isChangeButton) {
             return;
         }
         isChangeButton = true;
@@ -293,6 +298,9 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
 
     private void loadUpdate(CommonResponse resposne) {
         dialogDismiss();
+        isChangeButton = false;
+        setButtonState(false);
+        isChangeButton = false;
         CommonUtil.showToast(resposne.getMsg());
         if (resposne.isSuccess()) {
             Parent parent = App.getInstance().getUserResult().getParent();
@@ -335,6 +343,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
     @OnClick(R.id.update_tv)
     void toUpdateApp() {
         AppManager manager = new AppManager();
+        dialogShow(R.string.update_get);
         manager.updateVersion();
     }
 
@@ -382,7 +391,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         LinearLayout convertView = (LinearLayout) mInflater.inflate(R.layout.dialog_remark, null);
         final TextView title = (TextView) convertView.findViewById(R.id.title);
         final EditText nameEt = (EditText) convertView.findViewById(R.id.desc_et);
-        TextView change_ok = (TextView) convertView.findViewById(R.id.change_ok);
+        Button change_ok = (Button) convertView.findViewById(R.id.change_ok);
         title.setText(R.string.setting_name);
         Parent parent = App.getInstance().getUserResult().getParent();
         String alias = parent.getAlias();

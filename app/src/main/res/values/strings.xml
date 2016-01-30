@@ -86,5 +86,7 @@
     <string name="failure_head_update">头像更新失败啦</string>
     <string name="no_change">暂无修改</string>
     <string name="time_select">约定 %d 分钟内完成</string>
+    <string name="update_get">正在获取更新...</string>
+    <string name="download">点击下载</string>
 
 </resources>

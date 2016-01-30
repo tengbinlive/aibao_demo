@@ -322,7 +322,7 @@ public class App extends Application {
             ParentDao dao = getDaoSession().getParentDao();
             dao.deleteAll();
         }
-        SharedPreferencesHelper.setBoolean(App.getInstance(), PushHelper.CHANNEL_STATE, false);
+        PushHelper.getInstance().clearChannelid();
         cookie = null;
         Activity activity = activityManager.currentActivity();
         Intent intent = new Intent(activity, LoginActivity.class);

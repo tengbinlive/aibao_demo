@@ -9,14 +9,33 @@
     android:paddingRight="35dp"
     android:paddingTop="20dp">
 
-    <TextView
-        android:id="@+id/value"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="35dp"
+        android:orientation="vertical"
         android:background="@drawable/button_bg_theme"
-        android:textColor="@color/textcolor_theme"
-        android:textSize="@dimen/font_btn" />
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="35dp"
+            android:textColor="@color/textcolor_theme"
+            android:textSize="@dimen/font_btn" />
+
+        <Button
+            android:id="@+id/download"
+            android:layout_width="match_parent"
+            android:layout_gravity="center"
+            android:layout_height="@dimen/bottom_bt_height"
+            android:layout_margin="@dimen/content_gap_big"
+            android:background="@drawable/button_bg_pink"
+            android:gravity="center"
+            android:text="@string/download"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_medium" />
+
+    </LinearLayout>
 
 </LinearLayout>
 

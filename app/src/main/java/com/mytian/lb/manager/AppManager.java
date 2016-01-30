@@ -10,6 +10,7 @@ import android.os.Message;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -37,7 +38,7 @@ public class AppManager {
 
     private NiftyDialogBuilder dialogBuilder;
 
-    private String downloadUrl;
+    private SysAppUpgradeResult sysAppUpgradeResult;
 
     /**
      * 版本更新
@@ -92,9 +93,8 @@ public class AppManager {
     private void loadUpdate(CommonResponse resposne) {
         isChecking = false;
         if (resposne.isSuccess()) {
-            SysAppUpgradeResult result = (SysAppUpgradeResult) resposne.getData();
-            if (result.getVersion() > App.getAppVersionCode()) {
-                downloadUrl = result.getUrl();
+            sysAppUpgradeResult = (SysAppUpgradeResult) resposne.getData();
+            if (sysAppUpgradeResult.getVersion() > App.getAppVersionCode()) {
                 activityHandler.sendEmptyMessageDelayed(APP_DOWNLOAD, 1500);
             } else {
                 CommonUtil.showToast("已是最新版");
@@ -105,13 +105,11 @@ public class AppManager {
     }
 
     private void dialogDownload() {
-        if (StringUtil.isNotBlank(downloadUrl)) {
-            StringBuffer versionInfo = new StringBuffer();
-            versionInfo.append("爱宝.").append("\n\n")
-                    .append("点击下载最新版").append("\n\n")
-                    .append("......");
-            dialogUpdate(versionInfo.toString(), downloadUrl);
-        }
+        StringBuffer versionInfo = new StringBuffer();
+        versionInfo.append("爱宝.").append("\n\n")
+                .append("发现新的版本").append("\n\n")
+                .append("版本编号："+sysAppUpgradeResult.getVersion());
+        dialogUpdate(versionInfo.toString(), sysAppUpgradeResult.getUrl());
     }
 
     private void dialogOUT() {
@@ -151,8 +149,9 @@ public class AppManager {
         final Activity activity = App.getInstance().getCurrentActivity();
         LinearLayout convertView = (LinearLayout) LayoutInflater.from(activity).inflate(R.layout.dialog_prompt, null);
         TextView valueTv = (TextView) convertView.findViewById(R.id.value);
+        Button downloadBt = (Button) convertView.findViewById(R.id.download);
         valueTv.setText(value);
-        valueTv.setOnClickListener(new View.OnClickListener() {
+        downloadBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 toDownload(activity, download);

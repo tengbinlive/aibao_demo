@@ -7,6 +7,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -98,7 +99,7 @@ public class UserDetailActivity extends AbsActivity {
                 .centerCrop().into(userIcon);
     }
 
-    private void setUserRemark(){
+    private void setUserRemark() {
         String remark = cureentParent.getBaby_alias();
         String name = cureentParent.getAlias();
         if (StringUtil.isBlank(remark)) {
@@ -217,13 +218,18 @@ public class UserDetailActivity extends AbsActivity {
     private void showRemarkView() {
         dialogDismiss();
         LinearLayout convertView = (LinearLayout) mInflater.inflate(R.layout.dialog_remark, null);
-        final EditText name = (EditText) convertView.findViewById(R.id.desc_et);
-        TextView change_ok = (TextView) convertView.findViewById(R.id.change_ok);
-        name.setHint(userRemark.getText());
+        final EditText remark = (EditText) convertView.findViewById(R.id.desc_et);
+        Button change_ok = (Button) convertView.findViewById(R.id.change_ok);
+        String remarkStr = cureentParent.getBaby_alias();
+        remark.setHint(R.string.remark);
+        remark.setText(remarkStr);
+        if (StringUtil.isNotBlank(remarkStr)) {
+            remark.setSelection(remarkStr.length());
+        }
         change_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                remarkName = name.getText().toString();
+                remarkName = remark.getText().toString();
                 dialogShow(R.string.update_remark);
                 UserManager manager = new UserManager();
                 manager.updateRemarkName(mContext, cureentParent.getUid(), remarkName, activityHandler, UPDATE_REMARKNAME);

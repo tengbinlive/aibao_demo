@@ -105,6 +105,10 @@ public abstract class AbsFragment extends Fragment implements EInitFragmentDate 
         ButterKnife.unbind(this);
     }
 
+    public void dialogShow(int title) {
+        dialogShow(mContext.getString(title));
+    }
+
     public void dialogShow(String title) {
         dialogDismiss();
         LinearLayout convertView = (LinearLayout) getActivity().getLayoutInflater().inflate(R.layout.loading_view, null);

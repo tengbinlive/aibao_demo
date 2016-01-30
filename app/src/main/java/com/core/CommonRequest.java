@@ -90,7 +90,7 @@ public class CommonRequest extends Request<CommonResponse> {
         return mHandler;
     }
 
-    public int getHandlerMsgCode() {
+    public Integer getHandlerMsgCode() {
         return mHandlerMsgCode;
     }
 
@@ -295,6 +295,7 @@ public class CommonRequest extends Request<CommonResponse> {
     private void doParse(String str, String format, TypeReference<?> typeToken, CommonResponse response, boolean rawData) {
         // 如果来自OpenApi且是JSON格式
         if (OpenApi.FORMAT_JSON.equals(format)) {
+            Logger.d(str);
             OpenApiParser.parseFromJson(str, typeToken, response, rawData);
         }
         // 其他未知格式

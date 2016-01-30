@@ -74,7 +74,6 @@ public class updateRemarkNameParam extends OpenApiBaseRequestAdapter {
         if (StringUtil.isBlank(this.client_type)) return false;
         if (StringUtil.isBlank(this.babyId)) return false;
         if (StringUtil.isBlank(this.parentId)) return false;
-        if (StringUtil.isBlank(this.babyAlias)) return false;
         return true;
     }
 

@@ -68,6 +68,13 @@ public class PushHelper {
 
     private long delayedTime = 60 * 1000;
 
+    public void clearChannelid(){
+        UPLOAD_ID_SUCCESS = false;
+        pushState = STATE_NORMAL;
+        UPLOAD_ING = false;
+        SharedPreferencesHelper.setBoolean(App.getInstance(), PushHelper.CHANNEL_STATE, false);
+    }
+
     public void initPush(Context context) {
         if (mContext == null) {
             mContext = context;

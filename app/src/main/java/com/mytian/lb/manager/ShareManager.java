@@ -36,6 +36,10 @@ public final class ShareManager {
 
     private DynamicContent dynamicContent;
 
+    private final static String TYPE_SHARE_WEBPAGE = "0";
+    private final static String TYPE_SHARE_MUSIC = "1";
+    private final static String TYPE_SHARE_VIDEO = "2";
+
     public static ShareManager getInstance() {
         if (instance == null) {
             instance = new ShareManager();
@@ -75,10 +79,9 @@ public final class ShareManager {
         int titleConut = titleConut(name);
         int contentConut = contentConut(name);
         ShareParams shareParams = new ShareParams();
-        String title = dynamicContent.getTitle();
-        String contents = dynamicContent.getText();
+        String title = titleStr(dynamicContent, name);
+        String contents = contentStr(dynamicContent,name);
         String urlImage = dynamicContent.getImageUrl();
-        String url = dynamicContent.getUrl();
         if (StringUtil.isNotBlank(title) && titleConut != -1) {
             if (title.length() > titleConut) {
                 title = title.substring(0, titleConut);
@@ -94,11 +97,26 @@ public final class ShareManager {
         if (StringUtil.isNotBlank(urlImage)) {
             shareParams.setImageUrl(urlImage);
         }
-        if (StringUtil.isNotBlank(url)) {
-            shareParams.setUrl(url);
+        if (PlatformEnum.WEIXIN.getCode().equals(name)||PlatformEnum.WEIXIN_TIMELINE.getCode().equals(name)) {
+            String shareType = dynamicContent.getShareType();
+            if (TYPE_SHARE_WEBPAGE.equals(shareType)) {
+                shareParams.setUrl(dynamicContent.getUrl());
+                shareParams.setShareType(Platform.SHARE_WEBPAGE);
+            } else if (TYPE_SHARE_MUSIC.equals(shareType)) {
+                shareParams.setMusicUrl(dynamicContent.getMusicUrl());
+                shareParams.setShareType(Platform.SHARE_MUSIC);
+            } else if (TYPE_SHARE_VIDEO.equals(shareType)) {
+                shareParams.setUrl(dynamicContent.getUrl());
+                shareParams.setShareType(Platform.SHARE_VIDEO);
+            } else {
+                shareParams.setShareType(Platform.SHARE_IMAGE);
+            }
+        }else if (PlatformEnum.QQ_TENCENT.getCode().equals(name)){
+            shareParams.setTitleUrl(dynamicContent.getTitleUrl());
+            shareParams.setSite(dynamicContent.getSite());
             shareParams.setShareType(Platform.SHARE_WEBPAGE);
-        } else {
-            shareParams.setShareType(Platform.SHARE_IMAGE);
+        }else {
+            shareParams.setShareType(Platform.SHARE_WEBPAGE);
         }
         return shareParams;
     }
@@ -127,6 +145,33 @@ public final class ShareManager {
             return 140;
         }
         return -1;
+    }
+
+
+    private String titleStr(DynamicContent dynamicContent,String name) {
+        if (PlatformEnum.WEIXIN.getCode().equals(name)) {
+            return dynamicContent.getTitle();
+        } else if (PlatformEnum.WEIXIN_TIMELINE.getCode().equals(name)) {
+            return dynamicContent.getText();
+        } else if (PlatformEnum.QQ_TENCENT.getCode().equals(name)) {
+            return dynamicContent.getTitle();
+        } else if (PlatformEnum.SINA.getCode().equals(name)) {
+            return dynamicContent.getTitle();
+        }
+        return dynamicContent.getText();
+    }
+
+    private String contentStr(DynamicContent dynamicContent,String name) {
+        if (PlatformEnum.WEIXIN.getCode().equals(name)) {
+            return dynamicContent.getText();
+        } else if (PlatformEnum.WEIXIN_TIMELINE.getCode().equals(name)) {
+            return dynamicContent.getText();
+        } else if (PlatformEnum.QQ_TENCENT.getCode().equals(name)) {
+            return dynamicContent.getText();
+        } else if (PlatformEnum.SINA.getCode().equals(name)) {
+            return dynamicContent.getText()+" "+dynamicContent.getUrl();
+        }
+        return dynamicContent.getText();
     }
 
     private void showShareView() {

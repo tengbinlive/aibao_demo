@@ -72,7 +72,7 @@
     <LinearLayout
         android:id="@+id/content_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="90dp"
         android:layout_below="@+id/title"
         android:layout_marginTop="@dimen/content_gap_small"
         android:background="@color/gray_background"
@@ -83,8 +83,7 @@
             android:id="@+id/image"
             android:scaleType="fitCenter"
             android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:visibility="gone" />
+            android:layout_height="90dp" />
 
         <TextView
             android:id="@+id/content"

@@ -80,7 +80,7 @@ public class AgreementFragment extends AbsFragment {
     private UserAction cureentAction;
     private FollowUser cureentParent;
     private AgreementAdapter mAdapter;
-    private final Timer timer = new Timer();
+    private Timer timer;
 
     private float PROGRESS_MAX = 1.0f;
 
@@ -165,6 +165,7 @@ public class AgreementFragment extends AbsFragment {
     }
 
     private void startThread() {
+        timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {

@@ -76,7 +76,7 @@ public class DynamicAdapter extends BaseAdapter {
         final DynamicBaseInfo dynamicBaseInfo = bean.getBaseInfo();
         final DynamicContent dynamicContent = bean.getContent();
         String fromType = dynamicBaseInfo.getFromType();
-        if (DynamicBaseInfo.TYPE_MB.equals(fromType)) {
+        if (DynamicBaseInfo.TYPE_SYS.equals(fromType)) {
             Glide.with(mContext).load(dynamicBaseInfo.getHead_thumb()).asBitmap()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .placeholder(R.mipmap.head_default)
@@ -93,24 +93,20 @@ public class DynamicAdapter extends BaseAdapter {
         viewHolder.name.setText(dynamicBaseInfo.getAlias());
         viewHolder.date.setText(dynamicBaseInfo.getTime());
         viewHolder.desc.setText(dynamicBaseInfo.getFromName());
-        viewHolder.title.setText(dynamicContent.getTitle());
-        String contentStr = dynamicContent.getText();
-        String imageUrl = dynamicContent.getImageUrl();
-        if(StringUtil.isBlank(contentStr)&&StringUtil.isBlank(imageUrl)){
+        String showType = dynamicBaseInfo.getShowType();
+        if(DynamicBaseInfo.TYPE_TEXT.equals(showType)){
+            viewHolder.title.setText(dynamicContent.getText());
             viewHolder.contentLayout.setVisibility(View.GONE);
         }else{
+            viewHolder.title.setText(dynamicContent.getTitle());
             viewHolder.contentLayout.setVisibility(View.VISIBLE);
-            if(StringUtil.isBlank(imageUrl)){
-                viewHolder.image.setVisibility(View.GONE);
-            }else{
-                viewHolder.image.setVisibility(View.VISIBLE);
-                Glide.with(mContext).load(imageUrl).asBitmap()
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .transform(transform)
-                        .into(viewHolder.image);
-            }
-            viewHolder.content.setText(contentStr);
+            viewHolder.content.setText(dynamicContent.getText());
+            Glide.with(mContext).load(dynamicContent.getImageUrl()).asBitmap()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .transform(transform)
+                    .into(viewHolder.image);
         }
+
         viewHolder.share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

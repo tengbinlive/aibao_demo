@@ -42,7 +42,7 @@
         android:layout_marginRight="@dimen/content_gap_big"
         android:background="@drawable/light_divide" />
 
-    <TextView
+    <Button
         android:id="@+id/change_ok"
         android:layout_width="match_parent"
         android:layout_gravity="center"
