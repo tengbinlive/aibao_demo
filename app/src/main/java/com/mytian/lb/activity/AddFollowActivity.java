@@ -302,7 +302,7 @@ public class AddFollowActivity extends AbsActivity {
     private static final int FOLLOW_GETBABY = 0x03;//查找麦宝账户信息
     private static final int FOLLOW_ADD = 0x04;//添加关注
     private static final int LOAD_DATA = 0x02;//加载数据处理
-    private static final int COUNT_MAX = 15;//加载数据最大值
+    private static final int COUNT_MAX = 12;//加载数据最大值
     private static final int SHOW_DIALOG = 0X05;//添加dialog显示
     private Handler activityHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -329,6 +329,7 @@ public class AddFollowActivity extends AbsActivity {
 
     private void loadData(CommonResponse resposne) {
         dialogDismiss();
+        listview.onRefreshComplete();
         if (resposne.isSuccess()) {
             FollowListResult result = (FollowListResult) resposne.getData();
             ArrayList<FollowUser> list = result.getList();
@@ -350,7 +351,6 @@ public class AddFollowActivity extends AbsActivity {
         } else {
             CommonUtil.showToast(resposne.getMsg());
         }
-        listview.onRefreshComplete();
         if (arrayList == null || arrayList.size() <= 0) {
             llListEmpty.setVisibility(View.VISIBLE);
         } else {

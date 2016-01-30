@@ -95,7 +95,7 @@ public class DynameicFragment extends AbsFragment {
 
     private static final int INIT_LIST = 0x01;//初始化数据处理
     private static final int LOAD_DATA = 0x02;//加载数据处理
-    private static final int COUNT_MAX = 15;//加载数据最大值
+    private static final int COUNT_MAX = 12;//加载数据最大值
     private Handler activityHandler = new Handler() {
         public void handleMessage(Message msg) {
             int what = msg.what;
@@ -112,6 +112,7 @@ public class DynameicFragment extends AbsFragment {
 
     private void loadData(CommonResponse resposne) {
         dialogDismiss();
+        listview.onRefreshComplete();
         if (resposne.isSuccess()) {
             DynamicResult result = (DynamicResult) resposne.getData();
             ArrayList<Dynamic> list = result.getList();
@@ -131,7 +132,6 @@ public class DynameicFragment extends AbsFragment {
         } else {
             //避免第一次应用启动时 创建fragment加载数据多次提示
         }
-        listview.onRefreshComplete();
         if (arrayList == null || arrayList.size() <= 0) {
             llListEmpty.setVisibility(View.VISIBLE);
         } else {
