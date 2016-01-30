@@ -94,9 +94,9 @@ public class UpdateParentParam extends OpenApiBaseRequestAdapter {
             param.put("parent.alias", alias);
         if (includeEmptyAttr || (!includeEmptyAttr && StringUtil.isNotBlank(realName)))
             param.put("parent.realName", realName);
-        if (includeEmptyAttr || (!includeEmptyAttr && StringUtil.isNotBlank(sex)))
+        if (includeEmptyAttr || (!includeEmptyAttr && sex>=0))
             param.put("parent.sex", sex);
-        if (includeEmptyAttr || (!includeEmptyAttr && StringUtil.isNotBlank(birthday)))
+        if (includeEmptyAttr || (!includeEmptyAttr && birthday>0))
             param.put("parent.birthday", birthday);
         if (includeEmptyAttr || (!includeEmptyAttr && StringUtil.isNotBlank(headThumb)))
             param.put("parent.headThumb", headThumb);

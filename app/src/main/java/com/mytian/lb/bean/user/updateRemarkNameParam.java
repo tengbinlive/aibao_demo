@@ -89,7 +89,7 @@ public class updateRemarkNameParam extends OpenApiBaseRequestAdapter {
             param.put("babyParentFocus.babyId", babyId);
         if (includeEmptyAttr || (!includeEmptyAttr && StringUtil.isNotBlank(parentId)))
             param.put("babyParentFocus.parentId", parentId);
-        if (includeEmptyAttr || (!includeEmptyAttr && StringUtil.isNotBlank(babyAlias)))
+        if (includeEmptyAttr || (!includeEmptyAttr))
             param.put("babyParentFocus.babyAlias", babyAlias);
     }
 

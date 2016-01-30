@@ -585,9 +585,8 @@ public class AgreementFragment extends AbsFragment {
         dialogDismiss();
         if (resposne.isSuccess()) {
             AgreementResult result = (AgreementResult) resposne.getData();
-            Parent parent = App.getInstance().getUserResult().getParent();
             appoint_time = result.getAppoint_time();
-            AgreementStateEventType eventType = new AgreementStateEventType(cureentParent.getUid(), AgreementStateEventType.AGREEMENT_ING, parent.getAlias(), appoint_time);
+            AgreementStateEventType eventType = new AgreementStateEventType(cureentParent.getUid(), AgreementStateEventType.AGREEMENT_ING, null, appoint_time);
             EventBus.getDefault().postSticky(eventType);
         } else {
             sendCount = 0;

@@ -9,6 +9,9 @@ import com.dao.Parent;
  */
 public class UserResult extends OpenApiSimpleResult {
 
+    public final static int WOMAN = 0;
+    public final static int MAN = 1;
+
     private Parent parent;
 
     public Parent getParent() {

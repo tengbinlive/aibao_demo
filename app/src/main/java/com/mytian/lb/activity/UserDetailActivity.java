@@ -135,6 +135,11 @@ public class UserDetailActivity extends AbsActivity {
      */
     private void setIsAgreementState(String appointing, String appointer) {
         String state = "";
+        if(StringUtil.isBlank(appointer)){
+            userState.setVisibility(View.GONE);
+            return;
+        }
+        userState.setVisibility(View.VISIBLE);
         if (AgreementStateEventType.AGREEMENT_ING.equals(appointing)) {
             state = String.format(mContext.getString(R.string.and_agreement), appointer);
             userState.setTextColor(pinkColor);
@@ -165,7 +170,7 @@ public class UserDetailActivity extends AbsActivity {
     public void onEvent(PushStateEventType event) {
         String babyUid = event.babyUid;
         if (babyUid.equals(cureentParent.getUid())) {
-            cureentParent.setAppointing(event.is_online);
+            cureentParent.setIs_online(event.is_online);
             setUserState(event.is_online, cureentParent.getAppointing(), cureentParent.getAppointer());
         }
     }

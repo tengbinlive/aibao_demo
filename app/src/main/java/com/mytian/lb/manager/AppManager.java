@@ -43,8 +43,9 @@ public class AppManager {
     /**
      * 版本更新
      */
-    public void updateVersion() {
+    public void updateVersion(NiftyDialogBuilder dialogBuilder) {
         if (!isChecking) {
+            this.dialogBuilder = dialogBuilder;
             isChecking = true;
             manager.checkNewVersion(App.getInstance(), activityHandler, APP_UPDATE);
         }
@@ -94,17 +95,21 @@ public class AppManager {
         isChecking = false;
         if (resposne.isSuccess()) {
             sysAppUpgradeResult = (SysAppUpgradeResult) resposne.getData();
-            if (sysAppUpgradeResult.getVersion() > App.getAppVersionCode()) {
+            int versioncode = CommonUtil.getAppVersionCode(App.getInstance());
+            if (sysAppUpgradeResult.getVersion() > versioncode) {
                 activityHandler.sendEmptyMessageDelayed(APP_DOWNLOAD, 1500);
             } else {
+                dialogDismiss();
                 CommonUtil.showToast("已是最新版");
             }
         } else {
+            dialogDismiss();
             CommonUtil.showToast(resposne.getMsg());
         }
     }
 
     private void dialogDownload() {
+        dialogDismiss();
         StringBuffer versionInfo = new StringBuffer();
         versionInfo.append("爱宝.").append("\n\n")
                 .append("发现新的版本").append("\n\n")
@@ -154,6 +159,7 @@ public class AppManager {
         downloadBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                dialogDismiss();
                 toDownload(activity, download);
             }
         });

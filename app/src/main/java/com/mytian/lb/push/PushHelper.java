@@ -238,7 +238,7 @@ public class PushHelper {
                 }
             } else if (PushCode.AIBAO_UPDATE.equals(result.getCmd())) {
                 AppManager manager = new AppManager();
-                manager.updateVersion();
+                manager.updateVersion(null);
             } else if (PushCode.APPOINT_STATUS.equals(result.getCmd())) {
                 String info = result.getInfo();
                 String babyUid = "";

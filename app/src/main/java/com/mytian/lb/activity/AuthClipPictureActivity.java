@@ -18,6 +18,7 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
+import android.widget.LinearLayout;
 
 import com.core.util.FileDataHelper;
 import com.mytian.lb.AbsActivity;
@@ -106,6 +107,7 @@ public class AuthClipPictureActivity extends AbsActivity implements OnTouchListe
             return;
         }
         srcPic = (ImageView) this.findViewById(R.id.src_pic);
+        final LinearLayout button_layout = (LinearLayout) this.findViewById(R.id.button_layout);
 
         srcPic.setOnTouchListener(this);
 
@@ -115,7 +117,7 @@ public class AuthClipPictureActivity extends AbsActivity implements OnTouchListe
             @SuppressWarnings("deprecation")
             public void onGlobalLayout() {
                 srcPic.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                initClipView(srcPic.getTop(), srcPic.getBottom(), bitmap);
+                initClipView(srcPic.getTop(), button_layout.getTop(), bitmap);
             }
         });
         saveLayout = (Button) this.findViewById(R.id.sure);

@@ -42,7 +42,7 @@ import com.mytian.lb.activity.AuthClipPictureActivity;
 import com.mytian.lb.activity.ResetPassWordActivity;
 import com.mytian.lb.bean.user.UpdateParentParam;
 import com.mytian.lb.bean.user.UpdateParentPortraitResult;
-import com.mytian.lb.enums.WomanOrManEnum;
+import com.mytian.lb.bean.user.UserResult;
 import com.mytian.lb.helper.AnimationHelper;
 import com.mytian.lb.helper.AnimatorUtils;
 import com.mytian.lb.manager.AppManager;
@@ -128,12 +128,13 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
 
     @Override
     public void EInit() {
+        setUserInfo();
         birthdayDate = Calendar.getInstance();
         CompoundButton.OnCheckedChangeListener listener = new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                setButtonState(true);
                 if (isChecked) {
+                    setButtonState(true);
                     woman_bt.setChecked(woman_bt == buttonView);
                     man_bt.setChecked(man_bt == buttonView);
                 }
@@ -141,7 +142,6 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         };
         woman_bt.setOnCheckedChangeListener(listener);
         man_bt.setOnCheckedChangeListener(listener);
-        setUserInfo();
         user_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -149,7 +149,8 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
             }
         });
         String updateStr = mContext.getString(R.string.update);
-        updateStr = updateStr + "      " + App.getAppVersionName();
+        int versioncode = CommonUtil.getAppVersionCode(App.getInstance());
+        updateStr = updateStr + "      " + App.getAppVersionName()+"."+versioncode;
         updatetv.setText(updateStr);
     }
 
@@ -157,6 +158,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         Parent parent = App.getInstance().getUserResult().getParent();
         String name = parent.getAlias();
         if (StringUtil.isNotBlank(name)) {
+            nameValue.setText("");
             nameValue.setHint(name);
         }
         String phone = parent.getPhone();
@@ -167,12 +169,29 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         long bir = parent.getBirthday();
         if (bir > 0) {
             String birthday = DateUtil.ConverToString(bir, DateUtil.YYYY_MM_DD);
+            birthdayValue.setText("");
             birthdayValue.setHint(birthday);
         }
+
+        int sex = parent.getSex();
+        if (UserResult.WOMAN == sex) {
+            woman_bt.setChecked(true);
+            man_bt.setChecked(false);
+        } else {
+            woman_bt.setChecked(false);
+            man_bt.setChecked(true);
+        }
+
         user_icon.setVisibility(View.VISIBLE);
         Glide.with(mContext).load(head).asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .centerCrop().placeholder(R.mipmap.default_head).into(user_icon);
+    }
+
+    private void cancleButtonState() {
+        isChangeButton = false;
+        setButtonState(false);
+        isChangeButton = false;
     }
 
     /**
@@ -205,11 +224,22 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
 
     @OnClick(R.id.change_bt)
     void onChangeInfo() {
-        isChangeButton = false;
-        setButtonState(false);
-        String name = nameValue.getText().toString();
-        String nameHint = nameValue.getHint().toString();
-        String birthday = birthdayValue.getText().toString();
+        cancleButtonState();
+        CharSequence charSequence = nameValue.getText();
+        String name = "";
+        if(charSequence!=null){
+            name = charSequence.toString();
+        }
+        String birthday = "";
+        charSequence = birthdayValue.getText();
+        if(charSequence!=null){
+            birthday = charSequence.toString();
+        }
+        String nameHint = "";
+        charSequence = nameValue.getHint();
+        if(charSequence!=null){
+            nameHint = charSequence.toString();
+        }
 
         boolean isName = StringUtil.isNotBlank(name);
         boolean isBirthday = StringUtil.isNotBlank(birthday);
@@ -223,9 +253,9 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         int sex_src = App.getInstance().getUserResult().getParent().getSex();
         int sex = sex_src;
         if (woman_bt.isChecked()) {
-            sex = WomanOrManEnum.WOMAN.getCode();
+            sex = UserResult.WOMAN;
         } else if (man_bt.isChecked()) {
-            sex = WomanOrManEnum.MAN.getCode();
+            sex = UserResult.MAN;
         }
 
         boolean isSex = sex_src != sex;
@@ -256,8 +286,8 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
     void onCancelInfo() {
         isChangeButton = false;
         setButtonState(false);
-        isChangeButton = false;
         setUserInfo();
+        isChangeButton = false;
         if (StringUtil.isNotBlank(headPath)) {
             FileDataHelper.deleteDirectory(FileDataHelper.getFilePath(Constant.Dir.IMAGE_TEMP));
             headPath = null;
@@ -298,9 +328,6 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
 
     private void loadUpdate(CommonResponse resposne) {
         dialogDismiss();
-        isChangeButton = false;
-        setButtonState(false);
-        isChangeButton = false;
         CommonUtil.showToast(resposne.getMsg());
         if (resposne.isSuccess()) {
             Parent parent = App.getInstance().getUserResult().getParent();
@@ -344,7 +371,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
     void toUpdateApp() {
         AppManager manager = new AppManager();
         dialogShow(R.string.update_get);
-        manager.updateVersion();
+        manager.updateVersion(dialogBuilder);
     }
 
     @OnClick(R.id.reset_password_tv)

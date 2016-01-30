@@ -1,6 +1,9 @@
 package com.mytian.lb.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,11 +34,11 @@ public class DynamicAdapter extends BaseAdapter {
 
     private ArrayList<Dynamic> list;
 
-    private Context mContext;
+    private Activity mContext;
 
     private GlideRoundTransform transform;
 
-    public DynamicAdapter(Context context, ArrayList<Dynamic> _list) {
+    public DynamicAdapter(Activity context, ArrayList<Dynamic> _list) {
         this.list = _list;
         mContext = context;
         mInflater = LayoutInflater.from(context);
@@ -101,6 +104,12 @@ public class DynamicAdapter extends BaseAdapter {
             viewHolder.title.setText(dynamicContent.getTitle());
             viewHolder.contentLayout.setVisibility(View.VISIBLE);
             viewHolder.content.setText(dynamicContent.getText());
+            viewHolder.contentLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    toWEBVIEW(mContext,dynamicContent.getUrl());
+                }
+            });
             Glide.with(mContext).load(dynamicContent.getImageUrl()).asBitmap()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .transform(transform)
@@ -124,6 +133,12 @@ public class DynamicAdapter extends BaseAdapter {
         if ("100105".equals(uid)) return R.mipmap.head_sys_4;
         if ("100106".equals(uid)) return R.mipmap.head_default;
         return -1;
+    }
+
+    private void toWEBVIEW(Activity activity, String download) {
+        Uri uri = Uri.parse(download);
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        activity.startActivity(intent);
     }
 
 
