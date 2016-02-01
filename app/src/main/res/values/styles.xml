@@ -68,7 +68,7 @@
         <item name="android:windowExitAnimation">@anim/push_translate_out</item>
     </style>
 
-    <style name="ScrollbarTheme">
+    <style name="ListViewTheme">
         <item name="android:scrollbarAlwaysDrawVerticalTrack">true</item>
         <item name="android:scrollbarStyle">outsideOverlay</item>
         <item name="android:scrollbars">vertical</item>
