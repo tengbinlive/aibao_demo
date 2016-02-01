@@ -70,6 +70,16 @@ public class App extends Application {
 
     private String cookie;
 
+    private String appoint_time;
+
+    public String getAppoint_time() {
+        return appoint_time;
+    }
+
+    public void setAppoint_time(String appoint_time) {
+        this.appoint_time = appoint_time;
+    }
+
     public Activity getCurrentActivity() {
         return currentActivity;
     }

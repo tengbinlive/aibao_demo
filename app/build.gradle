@@ -5,7 +5,7 @@ apply plugin: 'com.droidtitan.lintcleaner'
 def versionMajor = 2
 def versionMinor = 0
 def versionPatch = 2
-def versionBuild = 54 // bump for dogfood builds, public betas, etc.
+def versionBuild = 55 // bump for dogfood builds, public betas, etc.
 
 android {
 
@@ -42,7 +42,7 @@ android {
     buildTypes {
 
         debug {
-            buildConfigField "String", "API_HOST", "\"http://114.215.108.49/\""//API Host
+            buildConfigField "String", "API_HOST", "\"http://www.mytian.com.cn/\""//API Host
             buildConfigField "boolean", "LOG_DEBUG", "true"// log info
             buildConfigField "boolean", "CHANNEL_DEBUG", "true"// channel info
             debuggable true
@@ -54,7 +54,7 @@ android {
         }
 
         alpha {
-            buildConfigField "String", "API_HOST", "\"http://114.215.108.49/\""//API Host
+            buildConfigField "String", "API_HOST", "\"http://www.mytian.com.cn/\""//API Host
             buildConfigField "boolean", "LOG_DEBUG", "false"// log info
             buildConfigField "boolean", "CHANNEL_DEBUG", "false"// channel info
             debuggable true
@@ -66,7 +66,7 @@ android {
         }
 
         release {
-            buildConfigField "String", "API_HOST", "\"http://114.215.108.49/\""//API Host
+            buildConfigField "String", "API_HOST", "\"http://www.mytian.com.cn/\""//API Host
             buildConfigField "boolean", "LOG_DEBUG", "false"//log info
             buildConfigField "boolean", "CHANNEL_DEBUG", "false"//channel info
             debuggable false

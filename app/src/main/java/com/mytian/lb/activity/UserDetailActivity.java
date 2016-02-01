@@ -21,6 +21,7 @@ import com.gitonway.lee.niftymodaldialogeffects.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.NiftyDialogBuilder;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mytian.lb.AbsActivity;
+import com.mytian.lb.App;
 import com.mytian.lb.R;
 import com.mytian.lb.adapter.MainViewPagerAdapter;
 import com.mytian.lb.bean.follow.FollowUser;
@@ -29,6 +30,7 @@ import com.mytian.lb.event.PushStateEventType;
 import com.mytian.lb.event.UpdateBabyAliasEventType;
 import com.mytian.lb.fragment.AgreementFragment;
 import com.mytian.lb.fragment.HabitFragment;
+import com.mytian.lb.helper.SharedPreferencesHelper;
 import com.mytian.lb.manager.UserManager;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
@@ -135,7 +137,10 @@ public class UserDetailActivity extends AbsActivity {
      */
     private void setIsAgreementState(String appointing, String appointer) {
         String state = "";
-        if(StringUtil.isBlank(appointer)){
+        String userUid = App.getInstance().getUserResult().getParent().getUid();
+        String sharedKey = AgreementFragment.SHAREDPREFERENCES_TIME + cureentParent.getUid()+userUid;
+        String content = SharedPreferencesHelper.getString(mContext, sharedKey, "");
+        if(StringUtil.isNotBlank(content)||StringUtil.isBlank(appointer)){
             userState.setVisibility(View.GONE);
             return;
         }
@@ -154,7 +159,10 @@ public class UserDetailActivity extends AbsActivity {
      */
     public void onEventMainThread(AgreementStateEventType event) {
         String babyUid = event.babyUid;
-        if (cureentParent.getUid().equals(babyUid)) {
+        String time = event.appoint_time;
+        String appoint_time = App.getInstance().getAppoint_time();
+        boolean isTime = StringUtil.isNotBlank(appoint_time) && time.equals(appoint_time);
+        if (cureentParent.getUid().equals(babyUid)&&isTime) {
             String appointing = event.appointing;
             cureentParent.setAppointing(appointing);
             cureentParent.setAppointer(event.appointer);

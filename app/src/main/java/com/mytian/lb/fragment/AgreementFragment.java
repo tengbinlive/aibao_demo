@@ -94,13 +94,11 @@ public class AgreementFragment extends AbsFragment {
 
     private final static String SPLIT_KEY = "%";
 
-    private final static String SHAREDPREFERENCES_TIME = "START_TIME";
+    public final static String SHAREDPREFERENCES_TIME = "START_TIME";
 
     private int sendCount = 0; //避免用户快速点击
 
     private long actionEndTime;
-
-    public String appoint_time;
 
     private void initGridView() {
 
@@ -214,8 +212,9 @@ public class AgreementFragment extends AbsFragment {
 
     private void endTimeAnimation() {
         if (isSettingShow) {
+            String userUid = App.getInstance().getUserResult().getParent().getUid();
             String uid = cureentParent.getUid();
-            String sharedKey = SHAREDPREFERENCES_TIME + uid;
+            String sharedKey = SHAREDPREFERENCES_TIME + uid+userUid;
             SharedPreferencesHelper.setString(mContext, sharedKey, "");
             actionEndTime = 0;
             sendCount = 0;
@@ -260,8 +259,9 @@ public class AgreementFragment extends AbsFragment {
         cureentParent = (FollowUser) getArguments().getSerializable(UserDetailActivity.USER);
         isSettingShow = false;
         initGridView();
+        String userUid = App.getInstance().getUserResult().getParent().getUid();
         String uid = cureentParent.getUid();
-        String sharedKey = SHAREDPREFERENCES_TIME + uid;
+        String sharedKey = SHAREDPREFERENCES_TIME + uid + userUid;
         String content = SharedPreferencesHelper.getString(mContext, sharedKey, "");
         if (StringUtil.isNotBlank(content)) {
             String[] strings = StringUtil.split(content, SPLIT_KEY);
@@ -392,19 +392,19 @@ public class AgreementFragment extends AbsFragment {
     public void onEventMainThread(AgreementStateEventType event) {
         String babyUid = event.babyUid;
         String time = event.appoint_time;
-        if (cureentParent.getUid().equals(babyUid)) {
+        String appoint_time = App.getInstance().getAppoint_time();
+        boolean isTime = StringUtil.isNotBlank(appoint_time) && time.equals(appoint_time);
+        if (cureentParent.getUid().equals(babyUid) && isTime) {
             cureentParent.setAppointing(event.appointing);
             cureentParent.setAppointer(event.appointer);
             boolean isAgreement = AgreementStateEventType.AGREEMENT_ING.equals(event.appointing);
             mAdapter.setIsAGREEMENTING(isAgreement);
-            if (StringUtil.isNotBlank(appoint_time) && time.equals(appoint_time)) {
-                if (isAgreement) {
-                    Parent parent = App.getInstance().getUserResult().getParent();
-                    actionEndTime = System.currentTimeMillis() + DKEY_TIME;
-                    startAgreementAni(parent, actionEndTime);
-                } else {
-                    endTimeAnimation();
-                }
+            if (isAgreement) {
+                Parent parent = App.getInstance().getUserResult().getParent();
+                actionEndTime = System.currentTimeMillis() + DKEY_TIME;
+                startAgreementAni(parent, actionEndTime);
+            } else {
+                endTimeAnimation();
             }
         }
     }
@@ -571,8 +571,9 @@ public class AgreementFragment extends AbsFragment {
         StringBuffer contentBf = new StringBuffer();
         String action = JSON.toJSONString(cureentAction);
         contentBf.append(time).append(SPLIT_KEY).append(DKEY_TIME).append(SPLIT_KEY).append(action);
+        String userUid = App.getInstance().getUserResult().getParent().getUid();
         String uid = cureentParent.getUid();
-        String sharedKey = SHAREDPREFERENCES_TIME + uid;
+        String sharedKey = SHAREDPREFERENCES_TIME + uid+userUid;
         SharedPreferencesHelper.setString(mContext, sharedKey, contentBf.toString());
     }
 
@@ -585,8 +586,8 @@ public class AgreementFragment extends AbsFragment {
         dialogDismiss();
         if (resposne.isSuccess()) {
             AgreementResult result = (AgreementResult) resposne.getData();
-            appoint_time = result.getAppoint_time();
-            AgreementStateEventType eventType = new AgreementStateEventType(cureentParent.getUid(), AgreementStateEventType.AGREEMENT_ING, null, appoint_time);
+            App.getInstance().setAppoint_time(result.getAppoint_time());
+            AgreementStateEventType eventType = new AgreementStateEventType(cureentParent.getUid(), AgreementStateEventType.AGREEMENT_ING, null, result.getAppoint_time());
             EventBus.getDefault().postSticky(eventType);
         } else {
             sendCount = 0;
@@ -604,8 +605,8 @@ public class AgreementFragment extends AbsFragment {
         sendCount = 0;
         if (resposne.isSuccess()) {
             AgreementResult result = (AgreementResult) resposne.getData();
-            appoint_time = result.getAppoint_time();
-            AgreementStateEventType eventType = new AgreementStateEventType(cureentParent.getUid(), AgreementStateEventType.AGREEMENT_END, null, appoint_time);
+            App.getInstance().setAppoint_time(result.getAppoint_time());
+            AgreementStateEventType eventType = new AgreementStateEventType(cureentParent.getUid(), AgreementStateEventType.AGREEMENT_END, null, result.getAppoint_time());
             EventBus.getDefault().postSticky(eventType);
         } else {
             CommonUtil.showToast(resposne.getMsg());
