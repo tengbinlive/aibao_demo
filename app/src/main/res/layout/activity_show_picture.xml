@@ -24,10 +24,6 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/content_10dp"
-        android:paddingBottom="@dimen/content_gap_small"
-        android:paddingLeft="@dimen/content_10dp"
-        android:paddingRight="@dimen/content_10dp"
-        android:paddingTop="@dimen/content_gap_small"
         android:textColor="@color/textcolor_theme"
         android:textSize="@dimen/font_big" />
 

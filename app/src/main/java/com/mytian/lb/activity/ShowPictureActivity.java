@@ -63,7 +63,7 @@ public class ShowPictureActivity extends AbsActivity {
             item_size = mImages.size();
             setDot(index, item_size);
             for (int i = 0; i < item_size; i++) {
-                RelativeLayout layout = (RelativeLayout) mInflater.inflate(R.layout.layout_showpicture, null);
+                RelativeLayout layout = (RelativeLayout) mInflater.inflate(R.layout.layout_show_picture, null);
                 PhotoView view = (PhotoView) layout.findViewById(R.id.photoview);
                 view.enable();
                 final ProgressWheel progressbar = (ProgressWheel) layout.findViewById(R.id.progress);

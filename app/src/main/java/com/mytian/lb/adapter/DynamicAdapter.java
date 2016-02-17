@@ -128,6 +128,14 @@ public class DynamicAdapter extends BaseAdapter {
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .transform(transform)
                     .into(viewHolder.image);
+            viewHolder.image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ArrayList<Object> imgs = new ArrayList<>();
+                    imgs.add(dynamicContent.getImageUrl());
+                    toShowPicture(mContext, imgs);
+                }
+            });
         }
 
         viewHolder.share.setOnClickListener(new View.OnClickListener() {
