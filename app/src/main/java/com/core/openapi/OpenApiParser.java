@@ -68,14 +68,14 @@ public class OpenApiParser {
                 response.setCode(CodeEnum.EXCEPTION.getCode());
                 String mes = StringUtil.isBlank(mesg)?e.getLocalizedMessage():mesg;
                 response.setMsg(mes);
-                Logger.d(str);
+                Logger.e(str);
             } catch (OutOfMemoryError e) {
                 System.gc();
                 response.setData(null);
                 response.setCode(CodeEnum.EXCEPTION.getCode());
                 String mes = StringUtil.isBlank(mesg)?e.getLocalizedMessage():mesg;
                 response.setMsg(mes);
-                Logger.d(str);
+                Logger.e(str);
             }
         }
         return obj;

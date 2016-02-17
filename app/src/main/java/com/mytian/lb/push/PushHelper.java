@@ -156,7 +156,7 @@ public class PushHelper {
     private void loadData(CommonResponse resposne) {
         UPLOAD_ING = false;
         if (resposne.isSuccess()) {
-            Logger.d("上传成功");
+            Logger.i("上传成功");
             UPLOAD_ID_SUCCESS = true;
             pushState = STATE_NORMAL;
             SharedPreferencesHelper.setBoolean(App.getInstance(), CHANNEL_STATE, UPLOAD_ID_SUCCESS);

@@ -22,7 +22,13 @@ import com.orhanobut.logger.Logger;
 
 import junit.framework.Assert;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.RandomAccessFile;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -239,7 +245,7 @@ public class CommonUtil {
 
         File file = new File(fileName);
         if (!file.exists()) {
-            Logger.i( "readFromFile: file not found");
+            Logger.d("readFromFile: file not found");
             return null;
         }
 
@@ -250,15 +256,15 @@ public class CommonUtil {
         Logger.d("readFromFile : offset = " + offset + " len = " + len + " offset + len = " + (offset + len));
 
         if (offset < 0) {
-            Logger.e( "readFromFile invalid offset:" + offset);
+            Logger.e("readFromFile invalid offset:" + offset);
             return null;
         }
         if (len <= 0) {
-            Logger.e( "readFromFile invalid len:" + len);
+            Logger.e("readFromFile invalid len:" + len);
             return null;
         }
         if (offset + len > (int) file.length()) {
-            Logger.e( "readFromFile invalid file len:" + file.length());
+            Logger.e("readFromFile invalid file len:" + file.length());
             return null;
         }
 
@@ -271,7 +277,7 @@ public class CommonUtil {
             in.close();
 
         } catch (Exception e) {
-            Logger.e( "readFromFile : errMsg = " + e.getMessage());
+            Logger.e("readFromFile : errMsg = " + e.getMessage());
             e.printStackTrace();
         }
         return b;
@@ -320,15 +326,15 @@ public class CommonUtil {
 
             options.inJustDecodeBounds = false;
 
-            Logger.i( "bitmap required size=" + newWidth + "x" + newHeight + ", orig=" + options.outWidth + "x"
+            Logger.d("bitmap required size=" + newWidth + "x" + newHeight + ", orig=" + options.outWidth + "x"
                     + options.outHeight + ", sample=" + options.inSampleSize);
             Bitmap bm = BitmapFactory.decodeFile(path, options);
             if (bm == null) {
-                Logger.e( "bitmap decode failed");
+                Logger.e("bitmap decode failed");
                 return null;
             }
 
-            Logger.i( "bitmap decoded size=" + bm.getWidth() + "x" + bm.getHeight());
+            Logger.d("bitmap decoded size=" + bm.getWidth() + "x" + bm.getHeight());
             final Bitmap scale = Bitmap.createScaledBitmap(bm, newWidth, newHeight, true);
             if (scale != null) {
                 bm.recycle();
@@ -344,12 +350,12 @@ public class CommonUtil {
 
                 bm.recycle();
                 bm = cropped;
-                Logger.i( "bitmap croped size=" + bm.getWidth() + "x" + bm.getHeight());
+                Logger.d("bitmap croped size=" + bm.getWidth() + "x" + bm.getHeight());
             }
             return bm;
 
         } catch (final OutOfMemoryError e) {
-            Logger.e( "decode bitmap failed: " + e.getMessage());
+            Logger.e("decode bitmap failed: " + e.getMessage());
             options = null;
         }
 

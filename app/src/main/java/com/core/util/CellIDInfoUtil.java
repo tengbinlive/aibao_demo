@@ -52,7 +52,7 @@ public class CellIDInfoUtil {
 
 				if (!readSignalState) return null;
 			} catch (Exception e) {
-				Logger.i(manager.getNetworkOperator());
+				Logger.e(manager.getNetworkOperator());
 				return null;
 			}
 			currentCell.cellId = gsm.getCid();

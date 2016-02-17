@@ -250,18 +250,18 @@ public class App extends Application {
                     .setMethodOffset(2)        // default 0
                     .setLogLevel(logLevel);  // default LogLevel.FULL
 
-            Logger.i(TAG, "成功初始化LOG日志.");
+            Logger.v(TAG, "成功初始化LOG日志.");
 
             // 初始化APP相关目录
             FileDataHelper.initDirectory();
-            Logger.i(TAG, "成功初始化APP相关目录.");
+            Logger.v(TAG, "成功初始化APP相关目录.");
 
             //本地数据库
             initDAOData();
 
             // 保存当前网络状态(在每次网络通信时可能需要判断当前网络状态)
             setCurrentNetworkStatus(NetworkUtil.getCurrentNextworkState(this));
-            Logger.i(TAG, "保存当前网络状态:" + getCurrentNetworkStatus());
+            Logger.v(TAG, "保存当前网络状态:" + getCurrentNetworkStatus());
             //注册网络状态监听广播
             newConnectionReceiver();
 

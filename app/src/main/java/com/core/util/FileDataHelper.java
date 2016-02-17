@@ -1,6 +1,5 @@
 package com.core.util;
 
-import android.annotation.SuppressLint;
 import android.os.Environment;
 
 import com.mytian.lb.Constant;
@@ -45,9 +44,9 @@ public final class FileDataHelper {
                 rootFile = Environment.getExternalStorageDirectory();
                 if (rootFile.exists()) {
                     root = rootFile.toString();
-                    Logger.i("sdcard is using!");
+                    Logger.d("sdcard is using!");
                 } else {
-                    Logger.i("sdcard not use!");
+                    Logger.d("sdcard not use!");
                 }
             }
 
@@ -56,9 +55,9 @@ public final class FileDataHelper {
                 rootFile = new File(Constant.Dir.ROOT_DIR);
                 if (rootFile.exists()) {
                     root = rootFile.toString();
-                    Logger.i("/flase is using!");
+                    Logger.d("/flase is using!");
                 } else {
-                    Logger.i("/flase not use!");
+                    Logger.d("/flase not use!");
                 }
             }
 
@@ -70,19 +69,19 @@ public final class FileDataHelper {
 
                 if (!rootDir.exists()) {
                     rootDir.mkdirs();
-                    Logger.i(rootDir + " is not exist, created succeed!");
+                    Logger.d(rootDir + " is not exist, created succeed!");
                 }
                 if (!downloadDir.exists()) {
                     downloadDir.mkdirs();
-                    Logger.i(downloadDir + " is not exist, created succeed!");
+                    Logger.d(downloadDir + " is not exist, created succeed!");
                 }
                 if (!imageDir.exists()) {
                     imageDir.mkdirs();
-                    Logger.i(imageDir + " is not exist, created succeed!");
+                    Logger.d(imageDir + " is not exist, created succeed!");
                 }
                 if (!cacheDir.exists()) {
                     cacheDir.mkdirs();
-                    Logger.i(cacheDir + " is not exist, created succeed!");
+                    Logger.d(cacheDir + " is not exist, created succeed!");
                 }
                 result = true;
             } else {

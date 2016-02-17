@@ -74,20 +74,20 @@ public class ConfigManager {
 
         //	判断数据库中保存的版本号和当前的是否一致, 如果不一致, 需要更新到数据库中, 并标记本次启动为首次启动
         if (StringUtil.isBlank(lastAppVersionName) || !currentAppVersionName.equals(lastAppVersionName)) {
-            Logger.i("判断为首次启动");
+            Logger.v("判断为首次启动");
             map.put(ConfigKeyEnum.IS_FIRST_LUNCH.name(), true);
             Config record = new Config(null, ConfigKeyEnum.APP_VERSION_NAME.name(), currentAppVersionName);
             Long id = configDao.insertOrReplace(record);
-            Logger.i("更新数据库中的版本号,  记录ID=" + id + ",版本号=" + currentAppVersionName);
+            Logger.v("更新数据库中的版本号,  记录ID=" + id + ",版本号=" + currentAppVersionName);
         } else {
             map.put(ConfigKeyEnum.IS_FIRST_LUNCH.name(), false);
-            Logger.i("判断为非首次启动");
+            Logger.v("判断为非首次启动");
         }
 
         if (Constant.DEBUG) {
-            Logger.i("初始化系统配置");
+            Logger.v("初始化系统配置");
             for (ConfigKeyEnum item : ConfigKeyEnum.values()) {
-                Logger.i(item.name() + "=" + map.get(item.name()));
+                Logger.v(item.name() + "=" + map.get(item.name()));
             }
         }
     }

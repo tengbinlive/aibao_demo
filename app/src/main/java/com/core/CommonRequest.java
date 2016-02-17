@@ -175,10 +175,10 @@ public class CommonRequest extends Request<CommonResponse> {
             for (String key : mParam.keySet()) {
                 buf.append(key).append("=").append(mParam.get(key)).append("\n");
             }
-            Logger.d(buf.toString());
-            Logger.d(mFileParts.size() + "个File，长度：" + l);
-            Logger.d(mParam.size() + "个String，长度：" + l);
-            Logger.d(entity.toString());
+            Logger.i(buf.toString());
+            Logger.i(mFileParts.size() + "个File，长度：" + l);
+            Logger.i(mParam.size() + "个String，长度：" + l);
+            Logger.i(entity.toString());
         }
 
         // 设置该Request正确创建
@@ -235,10 +235,10 @@ public class CommonRequest extends Request<CommonResponse> {
             for (String key : mParam.keySet()) {
                 buf.append(key).append("=").append(mParam.get(key)).append("\n");
             }
-            Logger.d(buf.toString());
-            Logger.d(mFileParts.size() + "个File，长度：" + l);
-            Logger.d(mParam.size() + "个String，长度：" + l);
-            Logger.d(entity.toString());
+            Logger.i(buf.toString());
+            Logger.i(mFileParts.size() + "个File，长度：" + l);
+            Logger.i(mParam.size() + "个String，长度：" + l);
+            Logger.i(entity.toString());
         }
 
         // 设置该Request正确创建
@@ -275,7 +275,7 @@ public class CommonRequest extends Request<CommonResponse> {
         try {
             App.getInstance().setCookie(networkResponse.headers.get(SET_COOKIE_KEY));
             jsonString = new String(networkResponse.data, HttpHeaderParser.parseCharset(networkResponse.headers, OpenApi.CHARSET_UTF8));
-            Logger.d(jsonString);
+            Logger.i(jsonString);
             // 转换返回结果为指定对象
             this.doParse(jsonString, mFormat, mTypeToken, response, mRawData);
         } catch (UnsupportedEncodingException e) {
@@ -295,7 +295,7 @@ public class CommonRequest extends Request<CommonResponse> {
     private void doParse(String str, String format, TypeReference<?> typeToken, CommonResponse response, boolean rawData) {
         // 如果来自OpenApi且是JSON格式
         if (OpenApi.FORMAT_JSON.equals(format)) {
-            Logger.d(str);
+            Logger.i(str);
             OpenApiParser.parseFromJson(str, typeToken, response, rawData);
         }
         // 其他未知格式

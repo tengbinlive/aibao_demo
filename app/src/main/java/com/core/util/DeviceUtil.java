@@ -57,9 +57,9 @@ public class DeviceUtil {
 		WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
 		if (wifiManager.isWifiEnabled()) {
 			enable = true;
-			Logger.i("isWifiEnabled");
+			Logger.v("isWifiEnabled");
 		}
-		Logger.i("isWifiDisabled");
+		Logger.v("isWifiDisabled");
 		return enable;
 	}
 
@@ -88,7 +88,7 @@ public class DeviceUtil {
 		if (telephonyManager != null) {
 			if (telephonyManager.getNetworkType() != TelephonyManager.NETWORK_TYPE_UNKNOWN) {
 				enable = true;
-				Logger.i("isNetEnabled");
+				Logger.v("isNetEnabled");
 			}
 		}
 		return enable;
@@ -104,10 +104,10 @@ public class DeviceUtil {
 		ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo mobileNetworkInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
 		if (mobileNetworkInfo.isConnected()) {
-			Logger.i("isNetContected");
+			Logger.v("isNetContected");
 			return true;
 		}
-		Logger.i("isNetDisconnected");
+		Logger.v("isNetDisconnected");
 		return false;
 	}
 
