@@ -1,9 +1,7 @@
 package com.mytian.lb.adapter;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +12,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.core.util.StringUtil;
 import com.mytian.lb.R;
+import com.mytian.lb.activity.ShowPictureActivity;
+import com.mytian.lb.activity.WebViewActivity;
 import com.mytian.lb.bean.dymic.Dynamic;
 import com.mytian.lb.bean.dymic.DynamicBaseInfo;
 import com.mytian.lb.bean.dymic.DynamicContent;
@@ -26,7 +25,6 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import cn.sharesdk.framework.Platform;
 
 public class DynamicAdapter extends BaseAdapter {
 
@@ -85,29 +83,45 @@ public class DynamicAdapter extends BaseAdapter {
                     .placeholder(R.mipmap.head_default)
                     .transform(transform)
                     .into(viewHolder.head);
+            viewHolder.head.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ArrayList<Object> imgs = new ArrayList<>();
+                    imgs.add(dynamicBaseInfo.getHead_thumb());
+                    toShowPicture(mContext, imgs);
+                }
+            });
         } else {
-            int headResid = getHeadResid(dynamicBaseInfo.getSys_thumb_id());
+            final int headResid = getHeadResid(dynamicBaseInfo.getSys_thumb_id());
             Glide.with(mContext).load(headResid).asBitmap()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .placeholder(R.mipmap.default_head)
                     .transform(transform)
                     .into(viewHolder.head);
+            viewHolder.head.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ArrayList<Object> imgs = new ArrayList<>();
+                    imgs.add(headResid);
+                    toShowPicture(mContext, imgs);
+                }
+            });
         }
         viewHolder.name.setText(dynamicBaseInfo.getAlias());
         viewHolder.date.setText(dynamicBaseInfo.getTime());
         viewHolder.desc.setText(dynamicBaseInfo.getFromName());
         String showType = dynamicBaseInfo.getShowType();
-        if(DynamicBaseInfo.TYPE_TEXT.equals(showType)){
+        if (DynamicBaseInfo.TYPE_TEXT.equals(showType)) {
             viewHolder.title.setText(dynamicContent.getText());
             viewHolder.contentLayout.setVisibility(View.GONE);
-        }else{
+        } else {
             viewHolder.title.setText(dynamicContent.getTitle());
             viewHolder.contentLayout.setVisibility(View.VISIBLE);
             viewHolder.content.setText(dynamicContent.getText());
             viewHolder.contentLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    toWEBVIEW(mContext,dynamicContent.getUrl());
+                    toWEBVIEW(mContext, dynamicContent.getText(), dynamicContent.getUrl());
                 }
             });
             Glide.with(mContext).load(dynamicContent.getImageUrl()).asBitmap()
@@ -135,12 +149,18 @@ public class DynamicAdapter extends BaseAdapter {
         return -1;
     }
 
-    private void toWEBVIEW(Activity activity, String download) {
-        Uri uri = Uri.parse(download);
-        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+    private void toWEBVIEW(Activity activity, String title, String url) {
+        Intent intent = new Intent(activity, WebViewActivity.class);
+        intent.putExtra(WebViewActivity.TITLE, title);
+        intent.putExtra(WebViewActivity.URL, url);
         activity.startActivity(intent);
     }
 
+    private void toShowPicture(Activity activity, ArrayList<Object> imgs) {
+        Intent intent = new Intent(activity, ShowPictureActivity.class);
+        intent.putExtra(ShowPictureActivity.IMAGES, imgs);
+        activity.startActivity(intent);
+    }
 
     /**
      * This class contains all butterknife-injected Views & Layouts from layout file 'item_dynamic.xml'

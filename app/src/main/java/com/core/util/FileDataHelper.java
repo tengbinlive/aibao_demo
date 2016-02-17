@@ -1,11 +1,14 @@
 package com.core.util;
 
+import android.annotation.SuppressLint;
 import android.os.Environment;
 
 import com.mytian.lb.Constant;
 import com.orhanobut.logger.Logger;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public final class FileDataHelper {
 
@@ -13,6 +16,19 @@ public final class FileDataHelper {
 
     private FileDataHelper() {
 
+    }
+
+    /**
+     * 得到一个指定名称格式的图片名字
+     *
+     * @return
+     */
+    public static String getImgName(String suffix) {
+        SimpleDateFormat sdf = new SimpleDateFormat();
+        sdf.applyPattern("yyyyMMdd_HHmmsss");
+        StringBuilder result = new StringBuilder("IMG_");
+        result.append(sdf.format(new Date()) + (int) (Math.random() * 100)).append(suffix);
+        return result.toString();
     }
 
     /**

@@ -187,6 +187,14 @@ public abstract class AbsActivity extends SwipeBackActivity implements EInitDate
         toolbar_intermediate_tv.setText(rId);
     }
 
+    /**
+     * 设置标题
+     *
+     * @param value
+     */
+    public void setToolbarIntermediateStr(String value) {
+        toolbar_intermediate_tv.setText(value);
+    }
 
     public abstract int getContentView();
 

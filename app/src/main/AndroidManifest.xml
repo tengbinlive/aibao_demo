@@ -118,6 +118,16 @@
             android:name=".activity.AuthClipPictureActivity"
             android:theme="@style/AppTheme"></activity>
 
+        <!--url 界面-->
+        <activity
+            android:name=".activity.WebViewActivity"
+            android:theme="@style/AppTheme"></activity>
+
+        <!--图片预览 界面-->
+        <activity
+            android:name=".activity.ShowPictureActivity"
+            android:theme="@style/AppTheme"></activity>
+
         <!-- push service start -->
         <!--个推SDK配置开始-->
         <!-- 配置第三方Receiver -->

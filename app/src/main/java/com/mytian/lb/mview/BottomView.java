@@ -2,6 +2,7 @@ package com.mytian.lb.mview;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.Display;
 import android.view.View;
 import android.view.Window;
@@ -29,7 +30,7 @@ public class BottomView {
 
     @SuppressWarnings("deprecation")
     public void showBottomView(boolean CanceledOnTouchOutside) {
-        if(bv==null) {
+        if (bv == null) {
             if (this.theme == 0)
                 this.bv = new Dialog(this.context);
             else
@@ -66,6 +67,12 @@ public class BottomView {
 
     public View getView() {
         return this.convertView;
+    }
+
+    public void setCancelListener(DialogInterface.OnCancelListener listener) {
+        if (null != listener) {
+            bv.setOnCancelListener(listener);
+        }
     }
 
     public void dismissBottomView() {
