@@ -57,7 +57,7 @@ public class AppManager {
     public void reLoginApp() {
         if (!isOUT) {
             isOUT = true;
-            activityHandler.sendEmptyMessageDelayed(APP_RELOGIN, 1500);
+            activityHandler.sendEmptyMessageDelayed(APP_RELOGIN, 1000);
         }
     }
 
@@ -93,23 +93,21 @@ public class AppManager {
 
     private void loadUpdate(CommonResponse resposne) {
         isChecking = false;
+        dialogDismiss();
         if (resposne.isSuccess()) {
             sysAppUpgradeResult = (SysAppUpgradeResult) resposne.getData();
             int versioncode = CommonUtil.getAppVersionCode(App.getInstance());
             if (sysAppUpgradeResult.getVersion() > versioncode) {
-                activityHandler.sendEmptyMessageDelayed(APP_DOWNLOAD, 1500);
+                activityHandler.sendEmptyMessageDelayed(APP_DOWNLOAD, 1000);
             } else {
-                dialogDismiss();
                 CommonUtil.showToast("已是最新版");
             }
         } else {
-            dialogDismiss();
             CommonUtil.showToast(resposne.getMsg());
         }
     }
 
     private void dialogDownload() {
-        dialogDismiss();
         StringBuffer versionInfo = new StringBuffer();
         versionInfo.append("爱宝.").append("\n\n")
                 .append("发现新的版本").append("\n\n")
@@ -150,7 +148,6 @@ public class AppManager {
         if (StringUtil.isBlank(value)) {
             return;
         }
-        dialogDismiss();
         final Activity activity = App.getInstance().getCurrentActivity();
         LinearLayout convertView = (LinearLayout) LayoutInflater.from(activity).inflate(R.layout.dialog_prompt, null);
         TextView valueTv = (TextView) convertView.findViewById(R.id.value);
