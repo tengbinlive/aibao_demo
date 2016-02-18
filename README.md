@@ -34,8 +34,8 @@ sharesdk
     
 Wechat  如果分享类型跟数据填充不匹配，将无法调启微信客服端，如（url ="",分享类型为 = SHARE_WEBPAGE,会无法调启客服端）
 
-    AppId="wx25f63c29962b8d0b"
-    AppSecret="5697971f7f49ba14c9e9f2672a1bd6b5"
+    AppId="wxa91c0e9b1fcdea23"
+    AppSecret="2ce1257f1ebd4e63405af586ba85e337"
 
 SinaWeibo 
     

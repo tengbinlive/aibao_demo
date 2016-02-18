@@ -75,24 +75,24 @@
     <Wechat
         Id="2"
         SortId="2"
-        AppId="wx25f63c29962b8d0b"
-        AppSecret="5697971f7f49ba14c9e9f2672a1bd6b5"
+        AppId="wxa91c0e9b1fcdea23"
+        AppSecret="2ce1257f1ebd4e63405af586ba85e337"
         BypassApproval="false"
         Enable="true" />
 
     <WechatMoments
         Id="3"
         SortId="3"
-        AppId="wx25f63c29962b8d0b"
-        AppSecret="5697971f7f49ba14c9e9f2672a1bd6b5"
+        AppId="wxa91c0e9b1fcdea23"
+        AppSecret="2ce1257f1ebd4e63405af586ba85e337"
         BypassApproval="false"
         Enable="true" />
 
     <WechatFavorite
         Id="4"
         SortId="4"
-        AppId="wx25f63c29962b8d0b"
-        AppSecret="5697971f7f49ba14c9e9f2672a1bd6b5"
+        AppId="wxa91c0e9b1fcdea23"
+        AppSecret="2ce1257f1ebd4e63405af586ba85e337"
         Enable="true" />
 
     <QQ
