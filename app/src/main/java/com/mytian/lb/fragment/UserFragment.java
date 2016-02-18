@@ -36,6 +36,7 @@ import com.gitonway.lee.niftymodaldialogeffects.NiftyDialogBuilder;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mytian.lb.AbsFragment;
 import com.mytian.lb.App;
+import com.mytian.lb.BuildConfig;
 import com.mytian.lb.Constant;
 import com.mytian.lb.R;
 import com.mytian.lb.activity.AuthClipPictureActivity;
@@ -149,8 +150,9 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
             }
         });
         String updateStr = mContext.getString(R.string.update);
-        int versioncode = CommonUtil.getAppVersionCode(App.getInstance());
-        updateStr = updateStr + "      " + App.getAppVersionName()+"."+versioncode;
+        if (!BuildConfig.BUILD_TYPE.equals("release")) {
+            updateStr = updateStr + "      " + BuildConfig.VERSION_NAME + "      " + BuildConfig.BUILD_TYPE;
+        }
         updatetv.setText(updateStr);
     }
 
@@ -227,17 +229,17 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         cancleButtonState();
         CharSequence charSequence = nameValue.getText();
         String name = "";
-        if(charSequence!=null){
+        if (charSequence != null) {
             name = charSequence.toString();
         }
         String birthday = "";
         charSequence = birthdayValue.getText();
-        if(charSequence!=null){
+        if (charSequence != null) {
             birthday = charSequence.toString();
         }
         String nameHint = "";
         charSequence = nameValue.getHint();
-        if(charSequence!=null){
+        if (charSequence != null) {
             nameHint = charSequence.toString();
         }
 

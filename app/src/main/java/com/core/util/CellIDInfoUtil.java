@@ -119,7 +119,6 @@ public class CellIDInfoUtil {
 		if (networkType == -1) try {
 			getCellIDInfo(context, false);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return networkType;
@@ -129,7 +128,6 @@ public class CellIDInfoUtil {
 		if (null == mnc || "".equalsIgnoreCase(mnc)) try {
 			getCellIDInfo(context, false);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return mnc;

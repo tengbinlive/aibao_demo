@@ -5,7 +5,7 @@ apply plugin: 'com.droidtitan.lintcleaner'
 def versionMajor = 2
 def versionMinor = 0
 def versionPatch = 2
-def versionBuild = 56 // bump for dogfood builds, public betas, etc.
+def versionBuild = 57 // bump for dogfood builds, public betas, etc.
 
 android {
 
@@ -19,7 +19,7 @@ android {
         targetSdkVersion 22
 
         versionCode versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
-        versionName "v${versionMajor}.${versionMinor}.${versionPatch}"
+        versionName "v${versionMajor}.${versionMinor}.${versionPatch}.${versionBuild}"
 
         manifestPlaceholders = [
                 GETUI_APP_ID    : "kvuUWGiv0c6sHXaYA8JzT7",
@@ -43,7 +43,9 @@ android {
 
         debug {
             buildConfigField "String", "API_HOST", "\"http://www.mytian.com.cn/\""//API Host
+            buildConfigField "boolean", "CONFIG_DEBUG", "true"// config info
             buildConfigField "boolean", "LOG_DEBUG", "true"// log info
+            buildConfigField "boolean", "STETHO_DEBUG", "true"// stetho info
             buildConfigField "boolean", "CHANNEL_DEBUG", "true"// channel info
             debuggable true
             minifyEnabled false
@@ -55,7 +57,9 @@ android {
 
         alpha {
             buildConfigField "String", "API_HOST", "\"http://www.mytian.com.cn/\""//API Host
+            buildConfigField "boolean", "CONFIG_DEBUG", "true"// config info
             buildConfigField "boolean", "LOG_DEBUG", "false"// log info
+            buildConfigField "boolean", "STETHO_DEBUG", "false"// stetho info
             buildConfigField "boolean", "CHANNEL_DEBUG", "false"// channel info
             debuggable true
             minifyEnabled false
@@ -67,8 +71,10 @@ android {
 
         release {
             buildConfigField "String", "API_HOST", "\"http://www.mytian.com.cn/\""//API Host
-            buildConfigField "boolean", "LOG_DEBUG", "false"//log info
-            buildConfigField "boolean", "CHANNEL_DEBUG", "false"//channel info
+            buildConfigField "boolean", "CONFIG_DEBUG", "false"// config info
+            buildConfigField "boolean", "LOG_DEBUG", "false"// log info
+            buildConfigField "boolean", "STETHO_DEBUG", "false"// stetho info
+            buildConfigField "boolean", "CHANNEL_DEBUG", "false"// channel info
             debuggable false
             minifyEnabled true
             zipAlignEnabled true
@@ -127,6 +133,8 @@ dependencies {
     compile 'com.makeramen:roundedimageview:2.2.1' //圆角 imageview
     compile 'com.pnikosis:materialish-progress:1.5'//material进度条
     compile 'com.mcxiaoke.volley:library:1.0.19'//volley
+    compile 'com.facebook.stetho:stetho:1.3.0'
+    compile 'com.facebook.stetho:stetho-okhttp:1.3.0'
     compile 'com.bm.photoview:library:1.3.6'
     compile 'com.wdullaer:materialdatetimepicker:2.0.1'
     compile 'com.ogaclejapan.smarttablayout:library:1.4.2@aar'

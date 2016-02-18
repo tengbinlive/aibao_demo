@@ -22,6 +22,7 @@ import com.dao.DaoMaster.OpenHelper;
 import com.dao.DaoSession;
 import com.dao.Parent;
 import com.dao.ParentDao;
+import com.facebook.stetho.Stetho;
 import com.mytian.lb.activity.LoginActivity;
 import com.mytian.lb.activityexpand.activity.AnimatedRectLayout;
 import com.mytian.lb.bean.user.UserResult;
@@ -230,7 +231,15 @@ public class App extends Application {
         // 多进程情况只初始化一次
         if (ProcessUtil.isCurMainProcess(getApplicationContext())) {
 
-            Constant.DEBUG = BuildConfig.DEBUG;
+            Constant.DEBUG = BuildConfig.CONFIG_DEBUG;
+
+            if (BuildConfig.STETHO_DEBUG) {
+                Stetho.initialize(Stetho
+                        .newInitializerBuilder(this)
+                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+                        .enableWebKitInspector(
+                                Stetho.defaultInspectorModulesProvider(this)).build());
+            }
 
             FIR.init(getApplicationContext());
 

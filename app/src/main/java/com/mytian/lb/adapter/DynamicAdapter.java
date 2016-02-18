@@ -126,7 +126,6 @@ public class DynamicAdapter extends BaseAdapter {
             });
             Glide.with(mContext).load(dynamicContent.getImageUrl()).asBitmap()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .transform(transform)
                     .into(viewHolder.image);
             viewHolder.image.setOnClickListener(new View.OnClickListener() {
                 @Override
