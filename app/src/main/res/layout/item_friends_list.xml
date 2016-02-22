@@ -51,9 +51,8 @@
                 android:layout_height="@dimen/item_head_size_small"
                 android:layout_marginRight="@dimen/content_gap"
                 app:riv_border_width="0dip"
-                app:riv_corner_radius="@dimen/corner_radius"
                 app:riv_mutate_background="true"
-                app:riv_oval="false"
+                app:riv_oval="true"
                 app:riv_tile_mode="repeat" />
 
             <TextView

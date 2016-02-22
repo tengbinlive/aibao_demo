@@ -15,9 +15,8 @@
         android:layout_width="@dimen/item_head_size"
         android:layout_height="@dimen/item_head_size"
         app:riv_border_width="0dip"
-        app:riv_corner_radius="@dimen/corner_radius"
         app:riv_mutate_background="true"
-        app:riv_oval="false"
+        app:riv_oval="true"
         app:riv_tile_mode="repeat" />
 
     <RelativeLayout

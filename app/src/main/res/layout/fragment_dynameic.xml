@@ -9,7 +9,7 @@
         android:background="@color/theme_bg_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:dividerHeight="@dimen/content_10dp"
+        android:dividerHeight="@dimen/content_gap"
         ptr:ptrAnimationStyle="flip"
         ptr:ptrMode="both" />
 

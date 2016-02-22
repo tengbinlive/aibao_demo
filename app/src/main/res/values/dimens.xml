@@ -41,9 +41,9 @@
     <dimen name="item_head_size">60dp</dimen>
     <dimen name="foatingbt_size">30dp</dimen>
     <dimen name="item_head_size_small">50dp</dimen>
-    <dimen name="corner_radius">180dip</dimen>
     <dimen name="elevation_height">2dp</dimen>
     <dimen name="shadow">3dp</dimen>
+    <dimen name="corner_radius">5dp</dimen>
 
     <dimen name="rounded_size">4dp</dimen>
 

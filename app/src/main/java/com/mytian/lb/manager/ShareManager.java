@@ -19,12 +19,17 @@ import com.mytian.lb.Constant;
 import com.mytian.lb.R;
 import com.mytian.lb.bean.dymic.DynamicContent;
 import com.mytian.lb.enums.PlatformEnum;
+import com.orhanobut.logger.Logger;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
+import java.util.HashMap;
+
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.Platform.ShareParams;
+import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.tencent.qq.QQ;
 
 public final class ShareManager {
 
@@ -75,6 +80,13 @@ public final class ShareManager {
         activityHandler.sendEmptyMessage(SHOW_SHAER);
     }
 
+
+    /**
+     * 初始分享
+     * @param dynamicContent
+     * @param name
+     * @return
+     */
     public ShareParams getParams(DynamicContent dynamicContent, String name) {
         int titleConut = titleConut(name);
         int contentConut = contentConut(name);
@@ -114,13 +126,16 @@ public final class ShareManager {
         }else if (PlatformEnum.QQ_TENCENT.getCode().equals(name)){
             shareParams.setTitleUrl(dynamicContent.getTitleUrl());
             shareParams.setSite(dynamicContent.getSite());
-            shareParams.setShareType(Platform.SHARE_WEBPAGE);
-        }else {
-            shareParams.setShareType(Platform.SHARE_WEBPAGE);
+            shareParams.setSiteUrl(dynamicContent.getUrl());
         }
         return shareParams;
     }
 
+    /**
+     * 分享标题 各个平台限制大小
+     * @param name
+     * @return
+     */
     private int titleConut(String name) {
         if (PlatformEnum.WEIXIN.getCode().equals(name)) {
             return 200;
@@ -134,6 +149,11 @@ public final class ShareManager {
         return -1;
     }
 
+    /**
+     * 分享内容 各个平台限制大小
+     * @param name
+     * @return
+     */
     private int contentConut(String name) {
         if (PlatformEnum.WEIXIN.getCode().equals(name)) {
             return 450;
@@ -148,6 +168,11 @@ public final class ShareManager {
     }
 
 
+    /**
+     * 分享标题 各个平台个性化
+     * @param name
+     * @return
+     */
     private String titleStr(DynamicContent dynamicContent,String name) {
         if (PlatformEnum.WEIXIN.getCode().equals(name)) {
             return dynamicContent.getTitle();
@@ -161,6 +186,11 @@ public final class ShareManager {
         return dynamicContent.getText();
     }
 
+    /**
+     * 分享内容 各个平台个性化
+     * @param name
+     * @return
+     */
     private String contentStr(DynamicContent dynamicContent,String name) {
         if (PlatformEnum.WEIXIN.getCode().equals(name)) {
             return dynamicContent.getText();
@@ -174,6 +204,9 @@ public final class ShareManager {
         return dynamicContent.getText();
     }
 
+    /**
+     * 显示分享操作框
+     */
     private void showShareView() {
         dialogDismiss();
         final Activity activity = App.getInstance().getCurrentActivity();
@@ -263,5 +296,21 @@ public final class ShareManager {
         Platform.ShareParams shareParams = getParams(dynamicContent, type.getCode());
         Platform platform = ShareSDK.getPlatform(context, type.getCode());
         platform.share(shareParams);
+        platform.setPlatformActionListener(new PlatformActionListener() {
+            @Override
+            public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+                Logger.i("sendShare onComplete");
+            }
+
+            @Override
+            public void onError(Platform platform, int i, Throwable throwable) {
+                Logger.i("sendShare onError");
+            }
+
+            @Override
+            public void onCancel(Platform platform, int i) {
+                Logger.i("sendShare onCancel");
+            }
+        });
     }
 }

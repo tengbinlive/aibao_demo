@@ -5,7 +5,7 @@ apply plugin: 'com.droidtitan.lintcleaner'
 def versionMajor = 2
 def versionMinor = 0
 def versionPatch = 2
-def versionBuild = 57 // bump for dogfood builds, public betas, etc.
+def versionBuild = 59 // bump for dogfood builds, public betas, etc.
 
 android {
 
@@ -14,7 +14,7 @@ android {
 
     defaultConfig {
         applicationId "com.mytian.lb"
-//        解决Android L上通知显示异常问题，targetSdkVersion需要设置成22
+//      解决Android L上通知显示异常问题，targetSdkVersion需要设置成22
         minSdkVersion 15
         targetSdkVersion 22
 

@@ -103,4 +103,12 @@
         ShareByAppClient="true"
         Enable="true" />
 
+    <QZone
+        Id="6"
+        SortId="6"
+        AppId="1105046638"
+        AppKey="nHG1UCvmLyVNjelM"
+        ShareByAppClient="true"
+        Enable="true" />
+
 </DevInfor>

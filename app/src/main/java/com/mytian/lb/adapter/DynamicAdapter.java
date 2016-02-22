@@ -18,7 +18,6 @@ import com.mytian.lb.activity.WebViewActivity;
 import com.mytian.lb.bean.dymic.Dynamic;
 import com.mytian.lb.bean.dymic.DynamicBaseInfo;
 import com.mytian.lb.bean.dymic.DynamicContent;
-import com.mytian.lb.helper.GlideRoundTransform;
 import com.mytian.lb.manager.ShareManager;
 
 import java.util.ArrayList;
@@ -34,13 +33,10 @@ public class DynamicAdapter extends BaseAdapter {
 
     private Activity mContext;
 
-    private GlideRoundTransform transform;
-
     public DynamicAdapter(Activity context, ArrayList<Dynamic> _list) {
         this.list = _list;
         mContext = context;
         mInflater = LayoutInflater.from(context);
-        transform = new GlideRoundTransform(context);
     }
 
     @Override
@@ -80,8 +76,8 @@ public class DynamicAdapter extends BaseAdapter {
         if (DynamicBaseInfo.TYPE_SYS.equals(fromType)) {
             Glide.with(mContext).load(dynamicBaseInfo.getHead_thumb()).asBitmap()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .placeholder(R.mipmap.head_default)
-                    .transform(transform)
+                    .centerCrop()
+                    .placeholder(R.mipmap.default_head)
                     .into(viewHolder.head);
             viewHolder.head.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -95,8 +91,8 @@ public class DynamicAdapter extends BaseAdapter {
             final int headResid = getHeadResid(dynamicBaseInfo.getSys_thumb_id());
             Glide.with(mContext).load(headResid).asBitmap()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .centerCrop()
                     .placeholder(R.mipmap.default_head)
-                    .transform(transform)
                     .into(viewHolder.head);
             viewHolder.head.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -124,7 +120,7 @@ public class DynamicAdapter extends BaseAdapter {
                     toWEBVIEW(mContext, dynamicContent.getText(), dynamicContent.getUrl());
                 }
             });
-            Glide.with(mContext).load(dynamicContent.getImageUrl()).asBitmap()
+            Glide.with(mContext).load(dynamicContent.getImageUrl()).asBitmap().centerCrop()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(viewHolder.image);
             viewHolder.image.setOnClickListener(new View.OnClickListener() {
