@@ -151,7 +151,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         });
         String updateStr = mContext.getString(R.string.update);
         if (!BuildConfig.BUILD_TYPE.equals("release")) {
-            updateStr = updateStr + "      " + BuildConfig.VERSION_NAME + "      " + BuildConfig.BUILD_TYPE;
+            updateStr = updateStr + "      " + BuildConfig.VERSION_NAME + " for android " + BuildConfig.BUILD_TYPE;
         }
         updatetv.setText(updateStr);
     }
