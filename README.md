@@ -6,7 +6,18 @@ build
 
     debug 调试版本
     alpha 测试版本
-    release 发表版本
+    release 发布版本
+    
+    配置api
+    buildConfigField "String", "API_HOST", "\"http://www.mytian.com.cn/\""//API Host 
+    配置debug
+    buildConfigField "boolean", "CONFIG_DEBUG", "false"// config info
+    配置日志输出
+    buildConfigField "boolean", "LOG_DEBUG", "false"// log info
+    配置web联调
+    buildConfigField "boolean", "STETHO_DEBUG", "false"// stetho info
+    配置渠道信息输出
+    buildConfigField "boolean", "CHANNEL_DEBUG", "false"// channel info
 
 服务器url:
 
@@ -20,7 +31,7 @@ appkey - aibao.jks
     
 getui
     
-     manifestPlaceholders = [
+    manifestPlaceholders = [
                     GETUI_APP_ID    : "kvuUWGiv0c6sHXaYA8JzT7",
                     GETUI_APP_KEY   : "PO0la0IdOd8vTKnFl4Ftq2",
                     GETUI_APP_SECRET: "bGqQIpUdU69rpr74CTX3t2",
@@ -96,4 +107,5 @@ lib_greendao为本地数据库dao-生成项目
 5.发布APP时，三星系列需要
 
     debuggable false
-    
+
+ 
