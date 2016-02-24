@@ -5,7 +5,7 @@ apply plugin: 'com.droidtitan.lintcleaner'
 def versionMajor = 2
 def versionMinor = 0
 def versionPatch = 2
-def versionBuild = 59 // bump for dogfood builds, public betas, etc.
+def versionBuild = 60 // bump for dogfood builds, public betas, etc.
 
 android {
 
