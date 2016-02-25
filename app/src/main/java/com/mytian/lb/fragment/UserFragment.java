@@ -6,15 +6,12 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
@@ -22,7 +19,6 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -90,28 +86,23 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
 
     @BindColor(R.color.theme)
     int accentColor;
+    @BindColor(R.color.textcolor_theme)
+    int textcolor_theme;
     private Calendar birthdayDate;
 
     /**
      * 图片地址
      */
     private Uri imageUri;
-    private static final String STR_PATH = "path";
-    private static final String STR_CLIPRATIO = "clipRatio";
-    private double clipRatio = 1.0;
     private BottomView mBottomView;
     /**
      * 本地图片选取标志
      */
     private static final int FLAG_CHOOSE_IMG = 0x11;
     /**
-     * 截取结束标志
-     */
-    private static final int FLAG_MODIFY_FINISH = 0x7;
-    /**
      * 相机标志
      */
-    private static final int FLAG_CHOOSE_CAMERA = 0x17;
+    private static final int FLAG_CHOOSE_CAMERA = 0x12;
 
     @Bind(R.id.user_icon)
     RoundedImageView user_icon;
@@ -247,7 +238,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
 
         boolean isName = StringUtil.isNotBlank(name);
         boolean isBirthday = StringUtil.isNotBlank(birthday);
-        boolean isHeadPath = headUri!=null;
+        boolean isHeadPath = headUri != null;
 
         if (StringUtil.isBlank(name) && StringUtil.isBlank(nameHint)) {
             AnimationHelper.getInstance().viewAnimationQuiver(nameValue);
@@ -292,10 +283,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         setButtonState(false);
         setUserInfo();
         isChangeButton = false;
-        if (headUri!=null) {
-            FileDataHelper.deleteDirectory(FileDataHelper.getFilePath(Constant.Dir.IMAGE_TEMP));
-            headUri = null;
-        }
+        deleteImageFile();
     }
 
     private static final int UPDATE_PARENT = 0x04;//信息补全
@@ -317,10 +305,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
     };
 
     private void resetData() {
-        if (headUri!=null) {
-            FileDataHelper.deleteDirectory(FileDataHelper.getFilePath(Constant.Dir.IMAGE_TEMP));
-            headUri = null;
-        }
+        deleteImageFile();
         if (isUpdateSuccess == 2) {
             String head = App.getInstance().getUserResult().getParent().getHeadThumb();
             Glide.with(mContext).load(head).asBitmap()
@@ -328,6 +313,16 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
                     .centerCrop().placeholder(R.mipmap.default_head).into(user_icon);
         }
         isUpdateSuccess = 0;
+    }
+
+    /**
+     * 删除上传头像 裁剪遗留图片
+     */
+    private void deleteImageFile() {
+        if (headUri != null) {
+            FileDataHelper.deleteDirectory(FileDataHelper.getFilePath(Constant.Dir.IMAGE_TEMP));
+            headUri = null;
+        }
     }
 
     private void loadUpdate(CommonResponse resposne) {
@@ -487,12 +482,12 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == Activity.RESULT_OK){
+        if (resultCode == Activity.RESULT_OK) {
             if (requestCode == FLAG_CHOOSE_CAMERA) {
                 startCropActivity(imageUri);
-            }else if (requestCode == FLAG_CHOOSE_IMG){
+            } else if (requestCode == FLAG_CHOOSE_IMG) {
                 processCropIMG(data);
-            }else if(requestCode == UCrop.REQUEST_CROP){
+            } else if (requestCode == UCrop.REQUEST_CROP) {
                 handleCropResult(data);
             }
         }
@@ -505,8 +500,8 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         headUri = UCrop.getOutput(result);
         if (headUri != null) {
             user_icon.setImageURI(headUri);
-                isUpdateSuccess = 2;
-                setButtonState(true);
+            isUpdateSuccess = 2;
+            setButtonState(true);
         }
     }
 
@@ -582,7 +577,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
             final Uri selectedUri = data.getData();
             if (selectedUri != null) {
                 startCropActivity(selectedUri);
-            }else{
+            } else {
                 CommonUtil.showToast(R.string.toast_cannot_retrieve_selected_image);
             }
         }
@@ -590,6 +585,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
 
     /**
      * 进入图片裁剪
+     *
      * @param uri
      */
     private void startCropActivity(@NonNull Uri uri) {
@@ -597,8 +593,10 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         options.setCompressionFormat(Bitmap.CompressFormat.JPEG);
         options.setToolbarColor(accentColor);
         options.setStatusBarColor(accentColor);
+        options.setActiveWidgetColor(accentColor);
+        options.setToolbarTitleTextColor(textcolor_theme);
         UCrop.of(uri, imageUri).withAspectRatio(1, 1).withOptions(options)
-                .start(getContext(),this);
+                .start(getContext(), this);
     }
 
     private Animator createViewScale1(final View view) {
