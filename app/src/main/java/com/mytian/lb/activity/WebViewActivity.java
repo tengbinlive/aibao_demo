@@ -58,9 +58,10 @@ public class WebViewActivity extends AbsActivity {
     //webview 属性 设置
     private void webviewSetInit(String url) {
         WebSettings websettings = webview.getSettings();
-        websettings.setBuiltInZoomControls(true);
-        websettings.setSupportZoom(true);
+        websettings.setBuiltInZoomControls(false);
+        websettings.setSupportZoom(false);
         websettings.setDisplayZoomControls(false);
+        websettings.setUseWideViewPort(true);
         websettings.setDefaultTextEncodingName("UTF-8");
         // for localStorage
         websettings.setDomStorageEnabled(true);
@@ -85,7 +86,13 @@ public class WebViewActivity extends AbsActivity {
         webview.setWebViewClient(mWebViewClient);
         mWebChromeClient = new MWebChromeClient(this);
         webview.setWebChromeClient(mWebChromeClient);
+        webview.setOnLongClickListener(new View.OnLongClickListener() {
 
+            @Override
+            public boolean onLongClick(View v) {
+                return true;
+            }
+        });
         if (null != mSavedInstanceState) {
             webview.restoreState(mSavedInstanceState);
         } else {

@@ -21,7 +21,7 @@ build
 
 服务器url:
 
-    "http://114.215.108.49/" /** 调试环境OpenAPI地址 */
+    "http://www.mytian.com.cn/"
 
 appkey - aibao.jks
 

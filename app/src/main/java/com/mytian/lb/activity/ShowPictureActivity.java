@@ -103,7 +103,7 @@ public class ShowPictureActivity extends AbsActivity {
     }
 
     private void setDot(int index, int size) {
-        if (size > 0) {
+        if (size > 1) {
             dot.setVisibility(View.VISIBLE);
             // 从1开始
             dot.setText((index + 1) + "/" + size);
