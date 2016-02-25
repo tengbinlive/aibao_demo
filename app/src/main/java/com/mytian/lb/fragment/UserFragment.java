@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
@@ -21,6 +22,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -39,7 +41,6 @@ import com.mytian.lb.App;
 import com.mytian.lb.BuildConfig;
 import com.mytian.lb.Constant;
 import com.mytian.lb.R;
-import com.mytian.lb.activity.AuthClipPictureActivity;
 import com.mytian.lb.activity.ResetPassWordActivity;
 import com.mytian.lb.bean.user.UpdateParentParam;
 import com.mytian.lb.bean.user.UpdateParentPortraitResult;
@@ -51,6 +52,7 @@ import com.mytian.lb.manager.UserManager;
 import com.mytian.lb.mview.BottomView;
 import com.rey.material.widget.RadioButton;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
+import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -118,7 +120,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
 
     private int isUpdateSuccess;
 
-    private String headPath;
+    private Uri headUri;
 
     private boolean isChangeButton;
 
@@ -245,7 +247,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
 
         boolean isName = StringUtil.isNotBlank(name);
         boolean isBirthday = StringUtil.isNotBlank(birthday);
-        boolean isHeadPath = StringUtil.isNotBlank(headPath);
+        boolean isHeadPath = headUri!=null;
 
         if (StringUtil.isBlank(name) && StringUtil.isBlank(nameHint)) {
             AnimationHelper.getInstance().viewAnimationQuiver(nameValue);
@@ -279,7 +281,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
             param.setBirthday(birthdayDate.getTimeInMillis());
         }
         if (isHeadPath) {
-            manager.updateParentPortrait(mContext, new File(headPath), activityHandler, UPDATE_PARENTPORTRAIT);
+            manager.updateParentPortrait(mContext, new File(headUri.getPath()), activityHandler, UPDATE_PARENTPORTRAIT);
         }
         manager.updateParent(mContext, param, activityHandler, UPDATE_PARENT);
     }
@@ -290,9 +292,9 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         setButtonState(false);
         setUserInfo();
         isChangeButton = false;
-        if (StringUtil.isNotBlank(headPath)) {
+        if (headUri!=null) {
             FileDataHelper.deleteDirectory(FileDataHelper.getFilePath(Constant.Dir.IMAGE_TEMP));
-            headPath = null;
+            headUri = null;
         }
     }
 
@@ -315,9 +317,9 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
     };
 
     private void resetData() {
-        if (StringUtil.isNotBlank(headPath)) {
+        if (headUri!=null) {
             FileDataHelper.deleteDirectory(FileDataHelper.getFilePath(Constant.Dir.IMAGE_TEMP));
-            headPath = null;
+            headUri = null;
         }
         if (isUpdateSuccess == 2) {
             String head = App.getInstance().getUserResult().getParent().getHeadThumb();
@@ -485,22 +487,39 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == FLAG_CHOOSE_CAMERA) {
-            processCamera();
-        } else if (requestCode == FLAG_CHOOSE_IMG && resultCode == Activity.RESULT_OK) {
-            processGalleryIMG(data);
-        } else if (requestCode == FLAG_MODIFY_FINISH && resultCode == Activity.RESULT_OK) {
-            if (data != null) {
-                headPath = data.getStringExtra(STR_PATH);
-                if (StringUtil.isNotBlank(headPath)) {
-                    Bitmap headIcon = BitmapFactory.decodeFile(headPath);
-                    user_icon.setImageBitmap(headIcon);
-                    isUpdateSuccess = 2;
-                    setButtonState(true);
-                }
+        if(resultCode == Activity.RESULT_OK){
+            if (requestCode == FLAG_CHOOSE_CAMERA) {
+                startCropActivity(imageUri);
+            }else if (requestCode == FLAG_CHOOSE_IMG){
+                processCropIMG(data);
+            }else if(requestCode == UCrop.REQUEST_CROP){
+                handleCropResult(data);
             }
         }
+        if (resultCode == UCrop.RESULT_ERROR) {
+            handleCropError(data);
+        }
     }
+
+    private void handleCropResult(@NonNull Intent result) {
+        headUri = UCrop.getOutput(result);
+        if (headUri != null) {
+            user_icon.setImageURI(headUri);
+                isUpdateSuccess = 2;
+                setButtonState(true);
+        }
+    }
+
+    @SuppressWarnings("ThrowableResultOfMethodCallIgnored")
+    private void handleCropError(@NonNull Intent result) {
+        final Throwable cropError = UCrop.getError(result);
+        if (cropError != null) {
+            CommonUtil.showToast(cropError.getMessage());
+        } else {
+            CommonUtil.showToast(R.string.toast_unexpected_error);
+        }
+    }
+
 
     class PictButtonOnClickListener implements View.OnClickListener {
         @Override
@@ -558,40 +577,28 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         imageUri = Uri.fromFile(imageFile);
     }
 
-    private void processGalleryIMG(Intent data) {
+    private void processCropIMG(Intent data) {
         if (data != null) {
-            Uri uri = data.getData();
-            if (!TextUtils.isEmpty(uri.getAuthority())) {
-                Cursor cursor = getActivity().getContentResolver().query(uri,
-                        new String[]{MediaStore.Images.Media.DATA},
-                        null, null, null);
-                if (null == cursor) {
-                    CommonUtil.showToast("图片没找到哦");
-                    return;
-                }
-                cursor.moveToFirst();
-                String path = cursor.getString(cursor
-                        .getColumnIndex(MediaStore.Images.Media.DATA));
-                cursor.close();
-
-                Intent intent = new Intent(getActivity(), AuthClipPictureActivity.class);
-                intent.putExtra(STR_PATH, path);
-                intent.putExtra(STR_CLIPRATIO, clipRatio);
-                startActivityForResult(intent, FLAG_MODIFY_FINISH);
-            } else {
-                Intent intent = new Intent(getActivity(), AuthClipPictureActivity.class);
-                intent.putExtra(STR_PATH, uri.getPath());
-                intent.putExtra(STR_CLIPRATIO, clipRatio);
-                startActivityForResult(intent, FLAG_MODIFY_FINISH);
+            final Uri selectedUri = data.getData();
+            if (selectedUri != null) {
+                startCropActivity(selectedUri);
+            }else{
+                CommonUtil.showToast(R.string.toast_cannot_retrieve_selected_image);
             }
         }
     }
 
-    private void processCamera() {
-        Intent intent = new Intent(getActivity(), AuthClipPictureActivity.class);
-        intent.putExtra(STR_PATH, imageUri.getPath());
-        intent.putExtra(STR_CLIPRATIO, clipRatio);
-        startActivityForResult(intent, FLAG_MODIFY_FINISH);
+    /**
+     * 进入图片裁剪
+     * @param uri
+     */
+    private void startCropActivity(@NonNull Uri uri) {
+        UCrop.Options options = new UCrop.Options();
+        options.setCompressionFormat(Bitmap.CompressFormat.JPEG);
+        options.setToolbarColor(accentColor);
+        options.setStatusBarColor(accentColor);
+        UCrop.of(uri, imageUri).withAspectRatio(1, 1).withOptions(options)
+                .start(getContext(),this);
     }
 
     private Animator createViewScale1(final View view) {

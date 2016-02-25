@@ -115,8 +115,8 @@
 
         <!--图片裁剪-->
         <activity
-            android:name=".activity.AuthClipPictureActivity"
-            android:theme="@style/AppTheme"></activity>
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"/>
 
         <!--url 界面-->
         <activity

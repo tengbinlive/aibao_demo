@@ -154,4 +154,5 @@ dependencies {
     compile(name: 'matchview-release', ext: 'aar')
     compile(name: 'swipeLayout-release', ext: 'aar')
     compile(name: 'circularprogressbar-release', ext: 'aar')
+    compile(name: 'ucrop-release', ext: 'aar')
 }
