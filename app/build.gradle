@@ -4,8 +4,8 @@ apply plugin: 'com.droidtitan.lintcleaner'
 // Manifest version information!
 def versionMajor = 2
 def versionMinor = 0
-def versionPatch = 2
-def versionBuild = 62 // bump for dogfood builds, public betas, etc.
+def versionPatch = 3
+def versionBuild = 61 // bump for dogfood builds, public betas, etc.
 
 android {
 
