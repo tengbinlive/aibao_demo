@@ -286,7 +286,7 @@ public class App extends Application {
         //用户信息
         initUserData();
         //用户动作
-        UserActionDOManager.getInstance().init();
+        UserActionDOManager.getInstance().init(this);
     }
 
     private void initUserData() {

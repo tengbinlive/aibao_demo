@@ -1,0 +1,33 @@
+<resources>
+    <!--约定-->
+    <string-array name = "argeement" >
+        <item>写作业</item>
+        <item>看书</item>
+        <item>做家务</item>
+        <item>吃饭</item>
+        <item>出去玩</item>
+        <item>睡觉</item>
+        <item>洗脸</item>
+        <item>上幼儿园</item>
+        <item>刷牙</item>
+        <item>上厕所</item>
+    </string-array>
+
+    <!--习惯-->
+    <string-array name = "habit" >
+        <item>按时起床</item>
+        <item>按时睡觉</item>
+        <item>起床洗脸</item>
+        <item>睡觉洗脸</item>
+        <item>饭前洗手</item>
+        <item>便后洗手</item>
+        <item>早上刷牙</item>
+        <item>晚上刷牙</item>
+        <item>按时吃饭</item>
+        <item>自己吃饭</item>
+        <item>是否剩饭</item>
+        <item>物品归位</item>
+        <item>礼貌用语</item>
+    </string-array>
+
+</resources>

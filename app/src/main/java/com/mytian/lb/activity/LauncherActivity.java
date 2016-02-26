@@ -41,7 +41,7 @@ public class LauncherActivity extends AbsActivity {
                 CommonUtil.showToast(channel_id);
             }
         }
-        PushHelper.getInstance().initPush(getApplicationContext());
+        PushHelper.getInstance().initPush();
         super.EInit();
         setSwipeBackEnable(false);
         statue = App.isFirstLunch() ? TO_GUIDE : TO_LOGIN;

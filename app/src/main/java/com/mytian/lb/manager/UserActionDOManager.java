@@ -1,8 +1,11 @@
 package com.mytian.lb.manager;
 
+import android.content.Context;
+
 import com.dao.UserAction;
 import com.dao.UserActionDao;
 import com.mytian.lb.App;
+import com.mytian.lb.R;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -40,11 +43,11 @@ public class UserActionDOManager {
         return instance;
     }
 
-    public void init() {
+    public void init(Context context) {
         // 从数据库中载入信息
         UserActionDao dao = App.getDaoSession().getUserActionDao();
         if (dao.count() <= 0) {
-            initLocalData();
+            initLocalData(context);
         }
         classification(dao);
     }
@@ -56,9 +59,9 @@ public class UserActionDOManager {
         arrayListHabit = (ArrayList<UserAction>) dao.queryBuilder().where(wcHab).list();
     }
 
-    private void initLocalData() {
-        String[] argeementTitle = new String[]{"写作业", "看书", "做家务", "吃饭", "出去玩", "睡觉", "洗脸", "上幼儿园", "刷牙", "上厕所"};
-        String[] habitTitle = new String[]{"吃饭", "洗脸", "睡觉", "刷牙", "做家务", "休息下", "写作业", "上幼儿园", "洗澡", "上厕所"};
+    private void initLocalData(Context context) {
+        String [] argeementTitle = context.getResources().getStringArray(R.array.argeement);
+        String [] habitTitle = context.getResources().getStringArray(R.array.habit);
         int startIndex = 2000;
         ArrayList<UserAction> arrayList = new ArrayList<>();
         int length = argeementTitle.length;

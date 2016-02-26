@@ -75,16 +75,16 @@ public class PushHelper {
         SharedPreferencesHelper.setBoolean(App.getInstance(), PushHelper.CHANNEL_STATE, false);
     }
 
-    public void initPush(Context context) {
+    public void initPush() {
         if (mContext == null) {
-            mContext = context;
+            mContext = App.getInstance();
         }
-        PushManager.getInstance().initialize(context);
+        PushManager.getInstance().initialize(mContext);
         Tag[] tags = new Tag[1];
         Tag tag = new Tag();
         tag.setName("parent");
         tags[0] = tag;
-        PushManager.getInstance().setTag(context, tags);
+        PushManager.getInstance().setTag(mContext, tags);
     }
 
     public void bindPush(Context context) {

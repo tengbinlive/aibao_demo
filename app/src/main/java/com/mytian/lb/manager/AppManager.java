@@ -80,10 +80,14 @@ public class AppManager {
                     dialogDownload();
                     break;
                 case DIALOGSHOW:
-                    dialogBuilder.show();
+                    if (null != dialogBuilder) {
+                        dialogBuilder.show();
+                    }
                     break;
                 case DIALOGDISMISS:
-                    dialogBuilder.dismiss();
+                    if (null != dialogBuilder && dialogBuilder.isShowing()) {
+                        dialogBuilder.dismiss();
+                    }
                     break;
                 default:
                     break;
@@ -93,16 +97,17 @@ public class AppManager {
 
     private void loadUpdate(CommonResponse resposne) {
         isChecking = false;
-        dialogDismiss();
         if (resposne.isSuccess()) {
             sysAppUpgradeResult = (SysAppUpgradeResult) resposne.getData();
             int versioncode = CommonUtil.getAppVersionCode(App.getInstance());
-            if (sysAppUpgradeResult.getVersion() > versioncode) {
-                activityHandler.sendEmptyMessageDelayed(APP_DOWNLOAD, 1000);
+            if (sysAppUpgradeResult.getVersion() < versioncode) {
+                activityHandler.sendEmptyMessageDelayed(APP_DOWNLOAD, 400);
             } else {
+                dialogDismiss();
                 CommonUtil.showToast("已是最新版");
             }
         } else {
+            dialogDismiss();
             CommonUtil.showToast(resposne.getMsg());
         }
     }
@@ -111,7 +116,7 @@ public class AppManager {
         StringBuffer versionInfo = new StringBuffer();
         versionInfo.append("爱宝.").append("\n\n")
                 .append("发现新的版本").append("\n\n")
-                .append("版本编号："+sysAppUpgradeResult.getVersion());
+                .append("版本编号：" + sysAppUpgradeResult.getVersion());
         dialogUpdate(versionInfo.toString(), sysAppUpgradeResult.getUrl());
     }
 
@@ -175,8 +180,6 @@ public class AppManager {
     }
 
     private void dialogDismiss() {
-        if (null != dialogBuilder && dialogBuilder.isShowing()) {
-            activityHandler.sendEmptyMessage(DIALOGDISMISS);
-        }
+        activityHandler.sendEmptyMessage(DIALOGDISMISS);
     }
 }

@@ -2,6 +2,30 @@
 
 [download](http://fir.im/5xv4)
 
+Monkey
+
+事件之间延时500毫秒 压力10000
+
+前提：已经完成登录，app启动后可直接进入主界面
+    
+    adb shell monkey -v -v -v -p com.mytian.lb 
+    --monitor-native-crashes --ignore-security-exceptions 
+    --kill-process-after-error --pct-trackball 0 --pct-nav 0 
+    --pct-syskeys 0 --pct-anyevent 0 --pct-appswitch 0 
+    --pct-flip 0 --pct-majornav 0 
+    --pct-touch 75 --pct-motion 25 --throttle 500 10000 
+    > D:\monkey_log\java_monkey_log_aibao.txt 
+    
+1.修改UserFragment exitAccount(),防止点击退出
+    
+2.手机屏幕超时设置为30分钟（或者更长），防止手机进入锁屏状态
+
+3.插入SIM卡和存储卡后将手机开机，开启ADB模式（即USB调试模式），连接到PC（存储卡剩余空间尽量留大，建议 1G以上）
+
+4.在PC上执行 运行—>cmd,在弹出的命令窗口中，输入adb devices，检查设备是否连接
+
+5.输入Monkey命令，回车
+  
 build
 
     debug 调试版本
