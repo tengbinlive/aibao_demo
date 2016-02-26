@@ -125,7 +125,6 @@ dependencies {
     compile fileTree(dir: 'libs_share', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.1.1'
     compile 'im.fir:fir-sdk:latest.integration@aar'//bug 收集
-    compile 'de.greenrobot:eventbus-annotation-processor:3.0.1'//事件派发
     compile 'org.greenrobot:eventbus:3.0.0'//事件派发
     compile 'com.squareup.okhttp3:okhttp:3.2.0'// okhttp 网络处理
     compile 'com.jakewharton:butterknife:7.0.1'//布局id绑定生成 butterknife
