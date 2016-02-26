@@ -42,13 +42,16 @@ import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationA
 import com.pascalwelsch.holocircularprogressbar.HoloCircularProgressBar;
 import com.rey.material.widget.Slider;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import de.greenrobot.event.EventBus;
 
 public class AgreementFragment extends AbsFragment {
 
@@ -375,6 +378,7 @@ public class AgreementFragment extends AbsFragment {
      *
      * @param event
      */
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(PushStateEventType event) {
         String babyUid = event.babyUid;
         if (babyUid.equals(cureentParent.getUid())) {
@@ -389,7 +393,8 @@ public class AgreementFragment extends AbsFragment {
      *
      * @param event
      */
-    public void onEventMainThread(AgreementStateEventType event) {
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(AgreementStateEventType event) {
         String babyUid = event.babyUid;
         String time = event.appoint_time;
         String appoint_time = App.getInstance().getAppoint_time();

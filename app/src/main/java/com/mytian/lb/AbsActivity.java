@@ -24,8 +24,11 @@ import com.gitonway.lee.niftymodaldialogeffects.NiftyDialogBuilder;
 import com.mytian.lb.event.AnyEventType;
 import com.mytian.lb.imp.EInitDate;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import butterknife.ButterKnife;
-import de.greenrobot.event.EventBus;
 import me.imid.swipebacklayout.lib.SwipeBackLayout;
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
@@ -71,7 +74,6 @@ public abstract class AbsActivity extends SwipeBackActivity implements EInitDate
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
-        EventBus.getDefault().register(this);
         App.getInstance().activityManager.pushActivity(this);
         int colos = getIntent().getIntExtra(STATUSBAR_COLOS, 0);
         setStatusBar(colos);
@@ -202,8 +204,6 @@ public abstract class AbsActivity extends SwipeBackActivity implements EInitDate
     public void onDestroy() {
         activityFinish = true;
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
-        ButterKnife.unbind(this);
         EDestroy();
         if (Constant.DEBUG) {
             ViewServer.get(this).removeWindow(this);
@@ -241,6 +241,7 @@ public abstract class AbsActivity extends SwipeBackActivity implements EInitDate
         initSwipeBack();
     }
 
+    @Subscribe(threadMode = ThreadMode.POSTING)
     public void onEvent(AnyEventType event) {
         //接收消息
     }
@@ -253,6 +254,18 @@ public abstract class AbsActivity extends SwipeBackActivity implements EInitDate
                 .withEffect(Effectstype.Fadein) // def Effectstype.Slidetop
                 .setCustomView(R.layout.loading_view, this); // .setCustomView(View
         activityHandler.sendEmptyMessage(DIALOGSHOW);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
     }
 
     public void dialogShow(String title) {

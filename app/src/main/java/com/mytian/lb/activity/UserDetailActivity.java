@@ -34,11 +34,14 @@ import com.mytian.lb.helper.SharedPreferencesHelper;
 import com.mytian.lb.manager.UserManager;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.BindColor;
-import de.greenrobot.event.EventBus;
 
 /**
  * 用户详情界面
@@ -157,7 +160,8 @@ public class UserDetailActivity extends AbsActivity {
      *
      * @param event
      */
-    public void onEventMainThread(AgreementStateEventType event) {
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(AgreementStateEventType event) {
         String babyUid = event.babyUid;
         String time = event.appoint_time;
         String appoint_time = App.getInstance().getAppoint_time();
@@ -175,6 +179,7 @@ public class UserDetailActivity extends AbsActivity {
      *
      * @param event
      */
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(PushStateEventType event) {
         String babyUid = event.babyUid;
         if (babyUid.equals(cureentParent.getUid())) {

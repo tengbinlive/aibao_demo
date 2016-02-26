@@ -26,6 +26,9 @@ import com.mytian.lb.event.UpdateBabyAliasEventType;
 import com.mytian.lb.manager.FollowManager;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -133,6 +136,7 @@ public class FriendslistFragment extends AbsFragment {
      *
      * @param event
      */
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(PushStateEventType event) {
         String babyUid = event.babyUid;
         if (arrayList != null && arrayList.containsKey(babyUid)) {
@@ -148,6 +152,7 @@ public class FriendslistFragment extends AbsFragment {
      *
      * @param event
      */
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onEvent(UpdateBabyAliasEventType event) {
         String babyUid = event.babyUid;
         if (arrayList != null && arrayList.containsKey(babyUid)) {
@@ -162,6 +167,7 @@ public class FriendslistFragment extends AbsFragment {
      *
      * @param event
      */
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(AgreementStateEventType event) {
         String babyUid = event.babyUid;
         if (arrayList != null && arrayList.containsKey(babyUid)) {

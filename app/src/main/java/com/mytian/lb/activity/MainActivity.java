@@ -25,6 +25,9 @@ import com.mytian.lb.fragment.UserFragment;
 import com.mytian.lb.push.PushHelper;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -188,6 +191,7 @@ public class MainActivity extends AbsActivity {
      *
      * @param event
      */
+    @Subscribe(sticky = true,threadMode = ThreadMode.MAIN)
     public void onEvent(PushUserEventType event) {
         isToolbarTipsMessage = true;
         if (currentPosition == FRIENDS) {
