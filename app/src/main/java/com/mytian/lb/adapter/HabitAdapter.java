@@ -179,6 +179,7 @@ public class HabitAdapter extends BaseAdapter {
 
     /**
      * 设置评价结果
+     *
      * @param v
      * @param type
      */
@@ -199,13 +200,14 @@ public class HabitAdapter extends BaseAdapter {
 
     /**
      * 发生评价
+     *
      * @param v
      * @param isPraise
      */
     private void sendHabit(View v, String isPraise) {
         int index = (int) v.getTag(R.id.item_habit_index);
-        String record=list.get(index).getRecord();
-        if(isPraise.equals(record)){
+        String record = list.get(index).getRecord();
+        if (isPraise.equals(record)) {
             return;
         }
         int state = UserAction.GREAT.equals(isPraise) ? HABIT_GREAT : HABIT_BAD;

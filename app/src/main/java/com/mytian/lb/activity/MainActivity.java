@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.core.util.CommonUtil;
+import com.core.util.StringUtil;
 import com.mytian.lb.AbsActivity;
 import com.mytian.lb.AbsFragment;
 import com.mytian.lb.App;
@@ -22,6 +23,7 @@ import com.mytian.lb.fragment.DynameicFragment;
 import com.mytian.lb.fragment.FriendslistFragment;
 import com.mytian.lb.fragment.KindleFragment;
 import com.mytian.lb.fragment.UserFragment;
+import com.mytian.lb.push.PushCode;
 import com.mytian.lb.push.PushHelper;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
@@ -95,6 +97,25 @@ public class MainActivity extends AbsActivity {
         super.EInit();
         setSwipeBackEnable(false);
         init();
+        String NOTICE_TYPE = getIntent().getStringExtra(PushCode.NOTICE_TYPE);
+        toNOTICE_TYPE(NOTICE_TYPE);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        String NOTICE_TYPE = intent.getStringExtra(PushCode.NOTICE_TYPE);
+        toNOTICE_TYPE(NOTICE_TYPE);
+    }
+
+    private void toNOTICE_TYPE(String type) {
+        if (StringUtil.isBlank(type)) {
+            return;
+        }
+        viewPager.setCurrentItem(FRIENDS);
+        if (PushCode.FOLLOW_NOTICE.equals(type)) {
+            toAddFollowActivity();
+        }
     }
 
     @Override
@@ -177,7 +198,7 @@ public class MainActivity extends AbsActivity {
                     menuFriendsTipsMessage.setVisibility(View.GONE);
                 }
             });
-            if(isToolbarTipsMessage){
+            if (isToolbarTipsMessage) {
                 toolbarTipsMessage.setVisibility(View.VISIBLE);
             }
         } else {
@@ -191,7 +212,7 @@ public class MainActivity extends AbsActivity {
      *
      * @param event
      */
-    @Subscribe(sticky = true,threadMode = ThreadMode.MAIN)
+    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     public void onEvent(PushUserEventType event) {
         isToolbarTipsMessage = true;
         if (currentPosition == FRIENDS) {

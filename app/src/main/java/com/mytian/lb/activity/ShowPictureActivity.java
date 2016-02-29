@@ -1,5 +1,7 @@
 package com.mytian.lb.activity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -15,6 +17,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.core.util.StringUtil;
 import com.mytian.lb.AbsActivity;
 import com.mytian.lb.R;
 import com.pnikosis.materialishprogress.ProgressWheel;
@@ -35,6 +38,7 @@ public class ShowPictureActivity extends AbsActivity {
     private ArrayList<ViewGroup> mViews;
 
     public final static String IMAGES = "DATA";
+    public final static String TITLE = "TITLE";
     public final static String INDEX = "INDEX";
 
     private int item_size;
@@ -43,16 +47,27 @@ public class ShowPictureActivity extends AbsActivity {
     public void EInit() {
         super.EInit();
         initView();
+        String title = getIntent().getStringExtra(TITLE);
+        String actionbarTitlte = StringUtil.isBlank(title) ? getString(R.string.app_name) : title;
+        setToolbarIntermediateStr(actionbarTitlte);
+    }
+
+    public static void toShowPicture(Activity activity, ArrayList<Object> imgs) {
+        Intent intent = new Intent(activity, ShowPictureActivity.class);
+        intent.putExtra(ShowPictureActivity.IMAGES, imgs);
+        activity.startActivity(intent);
+    }
+
+    public static void toShowPicture(Activity activity, ArrayList<Object> imgs, String title) {
+        Intent intent = new Intent(activity, ShowPictureActivity.class);
+        intent.putExtra(ShowPictureActivity.IMAGES, imgs);
+        intent.putExtra(ShowPictureActivity.TITLE, title);
+        activity.startActivity(intent);
     }
 
     @Override
     public int getContentView() {
         return R.layout.activity_show_picture;
-    }
-
-    @Override
-    public void initActionBar() {
-        setToolbarIntermediateStrID(R.string.app_name);
     }
 
     private void initView() {

@@ -2,7 +2,11 @@ package com.mytian.lb.push;
 
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.NotificationCompat;
@@ -16,6 +20,8 @@ import com.igexin.sdk.PushManager;
 import com.igexin.sdk.Tag;
 import com.mytian.lb.App;
 import com.mytian.lb.Constant;
+import com.mytian.lb.R;
+import com.mytian.lb.activity.MainActivity;
 import com.mytian.lb.bean.follow.FollowUser;
 import com.mytian.lb.bean.push.PushResult;
 import com.mytian.lb.bean.user.UserResult;
@@ -68,7 +74,7 @@ public class PushHelper {
 
     private long delayedTime = 60 * 1000;
 
-    public void clearChannelid(){
+    public void clearChannelid() {
         UPLOAD_ID_SUCCESS = false;
         pushState = STATE_NORMAL;
         UPLOAD_ING = false;
@@ -170,20 +176,41 @@ public class PushHelper {
      *
      * @param content
      */
-    private void showNotification(String content) {
+    public void showNotification(String content, String type) {
         String ns = Context.NOTIFICATION_SERVICE;
-        CharSequence tickerText = "aibao..";
-        CharSequence contentTitle = "aibao..";
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mContext)
-                .setSmallIcon(android.R.drawable.stat_notify_chat)
-                .setWhen(System.currentTimeMillis())
-                .setAutoCancel(true);
-        mBuilder.setContentTitle(contentTitle);
+        Context mContext = App.getInstance();
+        CharSequence tickerText = mContext.getString(R.string.app_name);
+        CharSequence contentTitle = mContext.getString(R.string.app_name);
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mContext);
+
+        Intent intent = new Intent(mContext, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra(PushCode.NOTICE_TYPE, type);
+        PendingIntent pendingIntent = PendingIntent.getActivity(mContext, content.hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        mBuilder.setContentIntent(pendingIntent);// 设置通知栏点击意图
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//悬挂式Notification，5.0后显示
+            mBuilder.setContentText(content).setFullScreenIntent(pendingIntent, true);
+            mBuilder.setCategory(NotificationCompat.CATEGORY_MESSAGE);
+            mBuilder.setSmallIcon(R.drawable.notification_icon);// 设置通知小ICON（5.0必须采用白色透明图片）
+        } else {
+            mBuilder.setSmallIcon(R.mipmap.app_icon);// 设置通知小ICON
+            mBuilder.setContentText(content);
+        }
+
+        mBuilder.setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.app_icon));// 设置通知大ICON
+
         mBuilder.setTicker(tickerText);
-        mBuilder.setContentText(content);
-        // mBuilder.setNumber(notificationNum);
+        mBuilder.setContentTitle(contentTitle);// 设置通知栏标题
+        mBuilder.setWhen(System.currentTimeMillis());
+        mBuilder.setAutoCancel(true);
+
+        mBuilder.setPriority(NotificationCompat.PRIORITY_MAX); // 设置该通知优先级
+
+        mBuilder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);//在任何情况下都显示，不受锁屏影响。
+
         Notification notification = mBuilder.build();
-        notification.flags = Notification.FLAG_AUTO_CANCEL;
+
         NotificationManager mNotificationManager = (NotificationManager) mContext.getSystemService(ns);
 
         //用mNotificationManager的notify方法通知用户生成标题栏消息通知
@@ -219,7 +246,7 @@ public class PushHelper {
                 if (FollowUser.MB.equals(user.getFocus_from())) {
                     EventBus.getDefault().postSticky(new PushUserEventType(user));
                 }
-                showNotification(result.getDescription());
+                showNotification(result.getDescription(), result.getCmd());
             } else if (PushCode.FOLLOW_ONLINE.equals(result.getCmd()) || PushCode.FOLLOW_OFFLINE.equals(result.getCmd())) {
                 String info = result.getInfo();
                 String babyUid = "";
@@ -234,7 +261,7 @@ public class PushHelper {
                 }
                 String des = result.getDescription();
                 if (StringUtil.isNotBlank(des)) {
-                    showNotification(result.getDescription());
+                    showNotification(result.getDescription(), result.getCmd());
                 }
             } else if (PushCode.AIBAO_UPDATE.equals(result.getCmd())) {
                 AppManager manager = new AppManager();
@@ -253,7 +280,7 @@ public class PushHelper {
                 } catch (JSONException e) {
                 }
                 if (StringUtil.isNotBlank(babyUid)) {
-                    EventBus.getDefault().postSticky(new AgreementStateEventType(babyUid, appointStatus, appointer,appoint_time));
+                    EventBus.getDefault().postSticky(new AgreementStateEventType(babyUid, appointStatus, appointer, appoint_time));
                 }
             } else if (PushCode.APPOINT_CANCEL.equals(result.getCmd())) {
                 String info = result.getInfo();
@@ -268,7 +295,7 @@ public class PushHelper {
                 } catch (JSONException e) {
                 }
                 if (StringUtil.isNotBlank(babyUid)) {
-                    AgreementStateEventType eventType = new AgreementStateEventType(babyUid, appointStatus, appointer,appoint_time);
+                    AgreementStateEventType eventType = new AgreementStateEventType(babyUid, appointStatus, appointer, appoint_time);
                     EventBus.getDefault().postSticky(eventType);
                 }
             }

@@ -20,9 +20,12 @@ import com.daimajia.swipe.adapters.BaseSwipeAdapter;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mytian.lb.AbsActivity;
 import com.mytian.lb.R;
+import com.mytian.lb.activity.ShowPictureActivity;
 import com.mytian.lb.bean.follow.FollowUser;
 import com.mytian.lb.event.AgreementStateEventType;
 import com.mytian.lb.manager.FollowManager;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -118,12 +121,20 @@ public class FriendslistAdapter extends BaseSwipeAdapter {
     @Override
     public void fillValues(int position, View convertView) {
         ViewHolder viewHolder = (ViewHolder) convertView.getTag();
-        FollowUser bean = list.valueAt(position);
+        final FollowUser bean = list.valueAt(position);
         Glide.with(mContext).load(bean.getHead_thumb()).asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .placeholder(R.mipmap.default_head)
                 .centerCrop()
                 .into(viewHolder.head);
+        viewHolder.head.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ArrayList<Object> imgs = new ArrayList<>();
+                imgs.add(bean.getHead_thumb());
+                ShowPictureActivity.toShowPicture(mContext, imgs,bean.getAlias());
+            }
+        });
         viewHolder.name.setText(bean.getAlias());
         boolean isOnline = FollowUser.ONLINE.equals(bean.getIs_online());
         setState(viewHolder.stateTv, viewHolder.stateIv, bean.getAppointing(), isOnline);

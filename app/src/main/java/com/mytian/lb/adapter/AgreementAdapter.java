@@ -77,7 +77,7 @@ public class AgreementAdapter extends BaseAdapter {
         }
         UserAction bean = list.get(position);
 
-        int icon_id = Utils.getResource(mContext, (isOFFLINE||isAGREEMENTING) ?  bean.getIcon_disabled():bean.getIcon(), "mipmap");
+        int icon_id = Utils.getResource(mContext, (isOFFLINE || isAGREEMENTING) ? bean.getIcon_disabled() : bean.getIcon(), "mipmap");
 
         Glide.with(mContext).load(icon_id).asBitmap().diskCacheStrategy(DiskCacheStrategy.ALL).into(viewHolder.icon);
         viewHolder.title.setText(bean.getTitle());

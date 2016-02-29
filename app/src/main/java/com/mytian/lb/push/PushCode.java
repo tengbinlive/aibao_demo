@@ -4,6 +4,8 @@ package com.mytian.lb.push;
  * Created by Administrator on 2015/10/30.
  */
 public class PushCode {
+
+    public final static String NOTICE_TYPE = "000000"; //通知类型 标签
     public final static String FOLLOW_NOTICE = "100205"; //关注推送通知 cmd
     public final static String FOLLOW_ONLINE  = "100207"; //麦宝上线 cmd
     public final static String FOLLOW_OFFLINE = "100208"; //麦宝离线 cmd

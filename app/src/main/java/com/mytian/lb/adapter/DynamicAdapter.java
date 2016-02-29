@@ -84,7 +84,7 @@ public class DynamicAdapter extends BaseAdapter {
                 public void onClick(View view) {
                     ArrayList<Object> imgs = new ArrayList<>();
                     imgs.add(dynamicBaseInfo.getHead_thumb());
-                    toShowPicture(mContext, imgs);
+                    ShowPictureActivity.toShowPicture(mContext, imgs);
                 }
             });
         } else {
@@ -99,7 +99,7 @@ public class DynamicAdapter extends BaseAdapter {
                 public void onClick(View view) {
                     ArrayList<Object> imgs = new ArrayList<>();
                     imgs.add(headResid);
-                    toShowPicture(mContext, imgs);
+                    ShowPictureActivity.toShowPicture(mContext, imgs);
                 }
             });
         }
@@ -128,7 +128,7 @@ public class DynamicAdapter extends BaseAdapter {
                 public void onClick(View view) {
                     ArrayList<Object> imgs = new ArrayList<>();
                     imgs.add(dynamicContent.getImageUrl());
-                    toShowPicture(mContext, imgs);
+                    ShowPictureActivity.toShowPicture(mContext, imgs);
                 }
             });
         }
@@ -156,12 +156,6 @@ public class DynamicAdapter extends BaseAdapter {
         Intent intent = new Intent(activity, WebViewActivity.class);
         intent.putExtra(WebViewActivity.TITLE, title);
         intent.putExtra(WebViewActivity.URL, url);
-        activity.startActivity(intent);
-    }
-
-    private void toShowPicture(Activity activity, ArrayList<Object> imgs) {
-        Intent intent = new Intent(activity, ShowPictureActivity.class);
-        intent.putExtra(ShowPictureActivity.IMAGES, imgs);
         activity.startActivity(intent);
     }
 

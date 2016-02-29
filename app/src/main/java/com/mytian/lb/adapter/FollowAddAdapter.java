@@ -17,8 +17,11 @@ import com.core.util.CommonUtil;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mytian.lb.AbsActivity;
 import com.mytian.lb.R;
+import com.mytian.lb.activity.ShowPictureActivity;
 import com.mytian.lb.bean.follow.FollowUser;
 import com.mytian.lb.manager.FollowManager;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -83,12 +86,23 @@ public class FollowAddAdapter extends BaseAdapter {
             viewHolder.title.setVisibility(View.GONE);
         }
 
-        FollowUser bean = list.valueAt(position);
+        final FollowUser bean = list.valueAt(position);
         Glide.with(mContext).load(bean.getHead_thumb())
                 .asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .centerCrop()
                 .placeholder(R.mipmap.default_head)
                 .into(viewHolder.head);
+
+        viewHolder.head.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ArrayList<Object> imgs = new ArrayList<>();
+                imgs.add(bean.getHead_thumb());
+                ShowPictureActivity.toShowPicture(mContext, imgs, bean.getAlias());
+            }
+        });
+
         String is_online = FollowUser.ONLINE.equals(bean.getIs_online()) ? mContext.getString(R.string.online_brackets) : mContext.getString(R.string.offline_brackets);
         viewHolder.name.setText(bean.getAlias() + is_online);
         if (FollowUser.LB.equals(bean.getFocus_from())) {

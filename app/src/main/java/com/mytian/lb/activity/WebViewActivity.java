@@ -34,8 +34,6 @@ public class WebViewActivity extends AbsActivity {
 
     private Bundle mSavedInstanceState;
 
-    private String title;
-
     public final static String URL = "URL";
     public final static String TITLE = "TITLE";
 
@@ -43,7 +41,7 @@ public class WebViewActivity extends AbsActivity {
     public void EInit() {
         super.EInit();
         String url = getIntent().getStringExtra(URL);
-        title = getIntent().getStringExtra(TITLE);
+        String title = getIntent().getStringExtra(TITLE);
         String actionbarTitlte = StringUtil.isBlank(title) ? getString(R.string.app_name) : title;
         setToolbarIntermediateStr(actionbarTitlte);
         webviewSetInit(url);
