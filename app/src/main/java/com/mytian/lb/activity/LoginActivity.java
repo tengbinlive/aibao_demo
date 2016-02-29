@@ -120,7 +120,7 @@ public class LoginActivity extends AnimatedRectActivity {
         mInflater = LayoutInflater.from(this);
         ButterKnife.bind(this);
         setStatusBar();
-        if(App.getInstance().getUserResult().getParent()!=null) {
+        if (App.getInstance().getUserResult().getParent() != null) {
             String phone = App.getInstance().getUserResult().getParent().getPhone();
             if (StringUtil.isNotBlank(phone)) {
                 phoneEt.setText(phone);

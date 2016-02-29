@@ -151,9 +151,10 @@ dependencies {
     compile(name: 'logger-debug', ext: 'aar')   //日志
     compile(name: 'niftymodaldialog-release', ext: 'aar')
     compile(name: 'pulltorefresh-release', ext: 'aar')
-    compile(name: 'alertview-release', ext: 'aar')
     compile(name: 'matchview-release', ext: 'aar')
     compile(name: 'swipeLayout-release', ext: 'aar')
     compile(name: 'circularprogressbar-release', ext: 'aar')
     compile(name: 'ucrop-release', ext: 'aar')
+    compile(name: 'alertview-release', ext: 'aar')
+
 }
