@@ -120,7 +120,7 @@ lib_greendao为本地数据库dao-生成项目
         this.record = record;
     }
 
-3.生成class写的是决定路径需要自行修改
+3.生成class写的是绝对路径需要自行修改
 
     new DaoGenerator().generateAll(schema, "D:\\tengbin\\project\\kndle\\lib_greendao\\src\\main\\java\\dao");
     
