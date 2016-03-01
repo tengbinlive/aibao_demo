@@ -73,8 +73,11 @@ public class DynamicAdapter extends BaseAdapter {
         final DynamicBaseInfo dynamicBaseInfo = bean.getBaseInfo();
         final DynamicContent dynamicContent = bean.getContent();
         String fromType = dynamicBaseInfo.getFromType();
-        boolean isSYS = DynamicBaseInfo.TYPE_SYS.equals(fromType);
-        if (!isSYS) {
+        String thumbType = dynamicBaseInfo.getThumb_type();
+        boolean isFromSYS = DynamicBaseInfo.FROM_TYPE_SYS.equals(fromType);
+        boolean isThumbSYS = DynamicBaseInfo.THUMB_TYPE_SYS.equals(thumbType);
+        viewHolder.name.setText(isFromSYS ? mContext.getString(R.string.sys_name) : dynamicBaseInfo.getAlias());
+        if (!isFromSYS&&!isThumbSYS) {
             Glide.with(mContext).load(dynamicBaseInfo.getHead_thumb()).asBitmap()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .centerCrop()
@@ -104,7 +107,6 @@ public class DynamicAdapter extends BaseAdapter {
                 }
             });
         }
-        viewHolder.name.setText(dynamicBaseInfo.getAlias());
         viewHolder.date.setText(dynamicBaseInfo.getTime());
         viewHolder.desc.setText(dynamicBaseInfo.getFromName());
         String showType = dynamicBaseInfo.getShowType();
@@ -150,7 +152,7 @@ public class DynamicAdapter extends BaseAdapter {
         if ("100104".equals(uid)) return R.mipmap.head_sys_3;
         if ("100105".equals(uid)) return R.mipmap.head_sys_4;
         if ("100106".equals(uid)) return R.mipmap.head_default;
-        return -1;
+        return R.mipmap.head_default;
     }
 
     private void toWEBVIEW(Activity activity, String title, String url) {

@@ -87,6 +87,7 @@
     <string name="time_select">约定 %d 分钟内完成</string>
     <string name="update_get">正在获取更新...</string>
     <string name="download">点击下载</string>
+    <string name="sys_name">麦田</string>
 
     <string name="toast_unexpected_error">未知错误</string>
     <string name="toast_cannot_retrieve_selected_image">图片没找到哦</string>

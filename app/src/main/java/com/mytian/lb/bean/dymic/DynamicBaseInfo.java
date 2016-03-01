@@ -7,9 +7,13 @@ import com.core.openapi.OpenApiSimpleResult;
  */
 public class DynamicBaseInfo extends OpenApiSimpleResult {
 
-    //0：麦宝（需解析uid等） 1：系统.
-    public final static String TYPE_MB = "0";
-    public final static String TYPE_SYS = "1";
+    //来源 类型 0：麦宝（需解析uid等） 1：系统.
+    public final static String FROM_TYPE_MB = "0";
+    public final static String FROM_TYPE_SYS = "1";
+
+    //头像 类型 0：系统 1：自定义.
+    public final static String THUMB_TYPE_SYS = "0";
+    public final static String THUMB_TYPE_HD = "1";
 
     //0：显示文本 1：显示网页.
     public final static String TYPE_TEXT = "0";
