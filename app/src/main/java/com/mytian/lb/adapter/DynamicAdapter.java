@@ -73,7 +73,8 @@ public class DynamicAdapter extends BaseAdapter {
         final DynamicBaseInfo dynamicBaseInfo = bean.getBaseInfo();
         final DynamicContent dynamicContent = bean.getContent();
         String fromType = dynamicBaseInfo.getFromType();
-        if (DynamicBaseInfo.TYPE_SYS.equals(fromType)) {
+        boolean isSYS = DynamicBaseInfo.TYPE_SYS.equals(fromType);
+        if (!isSYS) {
             Glide.with(mContext).load(dynamicBaseInfo.getHead_thumb()).asBitmap()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .centerCrop()
