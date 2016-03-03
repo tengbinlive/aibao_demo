@@ -100,7 +100,7 @@ public class AppManager {
         if (resposne.isSuccess()) {
             sysAppUpgradeResult = (SysAppUpgradeResult) resposne.getData();
             int versioncode = CommonUtil.getAppVersionCode(App.getInstance());
-            if (sysAppUpgradeResult.getVersion() < versioncode) {
+            if (sysAppUpgradeResult.getVersion() > versioncode) {
                 activityHandler.sendEmptyMessageDelayed(APP_DOWNLOAD, 400);
             } else {
                 dialogDismiss();

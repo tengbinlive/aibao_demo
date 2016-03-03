@@ -46,6 +46,8 @@ import com.mytian.lb.helper.AnimatorUtils;
 import com.mytian.lb.manager.AppManager;
 import com.mytian.lb.manager.UserManager;
 import com.mytian.lb.mview.BottomView;
+import com.mytian.lb.push.PushHelper;
+import com.rey.material.widget.CheckBox;
 import com.rey.material.widget.RadioButton;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.yalantis.ucrop.UCrop;
@@ -107,6 +109,9 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
     @Bind(R.id.user_icon)
     RoundedImageView user_icon;
 
+    @Bind(R.id.isdebug)
+    CheckBox isdebug;
+
     private int user_gender = -1;
 
     private int isUpdateSuccess;
@@ -145,6 +150,13 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         String updateStr = mContext.getString(R.string.update);
         if (!BuildConfig.BUILD_TYPE.equals("release")) {
             updateStr = updateStr + "      " + BuildConfig.VERSION_NAME + " for android " + BuildConfig.BUILD_TYPE;
+            isdebug.setVisibility(View.VISIBLE);
+            isdebug.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    PushHelper.isToast = b;
+                }
+            });
         }
         updatetv.setText(updateStr);
     }

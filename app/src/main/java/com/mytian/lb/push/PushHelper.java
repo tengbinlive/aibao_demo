@@ -74,6 +74,8 @@ public class PushHelper {
 
     private long delayedTime = 60 * 1000;
 
+    public static boolean isToast;
+
     public void clearChannelid() {
         UPLOAD_ID_SUCCESS = false;
         pushState = STATE_NORMAL;
@@ -223,7 +225,7 @@ public class PushHelper {
      * @param content
      */
     public void updateContent(String content) {
-        if (Constant.DEBUG) {
+        if (Constant.DEBUG&&isToast) {
             CommonUtil.showToast(content);
         }
         PushResult result = null;

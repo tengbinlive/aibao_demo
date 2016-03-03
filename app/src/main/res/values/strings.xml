@@ -89,6 +89,8 @@
     <string name="download">点击下载</string>
     <string name="sys_name">麦田</string>
 
+    <string name="is_debug">选中后显示推送TOAST</string>
+
     <string name="toast_unexpected_error">未知错误</string>
     <string name="toast_cannot_retrieve_selected_image">图片没找到哦</string>
 

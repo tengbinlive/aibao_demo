@@ -332,6 +332,23 @@
                 android:textColor="@color/textcolor_match"
                 android:textSize="@dimen/font_btn" />
 
+            <com.rey.material.widget.CheckBox
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                style="@style/CheckBoxDrawable"
+                android:id="@+id/isdebug"
+                android:layout_margin="@dimen/content_gap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/content_gap_small"
+                android:text="@string/is_debug"
+                android:textColor="@color/textcolor_theme"
+                android:textSize="@dimen/font_small"
+                android:checked="false"
+                android:visibility="gone"
+                app:cbd_strokeColor="@color/theme"
+                app:cbd_tickColor="@color/white"
+                android:gravity="center_vertical"/>
+
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>
