@@ -1,4 +1,32 @@
-package com.core; /**
+package com.core;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.toolbox.HttpStack;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.ProtocolVersion;
+import org.apache.http.StatusLine;
+import org.apache.http.entity.BasicHttpEntity;
+import org.apache.http.message.BasicHeader;
+import org.apache.http.message.BasicHttpResponse;
+import org.apache.http.message.BasicStatusLine;
+
+import java.io.IOException;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.Call;
+import okhttp3.Headers;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Protocol;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
+
+/**
  * The MIT License (MIT)
  * <p/>
  * Copyright (c) 2015 Circle Internet Financial
@@ -22,35 +50,9 @@ package com.core; /**
  * THE SOFTWARE.
  */
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.toolbox.HttpStack;
-import com.squareup.okhttp.Call;
-import com.squareup.okhttp.Headers;
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Protocol;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
-import com.squareup.okhttp.ResponseBody;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.ProtocolVersion;
-import org.apache.http.StatusLine;
-import org.apache.http.entity.BasicHttpEntity;
-import org.apache.http.message.BasicHeader;
-import org.apache.http.message.BasicHttpResponse;
-import org.apache.http.message.BasicStatusLine;
-
-import java.io.IOException;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
-
-
 /**
- * OkHttp backed {@link com.android.volley.toolbox.HttpStack HttpStack} that does not
- * use okhttp-urlconnection
+ * OkHttp backed {@link HttpStack HttpStack} that
+ * does not use okhttp-urlconnection
  */
 public class OkHttpStack implements HttpStack {
 
@@ -61,16 +63,18 @@ public class OkHttpStack implements HttpStack {
     }
 
     @Override
-    public HttpResponse performRequest(Request<?> request, Map<String, String> additionalHeaders)
-            throws IOException, AuthFailureError {
+    public HttpResponse performRequest(Request<?> request,
+                                       Map<String, String> additionalHeaders) throws IOException, AuthFailureError {
 
-        OkHttpClient client = mClient.clone();
         int timeoutMs = request.getTimeoutMs();
-        client.setConnectTimeout(timeoutMs, TimeUnit.MILLISECONDS);
-        client.setReadTimeout(timeoutMs, TimeUnit.MILLISECONDS);
-        client.setWriteTimeout(timeoutMs, TimeUnit.MILLISECONDS);
+        // okhttp 3.0以后的版本构建OkHttpClient使用Builder
+        OkHttpClient.Builder builder = mClient.newBuilder();
+        builder.connectTimeout(timeoutMs, TimeUnit.MILLISECONDS)
+                .readTimeout(timeoutMs, TimeUnit.MILLISECONDS)
+                .writeTimeout(timeoutMs, TimeUnit.MILLISECONDS);
+        OkHttpClient client = builder.build();
 
-        com.squareup.okhttp.Request.Builder okHttpRequestBuilder = new com.squareup.okhttp.Request.Builder();
+        okhttp3.Request.Builder okHttpRequestBuilder = new okhttp3.Request.Builder();
         okHttpRequestBuilder.url(request.getUrl());
 
         Map<String, String> headers = request.getHeaders();
@@ -78,16 +82,19 @@ public class OkHttpStack implements HttpStack {
             okHttpRequestBuilder.addHeader(name, headers.get(name));
         }
         for (final String name : additionalHeaders.keySet()) {
-            okHttpRequestBuilder.addHeader(name, additionalHeaders.get(name));
+            // 这里用header方法，如果有重复的name，会覆盖，否则某些请求会被判定为非法
+            okHttpRequestBuilder.header(name, additionalHeaders.get(name));
         }
 
         setConnectionParametersForRequest(okHttpRequestBuilder, request);
 
-        com.squareup.okhttp.Request okHttpRequest = okHttpRequestBuilder.build();
+        okhttp3.Request okHttpRequest = okHttpRequestBuilder.build();
         Call okHttpCall = client.newCall(okHttpRequest);
         Response okHttpResponse = okHttpCall.execute();
 
-        StatusLine responseStatus = new BasicStatusLine(parseProtocol(okHttpResponse.protocol()), okHttpResponse.code(), okHttpResponse.message());
+        StatusLine responseStatus = new BasicStatusLine(
+                parseProtocol(okHttpResponse.protocol()), okHttpResponse.code(),
+                okHttpResponse.message());
         BasicHttpResponse response = new BasicHttpResponse(responseStatus);
         response.setEntity(entityFromOkHttpResponse(okHttpResponse));
 
@@ -117,14 +124,17 @@ public class OkHttpStack implements HttpStack {
     }
 
     @SuppressWarnings("deprecation")
-    private static void setConnectionParametersForRequest(com.squareup.okhttp.Request.Builder builder, Request<?> request)
-            throws IOException, AuthFailureError {
+    private static void setConnectionParametersForRequest(
+            okhttp3.Request.Builder builder, Request<?> request) throws IOException,
+            AuthFailureError {
         switch (request.getMethod()) {
             case Request.Method.DEPRECATED_GET_OR_POST:
-                // Ensure backwards compatibility.  Volley assumes a request with a null body is a GET.
+                // Ensure backwards compatibility. Volley assumes a request with
+                // a null body is a GET.
                 byte[] postBody = request.getPostBody();
                 if (postBody != null) {
-                    builder.post(RequestBody.create(MediaType.parse(request.getPostBodyContentType()), postBody));
+                    builder.post(RequestBody.create(
+                            MediaType.parse(request.getPostBodyContentType()), postBody));
                 }
                 break;
             case Request.Method.GET:
@@ -172,8 +182,16 @@ public class OkHttpStack implements HttpStack {
     }
 
     private static RequestBody createRequestBody(Request r) throws AuthFailureError {
-        final byte[] body = r.getBody();
-        if (body == null) return null;
+        byte[] body = r.getBody();
+        if (body == null) {
+            // OkHttp内部默认的的判断逻辑是POST 不能为空，这里做了规避
+            if (r.getMethod() == Request.Method.POST) {
+                body = "".getBytes();
+            }
+            else {
+                return null;
+            }
+        }
 
         return RequestBody.create(MediaType.parse(r.getBodyContentType()), body);
     }

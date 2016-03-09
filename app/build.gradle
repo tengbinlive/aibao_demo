@@ -45,7 +45,6 @@ android {
             buildConfigField "String", "API_HOST", "\"http://www.mytian.com.cn/\""//API Host
             buildConfigField "boolean", "CONFIG_DEBUG", "true"// config info
             buildConfigField "boolean", "LOG_DEBUG", "true"// log info
-            buildConfigField "boolean", "STETHO_DEBUG", "true"// stetho info
             buildConfigField "boolean", "CHANNEL_DEBUG", "true"// channel info
             debuggable true
             minifyEnabled false
@@ -59,7 +58,6 @@ android {
             buildConfigField "String", "API_HOST", "\"http://www.mytian.com.cn/\""//API Host
             buildConfigField "boolean", "CONFIG_DEBUG", "true"// config info
             buildConfigField "boolean", "LOG_DEBUG", "false"// log info
-            buildConfigField "boolean", "STETHO_DEBUG", "false"// stetho info
             buildConfigField "boolean", "CHANNEL_DEBUG", "false"// channel info
             debuggable true
             minifyEnabled false
@@ -73,7 +71,6 @@ android {
             buildConfigField "String", "API_HOST", "\"http://www.mytian.com.cn/\""//API Host
             buildConfigField "boolean", "CONFIG_DEBUG", "false"// config info
             buildConfigField "boolean", "LOG_DEBUG", "false"// log info
-            buildConfigField "boolean", "STETHO_DEBUG", "false"// stetho info
             buildConfigField "boolean", "CHANNEL_DEBUG", "false"// channel info
             debuggable false
             minifyEnabled true
@@ -134,8 +131,6 @@ dependencies {
     compile 'com.pnikosis:materialish-progress:1.5'//material进度条
     compile 'com.mcxiaoke.volley:library:1.0.19'//volley
     compile 'com.alibaba:fastjson:1.1.46.android'//fastjson
-    compile 'com.facebook.stetho:stetho:1.3.0'
-    compile 'com.facebook.stetho:stetho-okhttp:1.3.0'
     compile 'com.bm.photoview:library:1.3.6'
     compile 'com.wdullaer:materialdatetimepicker:2.0.1'
     compile 'com.ogaclejapan.smarttablayout:library:1.4.2@aar'
@@ -144,7 +139,9 @@ dependencies {
     compile 'com.github.cdflynn:crossview:v1.0.1'
     compile 'com.wang.avi:library:1.0.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.github.bumptech.glide:okhttp-integration:1.4.0@aar'
+    compile ('com.github.bumptech.glide:okhttp3-integration:1.4.0') {//glide 使用okhttp3
+        exclude group: 'glide-parent'
+    }
     compile 'com.nhaarman.listviewanimations:lib-core:3.1.0@aar'
     compile 'com.igexin:sdk:+'//    个推
     compile 'com.igexin:getuiext:2.0.3'

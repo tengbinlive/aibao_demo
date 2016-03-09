@@ -66,8 +66,8 @@
 
         <!--Glide-okhttp-->
         <meta-data
-            android:name="com.bumptech.glide.integration.okhttp.OkHttpGlideModule"
-            android:value="GlideModule" />
+            android:name="com.bumptech.glide.integration.okhttp3.OkHttpGlideModule"
+            android:value="GlideModule"/>
 
         <activity
             android:name=".activity.LauncherActivity"

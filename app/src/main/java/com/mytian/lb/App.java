@@ -8,9 +8,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.integration.okhttp.OkHttpUrlLoader;
-import com.bumptech.glide.load.model.GlideUrl;
 import com.core.enums.ConfigKeyEnum;
 import com.core.manager.ConfigManager;
 import com.core.util.FileDataHelper;
@@ -22,7 +19,6 @@ import com.dao.DaoMaster.OpenHelper;
 import com.dao.DaoSession;
 import com.dao.Parent;
 import com.dao.ParentDao;
-import com.facebook.stetho.Stetho;
 import com.mytian.lb.activity.LoginActivity;
 import com.mytian.lb.activityexpand.activity.AnimatedRectLayout;
 import com.mytian.lb.bean.user.UserResult;
@@ -33,9 +29,7 @@ import com.mytian.lb.manager.UserActionDOManager;
 import com.mytian.lb.push.PushHelper;
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
-import com.squareup.okhttp.OkHttpClient;
 
-import java.io.InputStream;
 import java.util.List;
 
 import im.fir.sdk.FIR;
@@ -233,17 +227,8 @@ public class App extends Application {
 
             Constant.DEBUG = BuildConfig.CONFIG_DEBUG;
 
-            if (BuildConfig.STETHO_DEBUG) {
-                Stetho.initialize(Stetho
-                        .newInitializerBuilder(this)
-                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
-                        .enableWebKitInspector(
-                                Stetho.defaultInspectorModulesProvider(this)).build());
-            }
-
             FIR.init(getApplicationContext());
 
-            Glide.get(this).register(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory(new OkHttpClient()));
             //初始化自定义Activity管理器
             activityManager = ActivityManager.getScreenManager();
 

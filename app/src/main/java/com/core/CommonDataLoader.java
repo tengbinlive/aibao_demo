@@ -10,11 +10,9 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.core.enums.CodeEnum;
 import com.core.util.CommonUtil;
-import com.facebook.stetho.okhttp.StethoInterceptor;
 import com.mytian.lb.App;
-import com.mytian.lb.BuildConfig;
-import com.mytian.lb.Constant;
-import com.squareup.okhttp.OkHttpClient;
+
+import okhttp3.OkHttpClient;
 
 /**
  * 通用数据加载类.
@@ -67,11 +65,7 @@ public class CommonDataLoader {
      * @param context App的上下文
      */
     private CommonDataLoader(Context context) {
-        OkHttpClient client = new OkHttpClient();
-        if (BuildConfig.STETHO_DEBUG) {
-            client.networkInterceptors().add(new StethoInterceptor());
-        }
-        mRequestQueue = Volley.newRequestQueue(context, new OkHttpStack(client));
+        mRequestQueue = Volley.newRequestQueue(context, new OkHttpStack(new OkHttpClient()));
         mImageLoader = new ImageLoader(mRequestQueue, new BitmapCache());
     }
 
