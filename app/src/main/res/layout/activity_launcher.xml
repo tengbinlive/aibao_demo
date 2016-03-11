@@ -1,15 +1,29 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/launcher_ly"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/theme"
     android:gravity="center"
     android:orientation="vertical">
 
+    <com.flaviofaria.kenburnsview.KenBurnsView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@mipmap/bg_0" />
+
+    <su.levenetc.android.textsurface.TextSurface
+        android:id="@+id/text_surface"
+        android:layout_above="@+id/welcome_use"
+        android:layout_marginTop="@dimen/content_gap_big"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
     <com.roger.match.library.MatchTextView
         xmlns:match="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/welcome_use"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         match:text="WELCOME USE"
         match:textColor="@color/textcolor_theme" />
 
@@ -17,8 +31,10 @@
         xmlns:match="http://schemas.android.com/apk/res-auto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/content_gap"
+        android:layout_below="@+id/welcome_use"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/content_gap_big"
         match:text="AIBAO"
         match:textColor="@color/textcolor_theme" />
 
-</LinearLayout>
+</RelativeLayout>

@@ -4,7 +4,7 @@ package com.mytian.lb.activity;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.core.util.CommonUtil;
 import com.core.util.StringUtil;
@@ -15,10 +15,14 @@ import com.mytian.lb.App;
 import com.mytian.lb.BuildConfig;
 import com.mytian.lb.R;
 import com.mytian.lb.activityexpand.activity.AnimatedRectLayout;
+import com.mytian.lb.helper.CookieThumperSample;
+import com.mytian.lb.helper.SlideSample;
+import com.mytian.lb.manager.AppManager;
 import com.mytian.lb.push.PushHelper;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import su.levenetc.android.textsurface.TextSurface;
 
 /**
  * 启动界面
@@ -31,7 +35,10 @@ public class LauncherActivity extends AbsActivity {
     private static int statue;
 
     @Bind(R.id.launcher_ly)
-    LinearLayout launcherLy;
+    RelativeLayout launcherLy;
+
+    @Bind(R.id.text_surface)
+    TextSurface textSurface;
 
     @Override
     public void EInit() {
@@ -45,8 +52,19 @@ public class LauncherActivity extends AbsActivity {
         super.EInit();
         setSwipeBackEnable(false);
         statue = App.isFirstLunch() ? TO_GUIDE : TO_LOGIN;
-        long time = statue == TO_GUIDE ? 4000 : 3000;
-        activityHandler.sendEmptyMessageDelayed(statue, time);
+        textSurface.postDelayed(new Runnable() {
+            @Override public void run() {
+                showGuideText();
+            }
+        }, 2000);
+//        long time = statue == TO_GUIDE ? 14000 : 13000;
+//        activityHandler.sendEmptyMessageDelayed(statue, time);
+    }
+
+    private void showGuideText() {
+        textSurface.reset();
+        CookieThumperSample.play(textSurface, getAssets());
+//        SlideSample.play(textSurface);
     }
 
     @Override
@@ -94,6 +112,9 @@ public class LauncherActivity extends AbsActivity {
     }
 
     private void toMain() {
+        if (AppManager.isOUT) {
+            return;
+        }
         Intent intent = new Intent(LauncherActivity.this, MainActivity.class);
         startActivity(intent);
         finish();

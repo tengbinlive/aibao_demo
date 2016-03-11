@@ -16,6 +16,7 @@
     <!--font -->
     <color name="gray_hint">#8F000000</color>
     <color name="gray_background">#fff1f1f1</color>
+    <color name="textcolor_white">#FFFFFFFF</color>
     <color name="textcolor_theme">#FF333333</color>
     <color name="textcolor_match">#DE333333</color>
 

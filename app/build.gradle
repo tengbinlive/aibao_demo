@@ -5,18 +5,18 @@ apply plugin: 'com.droidtitan.lintcleaner'
 def versionMajor = 2
 def versionMinor = 0
 def versionPatch = 3
-def versionBuild = 65 // bump for dogfood builds, public betas, etc.
+def versionBuild = 66 // bump for dogfood builds, public betas, etc.
 
 android {
 
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
 
     defaultConfig {
         applicationId "com.mytian.lb"
 //      解决Android L上通知显示异常问题，targetSdkVersion需要设置成22
         minSdkVersion 15
-        targetSdkVersion 22
+        targetSdkVersion 23
 
         versionCode versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
         versionName "v${versionMajor}.${versionMinor}.${versionPatch}.${versionBuild}"
@@ -98,6 +98,14 @@ android {
         disable 'InvalidPackage'
     }
 
+    dexOptions {
+        incremental = true;
+        preDexLibraries = false
+        javaMaxHeapSize "4g"
+    }
+
+    useLibrary 'org.apache.http.legacy'
+
 }
 
 repositories {
@@ -120,7 +128,7 @@ lintCleaner {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile fileTree(dir: 'libs_share', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:22.1.1'
+    compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'im.fir:fir-sdk:latest.integration@aar'//bug 收集
     compile 'org.greenrobot:eventbus:3.0.0'//事件派发
     compile 'com.squareup.okhttp3:okhttp:3.2.0'// okhttp 网络处理
@@ -142,7 +150,12 @@ dependencies {
     compile ('com.github.bumptech.glide:okhttp3-integration:1.4.0') {//glide 使用okhttp3
         exclude group: 'glide-parent'
     }
+    compile (group: 'org.apache.httpcomponents' , name: 'httpmime' , version: '4.2.5') {
+        exclude module: 'org.apache.httpcomponents:httpclient'
+    }
     compile 'com.nhaarman.listviewanimations:lib-core:3.1.0@aar'
+    compile 'com.flaviofaria:kenburnsview:1.0.7'
+    compile 'com.github.elevenetc:textsurface:0.9.1'
     compile 'com.igexin:sdk:+'//    个推
     compile 'com.igexin:getuiext:2.0.3'
     compile(name: 'logger-debug', ext: 'aar')   //日志

@@ -112,24 +112,6 @@ public class DeviceUtil {
 	}
 
 	/**
-	 * 获得设备IMEI编号
-	 * 
-	 * @param context 上下文
-	 * @return 返回IMEI编号
-	 */
-	public static String getIMEI(Context context) {
-		TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-		String imei = tm.getDeviceId();
-		if (null != imei && !SPECIAL_IMEI.equals(imei)) {
-			return imei;
-		} else {
-			String deviceId = Secure.getString(context.getContentResolver(), Secure.ANDROID_ID);
-			if (null != deviceId) { return deviceId; }
-		}
-		return "";
-	}
-
-	/**
 	 * 获得手机类型.
 	 *
 	 * @return 返回手机类型

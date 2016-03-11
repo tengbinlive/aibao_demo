@@ -174,12 +174,6 @@ public class App extends Application {
         return ConfigManager.getConfigAsString(ConfigKeyEnum.MOBILE_TYPE);
     }
 
-    /**
-     * @return 返回IMEI
-     */
-    public static String getIMEI() {
-        return ConfigManager.getConfigAsString(ConfigKeyEnum.IMEI);
-    }
 
     /**
      * @return 返回屏幕 宽

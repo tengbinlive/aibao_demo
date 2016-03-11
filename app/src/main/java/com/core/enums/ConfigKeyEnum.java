@@ -8,8 +8,6 @@ package com.core.enums;
 public enum ConfigKeyEnum {
 	/** 设备ID */
 	DEVICE_ID,
-	/** IMEI */
-	IMEI,
 	/** 手机型号 */
 	MOBILE_TYPE,
 	/** 屏幕-宽 */

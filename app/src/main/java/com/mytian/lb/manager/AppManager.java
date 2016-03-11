@@ -30,9 +30,9 @@ import com.mytian.lb.bean.user.SysAppUpgradeResult;
  */
 public class AppManager {
 
-    private boolean isChecking; //版本更新对话框 是否显示
+    private static boolean isChecking; //版本更新对话框 是否显示
 
-    private boolean isOUT; //重新登录对话框 是否显示
+    public static boolean isOUT; //重新登录对话框 是否显示
 
     private UserManager manager = new UserManager();
 
