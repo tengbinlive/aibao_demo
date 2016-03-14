@@ -28,7 +28,7 @@ import su.levenetc.android.textsurface.interfaces.ISurfaceAnimation;
 public class ShapeRevealSample {
 
     private static int fontSize = 19;
-    private static int fontColor = 0xff333333;
+    private static int fontColor = 0x3b3733;
 
     public static void play(TextSurface textSurface, final ECallOnClick onClick) {
 
