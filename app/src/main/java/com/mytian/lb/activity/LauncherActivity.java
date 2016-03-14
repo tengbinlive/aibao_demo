@@ -81,6 +81,7 @@ public class LauncherActivity extends AbsActivity {
             return;
         }
         launcherLy.setEnabled(false);
+        textSurface.clearAnimation();
         activityHandler.removeMessages(statue);
         statue = TO_LOGIN;
         activityHandler.sendEmptyMessage(statue);

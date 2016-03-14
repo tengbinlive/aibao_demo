@@ -57,11 +57,6 @@ public class LoginActivity extends AnimatedRectActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        App.getInstance().exit();
-    }
-
-    @Override
     public void animationStartEnd() {
         App.getInstance().activityManager.popOneActivityExcept(MainActivity.class);
     }
