@@ -2,24 +2,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.handmark.pulltorefresh.PullToRefreshListView
-        xmlns:ptr="http://schemas.android.com/apk/res-auto"
-        style="@style/ListViewTheme"
-        android:id="@+id/listview_pr"
+    <com.mytian.lb.mview.CodeView
+        android:id="@+id/mcodeview"
+        android:layerType="hardware"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:background="@color/theme_bg_layout"
-        ptr:ptrAnimationStyle="flip"
-        ptr:ptrMode="both" />
-
-    <TextView
-        android:id="@+id/ll_listEmpty"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:lineSpacingMultiplier="1.4"
-        android:text="@string/list_empty"
-        android:textColor="@color/gray"
-        android:textSize="@dimen/font_medium" />
+        android:layout_height="match_parent"/>
 
 </RelativeLayout>
