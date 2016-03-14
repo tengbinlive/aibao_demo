@@ -6,6 +6,7 @@ import com.alibaba.fastjson.TypeReference;
 import com.core.CommonResponse;
 import com.core.enums.CodeEnum;
 import com.core.util.StringUtil;
+import com.mytian.lb.App;
 import com.mytian.lb.manager.AppManager;
 import com.orhanobut.logger.Logger;
 
@@ -46,7 +47,7 @@ public class OpenApiParser {
                 mesg = jsonObject.getString(JSON_ELEMENT_MESG);
 
                 // 先判断code
-                if (StringUtil.isNotBlank(code) && JSON_VALUE_OUT_CODE.equals(code)) {
+                if (!App.getInstance().isNoAccount()&&StringUtil.isNotBlank(code) && JSON_VALUE_OUT_CODE.equals(code)) {
                     AppManager manager = new AppManager();
                     manager.reLoginApp();
                     response.setData(null);

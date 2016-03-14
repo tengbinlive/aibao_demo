@@ -128,6 +128,24 @@
             android:textColor="@color/gray"
             android:textSize="@dimen/font_btn" />
 
+        <com.rey.material.widget.CheckBox
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            style="@style/CheckBoxDrawable"
+            android:id="@+id/isnoaccount"
+            android:layout_margin="@dimen/content_gap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/content_10dp"
+            android:padding="@dimen/content_gap_small"
+            android:text="@string/is_no_account"
+            android:textColor="@color/textcolor_theme"
+            android:textSize="@dimen/font_small"
+            android:checked="false"
+            android:visibility="gone"
+            app:cbd_strokeColor="@color/theme"
+            app:cbd_tickColor="@color/white"
+            android:gravity="center_vertical"/>
+
     </LinearLayout>
 
 </RelativeLayout>

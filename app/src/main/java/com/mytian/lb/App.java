@@ -65,6 +65,8 @@ public class App extends Application {
 
     private String cookie;
 
+    private boolean isNoAccount;
+
     private String appoint_time;
 
     public String getAppoint_time() {
@@ -97,6 +99,14 @@ public class App extends Application {
 
     public void setUserResult(UserResult userResult) {
         this.userResult = userResult;
+    }
+
+    public boolean isNoAccount() {
+        return isNoAccount;
+    }
+
+    public void setIsNoAccount(boolean isNoAccount) {
+        this.isNoAccount = isNoAccount;
     }
 
     /**

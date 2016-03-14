@@ -91,6 +91,8 @@
 
     <string name="is_debug">选中后显示推送TOAST</string>
 
+    <string name="is_no_account">无帐号登录</string>
+
     <string name="toast_unexpected_error">未知错误</string>
     <string name="toast_cannot_retrieve_selected_image">图片没找到哦</string>
 

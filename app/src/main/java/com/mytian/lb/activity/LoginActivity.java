@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -23,12 +24,15 @@ import com.dao.ParentDao;
 import com.gitonway.lee.niftymodaldialogeffects.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.NiftyDialogBuilder;
 import com.mytian.lb.App;
+import com.mytian.lb.BuildConfig;
 import com.mytian.lb.R;
 import com.mytian.lb.activityexpand.activity.AnimatedRectActivity;
 import com.mytian.lb.bean.user.UserResult;
 import com.mytian.lb.helper.AnimationHelper;
 import com.mytian.lb.manager.LoginManager;
 import com.mytian.lb.mview.EditTextWithDelete;
+import com.mytian.lb.push.PushHelper;
+import com.rey.material.widget.CheckBox;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -47,6 +51,8 @@ public class LoginActivity extends AnimatedRectActivity {
     EditTextWithDelete phoneEt;
     @Bind(R.id.password_et)
     EditTextWithDelete passwordEt;
+    @Bind(R.id.isnoaccount)
+    CheckBox isNoAccount;
 
     private String phone;
     private String password;
@@ -89,6 +95,10 @@ public class LoginActivity extends AnimatedRectActivity {
 
     @OnClick(R.id.login_bt)
     void login() {
+        if(App.getInstance().isNoAccount()){
+            loginSuccess(UserResult.testData());
+            return;
+        }
         phone = phoneEt.getText().toString();
         if (StringUtil.isBlank(phone) || !StringUtil.checkMobile(phone)) {
             AnimationHelper.getInstance().viewAnimationQuiver(phoneEt);
@@ -121,6 +131,15 @@ public class LoginActivity extends AnimatedRectActivity {
                 phoneEt.setText(phone);
                 phoneEt.setSelection(phone.length());
             }
+        }
+        if (BuildConfig.DEBUG) {
+            isNoAccount.setVisibility(View.VISIBLE);
+            isNoAccount.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    App.getInstance().setIsNoAccount(b);
+                }
+            });
         }
     }
 
@@ -179,14 +198,18 @@ public class LoginActivity extends AnimatedRectActivity {
         dialogDismiss();
         if (resposne.isSuccess()) {
             UserResult result = (UserResult) resposne.getData();
-            App.getInstance().setUserResult(result);
-            ParentDao dao = App.getDaoSession().getParentDao();
-            dao.deleteAll();
-            dao.insertInTx(result.getParent());
-            toMain();
+            loginSuccess(result);
         } else {
             CommonUtil.showToast(resposne.getMsg());
         }
+    }
+
+    private void loginSuccess(UserResult result) {
+        App.getInstance().setUserResult(result);
+        ParentDao dao = App.getDaoSession().getParentDao();
+        dao.deleteAll();
+        dao.insertInTx(result.getParent());
+        toMain();
     }
 
     private final static int LOGIN_ING = 3;
