@@ -13,9 +13,9 @@
 
     <su.levenetc.android.textsurface.TextSurface
         android:id="@+id/text_surface"
-        android:layout_above="@+id/welcome_use"
         android:layout_marginTop="@dimen/content_gap_big"
         android:layout_width="match_parent"
+        android:layout_alignBottom="@+id/welcome_use"
         android:layout_height="match_parent"/>
 
     <com.roger.match.library.MatchTextView
@@ -29,6 +29,7 @@
 
     <com.roger.match.library.MatchTextView
         xmlns:match="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/aibao"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/welcome_use"

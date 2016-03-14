@@ -15,8 +15,8 @@ import com.mytian.lb.App;
 import com.mytian.lb.BuildConfig;
 import com.mytian.lb.R;
 import com.mytian.lb.activityexpand.activity.AnimatedRectLayout;
-import com.mytian.lb.helper.CookieThumperSample;
-import com.mytian.lb.helper.SlideSample;
+import com.mytian.lb.helper.ShapeRevealSample;
+import com.mytian.lb.imp.ECallOnClick;
 import com.mytian.lb.manager.AppManager;
 import com.mytian.lb.push.PushHelper;
 
@@ -33,6 +33,8 @@ public class LauncherActivity extends AbsActivity {
     private final static int TO_GUIDE = 1;
 
     private static int statue;
+
+    private boolean isFirstLunch;
 
     @Bind(R.id.launcher_ly)
     RelativeLayout launcherLy;
@@ -51,20 +53,20 @@ public class LauncherActivity extends AbsActivity {
         PushHelper.getInstance().initPush();
         super.EInit();
         setSwipeBackEnable(false);
-        statue = App.isFirstLunch() ? TO_GUIDE : TO_LOGIN;
-        textSurface.postDelayed(new Runnable() {
-            @Override public void run() {
-                showGuideText();
-            }
-        }, 2000);
-//        long time = statue == TO_GUIDE ? 14000 : 13000;
-//        activityHandler.sendEmptyMessageDelayed(statue, time);
+        isFirstLunch = App.isFirstLunch();
+        statue = TO_GUIDE;
+        long time = 2000;
+        activityHandler.sendEmptyMessageDelayed(statue, time);
     }
 
     private void showGuideText() {
         textSurface.reset();
-        CookieThumperSample.play(textSurface, getAssets());
-//        SlideSample.play(textSurface);
+        ShapeRevealSample.play(textSurface, new ECallOnClick() {
+            @Override
+            public void callOnClick() {
+                toLogining();
+            }
+        });
     }
 
     @Override
@@ -75,9 +77,12 @@ public class LauncherActivity extends AbsActivity {
 
     @OnClick(R.id.launcher_ly)
     void OnClickActivity() {
+        if (isFirstLunch) {
+            return;
+        }
         launcherLy.setEnabled(false);
         activityHandler.removeMessages(statue);
-        statue = App.isFirstLunch() ? TO_GUIDE : TO_LOGIN;
+        statue = TO_LOGIN;
         activityHandler.sendEmptyMessage(statue);
     }
 
@@ -97,18 +102,24 @@ public class LauncherActivity extends AbsActivity {
         if (null != parent) {
             toMain();
         } else {
-            Intent intent = new Intent(this, LoginActivity.class);
-            intent.putExtra("animation_type", AnimatedRectLayout.ANIMATION_WAVE_TR);
-            startActivity(intent);
-            overridePendingTransition(0, 0);
+            toLoginActivity();
         }
     }
 
-    private void toGuide() {
+    private void toLoginActivity() {
         Intent intent = new Intent(this, LoginActivity.class);
         intent.putExtra("animation_type", AnimatedRectLayout.ANIMATION_WAVE_TR);
         startActivity(intent);
         overridePendingTransition(0, 0);
+    }
+
+    private void toGuide() {
+        textSurface.post(new Runnable() {
+            @Override
+            public void run() {
+                showGuideText();
+            }
+        });
     }
 
     private void toMain() {

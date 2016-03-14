@@ -48,6 +48,7 @@
    public void *(android.view.View);
 }
 
+-keep class su.levenetc.android.textsurface.** { *; }
 
 -dontwarn android.support.v4.**
 -dontwarn android.annotation
