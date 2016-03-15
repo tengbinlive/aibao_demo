@@ -267,7 +267,7 @@ public class App extends Application {
 
             BlockCanary.install(this, new AppBlockCanaryContext()).start();
 
-            FIR.init(getApplicationContext());
+            FIR.init(this);
 
             //初始化自定义Activity管理器
             activityManager = ActivityManager.getScreenManager();
