@@ -128,6 +128,14 @@ lintCleaner {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile fileTree(dir: 'libs_share', include: ['*.jar'])
+    // 仅在debug包启用leakcanary进行内存监控和提示
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta1'
+    alphaCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta1'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta1'
+    // 仅在debug包启用blockcanary进行卡顿监控和提示
+    debugCompile 'com.github.moduth:blockcanary-ui:1.1.4'
+    alphaCompile 'com.github.moduth:blockcanary-no-op:1.1.4'
+    releaseCompile 'com.github.moduth:blockcanary-no-op:1.1.4'
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'im.fir:fir-sdk:latest.integration@aar'//bug 收集
     compile 'org.greenrobot:eventbus:3.0.0'//事件派发

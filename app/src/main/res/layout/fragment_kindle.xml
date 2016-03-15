@@ -2,11 +2,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.mytian.lb.mview.CodeView
-        android:id="@+id/mcodeview"
-        android:layerType="hardware"
-        android:layout_width="match_parent"
-        android:background="@color/theme_bg_layout"
-        android:layout_height="match_parent"/>
+
 
 </RelativeLayout>

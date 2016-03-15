@@ -16,6 +16,7 @@ import com.gitonway.lee.niftymodaldialogeffects.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.NiftyDialogBuilder;
 import com.mytian.lb.event.AnyEventType;
 import com.mytian.lb.imp.EInitFragmentDate;
+import com.squareup.leakcanary.RefWatcher;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -59,6 +60,8 @@ public abstract class AbsFragment extends Fragment implements EInitFragmentDate 
     public void onDestroy() {
         dialogDismiss();
         super.onDestroy();
+        RefWatcher refWatcher = App.getInstance().getRefWatcher(getActivity());
+        refWatcher.watch(this);
     }
 
     @Override

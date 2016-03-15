@@ -6,7 +6,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.ApplicationInfo;
 import android.net.ConnectivityManager;
+import android.os.StrictMode;
 
 import com.core.enums.ConfigKeyEnum;
 import com.core.manager.ConfigManager;
@@ -19,6 +21,9 @@ import com.dao.DaoMaster.OpenHelper;
 import com.dao.DaoSession;
 import com.dao.Parent;
 import com.dao.ParentDao;
+import com.debug.AppBlockCanaryContext;
+import com.debug.StrictModeWrapper;
+import com.github.moduth.blockcanary.BlockCanary;
 import com.mytian.lb.activity.LoginActivity;
 import com.mytian.lb.activityexpand.activity.AnimatedRectLayout;
 import com.mytian.lb.bean.user.UserResult;
@@ -29,6 +34,8 @@ import com.mytian.lb.manager.UserActionDOManager;
 import com.mytian.lb.push.PushHelper;
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 
 import java.util.List;
 
@@ -68,6 +75,13 @@ public class App extends Application {
     private boolean isNoAccount;
 
     private String appoint_time;
+
+    private RefWatcher refWatcher;
+
+    public static RefWatcher getRefWatcher(Context context) {
+        App application = (App) context.getApplicationContext();
+        return application.refWatcher;
+    }
 
     public String getAppoint_time() {
         return appoint_time;
@@ -220,16 +234,38 @@ public class App extends Application {
         return ConfigManager.getConfigAsBoolean(ConfigKeyEnum.IS_FIRST_LUNCH);
     }
 
+    private static boolean strictModeAvailable;
+    static {
+        try {
+            StrictModeWrapper.checkAvailable();
+            strictModeAvailable = true;
+        } catch (Throwable throwable) {
+            strictModeAvailable = false;
+        }
+    }
 
     @Override
     public void onCreate() {
         super.onCreate();
-        instance = this;
 
         // 多进程情况只初始化一次
         if (ProcessUtil.isCurMainProcess(getApplicationContext())) {
 
+            instance = this;
+
             Constant.DEBUG = BuildConfig.CONFIG_DEBUG;
+
+            if (strictModeAvailable) {
+                // check if android:debuggable is set to true
+                int applicationFlags = getApplicationInfo().flags;
+                if (BuildConfig.DEBUG&&((applicationFlags & ApplicationInfo.FLAG_DEBUGGABLE) != 0)) {
+                    StrictModeWrapper.enableDefaults();
+                }
+            }
+
+            refWatcher = LeakCanary.install(this);
+
+            BlockCanary.install(this, new AppBlockCanaryContext()).start();
 
             FIR.init(getApplicationContext());
 
