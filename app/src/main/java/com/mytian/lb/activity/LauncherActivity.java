@@ -129,9 +129,16 @@ public class LauncherActivity extends AbsActivity {
         }
         Intent intent = new Intent(LauncherActivity.this, MainActivity.class);
         startActivity(intent);
-        finish();
     }
 
+    @Override
+    public void EDestroy() {
+        super.EDestroy();
+        activityHandler.removeMessages(statue);
+        activityHandler = null;
+        textSurface.clearAnimation();
+        textSurface = null;
+    }
 
     private Handler activityHandler = new Handler() {
         public void handleMessage(Message msg) {

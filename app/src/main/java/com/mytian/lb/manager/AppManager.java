@@ -14,14 +14,20 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.core.CommonResponse;
+import com.alibaba.fastjson.JSON;
 import com.core.util.CommonUtil;
+import com.core.util.DateUtil;
 import com.core.util.StringUtil;
 import com.gitonway.lee.niftymodaldialogeffects.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.NiftyDialogBuilder;
 import com.mytian.lb.App;
+import com.mytian.lb.BuildConfig;
+import com.mytian.lb.Constant;
 import com.mytian.lb.R;
 import com.mytian.lb.bean.user.SysAppUpgradeResult;
+
+import im.fir.sdk.FIR;
+import im.fir.sdk.VersionCheckCallback;
 
 /**
  * app 业务类  （更新&退出）.
@@ -34,20 +40,44 @@ public class AppManager {
 
     public static boolean isOUT; //重新登录对话框 是否显示
 
-    private UserManager manager = new UserManager();
-
     private NiftyDialogBuilder dialogBuilder;
 
     private SysAppUpgradeResult sysAppUpgradeResult;
 
+
     /**
      * 版本更新
      */
-    public void updateVersion(NiftyDialogBuilder dialogBuilder) {
+    public void updateVersion(NiftyDialogBuilder _dialogBuilder) {
         if (!isChecking) {
-            this.dialogBuilder = dialogBuilder;
+            this.dialogBuilder = _dialogBuilder;
             isChecking = true;
-            manager.checkNewVersion(App.getInstance(), activityHandler, APP_UPDATE);
+            FIR.checkForUpdateInFIR(Constant.FIR_API_TOKEN, new VersionCheckCallback() {
+                @Override
+                public void onSuccess(String versionJson) {
+                    sysAppUpgradeResult = JSON.parseObject(versionJson, SysAppUpgradeResult.class);
+                    if (sysAppUpgradeResult.getVersion() > BuildConfig.VERSION_CODE) {
+                        activityHandler.sendEmptyMessage(APP_DOWNLOAD);
+                    } else {
+                        CommonUtil.showToast(R.string.version_new);
+                    }
+                }
+
+                @Override
+                public void onFail(Exception exception) {
+                    CommonUtil.showToast(R.string.version_fail);
+                }
+
+                @Override
+                public void onStart() {
+                }
+
+                @Override
+                public void onFinish() {
+                    isChecking = false;
+                    dialogBuilder.dismiss();
+                }
+            });
         }
     }
 
@@ -61,7 +91,6 @@ public class AppManager {
         }
     }
 
-    private final static int APP_UPDATE = 0;
     private final static int APP_RELOGIN = 1;
     private final static int APP_DOWNLOAD = 4;
     private final static int DIALOGSHOW = 2;
@@ -70,9 +99,6 @@ public class AppManager {
     private Handler activityHandler = new Handler(Looper.getMainLooper()) {
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                case APP_UPDATE:
-                    loadUpdate((CommonResponse) msg.obj);
-                    break;
                 case APP_RELOGIN:
                     dialogOUT();
                     break;
@@ -95,29 +121,13 @@ public class AppManager {
         }
     };
 
-    private void loadUpdate(CommonResponse resposne) {
-        isChecking = false;
-        if (resposne.isSuccess()) {
-            sysAppUpgradeResult = (SysAppUpgradeResult) resposne.getData();
-            int versioncode = CommonUtil.getAppVersionCode(App.getInstance());
-            if (sysAppUpgradeResult.getVersion() > versioncode) {
-                activityHandler.sendEmptyMessageDelayed(APP_DOWNLOAD, 400);
-            } else {
-                dialogDismiss();
-                CommonUtil.showToast("已是最新版");
-            }
-        } else {
-            dialogDismiss();
-            CommonUtil.showToast(resposne.getMsg());
-        }
-    }
-
     private void dialogDownload() {
         StringBuffer versionInfo = new StringBuffer();
-        versionInfo.append("爱宝.").append("\n\n")
-                .append("发现新的版本").append("\n\n")
-                .append("版本编号：" + sysAppUpgradeResult.getVersion());
-        dialogUpdate(versionInfo.toString(), sysAppUpgradeResult.getUrl());
+        versionInfo.append(sysAppUpgradeResult.getName()).append("\n\n")
+                .append("更新时间：").append(DateUtil.TimeDES(App.getInstance(), sysAppUpgradeResult.getUpdated_at())).append("\n\n")
+                .append("更新日志：").append(sysAppUpgradeResult.getChangelog()).append("\n\n")
+                .append("版本编号：" + sysAppUpgradeResult.getVersionShort());
+        dialogUpdate(versionInfo.toString(), sysAppUpgradeResult.getInstallUrl());
     }
 
     private void dialogOUT() {

@@ -1,6 +1,7 @@
 package com.debug;
 
 import com.github.moduth.blockcanary.BlockCanaryContext;
+import com.mytian.lb.App;
 import com.mytian.lb.BuildConfig;
 
 /**
@@ -27,7 +28,7 @@ public class AppBlockCanaryContext extends BlockCanaryContext {
 
     @Override
     public String getNetworkType() {
-        return "4G";
+        return App.getCurrentNetworkStatus().getDesc();
     }
 
     @Override

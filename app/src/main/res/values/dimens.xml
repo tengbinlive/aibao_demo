@@ -51,7 +51,6 @@
 
     <!--progress-->
     <dimen name="progress_radius">30dp</dimen>
-    <dimen name="progress_radius45">45dp</dimen>
     <dimen name="progress_thickness">3dp</dimen>
     <dimen name="progress_radius_big">45dp</dimen>
 

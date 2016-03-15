@@ -1,11 +1,16 @@
 package com.core.util;
 
+import android.content.Context;
+
+import com.mytian.lb.R;
+
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * 日期时间工具类.
@@ -142,6 +147,12 @@ public class DateUtil {
 	}
 
 	// 把日期转为字符串
+	public static String ConverToString(Date date,String type) {
+		SimpleDateFormat df = new SimpleDateFormat(type);
+		return df.format(date);
+	}
+
+	// 把日期转为字符串
 	public static String ConverToString(Long date,String type) {
 		SimpleDateFormat df = new SimpleDateFormat(type);
 		return df.format(date);
@@ -180,6 +191,39 @@ public class DateUtil {
 
 		result=format.parse(date);
 
+		return result;
+	}
+
+	/**
+	 * 时间 描述
+	 * @param context
+	 * @param timeStr
+	 * @return
+	 */
+	public static String TimeDES(Context context, String timeStr) {
+		String result = null;
+		long misc = -1;
+		long miscSou = -1;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSS'Z'");
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+		try {
+			miscSou = sdf.parse(timeStr).getTime();
+			misc = miscSou + 8 * 60 * 60;
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		long timeTemp = System.currentTimeMillis() - misc;
+		long time = timeTemp / (1000 * 60);
+		if (time < 3) {
+			result = context.getString(R.string.just);
+		} else if (time >= 1 && time < 60) {
+			result = String.format(context.getString(R.string.min_before), time);
+		} else if (time >= 60 && time < (60 * 24)) {
+			result = String.format(context.getString(R.string.hour_before), time / 60);
+		} else {
+			result = df.format(new Date(miscSou));
+		}
 		return result;
 	}
 

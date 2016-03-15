@@ -368,12 +368,11 @@ public class App extends Application {
         }
         PushHelper.getInstance().clearChannelid();
         cookie = null;
-        Activity activity = activityManager.currentActivity();
-        Intent intent = new Intent(activity, LoginActivity.class);
+        Intent intent = new Intent(currentActivity, LoginActivity.class);
         intent.putExtra("animation_type", AnimatedRectLayout.ANIMATION_WAVE_TL);
         intent.putExtra("login", isCancle);
-        activity.startActivity(intent);
-        activity.overridePendingTransition(0, 0);
+        currentActivity.startActivity(intent);
+        currentActivity.overridePendingTransition(0, 0);
     }
 
     @Override

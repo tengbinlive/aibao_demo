@@ -205,6 +205,7 @@ public abstract class AbsActivity extends SwipeBackActivity implements EInitDate
         activityFinish = true;
         super.onDestroy();
         EDestroy();
+        App.getInstance().activityManager.popActivity(this);
         if (Constant.DEBUG) {
             ViewServer.get(this).removeWindow(this);
         }
@@ -370,7 +371,6 @@ public abstract class AbsActivity extends SwipeBackActivity implements EInitDate
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        App.getInstance().activityManager.popActivity(this);
     }
 
     private final static int DIALOGSHOW = 1;

@@ -28,6 +28,7 @@ public class ActivityManager {
             //在从自定义集合中取出当前Activity时，也进行了Activity的关闭操作
             activityStack.remove(activity);
             activity.finish();
+            activity = null;
         }
     }
 
