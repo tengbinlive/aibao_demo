@@ -36,9 +36,8 @@ public class OpenApiParser {
      */
     public static Object parseFromJson(String str, TypeReference<?> typeToken, CommonResponse response, boolean rawData) {
         Object obj = null;
-        String mesg = "";
+        String mesg;
         if (str != null) {
-            try {
                 if (rawData) response.setRawData(str);
 
                 JSONObject jsonObject = JSON.parseObject(str);
@@ -48,36 +47,21 @@ public class OpenApiParser {
 
                 // 先判断code
                 if (!App.getInstance().isNoAccount()&&StringUtil.isNotBlank(code) && JSON_VALUE_OUT_CODE.equals(code)) {
-                    AppManager manager = new AppManager();
-                    manager.reLoginApp();
+                    AppManager.getInstance().reLoginApp();
                     response.setData(null);
                     response.setCodeEnum(CodeEnum.LOGIN_REQUIRED);
                 } else if (StringUtil.isBlank(code) || !JSON_VALUE_SUCCESS_CODE.equals(code)) {
                     response.setData(null);
                     response.setCode(code);
-                    response.setMsg(StringUtil.isBlank(mesg) ? mesg : mesg);
+                    response.setMsg(mesg);
                 }
                 // 返回的结果为成功数据
                 else {
                     obj = JSON.parseObject(str, typeToken);
                     response.setData(obj);
-                    response.setMsg(StringUtil.isBlank(mesg) ? mesg : mesg);
+                    response.setMsg(mesg);
                     response.setCodeEnum(CodeEnum.SUCCESS);
                 }
-            } catch (Exception e) {
-                response.setData(null);
-                response.setCode(CodeEnum.EXCEPTION.getCode());
-                String mes = StringUtil.isBlank(mesg)?e.getLocalizedMessage():mesg;
-                response.setMsg(mes);
-                Logger.e(str);
-            } catch (OutOfMemoryError e) {
-                System.gc();
-                response.setData(null);
-                response.setCode(CodeEnum.EXCEPTION.getCode());
-                String mes = StringUtil.isBlank(mesg)?e.getLocalizedMessage():mesg;
-                response.setMsg(mes);
-                Logger.e(str);
-            }
         }
         return obj;
     }

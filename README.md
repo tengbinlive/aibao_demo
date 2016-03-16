@@ -38,8 +38,6 @@ build
     buildConfigField "boolean", "CONFIG_DEBUG", "false"// config info
     配置日志输出
     buildConfigField "boolean", "LOG_DEBUG", "false"// log info
-    配置web联调
-    buildConfigField "boolean", "STETHO_DEBUG", "false"// stetho info
     配置渠道信息输出
     buildConfigField "boolean", "CHANNEL_DEBUG", "false"// channel info
 

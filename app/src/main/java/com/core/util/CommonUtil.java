@@ -48,8 +48,6 @@ public class CommonUtil {
 
     private static final int MAX_DECODE_PICTURE_SIZE = 1920 * 1440;
 
-    public static Toast mToast;
-
     /**
      * 根据生日字符串返回数字数组,分别表示年月日
      *
@@ -60,9 +58,9 @@ public class CommonUtil {
         int[] date = new int[3];
         if (StringUtil.isNotEmpty(birthday)) {
             String str[] = birthday.split("-");
-            date[0] = Integer.valueOf(str[0]);
-            date[1] = Integer.valueOf(str[1]);
-            date[2] = Integer.valueOf(str[2]);
+            date[0] = Integer.parseInt(str[0]);
+            date[1] = Integer.parseInt(str[1]);
+            date[2] = Integer.parseInt(str[2]);
         }
         return date;
     }
@@ -363,7 +361,7 @@ public class CommonUtil {
     }
 
     private static void showToast(Context context, String msg, int time) {
-        mToast = Toast.makeText(context, msg, time);
+        Toast mToast = Toast.makeText(context, msg, time);
 //		toast.setGravity(Gravity.CENTER, 0, 0);
         mToast.show();
     }

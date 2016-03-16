@@ -145,7 +145,7 @@ public class ShowPictureActivity extends AbsActivity {
         }
     };
 
-    class PictureAdapter extends PagerAdapter {
+    static class PictureAdapter extends PagerAdapter {
 
         List<ViewGroup> mViews;
 

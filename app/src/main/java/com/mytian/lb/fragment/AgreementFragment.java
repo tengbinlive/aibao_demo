@@ -268,7 +268,7 @@ public class AgreementFragment extends AbsFragment {
         String content = SharedPreferencesHelper.getString(mContext, sharedKey, "");
         if (StringUtil.isNotBlank(content)) {
             String[] strings = StringUtil.split(content, SPLIT_KEY);
-            actionEndTime = Long.valueOf(strings[0]);
+            actionEndTime = Long.parseLong(strings[0]);
             DKEY_TIME = Long.valueOf(strings[1]);
             cureentAction = JSON.parseObject(strings[2], UserAction.class);
             long currentTime = System.currentTimeMillis();

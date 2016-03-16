@@ -26,7 +26,7 @@ public final class FileDataHelper {
         SimpleDateFormat sdf = new SimpleDateFormat();
         sdf.applyPattern("yyyyMMdd_HHmmsss");
         StringBuilder result = new StringBuilder("IMG_");
-        result.append(sdf.format(new Date()) + (int) (Math.random() * 100)).append(suffix);
+        result.append(sdf.format(new Date())).append(suffix);
         return result.toString();
     }
 
@@ -54,7 +54,6 @@ public final class FileDataHelper {
             if (root == null) {
                 rootFile = new File(Constant.Dir.ROOT_DIR);
                 if (rootFile.exists()) {
-                    root = rootFile.toString();
                     Logger.d("/flase is using!");
                 } else {
                     Logger.d("/flase not use!");
@@ -133,8 +132,9 @@ public final class FileDataHelper {
         }
         flag = true;
         File[] files = dirFile.listFiles();
+        int length = null==files?0:files.length;
         //遍历删除文件夹下的所有文件(包括子目录)
-        for (int i = 0; i < files.length; i++) {
+        for (int i = 0; i < length; i++) {
             if (files[i].isFile()) {
                 //删除子文件
                 flag = deleteFile(files[i].getAbsolutePath());
@@ -168,8 +168,9 @@ public final class FileDataHelper {
         }
         flag = true;
         File[] files = dirFile.listFiles();
+        int length = null==files?0:files.length;
         //遍历删除文件夹下的所有文件(包括子目录)
-        for (int i = 0; i < files.length; i++) {
+        for (int i = 0; i < length; i++) {
             if (files[i].isFile()) {
                 //删除子文件
                 flag = deleteFile(files[i].getAbsolutePath());

@@ -78,8 +78,8 @@ public class OkHttpStack implements HttpStack {
         okHttpRequestBuilder.url(request.getUrl());
 
         Map<String, String> headers = request.getHeaders();
-        for (final String name : headers.keySet()) {
-            okHttpRequestBuilder.addHeader(name, headers.get(name));
+        for (final Map.Entry<String, String> entry : headers.entrySet()) {
+            okHttpRequestBuilder.addHeader(entry.getKey(), entry.getValue());
         }
         for (final String name : additionalHeaders.keySet()) {
             // 这里用header方法，如果有重复的name，会覆盖，否则某些请求会被判定为非法

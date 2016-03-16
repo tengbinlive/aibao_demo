@@ -172,8 +172,8 @@ public class CommonRequest extends Request<CommonResponse> {
         if (Constant.DEBUG) {
             long l = entity.getContentLength();
             StringBuffer buf = new StringBuffer();
-            for (String key : mParam.keySet()) {
-                buf.append(key).append("=").append(mParam.get(key)).append("\n");
+            for (Map.Entry<String, String> entry : mParam.entrySet()) {
+                buf.append(entry.getKey()).append("=").append(entry.getValue()).append("\n");
             }
             Logger.i(buf.toString());
             Logger.i(mFileParts.size() + "个File，长度：" + l);
@@ -232,8 +232,8 @@ public class CommonRequest extends Request<CommonResponse> {
         if (Constant.DEBUG) {
             long l = entity.getContentLength();
             StringBuffer buf = new StringBuffer();
-            for (String key : mParam.keySet()) {
-                buf.append(key).append("=").append(mParam.get(key)).append("\n");
+            for (Map.Entry<String, String> entry : mParam.entrySet()) {
+                buf.append(entry.getKey()).append("=").append(entry.getValue()).append("\n");
             }
             Logger.i(buf.toString());
             Logger.i(mFileParts.size() + "个File，长度：" + l);

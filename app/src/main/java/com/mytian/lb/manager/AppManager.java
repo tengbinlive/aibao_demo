@@ -38,12 +38,24 @@ public class AppManager {
 
     private static boolean isChecking; //版本更新对话框 是否显示
 
-    public static boolean isOUT; //重新登录对话框 是否显示
+    private  boolean isOUT; //重新登录对话框 是否显示
 
     private NiftyDialogBuilder dialogBuilder;
 
     private SysAppUpgradeResult sysAppUpgradeResult;
 
+    private static AppManager instance;
+
+    public static AppManager getInstance(){
+        if(null==instance){
+            instance = new AppManager();
+        }
+        return instance;
+    }
+
+    public boolean isOUT() {
+        return isOUT;
+    }
 
     /**
      * 版本更新
@@ -75,7 +87,9 @@ public class AppManager {
                 @Override
                 public void onFinish() {
                     isChecking = false;
-                    dialogBuilder.dismiss();
+                    if(null!=dialogBuilder) {
+                        dialogBuilder.dismiss();
+                    }
                 }
             });
         }

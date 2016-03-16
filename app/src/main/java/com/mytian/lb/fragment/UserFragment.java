@@ -154,7 +154,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
             isdebug.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    PushHelper.isToast = b;
+                    PushHelper.getInstance().setIsToast(b);
                 }
             });
         }
@@ -382,9 +382,8 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
 
     @OnClick(R.id.update_tv)
     void toUpdateApp() {
-        AppManager manager = new AppManager();
         dialogShow(R.string.update_get);
-        manager.updateVersion(dialogBuilder);
+        AppManager.getInstance().updateVersion(dialogBuilder);
     }
 
     @OnClick(R.id.reset_password_tv)

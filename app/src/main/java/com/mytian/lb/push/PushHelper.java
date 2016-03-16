@@ -44,12 +44,9 @@ import org.json.JSONObject;
 
 public class PushHelper {
 
-    private static PushHelper instance;
+    private static PushHelper instance = new PushHelper();
 
     public static PushHelper getInstance() {
-        if (instance == null) {
-            instance = new PushHelper();
-        }
         return instance;
     }
 
@@ -74,7 +71,11 @@ public class PushHelper {
 
     private long delayedTime = 60 * 1000;
 
-    public static boolean isToast;
+    private boolean isToast;
+
+    public void setIsToast(boolean isToast) {
+        this.isToast = isToast;
+    }
 
     public void clearChannelid() {
         UPLOAD_ID_SUCCESS = false;
@@ -266,8 +267,7 @@ public class PushHelper {
                     showNotification(result.getDescription(), result.getCmd());
                 }
             } else if (PushCode.AIBAO_UPDATE.equals(result.getCmd())) {
-                AppManager manager = new AppManager();
-                manager.updateVersion(null);
+                AppManager.getInstance().updateVersion(null);
             } else if (PushCode.APPOINT_STATUS.equals(result.getCmd())) {
                 String info = result.getInfo();
                 String babyUid = "";

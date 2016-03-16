@@ -70,7 +70,7 @@ public class SMSContentObserver extends ContentObserver {
                 case SMS:
                     if (alertView == null) {
                         alertView = new AlertView("温馨提示", "请您允许自动获取验证码，" +
-                                "\n或是填写验证，谢谢."
+                                "\n或是手动填写验证，谢谢."
                                 , null, new String[]{"确定"}, null, mContext, Style.Alert,
                                 new OnItemClickListener() {
                                     @Override

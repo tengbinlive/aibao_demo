@@ -148,7 +148,7 @@ public class ViewServer implements Runnable {
   private View mFocusedWindow;
   private final ReentrantReadWriteLock mFocusLock = new ReentrantReadWriteLock();
 
-  private static ViewServer sServer;
+  private static ViewServer sServer = new ViewServer(ViewServer.VIEW_SERVER_DEFAULT_PORT);
 
   /**
    * Returns a unique instance of the ViewServer. This method should only be

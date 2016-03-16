@@ -100,10 +100,4 @@ public class EditTextWithDelete extends EditText {
         return super.onTouchEvent(event);
     }
 
-    @Override
-    protected void finalize() throws Throwable {
-        super.finalize();
-    }
-
-
 }

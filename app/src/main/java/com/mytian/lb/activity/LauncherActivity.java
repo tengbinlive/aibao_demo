@@ -32,7 +32,7 @@ public class LauncherActivity extends AbsActivity {
     private final static int TO_LOGIN = 0;
     private final static int TO_GUIDE = 1;
 
-    private static int statue;
+    private int statue;
 
     private boolean isFirstLunch;
 
@@ -124,7 +124,7 @@ public class LauncherActivity extends AbsActivity {
     }
 
     private void toMain() {
-        if (AppManager.isOUT) {
+        if (AppManager.getInstance().isOUT()) {
             return;
         }
         Intent intent = new Intent(LauncherActivity.this, MainActivity.class);
