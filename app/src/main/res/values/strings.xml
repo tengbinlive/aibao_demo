@@ -94,7 +94,6 @@
     <string name="toast_cannot_retrieve_selected_image">图片没找到哦</string>
     <string name="version_fail">版本检测失败了</string>
     <string name="version_new">已是最新版</string>
-    <string name="just">刚刚</string>
     <string name="min_before">%s分钟前</string>
     <string name="hour_before">%d小时前</string>
     <string name="unknown">未知</string>

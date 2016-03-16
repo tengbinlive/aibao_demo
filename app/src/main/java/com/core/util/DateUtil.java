@@ -234,9 +234,7 @@ public class DateUtil {
         long misc = miscSou + 8 * 60 * 60;
         long timeTemp = System.currentTimeMillis() - misc;
         long time = timeTemp / (1000 * 60);
-        if (time < 3) {
-            result = context.getString(R.string.just);
-        } else if (time >= 3 && time < 60) {
+        if (time < 60) {
             result = String.format(context.getString(R.string.min_before), time);
         } else if (time >= 60 && time < (60 * 24)) {
             result = String.format(context.getString(R.string.hour_before), time / 60);
