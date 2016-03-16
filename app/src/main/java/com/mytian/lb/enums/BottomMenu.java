@@ -15,7 +15,7 @@ public enum BottomMenu {
     DYNAMIC(R.string.menu_dynamic,R.string.menu_dynamic, R.mipmap.main_tab_news_down, R.mipmap.main_tab_news_normal, 0xFFFFD704, 0xFF333333),
     //爱的约定
     AGREEMENT(R.string.menu_follow,R.string.menu_follow, R.mipmap.main_tab_love_down, R.mipmap.main_tab_love_normal, 0xFFFFD704, 0xFF333333),
-    //习惯记录
+    //其他
     KINDLE(R.string.menu_kindle,R.string.menu_kindle, R.mipmap.main_tab_kindle_down, R.mipmap.main_tab_kindle_normal, 0xFFFFD704, 0xFF333333),
     //帐号管理
     USER(R.string.menu_user, R.string.menu_user,R.mipmap.main_tab_me_down, R.mipmap.main_tab_me_normal, 0xFFFFD704, 0xFF333333);

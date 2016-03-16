@@ -119,7 +119,6 @@ public abstract class AbsFragment extends Fragment implements EInitFragmentDate 
     public void onDestroyView() {
         super.onDestroyView();
         EDestroy();
-        ButterKnife.unbind(this);
     }
 
     public void dialogShow(int title) {

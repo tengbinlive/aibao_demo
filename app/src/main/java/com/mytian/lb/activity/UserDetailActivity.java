@@ -74,6 +74,7 @@ public class UserDetailActivity extends AbsActivity {
 
     private FollowUser cureentParent;
     private String remarkName;
+    private String headURL = "";
 
 
     @Override
@@ -88,20 +89,28 @@ public class UserDetailActivity extends AbsActivity {
     }
 
     private void setUserInfo(FollowUser userInfo) {
-        String head = "";
         if (null != userInfo) {
             cureentParent = userInfo;
             setUserRemark();
-            head = cureentParent.getHead_thumb();
+            headURL = cureentParent.getHead_thumb();
             String phone = cureentParent.getPhone();
             userPhone.setText(phone);
             setUserState(userInfo.getIs_online(), userInfo.getAppointing(), userInfo.getAppointer());
         }
-        Glide.with(mContext).load(head)
+        Glide.with(mContext).load(headURL)
                 .asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .placeholder(R.mipmap.default_head)
                 .centerCrop().into(userIcon);
+        userIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ArrayList<Object> imgs = new ArrayList<>();
+                imgs.add(headURL);
+                String remark = userRemark.getText().toString();
+                ShowPictureActivity.toShowPicture(UserDetailActivity.this, imgs,remark);
+            }
+        });
     }
 
     private void setUserRemark() {
@@ -113,7 +122,7 @@ public class UserDetailActivity extends AbsActivity {
         } else {
             userName.setVisibility(View.VISIBLE);
             userRemark.setText(remark);
-            userName.setText("昵称：" + name);
+            userName.setText(getString(R.string.hint_name)+"：" + name);
         }
     }
 

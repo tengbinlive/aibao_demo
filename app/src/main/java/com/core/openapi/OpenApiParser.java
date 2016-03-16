@@ -8,7 +8,6 @@ import com.core.enums.CodeEnum;
 import com.core.util.StringUtil;
 import com.mytian.lb.App;
 import com.mytian.lb.manager.AppManager;
-import com.orhanobut.logger.Logger;
 
 
 /**
@@ -38,30 +37,30 @@ public class OpenApiParser {
         Object obj = null;
         String mesg;
         if (str != null) {
-                if (rawData) response.setRawData(str);
+            if (rawData) response.setRawData(str);
 
-                JSONObject jsonObject = JSON.parseObject(str);
+            JSONObject jsonObject = JSON.parseObject(str);
 
-                String code = jsonObject.getString(JSON_ELEMENT_CODE);
-                mesg = jsonObject.getString(JSON_ELEMENT_MESG);
+            String code = jsonObject.getString(JSON_ELEMENT_CODE);
+            mesg = jsonObject.getString(JSON_ELEMENT_MESG);
 
-                // 先判断code
-                if (!App.getInstance().isNoAccount()&&StringUtil.isNotBlank(code) && JSON_VALUE_OUT_CODE.equals(code)) {
-                    AppManager.getInstance().reLoginApp();
-                    response.setData(null);
-                    response.setCodeEnum(CodeEnum.LOGIN_REQUIRED);
-                } else if (StringUtil.isBlank(code) || !JSON_VALUE_SUCCESS_CODE.equals(code)) {
-                    response.setData(null);
-                    response.setCode(code);
-                    response.setMsg(mesg);
-                }
-                // 返回的结果为成功数据
-                else {
-                    obj = JSON.parseObject(str, typeToken);
-                    response.setData(obj);
-                    response.setMsg(mesg);
-                    response.setCodeEnum(CodeEnum.SUCCESS);
-                }
+            // 先判断code
+            if (!App.getInstance().isNoAccount() && StringUtil.isNotBlank(code) && JSON_VALUE_OUT_CODE.equals(code)) {
+                AppManager.getInstance().reLoginApp();
+                response.setData(null);
+                response.setCodeEnum(CodeEnum.LOGIN_REQUIRED);
+            } else if (StringUtil.isBlank(code) || !JSON_VALUE_SUCCESS_CODE.equals(code)) {
+                response.setData(null);
+                response.setCode(code);
+                response.setMsg(mesg);
+            }
+            // 返回的结果为成功数据
+            else {
+                obj = JSON.parseObject(str, typeToken);
+                response.setData(obj);
+                response.setMsg(mesg);
+                response.setCodeEnum(CodeEnum.SUCCESS);
+            }
         }
         return obj;
     }

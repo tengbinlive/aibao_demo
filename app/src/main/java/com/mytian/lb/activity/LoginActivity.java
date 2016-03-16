@@ -31,7 +31,6 @@ import com.mytian.lb.bean.user.UserResult;
 import com.mytian.lb.helper.AnimationHelper;
 import com.mytian.lb.manager.LoginManager;
 import com.mytian.lb.mview.EditTextWithDelete;
-import com.mytian.lb.push.PushHelper;
 import com.rey.material.widget.CheckBox;
 
 import butterknife.Bind;
@@ -67,12 +66,6 @@ public class LoginActivity extends AnimatedRectActivity {
         App.getInstance().activityManager.popOneActivityExcept(MainActivity.class);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        ButterKnife.unbind(this);
-    }
-
     @OnClick(R.id.register_bt)
     void toRegister() {
         Intent intent = new Intent(this, RegisterActivity.class);
@@ -95,7 +88,7 @@ public class LoginActivity extends AnimatedRectActivity {
 
     @OnClick(R.id.login_bt)
     void login() {
-        if(App.getInstance().isNoAccount()){
+        if (App.getInstance().isNoAccount()) {
             loginSuccess(UserResult.testData());
             return;
         }

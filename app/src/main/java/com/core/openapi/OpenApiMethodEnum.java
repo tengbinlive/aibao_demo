@@ -108,7 +108,7 @@ public enum OpenApiMethodEnum {
 
     private String type;
 
-    private OpenApiMethodEnum(String code, String format, String type) {
+    OpenApiMethodEnum(String code, String format, String type) {
         this.code = code;
         this.format = format;
         this.type = type;

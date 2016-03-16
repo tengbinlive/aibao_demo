@@ -96,13 +96,6 @@ public class CommonDataLoader {
         }
     }
 
-    public static void loginRequired(CommonCallback callback) {
-        if (callback != null) {
-            callback.end();
-            callback.resp(new CommonResponse(CodeEnum.LOGIN_REQUIRED));
-        }
-    }
-
     public static void callback(CommonCallback callback, CommonResponse response) {
         if (callback != null) {
             callback.end();

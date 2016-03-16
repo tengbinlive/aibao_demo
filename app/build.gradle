@@ -1,11 +1,12 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.droidtitan.lintcleaner'
+apply plugin: 'com.neenbedankt.android-apt'
 
 // Manifest version information!
 def versionMajor = 3
 def versionMinor = 0
-def versionPatch = 0
-def versionBuild = 68 // bump for dogfood builds, public betas, etc.
+def versionPatch = 1
+def versionBuild = 69 // bump for dogfood builds, public betas, etc.
 
 android {
 
@@ -136,11 +137,12 @@ dependencies {
     debugCompile 'com.github.moduth:blockcanary-ui:1.1.4'
     alphaCompile 'com.github.moduth:blockcanary-no-op:1.1.4'
     releaseCompile 'com.github.moduth:blockcanary-no-op:1.1.4'
+    compile 'com.jakewharton:butterknife:8.0.0-SNAPSHOT'//布局id绑定生成 butterknife
+    apt 'com.jakewharton:butterknife-compiler:8.0.0-SNAPSHOT'
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'im.fir:fir-sdk:latest.integration@aar'//bug 收集
     compile 'org.greenrobot:eventbus:3.0.0'//事件派发
     compile 'com.squareup.okhttp3:okhttp:3.2.0'// okhttp 网络处理
-    compile 'com.jakewharton:butterknife:7.0.1'//布局id绑定生成 butterknife
     compile 'de.greenrobot:greendao:2.1.0'//greendao 数据库
     compile 'me.imid.swipebacklayout.lib:library:1.0.0'//滑动返回
     compile 'com.makeramen:roundedimageview:2.2.1' //圆角 imageview
