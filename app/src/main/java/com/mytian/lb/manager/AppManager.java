@@ -135,8 +135,12 @@ public class AppManager {
 
     private void dialogDownload() {
         StringBuffer versionInfo = new StringBuffer();
+        String timeStr = sysAppUpgradeResult.getUpdated_at();
+        if (timeStr.length() < 13) {
+            timeStr = timeStr + "000";
+        }
         versionInfo.append(sysAppUpgradeResult.getName()).append("\n\n")
-                .append("更新时间：").append("\n").append(DateUtil.TimeDES(App.getInstance(), sysAppUpgradeResult.getUpdated_at())).append("\n\n")
+                .append("更新时间：").append("\n").append(DateUtil.ConverToString(Long.parseLong(timeStr), DateUtil.YYYY_MM_DD_HH_MM_SS)).append("\n\n")
                 .append("更新日志：").append("\n").append(sysAppUpgradeResult.getChangelog()).append("\n\n")
                 .append("版本编号：" + sysAppUpgradeResult.getVersionShort());
         dialogUpdate(versionInfo.toString(), sysAppUpgradeResult.getInstallUrl());
