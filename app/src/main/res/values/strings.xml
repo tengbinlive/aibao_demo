@@ -97,5 +97,7 @@
     <string name="just">刚刚</string>
     <string name="min_before">%s分钟前</string>
     <string name="hour_before">%d小时前</string>
+    <string name="unknown">未知</string>
+    <string name="no_setting">未设置</string>
 
 </resources>

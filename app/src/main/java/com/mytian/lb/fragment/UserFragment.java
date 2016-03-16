@@ -178,6 +178,8 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
             String birthday = DateUtil.ConverToString(bir, DateUtil.YYYY_MM_DD);
             birthdayValue.setText("");
             birthdayValue.setHint(birthday);
+        }else{
+            birthdayValue.setHint(R.string.no_setting);
         }
 
         int sex = parent.getSex();
