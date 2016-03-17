@@ -1,10 +1,9 @@
 .gradle
-/local.properties
-/.idea
+local.properties
+.idea
 .DS_Store
-/build
-/captures
-/kndle.iml
+build
+captures
+kndle.iml
 app/app-release.apk
-/aibao.iml
-*.apk
+aibao.iml
