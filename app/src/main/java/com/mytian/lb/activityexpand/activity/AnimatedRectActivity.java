@@ -83,6 +83,7 @@ public abstract class AnimatedRectActivity extends Activity {
     }
 
     public void animationBackEnd() {
+        finish();
     }
 
     public void animationStartEnd() {

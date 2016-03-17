@@ -56,6 +56,8 @@ public class LoginActivity extends AnimatedRectActivity {
     private String phone;
     private String password;
 
+    private boolean isCancle;
+
     @Override
     public int getContentView() {
         return R.layout.activity_login;
@@ -114,6 +116,7 @@ public class LoginActivity extends AnimatedRectActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        isCancle = getIntent().getBooleanExtra("login",false);
         mInflater = LayoutInflater.from(this);
         ButterKnife.bind(this);
         setStatusBar();
@@ -124,7 +127,7 @@ public class LoginActivity extends AnimatedRectActivity {
                 phoneEt.setSelection(phone.length());
             }
         }
-        if (BuildConfig.DEBUG) {
+        if (!BuildConfig.BUILD_TYPE.equals("release")) {
             isNoAccount.setVisibility(View.VISIBLE);
             isNoAccount.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -133,6 +136,14 @@ public class LoginActivity extends AnimatedRectActivity {
                 }
             });
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(isCancle){
+            App.getInstance().exit();
+        }
+        super.onBackPressed();
     }
 
     /**
