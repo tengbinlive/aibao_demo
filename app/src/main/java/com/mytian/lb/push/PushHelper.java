@@ -197,11 +197,11 @@ public class PushHelper {
             mBuilder.setCategory(NotificationCompat.CATEGORY_MESSAGE);
             mBuilder.setSmallIcon(R.drawable.notification_icon);// 设置通知小ICON（5.0必须采用白色透明图片）
         } else {
-            mBuilder.setSmallIcon(R.mipmap.app_icon);// 设置通知小ICON
+            mBuilder.setSmallIcon(R.mipmap.ic_launcher);// 设置通知小ICON
             mBuilder.setContentText(content);
         }
 
-        mBuilder.setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.app_icon));// 设置通知大ICON
+        mBuilder.setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.ic_launcher));// 设置通知大ICON
 
         mBuilder.setTicker(tickerText);
         mBuilder.setContentTitle(contentTitle);// 设置通知栏标题

@@ -1,10 +1,16 @@
+#Welcome to the aibao_demo wiki!
+
 #aibao
 
 [download  apk](http://fir.im/5xv4)
 
-[download  apk](https://github.com/tengbinlive/aibao_demo/blob/master/app/app-alpha-unaligned.apk)
+[download  apk](https://github.com/tengbinlive/aibao_demo/blob/master/image/app-alpha-unaligned.apk?raw=true)
+
+![download](https://github.com/tengbinlive/aibao_demo/blob/master/image/download.png)
 
 [视频演示](http://yun.baidu.com/share/link?shareid=82978705&uk=3809381021)
+
+![效果:](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo.gif)
 
 build
 
