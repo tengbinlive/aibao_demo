@@ -8,17 +8,23 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.handmark.pulltorefresh.PullToRefreshBase;
+import com.handmark.pulltorefresh.PullToRefreshListView;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.mytian.lb.R;
 import com.mytian.lb.activity.ShowPictureActivity;
 import com.mytian.lb.activity.WebViewActivity;
 import com.mytian.lb.bean.dymic.Dynamic;
 import com.mytian.lb.bean.dymic.DynamicBaseInfo;
 import com.mytian.lb.bean.dymic.DynamicContent;
+import com.mytian.lb.bean.user.CommentResult;
 import com.mytian.lb.manager.ShareManager;
+import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
 
 import java.util.ArrayList;
 
@@ -142,6 +148,40 @@ public class DynamicAdapter extends BaseAdapter {
                 ShareManager.getInstance().share(dynamicContent);
             }
         });
+
+        final ArrayList<CommentResult> commentArray  = list.get(position).getCommentArray();
+        final CommentResult commentResult = commentArray.get(position);
+        Glide.with(mContext).load(commentResult.getHeadUrl()).asBitmap()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .centerCrop()
+                .placeholder(R.mipmap.default_head)
+                .into(viewHolder.commentHead);
+        viewHolder.commentName.setText(commentResult.getName());
+        viewHolder.commentContent.setText(commentResult.getContent());
+
+        final PullToRefreshListView listview = viewHolder.commentList;
+        listview.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
+            @Override
+            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+                listview.onRefreshComplete();
+            }
+
+            @Override
+            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+                listview.onRefreshComplete();
+            }
+        });
+
+        ListView mActualListView = listview.getRefreshableView();
+
+        CommentPagerAdapter mAdapter = new CommentPagerAdapter(mContext, commentArray);
+
+        SwingBottomInAnimationAdapter animationAdapter = new SwingBottomInAnimationAdapter(mAdapter);
+
+        animationAdapter.setAbsListView(mActualListView);
+
+        mActualListView.setAdapter(animationAdapter);
+
         return convertView;
     }
 
@@ -187,6 +227,15 @@ public class DynamicAdapter extends BaseAdapter {
         LinearLayout contentLayout;
         @Bind(R.id.image)
         ImageView image;
+
+        @Bind(R.id.listview_pr)
+        PullToRefreshListView commentList;
+        @Bind(R.id.head_comment)
+        RoundedImageView commentHead;
+        @Bind(R.id.name_comment)
+        TextView commentName;
+        @Bind(R.id.content_comment)
+        TextView commentContent;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
