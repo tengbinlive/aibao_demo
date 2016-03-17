@@ -2,6 +2,10 @@
 
 [download  apk](http://fir.im/5xv4)
 
+[download  apk](https://github.com/tengbinlive/aibao_demo/blob/master/app/app-alpha-unaligned.apk)
+
+[视频演示](http://yun.baidu.com/share/link?shareid=82978705&uk=3809381021)
+
 build
 
     debug 调试版本
