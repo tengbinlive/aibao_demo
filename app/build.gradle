@@ -6,7 +6,7 @@ apply plugin: 'com.neenbedankt.android-apt'
 def versionMajor = 3
 def versionMinor = 0
 def versionPatch = 1
-def versionBuild = 69 // bump for dogfood builds, public betas, etc.
+def versionBuild = 70 // bump for dogfood builds, public betas, etc.
 
 android {
 
@@ -17,7 +17,7 @@ android {
         applicationId "com.mytian.lb"
 //      解决Android L上通知显示异常问题，targetSdkVersion需要设置成22
         minSdkVersion 15
-        targetSdkVersion 23
+        targetSdkVersion 22
 
         versionCode versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
         versionName "v${versionMajor}.${versionMinor}.${versionPatch}.${versionBuild}"
@@ -168,13 +168,13 @@ dependencies {
     compile 'com.github.elevenetc:textsurface:0.9.1'
     compile 'com.igexin:sdk:+'//    个推
     compile 'com.igexin:getuiext:2.0.3'
-    compile(name: 'logger-debug', ext: 'aar')   //日志
+    compile 'com.yalantis:ucrop:1.3.+'
+    compile 'com.github.orhanobut:logger:1.12' //日志
+    compile 'com.bigkoo:alertview:1.0.2'
     compile(name: 'niftymodaldialog-release', ext: 'aar')
     compile(name: 'pulltorefresh-release', ext: 'aar')
     compile(name: 'matchview-release', ext: 'aar')
     compile(name: 'swipeLayout-release', ext: 'aar')
     compile(name: 'circularprogressbar-release', ext: 'aar')
-    compile(name: 'ucrop-release', ext: 'aar')
-    compile(name: 'alertview-release', ext: 'aar')
 
 }

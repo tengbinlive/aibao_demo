@@ -88,16 +88,16 @@ public class LoginActivity extends AnimatedRectActivity {
 
     @OnClick(R.id.login_bt)
     void login() {
-        if (App.getInstance().isNoAccount()) {
-            loginSuccess(UserResult.testData());
-            return;
-        }
         phone = phoneEt.getText().toString();
+        password = passwordEt.getText().toString();
+        if (App.getInstance().isNoAccount()) {
+            phone = "13120979267";
+            password ="123456";
+        }
         if (StringUtil.isBlank(phone) || !StringUtil.checkMobile(phone)) {
             AnimationHelper.getInstance().viewAnimationQuiver(phoneEt);
             return;
         }
-        password = passwordEt.getText().toString();
         if (StringUtil.isBlank(password)) {
             AnimationHelper.getInstance().viewAnimationQuiver(passwordEt);
             return;
@@ -109,7 +109,6 @@ public class LoginActivity extends AnimatedRectActivity {
     private void toMain() {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
-        finish();
     }
 
     @Override
@@ -193,6 +192,10 @@ public class LoginActivity extends AnimatedRectActivity {
             UserResult result = (UserResult) resposne.getData();
             loginSuccess(result);
         } else {
+            if (App.getInstance().isNoAccount()) {
+                loginSuccess(UserResult.testData());
+                return;
+            }
             CommonUtil.showToast(resposne.getMsg());
         }
     }

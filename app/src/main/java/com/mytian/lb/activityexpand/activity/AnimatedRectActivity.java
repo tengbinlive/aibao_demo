@@ -62,6 +62,7 @@ public abstract class AnimatedRectActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        App.getInstance().activityManager.popActivity(this);
         if (Constant.DEBUG) {
             ViewServer.get(this).removeWindow(this);
         }
@@ -82,7 +83,6 @@ public abstract class AnimatedRectActivity extends Activity {
     }
 
     public void animationBackEnd() {
-        App.getInstance().activityManager.popActivity(this);
     }
 
     public void animationStartEnd() {
