@@ -42,7 +42,7 @@ public class CommentResult extends OpenApiSimpleResult {
 
     public static ArrayList<CommentResult> testData() {
         ArrayList<CommentResult> arrayList = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
+        for (int i = 1; i < 8; i++) {
             arrayList.add(testData(i));
         }
         return arrayList;

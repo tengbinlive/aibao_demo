@@ -105,7 +105,6 @@
     <com.mytian.lb.mview.ExpandableLayout
         xmlns:expandable="http://schemas.android.com/apk/res-auto"
         android:id="@+id/comment_layout"
-        android:layout_marginTop="@dimen/content_gap_small"
         android:layout_below="@+id/content_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

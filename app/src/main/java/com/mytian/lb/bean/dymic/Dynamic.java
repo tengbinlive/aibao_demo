@@ -9,11 +9,22 @@ import java.util.ArrayList;
  * Created by bin.teng on 2015/10/28.
  */
 public class Dynamic extends OpenApiSimpleResult {
+
+    public boolean isExpandable; //评论列表状态 true 展开，false 关闭
+
     private String id;
     private DynamicBaseInfo baseInfo;
     private DynamicContent content;
     private CommentResult comment = CommentResult.testData(0);
     private ArrayList<CommentResult> commentArray = CommentResult.testData();
+
+    public boolean isExpandable() {
+        return isExpandable;
+    }
+
+    public void setIsExpandable(boolean isExpandable) {
+        this.isExpandable = isExpandable;
+    }
 
     public CommentResult getComment() {
         return comment;
@@ -58,9 +69,11 @@ public class Dynamic extends OpenApiSimpleResult {
     @Override
     public String toString() {
         return "Dynamic{" +
-                "id='" + id + '\'' +
+                "isExpandable=" + isExpandable +
+                ", id='" + id + '\'' +
                 ", baseInfo=" + baseInfo +
                 ", content=" + content +
+                ", comment=" + comment +
                 ", commentArray=" + commentArray +
                 '}';
     }
