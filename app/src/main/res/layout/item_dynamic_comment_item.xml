@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:paddingTop="@dimen/content_gap"
     android:orientation="horizontal"
     android:gravity="center_vertical"
-    android:layout_height="wrap_content">
+    android:layout_marginTop="@dimen/content_gap_small"
+    android:layout_height="@dimen/item_comment_head_size">
 
     <com.makeramen.roundedimageview.RoundedImageView
         xmlns:app="http://schemas.android.com/apk/res-auto"

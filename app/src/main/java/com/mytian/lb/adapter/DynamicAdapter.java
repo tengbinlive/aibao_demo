@@ -8,13 +8,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.handmark.pulltorefresh.PullToRefreshBase;
-import com.handmark.pulltorefresh.PullToRefreshListView;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mytian.lb.R;
 import com.mytian.lb.activity.ShowPictureActivity;
@@ -24,7 +22,8 @@ import com.mytian.lb.bean.dymic.DynamicBaseInfo;
 import com.mytian.lb.bean.dymic.DynamicContent;
 import com.mytian.lb.bean.user.CommentResult;
 import com.mytian.lb.manager.ShareManager;
-import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
+import com.mytian.lb.mview.ExpandableLayout;
+import com.mytian.lb.mview.PullToRefreshEXListView;
 
 import java.util.ArrayList;
 
@@ -39,10 +38,17 @@ public class DynamicAdapter extends BaseAdapter {
 
     private Activity mContext;
 
+    private int item_comment_height;
+
+    private static int COMMENT_MAX_EX = 4; //展开评论最大条数
+
+    private static int COMMENT_OFFSET = 1;//评论adapter偏移量
+
     public DynamicAdapter(Activity context, ArrayList<Dynamic> _list) {
         this.list = _list;
         mContext = context;
         mInflater = LayoutInflater.from(context);
+        item_comment_height = (int) context.getResources().getDimension(R.dimen.item_comment_head_size);
     }
 
     @Override
@@ -75,6 +81,8 @@ public class DynamicAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
+
+
         final Dynamic bean = list.get(position);
         final DynamicBaseInfo dynamicBaseInfo = bean.getBaseInfo();
         final DynamicContent dynamicContent = bean.getContent();
@@ -83,7 +91,7 @@ public class DynamicAdapter extends BaseAdapter {
         boolean isFromSYS = DynamicBaseInfo.FROM_TYPE_SYS.equals(fromType);
         boolean isThumbSYS = DynamicBaseInfo.THUMB_TYPE_SYS.equals(thumbType);
         viewHolder.name.setText(isFromSYS ? mContext.getString(R.string.sys_name) : dynamicBaseInfo.getAlias());
-        if (!isFromSYS&&!isThumbSYS) {
+        if (!isFromSYS && !isThumbSYS) {
             Glide.with(mContext).load(dynamicBaseInfo.getHead_thumb()).asBitmap()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .centerCrop()
@@ -149,8 +157,12 @@ public class DynamicAdapter extends BaseAdapter {
             }
         });
 
-        final ArrayList<CommentResult> commentArray  = list.get(position).getCommentArray();
-        final CommentResult commentResult = commentArray.get(position);
+
+        /**
+         * 评论部分
+         */
+        final ArrayList<CommentResult> commentArray = list.get(position).getCommentArray();
+        final CommentResult commentResult = commentArray.get(0);
         Glide.with(mContext).load(commentResult.getHeadUrl()).asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .centerCrop()
@@ -159,28 +171,16 @@ public class DynamicAdapter extends BaseAdapter {
         viewHolder.commentName.setText(commentResult.getName());
         viewHolder.commentContent.setText(commentResult.getContent());
 
-        final PullToRefreshListView listview = viewHolder.commentList;
-        listview.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
-            @Override
-            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-                listview.onRefreshComplete();
-            }
+        CommentPagerAdapter commentAdapter = new CommentPagerAdapter(mContext, commentArray, COMMENT_OFFSET);
 
-            @Override
-            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-                listview.onRefreshComplete();
-            }
-        });
+        int size = commentAdapter.getCount();
 
-        ListView mActualListView = listview.getRefreshableView();
-
-        CommentPagerAdapter mAdapter = new CommentPagerAdapter(mContext, commentArray);
-
-        SwingBottomInAnimationAdapter animationAdapter = new SwingBottomInAnimationAdapter(mAdapter);
-
-        animationAdapter.setAbsListView(mActualListView);
-
-        mActualListView.setAdapter(animationAdapter);
+        int listViewHeight = item_comment_height * (size > COMMENT_MAX_EX ? COMMENT_MAX_EX : size);
+        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) viewHolder.commentList.getLayoutParams();
+        layoutParams.width = RelativeLayout.LayoutParams.MATCH_PARENT;
+        layoutParams.height = listViewHeight;
+        viewHolder.commentList.setLayoutParams(layoutParams);
+        viewHolder.commentList.setAdapter(commentAdapter);
 
         return convertView;
     }
@@ -229,13 +229,15 @@ public class DynamicAdapter extends BaseAdapter {
         ImageView image;
 
         @Bind(R.id.listview_pr)
-        PullToRefreshListView commentList;
+        PullToRefreshEXListView commentList;
         @Bind(R.id.head_comment)
         RoundedImageView commentHead;
         @Bind(R.id.name_comment)
         TextView commentName;
         @Bind(R.id.content_comment)
         TextView commentContent;
+        @Bind(R.id.comment_layout)
+        ExpandableLayout commentLayout;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);

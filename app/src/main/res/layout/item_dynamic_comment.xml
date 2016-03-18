@@ -3,15 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <com.handmark.pulltorefresh.PullToRefreshListView
+    <com.mytian.lb.mview.PullToRefreshEXListView
         xmlns:ptr="http://schemas.android.com/apk/res-auto"
         style="@style/ListViewTheme"
         android:id="@+id/listview_pr"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:clipChildren="false"
-        android:clipToPadding="false"
-        android:paddingTop="@dimen/content_gap_small"
+        android:layout_height="wrap_content"
         ptr:ptrAnimationStyle="flip"
         ptr:ptrMode="both" />
 

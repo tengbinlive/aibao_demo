@@ -102,14 +102,15 @@
 
     </LinearLayout>
 
-    <com.andexert.expandablelayout.library.ExpandableLayout
+    <com.mytian.lb.mview.ExpandableLayout
         xmlns:expandable="http://schemas.android.com/apk/res-auto"
         android:id="@+id/comment_layout"
+        android:layout_marginTop="@dimen/content_gap_small"
         android:layout_below="@+id/content_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        expandable:contentLayout="@layout/item_dynamic_comment"
-        expandable:headerLayout="@layout/item_dynamic_comment_item" />
+        expandable:el_contentLayout="@layout/item_dynamic_comment"
+        expandable:el_headerLayout="@layout/item_dynamic_comment_item" />
 
 </RelativeLayout>
 
