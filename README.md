@@ -10,7 +10,7 @@
 
 ###效果图:
 
-![](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo1.gif)                       ![](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo2.gif)
+![](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo.gif)                       ![](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo2.gif)
 
 ![](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo3.gif)                       ![](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo4.gif)
 
