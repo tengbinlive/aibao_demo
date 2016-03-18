@@ -8,15 +8,15 @@
 
 ![download](https://github.com/tengbinlive/aibao_demo/blob/master/image/download.png)
 
-##效果图:
+###效果图:
 
 ![](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo1.gif)                       ![](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo2.gif)
 
-![](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo3.gif)                      ![](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo4.gif)
+![](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo3.gif)                       ![](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo4.gif)
 
-![](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo5.gif)                      ![](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo6.gif)
+![](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo5.gif)                       ![](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo6.gif)
 
-##build
+###build
 
     debug 调试版本
     alpha 测试版本
@@ -31,11 +31,11 @@
     配置渠道信息输出
     buildConfigField "boolean", "CHANNEL_DEBUG", "false"// channel info
 
-服务器 url:
+###服务器 url:
 
     "http://www.mytian.com.cn/"
     
-Wechat share:
+###Wechat share:
 
     如果分享类型跟数据填充不匹配，将无法调启微信客服端，如（url ="",分享类型为 = SHARE_WEBPAGE,会无法调启客服端）
 
