@@ -80,6 +80,7 @@
         android:layout_height="90dp"
         android:layout_below="@+id/title"
         android:layout_marginTop="@dimen/content_10dp"
+        android:layout_marginBottom="@dimen/content_10dp"
         android:background="@color/gray_background"
         android:orientation="horizontal"
         android:visibility="gone">

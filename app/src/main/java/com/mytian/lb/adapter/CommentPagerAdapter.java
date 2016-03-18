@@ -69,7 +69,6 @@ public class CommentPagerAdapter extends BaseAdapter {
         Glide.with(mContext).load(bean.getHeadUrl()).asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .centerCrop()
-                .placeholder(R.mipmap.default_head)
                 .into(viewHolder.head);
         viewHolder.name.setText(bean.getName());
         viewHolder.content.setText(bean.getContent());

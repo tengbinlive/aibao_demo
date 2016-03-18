@@ -5,8 +5,8 @@
 
     <com.bm.library.PhotoView
         android:id="@+id/photoview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_centerInParent="true" />
 
     <com.pnikosis.materialishprogress.ProgressWheel

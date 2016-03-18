@@ -8,9 +8,17 @@
 
 ![download](https://github.com/tengbinlive/aibao_demo/blob/master/image/download.png)
 
-[视频演示](http://yun.baidu.com/share/link?shareid=82978705&uk=3809381021)
+![效果:](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo1.gif)
 
-![效果:](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo.gif)
+![效果:](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo2.gif)
+
+![效果:](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo3.gif)
+
+![效果:](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo4.gif)
+
+![效果:](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo5.gif)
+
+![效果:](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo6.gif)
 
 build
 

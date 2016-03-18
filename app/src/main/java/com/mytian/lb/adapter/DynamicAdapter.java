@@ -161,7 +161,6 @@ public class DynamicAdapter extends BaseAdapter {
         Glide.with(mContext).load(commentResult.getHeadUrl()).asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .centerCrop()
-                .placeholder(R.mipmap.default_head)
                 .into(viewHolder.commentHead);
         viewHolder.commentName.setText(commentResult.getName());
         viewHolder.commentContent.setText(commentResult.getContent());
