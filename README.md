@@ -8,11 +8,13 @@
 
 ![download](https://github.com/tengbinlive/aibao_demo/blob/master/image/download.png)
 
-![效果:](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo1.gif)![效果:](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo2.gif)
+#效果图:
 
-![效果:](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo3.gif)![效果:](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo4.gif)
+![](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo1.gif)                  ![](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo2.gif)
 
-![效果:](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo5.gif)![效果:](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo6.gif)
+![](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo3.gif)                 ![](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo4.gif)
+
+![](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo5.gif)                 ![](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo6.gif)
 
 build
 
