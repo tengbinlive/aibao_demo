@@ -43,13 +43,17 @@ public class CommentResult extends OpenApiSimpleResult {
     public static ArrayList<CommentResult> testData() {
         ArrayList<CommentResult> arrayList = new ArrayList<>();
         for (int i = 0; i < 8; i++) {
-            CommentResult commentResult = new CommentResult();
-            commentResult.headUrl = "https://raw.githubusercontent.com/tengbinlive/aibao_demo/master/app/src/main/res/mipmap/ic_launcher.png";
-            commentResult.name = i==0?"newest ":"bin.teng " + i;
-            commentResult.content = "this is a comment ";
-            arrayList.add(commentResult);
+            arrayList.add(testData(i));
         }
         return arrayList;
+    }
+
+    public static CommentResult testData(int i) {
+        CommentResult commentResult = new CommentResult();
+        commentResult.headUrl = "https://raw.githubusercontent.com/tengbinlive/aibao_demo/master/app/src/main/res/mipmap/ic_launcher.png";
+        commentResult.name = i==0?"newest ":"bin.teng " + i;
+        commentResult.content = "this is a comment ";
+        return commentResult;
     }
 
 

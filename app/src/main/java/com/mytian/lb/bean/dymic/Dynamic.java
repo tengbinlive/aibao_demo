@@ -12,7 +12,16 @@ public class Dynamic extends OpenApiSimpleResult {
     private String id;
     private DynamicBaseInfo baseInfo;
     private DynamicContent content;
+    private CommentResult comment = CommentResult.testData(0);
     private ArrayList<CommentResult> commentArray = CommentResult.testData();
+
+    public CommentResult getComment() {
+        return comment;
+    }
+
+    public void setComment(CommentResult comment) {
+        this.comment = comment;
+    }
 
     public ArrayList<CommentResult> getCommentArray() {
         return commentArray;

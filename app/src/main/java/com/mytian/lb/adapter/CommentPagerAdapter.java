@@ -29,23 +29,20 @@ public class CommentPagerAdapter extends BaseAdapter {
 
     private Context mContext;
 
-    private int offset;
-
-    public CommentPagerAdapter(Context context, ArrayList<CommentResult> _list,int _offset) {
+    public CommentPagerAdapter(Context context, ArrayList<CommentResult> _list) {
         this.list = _list;
         mContext = context;
         mInflater = LayoutInflater.from(context);
-        offset = _offset;
     }
 
     @Override
     public int getCount() {
-        return null == list ? 0 : list.size()-offset;
+        return null == list ? 0 : list.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return list.get(position+offset);
+        return list.get(position);
     }
 
     @Override
@@ -68,7 +65,6 @@ public class CommentPagerAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        position = position+offset;
         final CommentResult bean = list.get(position);
         Glide.with(mContext).load(bean.getHeadUrl()).asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)

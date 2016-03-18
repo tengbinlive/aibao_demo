@@ -164,6 +164,7 @@ dependencies {
         exclude module: 'org.apache.httpcomponents:httpclient'
     }
     compile 'com.nhaarman.listviewanimations:lib-core:3.1.0@aar'
+    compile 'com.nhaarman.listviewanimations:lib-manipulation:3.1.0@aar'
     compile 'com.flaviofaria:kenburnsview:1.0.7'
     compile 'com.github.elevenetc:textsurface:0.9.1'
     compile 'com.igexin:sdk:+'//    个推

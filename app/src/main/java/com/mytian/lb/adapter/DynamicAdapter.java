@@ -2,10 +2,10 @@ package com.mytian.lb.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -22,15 +22,15 @@ import com.mytian.lb.bean.dymic.DynamicBaseInfo;
 import com.mytian.lb.bean.dymic.DynamicContent;
 import com.mytian.lb.bean.user.CommentResult;
 import com.mytian.lb.manager.ShareManager;
-import com.mytian.lb.mview.ExpandableLayout;
 import com.mytian.lb.mview.PullToRefreshEXListView;
+import com.nhaarman.listviewanimations.itemmanipulation.expandablelistitem.ExpandableListItemAdapter;
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class DynamicAdapter extends BaseAdapter {
+public class DynamicAdapter extends ExpandableListItemAdapter<Integer> {
 
     private LayoutInflater mInflater;
 
@@ -42,9 +42,8 @@ public class DynamicAdapter extends BaseAdapter {
 
     private static int COMMENT_MAX_EX = 4; //展开评论最大条数
 
-    private static int COMMENT_OFFSET = 1;//评论adapter偏移量
-
     public DynamicAdapter(Activity context, ArrayList<Dynamic> _list) {
+        super(context, R.layout.layout_expandablelistitem_card, R.id.activity_expandablelistitem_card_title, R.id.activity_expandablelistitem_card_content);
         this.list = _list;
         mContext = context;
         mInflater = LayoutInflater.from(context);
@@ -57,11 +56,6 @@ public class DynamicAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
-        return list.get(position);
-    }
-
-    @Override
     public long getItemId(int position) {
         return 0;
     }
@@ -71,8 +65,9 @@ public class DynamicAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getTitleView(final int position, View convertView, @NonNull final ViewGroup parent) {
         ViewHolder viewHolder;
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.item_dynamic, null);
@@ -81,8 +76,6 @@ public class DynamicAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-
-
         final Dynamic bean = list.get(position);
         final DynamicBaseInfo dynamicBaseInfo = bean.getBaseInfo();
         final DynamicContent dynamicContent = bean.getContent();
@@ -157,12 +150,10 @@ public class DynamicAdapter extends BaseAdapter {
             }
         });
 
-
         /**
          * 评论部分
          */
-        final ArrayList<CommentResult> commentArray = list.get(position).getCommentArray();
-        final CommentResult commentResult = commentArray.get(0);
+        final CommentResult commentResult = list.get(position).getComment();
         Glide.with(mContext).load(commentResult.getHeadUrl()).asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .centerCrop()
@@ -171,13 +162,30 @@ public class DynamicAdapter extends BaseAdapter {
         viewHolder.commentName.setText(commentResult.getName());
         viewHolder.commentContent.setText(commentResult.getContent());
 
-        CommentPagerAdapter commentAdapter = new CommentPagerAdapter(mContext, commentArray, COMMENT_OFFSET);
+        return convertView;
+    }
+    @NonNull
+    @Override
+    public View getContentView(final int position, View convertView, @NonNull final ViewGroup parent) {
+        ViewHolderComment viewHolder;
+        if (convertView == null) {
+            convertView = mInflater.inflate(R.layout.item_dynamic_comment, null);
+            viewHolder = new ViewHolderComment(convertView);
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolderComment) convertView.getTag();
+        }
 
+        /**
+         * 评论部分
+         */
+        final ArrayList<CommentResult> commentArray = list.get(position).getCommentArray();
+        CommentPagerAdapter commentAdapter = new CommentPagerAdapter(mContext, commentArray);
         int size = commentAdapter.getCount();
 
         int listViewHeight = item_comment_height * (size > COMMENT_MAX_EX ? COMMENT_MAX_EX : size);
-        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) viewHolder.commentList.getLayoutParams();
-        layoutParams.width = RelativeLayout.LayoutParams.MATCH_PARENT;
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) viewHolder.commentList.getLayoutParams();
+        layoutParams.width = LinearLayout.LayoutParams.MATCH_PARENT;
         layoutParams.height = listViewHeight;
         viewHolder.commentList.setLayoutParams(layoutParams);
         viewHolder.commentList.setAdapter(commentAdapter);
@@ -228,18 +236,30 @@ public class DynamicAdapter extends BaseAdapter {
         @Bind(R.id.image)
         ImageView image;
 
-        @Bind(R.id.listview_pr)
-        PullToRefreshEXListView commentList;
         @Bind(R.id.head_comment)
         RoundedImageView commentHead;
         @Bind(R.id.name_comment)
         TextView commentName;
         @Bind(R.id.content_comment)
         TextView commentContent;
-        @Bind(R.id.comment_layout)
-        ExpandableLayout commentLayout;
 
         ViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
+    }
+
+    /**
+     * This class contains all butterknife-injected Views & Layouts from layout file 'item_dynamic.xml'
+     * for easy to all layout elements.
+     *
+     * @author ButterKnifeZelezny, plugin for Android Studio by Avast Developers (http://github.com/avast)
+     */
+    static class ViewHolderComment {
+
+        @Bind(R.id.listview_comment)
+        PullToRefreshEXListView commentList;
+
+        ViewHolderComment(View view) {
             ButterKnife.bind(this, view);
         }
     }
