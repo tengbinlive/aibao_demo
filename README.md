@@ -8,8 +8,6 @@
 
 [download  apk](http://fir.im/5xv4)
 
-[download  apk](https://github.com/tengbinlive/aibao_demo/blob/master/python_tool/app-alpha-unaligned.apk?raw=true)
-
 ![download](https://github.com/tengbinlive/aibao_demo/blob/master/image/download.png)
 
 
