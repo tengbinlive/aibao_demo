@@ -306,10 +306,8 @@ public class CommonRequest extends Request<CommonResponse> {
 
     private void buildMultipartEntity(HashMap<String, String> mParam, HashMap<String, File> mFileParts) {
         //添加字符串参数
-        if (mParam != null && mParam.size() > 0) {
-            Iterator iter = mParam.entrySet().iterator();
-            while (iter.hasNext()) {
-                Map.Entry entry = (Map.Entry) iter.next();
+        if (mParam != null) {
+            for (Map.Entry entry : mParam.entrySet()) {
                 String key = entry.getKey().toString();
                 String val = entry.getValue().toString();
                 try {
@@ -320,10 +318,8 @@ public class CommonRequest extends Request<CommonResponse> {
         }
 
         //添加文件参数
-        if (mFileParts != null && mFileParts.size() > 0) {
-            Iterator iter = mFileParts.entrySet().iterator();
-            while (iter.hasNext()) {
-                Map.Entry entry = (Map.Entry) iter.next();
+        if (mFileParts != null) {
+            for (Map.Entry entry : mFileParts.entrySet()) {
                 String key = entry.getKey().toString();
                 File val = (File) entry.getValue();
                 entity.addPart(key, new FileBody(val));

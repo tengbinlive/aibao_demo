@@ -150,7 +150,7 @@ public abstract class AbsActivity extends SwipeBackActivity implements EInitDate
     /**
      * 设置actionbar 右部
      *
-     * @param
+     * @param visbilityTv 是否显示右边描述文字
      */
     public void setToolbarRightVisbility(int visbilityTv) {
         toolbar_right_tv.setVisibility(visbilityTv);
@@ -174,7 +174,7 @@ public abstract class AbsActivity extends SwipeBackActivity implements EInitDate
     /**
      * 设置actionbar 右部标题
      *
-     * @param rId
+     * @param rId 文字资源id
      */
     public void setToolbarRightStrID(int rId) {
         toolbar_right_tv.setText(rId);
@@ -183,7 +183,7 @@ public abstract class AbsActivity extends SwipeBackActivity implements EInitDate
     /**
      * 设置标题
      *
-     * @param rId
+     * @param rId 文字资源id
      */
     public void setToolbarIntermediateStrID(int rId) {
         toolbar_intermediate_tv.setText(rId);
@@ -192,7 +192,7 @@ public abstract class AbsActivity extends SwipeBackActivity implements EInitDate
     /**
      * 设置标题
      *
-     * @param value
+     * @param value 字符串
      */
     public void setToolbarIntermediateStr(String value) {
         toolbar_intermediate_tv.setText(value);
