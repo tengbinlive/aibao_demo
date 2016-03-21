@@ -149,6 +149,9 @@ public class AppManager {
     private void dialogOUT() {
         dialogDismiss();
         Activity activity = App.getInstance().getCurrentActivity();
+        if(null==activity){
+            return;
+        }
         LinearLayout convertView = (LinearLayout) LayoutInflater.from(activity).inflate(R.layout.dialog_out, null);
         TextView ok = (TextView) convertView.findViewById(R.id.tv_ok);
         ok.setOnClickListener(new View.OnClickListener() {
@@ -180,6 +183,9 @@ public class AppManager {
             return;
         }
         final Activity activity = App.getInstance().getCurrentActivity();
+        if(null==activity){
+            return;
+        }
         LinearLayout convertView = (LinearLayout) LayoutInflater.from(activity).inflate(R.layout.dialog_prompt, null);
         TextView valueTv = (TextView) convertView.findViewById(R.id.value);
         Button downloadBt = (Button) convertView.findViewById(R.id.download);

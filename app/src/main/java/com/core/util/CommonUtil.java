@@ -467,7 +467,7 @@ public class CommonUtil {
      * 获得APP的版本名称
      *
      * @param c 上下文
-     * @return 返回版本名称(例如: 3.2.1)
+     * @return 返回版本名称(例如: v1.0.0.1)
      */
     public static String getAppVersionName(Context c) {
         try {
@@ -477,7 +477,7 @@ public class CommonUtil {
         } catch (NameNotFoundException e) {
             e.printStackTrace();
         }
-        return null;
+        return "v1.0.0.1";
     }
 
     /**
