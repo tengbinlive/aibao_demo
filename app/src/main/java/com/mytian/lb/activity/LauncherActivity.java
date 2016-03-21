@@ -34,8 +34,6 @@ public class LauncherActivity extends AbsActivity {
 
     private int statue;
 
-    private boolean isFirstLunch;
-
     @Bind(R.id.launcher_ly)
     RelativeLayout launcherLy;
 
@@ -53,7 +51,6 @@ public class LauncherActivity extends AbsActivity {
         PushHelper.getInstance().initPush();
         super.EInit();
         setSwipeBackEnable(false);
-        isFirstLunch = App.isFirstLunch();
         statue = TO_GUIDE;
         long time = 2000;
         activityHandler.sendEmptyMessageDelayed(statue, time);
@@ -77,9 +74,6 @@ public class LauncherActivity extends AbsActivity {
 
     @OnClick(R.id.launcher_ly)
     void OnClickActivity() {
-        if (isFirstLunch) {
-            return;
-        }
         launcherLy.setEnabled(false);
         textSurface.clearAnimation();
         activityHandler.removeMessages(statue);

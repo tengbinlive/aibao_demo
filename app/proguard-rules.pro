@@ -50,14 +50,20 @@
 
 -keep class su.levenetc.android.textsurface.** { *; }
 
+
+-dontwarn com.handmark.pulltorefresh.**
+-dontwarn org.apache.http.**
+-keep class com.handmark.pulltorefresh.** { *; }
+-keep class org.apache.http.** { *; }
+
 -dontwarn android.support.v4.**
 -dontwarn android.annotation
 -dontwarn com.squareup.**
 -keepattributes *Annotation*
 
 #okhttp
--dontwarn com.squareup.okhttp.**
--keep class com.squareup.okhttp.** { *;}
+-dontwarn okhttp3.**
+-keep class okhttp3.** { *;}
 -dontwarn okio.**
 
 -keepclassmembers class fqcn.of.javascript.interface.for.webview {

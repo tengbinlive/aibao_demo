@@ -7,7 +7,7 @@
 
 [download  apk](http://fir.im/5xv4)
 
-[download  apk](https://github.com/tengbinlive/aibao_demo/blob/master/image/app-alpha-unaligned.apk?raw=true)
+[download  apk](https://github.com/tengbinlive/aibao_demo/blob/master/python_tool/app-alpha-unaligned.apk?raw=true)
 
 ![download](https://github.com/tengbinlive/aibao_demo/blob/master/image/download.png)
 
@@ -15,9 +15,9 @@
 
 ![](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo.gif)                       ![](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo2.gif)
 
-![](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo3.gif)                       ![](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo4.gif)
+![](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo3.gif)                      ![](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo4.gif)
 
-![](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo5.gif)                       ![](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo6.gif)
+![](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo5.gif)                      ![](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo6.gif)
 
 ###build
 
@@ -50,6 +50,14 @@ lib_greendao为本地数据库dao-生成项目
 用于生成greendao，生成app本地缓存用javabean 
 
 （app配置属性，用户登录属性，约定项目数据，习惯项目数据）
+
+##python_tool
+
+python_tool为渠道统计，多渠道打包用(需Python环境)
+
+配合 com.debug.ChannelUtil 使用
+
+使用时复制apk到python_tool目录，在 channel.txt 中添加渠道名称，运行MultiChannelBuildTool.py即可
 
 
 #注意事项

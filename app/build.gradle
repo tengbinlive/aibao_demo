@@ -6,7 +6,7 @@ apply plugin: 'com.neenbedankt.android-apt'
 def versionMajor = 3
 def versionMinor = 0
 def versionPatch = 1
-def versionBuild = 71 // bump for dogfood builds, public betas, etc.
+def versionBuild = 72// bump for dogfood builds, public betas, etc.
 
 android {
 
@@ -18,7 +18,6 @@ android {
 //      解决Android L上通知显示异常问题，targetSdkVersion需要设置成22
         minSdkVersion 15
         targetSdkVersion 22
-
         versionCode versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
         versionName "v${versionMajor}.${versionMinor}.${versionPatch}.${versionBuild}"
 
@@ -77,7 +76,7 @@ android {
             minifyEnabled true
             zipAlignEnabled true
             // 移除无用的resource文件
-            shrinkResources true
+            shrinkResources false
             proguardFiles 'proguard-rules.pro'
             signingConfig signingConfigs.aibao
         }
@@ -129,6 +128,7 @@ lintCleaner {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile fileTree(dir: 'libs_share', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:23.1.1'
     // 仅在debug包启用leakcanary进行内存监控和提示
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta1'
     alphaCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta1'
@@ -139,7 +139,6 @@ dependencies {
     releaseCompile 'com.github.moduth:blockcanary-no-op:1.1.4'
     compile 'com.jakewharton:butterknife:8.0.0-SNAPSHOT'//布局id绑定生成 butterknife
     apt 'com.jakewharton:butterknife-compiler:8.0.0-SNAPSHOT'
-    compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'im.fir:fir-sdk:latest.integration@aar'//bug 收集
     compile 'org.greenrobot:eventbus:3.0.0'//事件派发
     compile 'com.squareup.okhttp3:okhttp:3.2.0'// okhttp 网络处理
@@ -153,7 +152,7 @@ dependencies {
     compile 'com.wdullaer:materialdatetimepicker:2.0.1'
     compile 'com.ogaclejapan.smarttablayout:library:1.4.2@aar'
     compile 'com.nineoldandroids:library:2.4.0'
-    compile 'com.github.rey5137:material:1.2.1'
+    compile 'com.github.rey5137:material:1.2.2'
     compile 'com.github.cdflynn:crossview:v1.0.1'
     compile 'com.wang.avi:library:1.0.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
