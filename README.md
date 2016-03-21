@@ -12,7 +12,6 @@
 
 ![download](https://github.com/tengbinlive/aibao_demo/blob/master/image/download.png)
 
-###效果图:
 
 ![](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo.gif)                       ![](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo2.gif)
 
