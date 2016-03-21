@@ -1,5 +1,8 @@
 #Welcome to the aibao_demo
+        
+####有什么好的效果需求,欢迎添加issues|commit.
 
+        
 #aibao
 
 [download  apk](http://fir.im/5xv4)
@@ -10,7 +13,7 @@
 
 ###效果图:
 
-![](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo1.gif)                       ![](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo2.gif)
+![](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo.gif)                       ![](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo2.gif)
 
 ![](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo3.gif)                       ![](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo4.gif)
 
