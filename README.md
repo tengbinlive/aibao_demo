@@ -19,9 +19,9 @@
 
 ###build
 
-    debug 调试版本
-    alpha 测试版本
-    release 发布版本
+    debug 调试版
+    alpha 测试版
+    release 发布版
     
     配置api
     buildConfigField "String", "API_HOST", "\"http://www.mytian.com.cn/\""//API Host 
