@@ -93,8 +93,8 @@ public class LoginActivity extends AnimatedRectActivity {
         phone = phoneEt.getText().toString();
         password = passwordEt.getText().toString();
         if (App.getInstance().isNoAccount()) {
-            phone = "18217612175";
-            password ="2";
+            phone = "13120979267";
+            password ="123456";
         }
         if (StringUtil.isBlank(phone) || !StringUtil.checkMobile(phone)) {
             AnimationHelper.getInstance().viewAnimationQuiver(phoneEt);
