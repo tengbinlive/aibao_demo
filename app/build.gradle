@@ -6,7 +6,7 @@ apply plugin: 'com.neenbedankt.android-apt'
 def versionMajor = 3
 def versionMinor = 0
 def versionPatch = 2
-def versionBuild = 72// bump for dogfood builds, public betas, etc.
+def versionBuild = 73// bump for dogfood builds, public betas, etc.
 
 android {
 

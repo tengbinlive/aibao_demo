@@ -64,7 +64,7 @@
         <!--fir.img-->
         <meta-data
             android:name="BUG_HD_SDK_GENERAL_KEY"
-            android:value="073c54e897ed1268e330b4ceb3f78312" />
+            android:value="fd0f3eb6408ee9ef603b4bc21fa99801" />
 
         <!--Glide-okhttp-->
         <meta-data
