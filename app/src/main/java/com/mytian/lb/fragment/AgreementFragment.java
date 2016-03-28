@@ -275,6 +275,11 @@ public class AgreementFragment extends AbsFragment {
             if (currentTime < actionEndTime) {
                 Parent parent = App.getInstance().getUserResult().getParent();
                 startAgreement(parent, actionEndTime);
+            }else{
+                SharedPreferencesHelper.setString(mContext, sharedKey, "");
+                actionEndTime = 0;
+                sendCount = 0;
+                DKEY_TIME = 0;
             }
         }
     }
