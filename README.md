@@ -49,7 +49,7 @@ lib_greendao为本地数据库dao-生成项目
 
 ##channel_tool
 
-多渠道打包工具
+[多渠道打包工具](https://github.com/tengbinlive/aibao_demo/blob/master/channel_tool/README.md)
 
 
 
