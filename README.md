@@ -47,13 +47,10 @@ lib_greendao为本地数据库dao-生成项目
 
 （app配置属性，用户登录属性，约定项目数据，习惯项目数据）
 
-##python_tool
+##channel_tool
 
-python_tool为渠道统计，多渠道打包用(需Python环境)
+多渠道打包工具
 
-配合 com.debug.ChannelUtil 使用
-
-使用时复制apk到python_tool目录，在 channel.txt 中添加渠道名称，运行MultiChannelBuildTool.py即可
 
 
 #注意事项
