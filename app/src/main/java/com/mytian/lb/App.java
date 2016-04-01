@@ -263,9 +263,10 @@ public class App extends Application {
                 }
             }
 
-            refWatcher = LeakCanary.install(this);
-
-            BlockCanary.install(this, new AppBlockCanaryContext()).start();
+            if(BuildConfig.CANARY_DEBUG) {
+                refWatcher = LeakCanary.install(this);
+                BlockCanary.install(this, new AppBlockCanaryContext()).start();
+            }
 
             FIR.init(this);
 

@@ -60,8 +60,10 @@ public abstract class AbsFragment extends Fragment implements EInitFragmentDate 
     public void onDestroy() {
         dialogDismiss();
         super.onDestroy();
-        RefWatcher refWatcher = App.getInstance().getRefWatcher(getActivity());
-        refWatcher.watch(this);
+        if (BuildConfig.CANARY_DEBUG) {
+            RefWatcher refWatcher = App.getInstance().getRefWatcher(getActivity());
+            refWatcher.watch(this);
+        }
     }
 
     @Override

@@ -29,6 +29,9 @@
     buildConfigField "boolean", "LOG_DEBUG", "false"// log info
     配置渠道信息输出
     buildConfigField "boolean", "CHANNEL_DEBUG", "false"// channel info
+    内存监控&fps监控（默认关闭）
+    buildConfigField "boolean", "CANARY_DEBUG", "false"// canary info
+
 
 ###服务器 url:
 

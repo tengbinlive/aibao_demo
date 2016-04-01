@@ -6,7 +6,7 @@ apply plugin: 'com.neenbedankt.android-apt'
 def versionMajor = 3
 def versionMinor = 0
 def versionPatch = 2
-def versionBuild = 74// bump for dogfood builds, public betas, etc.
+def versionBuild = 75// bump for dogfood builds, public betas, etc.
 
 android {
 
@@ -45,6 +45,7 @@ android {
             buildConfigField "String", "API_HOST", "\"http://www.mytian.com.cn/\""//API Host
             buildConfigField "boolean", "CONFIG_DEBUG", "true"// config info
             buildConfigField "boolean", "LOG_DEBUG", "true"// log info
+            buildConfigField "boolean", "CANARY_DEBUG", "false"// canary info
             buildConfigField "boolean", "CHANNEL_DEBUG", "true"// channel info
             debuggable true
             minifyEnabled false
@@ -58,6 +59,7 @@ android {
             buildConfigField "String", "API_HOST", "\"http://www.mytian.com.cn/\""//API Host
             buildConfigField "boolean", "CONFIG_DEBUG", "true"// config info
             buildConfigField "boolean", "LOG_DEBUG", "false"// log info
+            buildConfigField "boolean", "CANARY_DEBUG", "false"// canary info
             buildConfigField "boolean", "CHANNEL_DEBUG", "false"// channel info
             debuggable true
             minifyEnabled false
@@ -71,6 +73,7 @@ android {
             buildConfigField "String", "API_HOST", "\"http://www.mytian.com.cn/\""//API Host
             buildConfigField "boolean", "CONFIG_DEBUG", "false"// config info
             buildConfigField "boolean", "LOG_DEBUG", "false"// log info
+            buildConfigField "boolean", "CANARY_DEBUG", "false"// canary info
             buildConfigField "boolean", "CHANNEL_DEBUG", "false"// channel info
             debuggable false
             minifyEnabled true
