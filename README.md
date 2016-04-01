@@ -24,13 +24,13 @@
     配置api
     buildConfigField "String", "API_HOST", "\"http://www.mytian.com.cn/\""//API Host 
     配置debug
-    buildConfigField "boolean", "CONFIG_DEBUG", "false"// config info
+    buildConfigField "boolean", "CONFIG_DEBUG", "false"// config
     配置日志输出
-    buildConfigField "boolean", "LOG_DEBUG", "false"// log info
+    buildConfigField "boolean", "LOG_DEBUG", "false"// log
     配置渠道信息输出
-    buildConfigField "boolean", "CHANNEL_DEBUG", "false"// channel info
+    buildConfigField "boolean", "CHANNEL_DEBUG", "false"// channel
     内存监控&fps监控（默认关闭）
-    buildConfigField "boolean", "CANARY_DEBUG", "false"// canary info
+    buildConfigField "boolean", "CANARY_DEBUG", "false"// canary
 
 
 ###服务器 url:
