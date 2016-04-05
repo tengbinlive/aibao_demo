@@ -147,7 +147,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
                 selectPict();
             }
         });
-        String  updateStr = mContext.getString(R.string.update) + "      " + BuildConfig.VERSION_NAME + "  for android  " + BuildConfig.BUILD_TYPE;
+        String updateStr = mContext.getString(R.string.update) + "      " + BuildConfig.VERSION_NAME + "  for android  " + BuildConfig.BUILD_TYPE;
         if (!BuildConfig.BUILD_TYPE.equals("release")) {
             isdebug.setVisibility(View.VISIBLE);
             isdebug.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -177,7 +177,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
             String birthday = DateUtil.ConverToString(bir, DateUtil.YYYY_MM_DD);
             birthdayValue.setText("");
             birthdayValue.setHint(birthday);
-        }else{
+        } else {
             birthdayValue.setHint(R.string.no_setting);
         }
 
@@ -228,6 +228,13 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         AnimatorSet animSet = new AnimatorSet();
         animSet.playSequentially(animList);
         animSet.start();
+    }
+
+    @OnClick(R.id.about_tv)
+    void about() {
+        Uri uri = Uri.parse("http://tengbin.me/");
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(intent);
     }
 
     @OnClick(R.id.change_bt)

@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.debug.ViewServer;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.mytian.lb.App;
 import com.mytian.lb.Constant;
 
@@ -18,12 +20,14 @@ public abstract class AnimatedRectActivity extends Activity {
     public AnimatedRectLayout mAnimated;
     protected int mAnimationType;
     private int DURATION = 600;
+    private Tracker mTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         App.getInstance().activityManager.pushActivity(this);
         setContentView(getContentView());
+        mTracker = App.getInstance().getDefaultTracker();
         FrameLayout activityRoot = (FrameLayout) findViewById(android.R.id.content);
         View parent = activityRoot.getChildAt(0);
 
@@ -53,6 +57,8 @@ public abstract class AnimatedRectActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        mTracker.setScreenName("TAG - "+this.getClass().getSimpleName());
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         App.getInstance().setCurrentActivity(this);
         if (Constant.DEBUG) {
             ViewServer.get(this).setFocusedWindow(this);

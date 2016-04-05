@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.gitonway.lee.niftymodaldialogeffects.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.NiftyDialogBuilder;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.mytian.lb.event.AnyEventType;
 import com.mytian.lb.imp.EInitFragmentDate;
 import com.squareup.leakcanary.RefWatcher;
@@ -32,6 +34,8 @@ public abstract class AbsFragment extends Fragment implements EInitFragmentDate 
 
     public LayoutInflater mInflater;
 
+    private Tracker mTracker;
+
     public Context mContext;
 
     public abstract boolean onBackPressed();
@@ -39,6 +43,8 @@ public abstract class AbsFragment extends Fragment implements EInitFragmentDate 
     @Override
     public void onResume() {
         super.onResume();
+        mTracker.setScreenName("TAG - "+this.getClass().getSimpleName());
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override
@@ -95,6 +101,7 @@ public abstract class AbsFragment extends Fragment implements EInitFragmentDate 
         mContext = this.getContext();
         mInflater = inflater;
         View rootView = inflater.inflate(getContentView(), container, false);
+        mTracker = App.getInstance().getDefaultTracker();
         ButterKnife.bind(this, rootView);
         EInit();
         return rootView;

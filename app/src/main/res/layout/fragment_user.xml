@@ -288,6 +288,22 @@
                 android:background="@drawable/light_divide" />
 
             <TextView
+                android:id="@+id/about_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/content_gap"
+                android:text="@string/about"
+                android:textColor="@color/textcolor_match"
+                android:textSize="@dimen/font_btn" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/content_gap"
+                android:layout_marginRight="@dimen/content_gap"
+                android:background="@drawable/light_divide" />
+
+            <TextView
                 android:id="@+id/update_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

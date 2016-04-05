@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.net.ConnectivityManager;
-import android.os.StrictMode;
 
 import com.core.enums.ConfigKeyEnum;
 import com.core.manager.ConfigManager;
@@ -21,9 +20,9 @@ import com.dao.DaoMaster.OpenHelper;
 import com.dao.DaoSession;
 import com.dao.Parent;
 import com.dao.ParentDao;
-import com.debug.AppBlockCanaryContext;
 import com.debug.StrictModeWrapper;
-import com.github.moduth.blockcanary.BlockCanary;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
 import com.mytian.lb.activity.LoginActivity;
 import com.mytian.lb.activityexpand.activity.AnimatedRectLayout;
 import com.mytian.lb.bean.user.UserResult;
@@ -53,6 +52,8 @@ import im.fir.sdk.FIR;
  * @author bin.teng
  */
 public class App extends Application {
+
+    private Tracker mTracker;
 
     private static final String TAG = App.class.getSimpleName();
 
@@ -265,7 +266,6 @@ public class App extends Application {
 
             if(BuildConfig.CANARY_DEBUG) {
                 refWatcher = LeakCanary.install(this);
-                BlockCanary.install(this, new AppBlockCanaryContext()).start();
             }
 
             FIR.init(this);
@@ -380,5 +380,18 @@ public class App extends Application {
     public void onTerminate() {
         unConnectionReceiver();
         super.onTerminate();
+    }
+
+    /**
+     * Gets the default {@link Tracker} for this {@link Application}.
+     * @return tracker
+     */
+    synchronized public Tracker getDefaultTracker() {
+        if (mTracker == null) {
+            GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
+            // To enable debug logging use: adb shell setprop log.tag.GAv4 DEBUG
+            mTracker = analytics.newTracker(R.xml.global_tracker);
+        }
+        return mTracker;
     }
 }

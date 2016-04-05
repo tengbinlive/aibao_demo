@@ -21,6 +21,8 @@ import android.widget.TextView;
 import com.debug.ViewServer;
 import com.gitonway.lee.niftymodaldialogeffects.Effectstype;
 import com.gitonway.lee.niftymodaldialogeffects.NiftyDialogBuilder;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.mytian.lb.event.AnyEventType;
 import com.mytian.lb.imp.EInitDate;
 
@@ -70,6 +72,8 @@ public abstract class AbsActivity extends SwipeBackActivity implements EInitDate
         return viewTitleBar;
     }
 
+    private Tracker mTracker;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +84,7 @@ public abstract class AbsActivity extends SwipeBackActivity implements EInitDate
         mInflater = LayoutInflater.from(this);
         setContentView(getContentView());
         getWindow().setBackgroundDrawable(null);
+        mTracker = App.getInstance().getDefaultTracker();
         ButterKnife.bind(this);
         initAbsActionBar();
         if (null != viewTitleBar) {
@@ -221,6 +226,8 @@ public abstract class AbsActivity extends SwipeBackActivity implements EInitDate
     public void onResume() {
         activityFinish = false;
         super.onResume();
+        mTracker.setScreenName("TAG - "+this.getClass().getSimpleName());
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         App.getInstance().setCurrentActivity(this);
         if (Constant.DEBUG) {
             ViewServer.get(this).setFocusedWindow(this);
