@@ -257,7 +257,6 @@ public class App extends Application {
             Constant.DEBUG = BuildConfig.CONFIG_DEBUG;
 
             if (strictModeAvailable) {
-                // check if android:debuggable is set to true
                 int applicationFlags = getApplicationInfo().flags;
                 if (BuildConfig.DEBUG&&((applicationFlags & ApplicationInfo.FLAG_DEBUGGABLE) != 0)) {
                     StrictModeWrapper.enableDefaults();
@@ -389,7 +388,6 @@ public class App extends Application {
     synchronized public Tracker getDefaultTracker() {
         if (mTracker == null) {
             GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
-            // To enable debug logging use: adb shell setprop log.tag.GAv4 DEBUG
             mTracker = analytics.newTracker(R.xml.global_tracker);
         }
         return mTracker;
