@@ -16,12 +16,6 @@ public class BottomView {
     private int animationStyle;
     private boolean isTop = false;
 
-    public BottomView(Context c, int theme, View convertView) {
-        this.theme = theme;
-        this.context = c;
-        this.convertView = convertView;
-    }
-
     public BottomView(Context c, int theme, int resource) {
         this.theme = theme;
         this.context = c;
