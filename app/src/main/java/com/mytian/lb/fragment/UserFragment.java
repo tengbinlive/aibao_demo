@@ -613,7 +613,6 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         options.setToolbarColor(accentColor);
         options.setStatusBarColor(accentColor);
         options.setActiveWidgetColor(accentColor);
-        options.setToolbarTitleTextColor(textcolor_theme);
         UCrop.of(uri, imageUri).withAspectRatio(1, 1).withOptions(options)
                 .start(getContext(), this);
     }
