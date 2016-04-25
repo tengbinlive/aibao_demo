@@ -68,6 +68,8 @@ public class MainActivity extends AbsActivity {
      */
     private long exitClickTimestamp = 0L;
 
+    private int selectPager = 0 ;
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -257,9 +259,12 @@ public class MainActivity extends AbsActivity {
 
     private void setSelectedTabBg(int position) {
         int count = fragments.size();
-        for (int i = 0; i < count; i++) {
-            ViewGroup view = (ViewGroup) viewPagerTab.getTabAt(i);
-            setTabViewBackground(view, i == position);
+        if (count > selectPager) {
+            ViewGroup view_select = (ViewGroup) viewPagerTab.getTabAt(selectPager);
+            ViewGroup view_position = (ViewGroup) viewPagerTab.getTabAt(position);
+            setTabViewBackground(view_select, false);
+            setTabViewBackground(view_position, true);
+            selectPager = position;
         }
     }
 
