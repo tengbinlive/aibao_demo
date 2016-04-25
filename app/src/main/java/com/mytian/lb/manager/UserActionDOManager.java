@@ -19,6 +19,7 @@ import de.greenrobot.dao.query.WhereCondition;
  */
 public class UserActionDOManager {
 
+    public static final String ICON = "icon_";
     private static UserActionDOManager instance;
 
     private ArrayList<UserAction> arrayListAgreement;
@@ -75,8 +76,8 @@ public class UserActionDOManager {
             bean.setType(TYPE_AGREEMENT);
             bean.setAppointId("" + appointid);
             bean.setTitle(argeementTitle[i]);
-            bean.setIcon("icon_" + appointid);
-            bean.setIcon_disabled("icon_" + appointid + "_disabled");
+            bean.setIcon(ICON + appointid);
+            bean.setIcon_disabled(ICON + appointid + "_disabled");
             arrayList.add(bean);
         }
         /**
@@ -91,8 +92,8 @@ public class UserActionDOManager {
             bean.setDate(new Date(15 * 60 * 1000));
             bean.setAppointId("" + appointid);
             bean.setTitle(habitTitle[i]);
-            bean.setIcon("icon_" + appointid);
-            bean.setIcon_disabled("icon_" + appointid + "_disabled");
+            bean.setIcon(ICON + appointid);
+            bean.setIcon_disabled(ICON + appointid + "_disabled");
             arrayList.add(bean);
         }
         UserActionDao dao = App.getDaoSession().getUserActionDao();

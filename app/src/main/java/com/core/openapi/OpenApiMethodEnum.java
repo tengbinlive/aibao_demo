@@ -13,94 +13,94 @@ public enum OpenApiMethodEnum {
     /**
      * 获取最新动态
      */
-    LOAD_DYMICLIST("myt_nf/dynamicAction_getDymicList.do", "openapi_json", OpenApi.URL_TYPE_DATA),
+    LOAD_DYMICLIST("myt_nf/dynamicAction_getDymicList.do", Constants.OPENAPI_JSON, OpenApi.URL_TYPE_DATA),
 
     /**
      * 修改麦宝备注名称
      */
-    LOAD_REMARK_NAME("myt_focus/babyParentFocusAction_updateBabyAlias.do", "openapi_json", OpenApi.URL_TYPE_DATA),
+    LOAD_REMARK_NAME("myt_focus/babyParentFocusAction_updateBabyAlias.do", Constants.OPENAPI_JSON, OpenApi.URL_TYPE_DATA),
 
     /**
      * 行为习惯表扬
      */
-    LOAD_MBHABIT("myt_das/habitAction_praiseMbHabit.do", "openapi_json", OpenApi.URL_TYPE_DATA),
+    LOAD_MBHABIT("myt_das/habitAction_praiseMbHabit.do", Constants.OPENAPI_JSON, OpenApi.URL_TYPE_DATA),
 
 
     /**
      * 上传头像
      */
-    LOAD_UPDATEPARENTPORTRAIT("myt_file/portraitAction_updateParentPortrait.do", "openapi_json", OpenApi.URL_TYPE_DATA),
+    LOAD_UPDATEPARENTPORTRAIT("myt_file/portraitAction_updateParentPortrait.do", Constants.OPENAPI_JSON, OpenApi.URL_TYPE_DATA),
 
     /**
      * 爱宝app更新
      */
-    APP_UPGRADE("myt_file/clientPushAction_getLBAppInfo.do", "openapi_json", OpenApi.URL_TYPE_DATA),
+    APP_UPGRADE("myt_file/clientPushAction_getLBAppInfo.do", Constants.OPENAPI_JSON, OpenApi.URL_TYPE_DATA),
 
     /**
      * 取消爱的约定
      */
-    LOAD_CANCELLOVEAPPOINT("myt_parent/commandAction_cancelLoveAppoint.do", "openapi_json", OpenApi.URL_TYPE_DATA),
+    LOAD_CANCELLOVEAPPOINT("myt_parent/commandAction_cancelLoveAppoint.do", Constants.OPENAPI_JSON, OpenApi.URL_TYPE_DATA),
 
     /**
      * 爱的约定
      */
-    LOAD_LOVEAPPOINT("myt_parent/commandAction_loveAppoint.do", "openapi_json", OpenApi.URL_TYPE_DATA),
+    LOAD_LOVEAPPOINT("myt_parent/commandAction_loveAppoint.do", Constants.OPENAPI_JSON, OpenApi.URL_TYPE_DATA),
 
     /**
      * 上传channelId
      */
-    LOAD_UPDATECHANNELID("myt_parent/parentAction_updateChannelId.do", "openapi_json", OpenApi.URL_TYPE_DATA),
+    LOAD_UPDATECHANNELID("myt_parent/parentAction_updateChannelId.do", Constants.OPENAPI_JSON, OpenApi.URL_TYPE_DATA),
 
 
     /**
      * 补全信息
      */
-    LOAD_UPDATEPARENT("myt_parent/parentAction_updateParent.do", "openapi_json", OpenApi.URL_TYPE_DATA),
+    LOAD_UPDATEPARENT("myt_parent/parentAction_updateParent.do", Constants.OPENAPI_JSON, OpenApi.URL_TYPE_DATA),
 
     /**
      * 爱宝解除关注麦宝
      */
-    LOAD_FOLLOW_CANCEL("myt_focus/babyParentFocusAction_parentReleaseFocusBaby.do", "openapi_json", OpenApi.URL_TYPE_DATA),
+    LOAD_FOLLOW_CANCEL("myt_focus/babyParentFocusAction_parentReleaseFocusBaby.do", Constants.OPENAPI_JSON, OpenApi.URL_TYPE_DATA),
 
     /**
      * 查找麦宝账户信息
      */
-    LOAD_FOLLOW_BABY("myt_baby/babyAction_getBabyByPhone.do", "openapi_json", OpenApi.URL_TYPE_DATA),
+    LOAD_FOLLOW_BABY("myt_baby/babyAction_getBabyByPhone.do", Constants.OPENAPI_JSON, OpenApi.URL_TYPE_DATA),
 
     /**
      * 爱宝关注列表
      */
-    LOAD_FOLLOW_ADD("myt_focus/babyParentFocusAction_parentFocusBaby.do", "openapi_json", OpenApi.URL_TYPE_DATA),
+    LOAD_FOLLOW_ADD("myt_focus/babyParentFocusAction_parentFocusBaby.do", Constants.OPENAPI_JSON, OpenApi.URL_TYPE_DATA),
 
     /**
      * 爱宝同意麦宝关注
      */
-    LOAD_FOLLOW_AGREE("myt_focus/babyParentFocusAction_parentConfirmBabyFocus.do", "openapi_json", OpenApi.URL_TYPE_DATA),
+    LOAD_FOLLOW_AGREE("myt_focus/babyParentFocusAction_parentConfirmBabyFocus.do", Constants.OPENAPI_JSON, OpenApi.URL_TYPE_DATA),
 
     /**
      * 获取关注列表
      */
-    LOAD_FOLLOW_LIST("myt_focus/babyParentFocusAction_getParentFocusBabyList.do", "openapi_json", OpenApi.URL_TYPE_DATA),
+    LOAD_FOLLOW_LIST("myt_focus/babyParentFocusAction_getParentFocusBabyList.do", Constants.OPENAPI_JSON, OpenApi.URL_TYPE_DATA),
 
     /**
      * 重置密码
      */
-    LOAD_RESET_PASSWORD("myt_parent/parentAction_resetPwd.do", "openapi_json", OpenApi.URL_TYPE_DATA),
+    LOAD_RESET_PASSWORD("myt_parent/parentAction_resetPwd.do", Constants.OPENAPI_JSON, OpenApi.URL_TYPE_DATA),
 
     /**
      * 登录
      */
-    LOAD_REGISTER("myt_parent/parentAction_regist.do", "openapi_json", OpenApi.URL_TYPE_DATA),
+    LOAD_REGISTER("myt_parent/parentAction_regist.do", Constants.OPENAPI_JSON, OpenApi.URL_TYPE_DATA),
 
     /**
      * 登录
      */
-    LOAD_LOGIN("myt_parent/parentAction_login.do", "openapi_json", OpenApi.URL_TYPE_DATA),
+    LOAD_LOGIN("myt_parent/parentAction_login.do", Constants.OPENAPI_JSON, OpenApi.URL_TYPE_DATA),
 
     /**
      * 获取验证码
      */
-    LOAD_GET_CODE("myt_parent/verificationAction_getVerificationCode.do", "openapi_json", OpenApi.URL_TYPE_DATA);
+    LOAD_GET_CODE("myt_parent/verificationAction_getVerificationCode.do", Constants.OPENAPI_JSON, OpenApi.URL_TYPE_DATA);
 
 
     private String code;
@@ -158,5 +158,9 @@ public enum OpenApiMethodEnum {
         buf.append(",code=").append(this.getCode());
         buf.append(",format=").append(this.getFormat());
         return buf.toString();
+    }
+
+    private static class Constants {
+        public static final String OPENAPI_JSON = "openapi_json";
     }
 }

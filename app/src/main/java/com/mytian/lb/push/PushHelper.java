@@ -44,6 +44,7 @@ import org.json.JSONObject;
 
 public class PushHelper {
 
+    public static final String BABY_UID = "babyUid";
     private static PushHelper instance = new PushHelper();
 
     public static PushHelper getInstance() {
@@ -256,7 +257,7 @@ public class PushHelper {
                 String is_online = PushCode.FOLLOW_ONLINE.equals(result.getCmd()) ? FollowUser.ONLINE : FollowUser.OFFLINE;
                 try {
                     JSONObject jsonObject = new JSONObject(info);
-                    babyUid = jsonObject.optString("babyUid");
+                    babyUid = jsonObject.optString(BABY_UID);
                 } catch (JSONException e) {
                 }
                 if (StringUtil.isNotBlank(babyUid)) {
@@ -276,7 +277,7 @@ public class PushHelper {
                 String appoint_time = "";
                 try {
                     JSONObject jsonObject = new JSONObject(info);
-                    babyUid = jsonObject.optString("babyUid");
+                    babyUid = jsonObject.optString(BABY_UID);
                     appointStatus = jsonObject.optString("appointStatus");
                     appointer = jsonObject.optString("appointer");
                 } catch (JSONException e) {
@@ -292,7 +293,7 @@ public class PushHelper {
                 String appointer = "";
                 try {
                     JSONObject jsonObject = new JSONObject(info);
-                    babyUid = jsonObject.optString("babyUid");
+                    babyUid = jsonObject.optString(BABY_UID);
                     appoint_time = jsonObject.optString("appoint_time");
                 } catch (JSONException e) {
                 }
