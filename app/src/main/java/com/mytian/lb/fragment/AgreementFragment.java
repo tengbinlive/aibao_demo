@@ -194,7 +194,7 @@ public class AgreementFragment extends AbsFragment {
      * @param TimeUsed
      */
     private void setTimeText(long TimeUsed) {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         int TimeMinute = (int) TimeUsed / 1000 / 60;
         int TimeSeconds = (int) TimeUsed / 1000 % 60;
         buffer.setLength(0);
@@ -578,7 +578,7 @@ public class AgreementFragment extends AbsFragment {
      * 开始时间存储
      */
     private void saveTime(long time) {
-        StringBuffer contentBf = new StringBuffer();
+        StringBuilder contentBf = new StringBuilder();
         String action = JSON.toJSONString(cureentAction);
         contentBf.append(time).append(SPLIT_KEY).append(DKEY_TIME).append(SPLIT_KEY).append(action);
         String userUid = App.getInstance().getUserResult().getParent().getUid();

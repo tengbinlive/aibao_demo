@@ -99,7 +99,7 @@ public enum CodeEnum {
 
     @Override
     public String toString() {
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         buf.append(super.toString());
         buf.append(",code=").append(this.getCode());
         buf.append(",desc=").append(this.getDesc());

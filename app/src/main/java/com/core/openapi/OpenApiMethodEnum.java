@@ -153,7 +153,7 @@ public enum OpenApiMethodEnum {
 
     @Override
     public String toString() {
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         buf.append(super.toString());
         buf.append(",code=").append(this.getCode());
         buf.append(",format=").append(this.getFormat());

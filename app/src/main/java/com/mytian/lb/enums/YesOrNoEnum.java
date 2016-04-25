@@ -40,7 +40,7 @@ public enum YesOrNoEnum {
 
 	@Override
 	public String toString() {
-		StringBuffer buf = new StringBuffer();
+		StringBuilder buf = new StringBuilder();
 		buf.append(super.toString());
 		buf.append(",code=").append(this.getCode());
 		return buf.toString();

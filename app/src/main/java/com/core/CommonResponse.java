@@ -173,7 +173,7 @@ public class CommonResponse implements Serializable {
 
 	@Override
 	public String toString() {
-		StringBuffer buf = new StringBuffer();
+		StringBuilder buf = new StringBuilder();
 		buf.append("code=").append(code);
 		buf.append(",msg=").append(msg);
 		buf.append(",ext=").append(ext);

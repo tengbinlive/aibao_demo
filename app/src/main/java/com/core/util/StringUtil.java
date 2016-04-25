@@ -157,7 +157,7 @@ public class StringUtil {
         }
         if (!checkMobile(num))
             return "";
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < num.length(); i++) {
             if (i >= 3 && i <= 6)
                 sb.append("*");
