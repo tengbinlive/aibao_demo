@@ -16,7 +16,7 @@ import com.mytian.lb.helper.Utils;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -92,9 +92,9 @@ public class AgreementAdapter extends BaseAdapter {
      * @author ButterKnifeZelezny, plugin for Android Studio by Avast Developers (http://github.com/avast)
      */
     static class ViewHolder {
-        @Bind(R.id.icon)
+        @BindView(R.id.icon)
         ImageView icon;
-        @Bind(R.id.title)
+        @BindView(R.id.title)
         TextView title;
 
         ViewHolder(View view) {

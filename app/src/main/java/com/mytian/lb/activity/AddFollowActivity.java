@@ -40,8 +40,8 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
 import butterknife.BindDimen;
+import butterknife.BindView;
 import cdflynn.android.library.crossview.CrossView;
 
 /**
@@ -49,23 +49,23 @@ import cdflynn.android.library.crossview.CrossView;
  */
 public class AddFollowActivity extends AbsActivity {
 
-    @Bind(R.id.listview_pr)
+    @BindView(R.id.listview_pr)
     PullToRefreshListView listview;
-    @Bind(R.id.ll_listEmpty)
+    @BindView(R.id.ll_listEmpty)
     LinearLayout llListEmpty;
-    @Bind(R.id.toolbar_left_btn)
+    @BindView(R.id.toolbar_left_btn)
     TextView toolbarLeftBtn;
-    @Bind(R.id.add_bt)
+    @BindView(R.id.add_bt)
     CrossView addBt;
-    @Bind(R.id.search_key_aibao)
+    @BindView(R.id.search_key_aibao)
     TextView searchKeyAibao;
-    @Bind(R.id.search_key_maibao)
+    @BindView(R.id.search_key_maibao)
     TextView searchKeyMaibao;
-    @Bind(R.id.search_key)
+    @BindView(R.id.search_key)
     EditText searchKey;
-    @Bind(R.id.search_layout_aibao)
+    @BindView(R.id.search_layout_aibao)
     LinearLayout search_layout_aibao;
-    @Bind(R.id.search_layout_maibao)
+    @BindView(R.id.search_layout_maibao)
     LinearLayout search_layout_maibao;
 
     private ListView mActualListView;
@@ -75,7 +75,7 @@ public class AddFollowActivity extends AbsActivity {
     private FollowManager manager = new FollowManager();
     private int currentPager = 1;
 
-    @Bind(R.id.layout_follow_search)
+    @BindView(R.id.layout_follow_search)
     LinearLayout layout_follow_search;
     @BindDimen(R.dimen.actionbar_search_height)
     float EDITEXT_OFFER;

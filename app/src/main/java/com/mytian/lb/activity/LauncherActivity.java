@@ -20,7 +20,7 @@ import com.mytian.lb.imp.ECallOnClick;
 import com.mytian.lb.manager.AppManager;
 import com.mytian.lb.push.PushHelper;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.OnClick;
 import su.levenetc.android.textsurface.TextSurface;
 
@@ -34,10 +34,10 @@ public class LauncherActivity extends AbsActivity {
 
     private int statue;
 
-    @Bind(R.id.launcher_ly)
+    @BindView(R.id.launcher_ly)
     RelativeLayout launcherLy;
 
-    @Bind(R.id.text_surface)
+    @BindView(R.id.text_surface)
     TextSurface textSurface;
 
     @Override

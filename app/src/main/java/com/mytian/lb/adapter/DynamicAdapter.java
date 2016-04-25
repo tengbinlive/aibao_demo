@@ -27,7 +27,7 @@ import com.mytian.lb.mview.PullToRefreshEXListView;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class DynamicAdapter extends BaseAdapter {
@@ -222,34 +222,34 @@ public class DynamicAdapter extends BaseAdapter {
      * @author ButterKnifeZelezny, plugin for Android Studio by Avast Developers (http://github.com/avast)
      */
     static class ViewHolder {
-        @Bind(R.id.head)
+        @BindView(R.id.head)
         ImageView head;
-        @Bind(R.id.name)
+        @BindView(R.id.name)
         TextView name;
-        @Bind(R.id.date)
+        @BindView(R.id.date)
         TextView date;
-        @Bind(R.id.desc)
+        @BindView(R.id.desc)
         TextView desc;
-        @Bind(R.id.title)
+        @BindView(R.id.title)
         TextView title;
-        @Bind(R.id.content)
+        @BindView(R.id.content)
         TextView content;
-        @Bind(R.id.share)
+        @BindView(R.id.share)
         ImageView share;
-        @Bind(R.id.content_layout)
+        @BindView(R.id.content_layout)
         LinearLayout contentLayout;
-        @Bind(R.id.image)
+        @BindView(R.id.image)
         ImageView image;
 
-        @Bind(R.id.listview_comment)
+        @BindView(R.id.listview_comment)
         PullToRefreshEXListView commentList;
-        @Bind(R.id.head_comment)
+        @BindView(R.id.head_comment)
         RoundedImageView commentHead;
-        @Bind(R.id.name_comment)
+        @BindView(R.id.name_comment)
         TextView commentName;
-        @Bind(R.id.content_comment)
+        @BindView(R.id.content_comment)
         TextView commentContent;
-        @Bind(R.id.comment_layout)
+        @BindView(R.id.comment_layout)
         ExpandableLayout commentLayout;
 
         ViewHolder(View view) {

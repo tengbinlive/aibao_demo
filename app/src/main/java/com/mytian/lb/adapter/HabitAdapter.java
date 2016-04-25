@@ -24,7 +24,7 @@ import com.mytian.lb.manager.UserActionManager;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class HabitAdapter extends BaseAdapter {
@@ -134,13 +134,13 @@ public class HabitAdapter extends BaseAdapter {
      * @author ButterKnifeZelezny, plugin for Android Studio by Avast Developers (http://github.com/avast)
      */
     static class ViewHolder {
-        @Bind(R.id.head)
+        @BindView(R.id.head)
         ImageView head;
-        @Bind(R.id.name)
+        @BindView(R.id.name)
         TextView name;
-        @Bind(R.id.like)
+        @BindView(R.id.like)
         ImageView like;
-        @Bind(R.id.dislike)
+        @BindView(R.id.dislike)
         ImageView dislike;
 
         ViewHolder(View view) {

@@ -12,14 +12,14 @@ import com.mytian.lb.AbsFragment;
 import com.mytian.lb.R;
 import com.pnikosis.materialishprogress.ProgressWheel;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 public class KindleFragment extends AbsFragment {
 
-    @Bind(R.id.photoview)
+    @BindView(R.id.photoview)
     PhotoView photoview;
 
-    @Bind(R.id.progress)
+    @BindView(R.id.progress)
     ProgressWheel progress;
 
     @Override

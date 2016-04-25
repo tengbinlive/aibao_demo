@@ -58,8 +58,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import butterknife.Bind;
 import butterknife.BindColor;
+import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
@@ -67,23 +67,23 @@ import butterknife.OnClick;
  */
 public class UserFragment extends AbsFragment implements DatePickerDialog.OnDateSetListener {
 
-    @Bind(R.id.name_value)
+    @BindView(R.id.name_value)
     TextView nameValue;
-    @Bind(R.id.phone_value)
+    @BindView(R.id.phone_value)
     TextView phoneValue;
-    @Bind(R.id.birthday_value)
+    @BindView(R.id.birthday_value)
     TextView birthdayValue;
-    @Bind(R.id.woman_bt)
+    @BindView(R.id.woman_bt)
     RadioButton woman_bt;
-    @Bind(R.id.man_bt)
+    @BindView(R.id.man_bt)
     RadioButton man_bt;
 
-    @Bind(R.id.update_tv)
+    @BindView(R.id.update_tv)
     TextView updatetv;
 
-    @Bind(R.id.cancel_bt)
+    @BindView(R.id.cancel_bt)
     Button cancel_bt;
-    @Bind(R.id.change_bt)
+    @BindView(R.id.change_bt)
     Button change_bt;
 
     @BindColor(R.color.theme)
@@ -106,10 +106,10 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
      */
     private static final int FLAG_CHOOSE_CAMERA = 0x12;
 
-    @Bind(R.id.user_icon)
+    @BindView(R.id.user_icon)
     RoundedImageView user_icon;
 
-    @Bind(R.id.isdebug)
+    @BindView(R.id.isdebug)
     CheckBox isdebug;
 
     private int user_gender = -1;

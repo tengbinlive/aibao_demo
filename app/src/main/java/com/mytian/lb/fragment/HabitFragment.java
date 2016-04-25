@@ -19,14 +19,14 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * 习惯界面
  */
 public class HabitFragment extends AbsFragment {
 
-    @Bind(R.id.listview_pr)
+    @BindView(R.id.listview_pr)
     ListView listview;
 
     private FollowUser cureentParent;
@@ -57,10 +57,10 @@ public class HabitFragment extends AbsFragment {
     }
 
     /**
-     *
      * 深度拷贝 行为习惯
      * 拷贝对象 需要 序列号
      * implements Serializable
+     *
      * @param src
      * @return
      * @throws IOException

@@ -40,8 +40,8 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
 import butterknife.BindColor;
+import butterknife.BindView;
 
 /**
  * 用户详情界面
@@ -52,19 +52,19 @@ public class UserDetailActivity extends AbsActivity {
     public final static int AGREEMENT = 0;
     public final static int HABIT = AGREEMENT + 1;
 
-    @Bind(R.id.user_icon)
+    @BindView(R.id.user_icon)
     RoundedImageView userIcon;
-    @Bind(R.id.user_remark)
+    @BindView(R.id.user_remark)
     TextView userRemark;
-    @Bind(R.id.user_state)
+    @BindView(R.id.user_state)
     TextView userState;
-    @Bind(R.id.user_phone)
+    @BindView(R.id.user_phone)
     TextView userPhone;
-    @Bind(R.id.user_name)
+    @BindView(R.id.user_name)
     TextView userName;
-    @Bind(R.id.viewpager_tab)
+    @BindView(R.id.viewpager_tab)
     SmartTabLayout viewpagerTab;
-    @Bind(R.id.view_pager)
+    @BindView(R.id.view_pager)
     ViewPager viewPager;
 
     @BindColor(R.color.pink)
@@ -108,7 +108,7 @@ public class UserDetailActivity extends AbsActivity {
                 ArrayList<Object> imgs = new ArrayList<>();
                 imgs.add(headURL);
                 String remark = userRemark.getText().toString();
-                ShowPictureActivity.toShowPicture(UserDetailActivity.this, imgs,remark);
+                ShowPictureActivity.toShowPicture(UserDetailActivity.this, imgs, remark);
             }
         });
     }
@@ -122,7 +122,7 @@ public class UserDetailActivity extends AbsActivity {
         } else {
             userName.setVisibility(View.VISIBLE);
             userRemark.setText(remark);
-            userName.setText(getString(R.string.hint_name)+"：" + name);
+            userName.setText(getString(R.string.hint_name) + "：" + name);
         }
     }
 
@@ -150,9 +150,9 @@ public class UserDetailActivity extends AbsActivity {
     private void setIsAgreementState(String appointing, String appointer) {
         String state = "";
         String userUid = App.getInstance().getUserResult().getParent().getUid();
-        String sharedKey = AgreementFragment.SHAREDPREFERENCES_TIME + cureentParent.getUid()+userUid;
+        String sharedKey = AgreementFragment.SHAREDPREFERENCES_TIME + cureentParent.getUid() + userUid;
         String content = SharedPreferencesHelper.getString(mContext, sharedKey, "");
-        if(StringUtil.isNotBlank(content)||StringUtil.isBlank(appointer)){
+        if (StringUtil.isNotBlank(content) || StringUtil.isBlank(appointer)) {
             userState.setVisibility(View.GONE);
             return;
         }
@@ -175,7 +175,7 @@ public class UserDetailActivity extends AbsActivity {
         String time = event.appoint_time;
         String appoint_time = App.getInstance().getAppoint_time();
         boolean isTime = StringUtil.isNotBlank(appoint_time) && time.equals(appoint_time);
-        if (cureentParent.getUid().equals(babyUid)&&isTime) {
+        if (cureentParent.getUid().equals(babyUid) && isTime) {
             String appointing = event.appointing;
             cureentParent.setAppointing(appointing);
             cureentParent.setAppointer(event.appointer);

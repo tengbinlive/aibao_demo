@@ -32,7 +32,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * （动态&关注&kindle&帐号管理）主界面
@@ -44,11 +44,11 @@ public class MainActivity extends AbsActivity {
     public final static int KINDLE = FRIENDS + 1;
     public final static int USER = KINDLE + 1;
 
-    @Bind(R.id.view_pager)
+    @BindView(R.id.view_pager)
     ViewPager viewPager;
-    @Bind(R.id.viewpager_tab)
+    @BindView(R.id.viewpager_tab)
     SmartTabLayout viewPagerTab;
-    @Bind(R.id.toolbar_tips_message)
+    @BindView(R.id.toolbar_tips_message)
     ImageView toolbarTipsMessage;
     ImageView menuFriendsTipsMessage;
 

@@ -50,29 +50,29 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.OnClick;
 
 public class AgreementFragment extends AbsFragment {
 
-    @Bind(R.id.gridview)
+    @BindView(R.id.gridview)
     GridView gridview;
 
-    @Bind(R.id.layout_agreement)
+    @BindView(R.id.layout_agreement)
     ClipRevealFrame layoutClip;
 
-    @Bind(R.id.circular_progressbar)
+    @BindView(R.id.circular_progressbar)
     HoloCircularProgressBar circularProgressbar;
-    @Bind(R.id.agreement_title)
+    @BindView(R.id.agreement_title)
     TextView agreementTitle;
-    @Bind(R.id.agreement_time)
+    @BindView(R.id.agreement_time)
     TextView agreementTime;
 
-    @Bind(R.id.head)
+    @BindView(R.id.head)
     RoundedImageView headRIV;
-    @Bind(R.id.des)
+    @BindView(R.id.des)
     TextView desTv;
-    @Bind(R.id.agreement_cancle)
+    @BindView(R.id.agreement_cancle)
     Button agreementCancle;
 
     private View tempClip;
@@ -217,7 +217,7 @@ public class AgreementFragment extends AbsFragment {
         if (isSettingShow) {
             String userUid = App.getInstance().getUserResult().getParent().getUid();
             String uid = cureentParent.getUid();
-            String sharedKey = SHAREDPREFERENCES_TIME + uid+userUid;
+            String sharedKey = SHAREDPREFERENCES_TIME + uid + userUid;
             SharedPreferencesHelper.setString(mContext, sharedKey, "");
             actionEndTime = 0;
             sendCount = 0;
@@ -275,7 +275,7 @@ public class AgreementFragment extends AbsFragment {
             if (currentTime < actionEndTime) {
                 Parent parent = App.getInstance().getUserResult().getParent();
                 startAgreement(parent, actionEndTime);
-            }else{
+            } else {
                 SharedPreferencesHelper.setString(mContext, sharedKey, "");
                 actionEndTime = 0;
                 sendCount = 0;
@@ -583,7 +583,7 @@ public class AgreementFragment extends AbsFragment {
         contentBf.append(time).append(SPLIT_KEY).append(DKEY_TIME).append(SPLIT_KEY).append(action);
         String userUid = App.getInstance().getUserResult().getParent().getUid();
         String uid = cureentParent.getUid();
-        String sharedKey = SHAREDPREFERENCES_TIME + uid+userUid;
+        String sharedKey = SHAREDPREFERENCES_TIME + uid + userUid;
         SharedPreferencesHelper.setString(mContext, sharedKey, contentBf.toString());
     }
 

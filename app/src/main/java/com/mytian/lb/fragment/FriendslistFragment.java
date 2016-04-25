@@ -31,16 +31,16 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * 关注的人界面
  */
 public class FriendslistFragment extends AbsFragment {
 
-    @Bind(R.id.listview_pr)
+    @BindView(R.id.listview_pr)
     PullToRefreshListView listview;
-    @Bind(R.id.ll_listEmpty)
+    @BindView(R.id.ll_listEmpty)
     LinearLayout llListEmpty;
 
     private ListView mActualListView;

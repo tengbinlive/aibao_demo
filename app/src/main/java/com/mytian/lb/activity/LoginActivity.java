@@ -33,7 +33,7 @@ import com.mytian.lb.manager.LoginManager;
 import com.mytian.lb.mview.EditTextWithDelete;
 import com.rey.material.widget.CheckBox;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -42,15 +42,15 @@ public class LoginActivity extends AnimatedRectActivity {
     public NiftyDialogBuilder dialogBuilder;
     public LayoutInflater mInflater;
     private LoginManager loginManager = new LoginManager();
-    @Bind(R.id.toolbar_left_btn)
+    @BindView(R.id.toolbar_left_btn)
     TextView toolbarLeftBtn;
-    @Bind(R.id.toolbar_intermediate_tv)
+    @BindView(R.id.toolbar_intermediate_tv)
     TextView toolbarIntermediateTv;
-    @Bind(R.id.phone_et)
+    @BindView(R.id.phone_et)
     EditTextWithDelete phoneEt;
-    @Bind(R.id.password_et)
+    @BindView(R.id.password_et)
     EditTextWithDelete passwordEt;
-    @Bind(R.id.isnoaccount)
+    @BindView(R.id.isnoaccount)
     CheckBox isNoAccount;
 
     private String phone;

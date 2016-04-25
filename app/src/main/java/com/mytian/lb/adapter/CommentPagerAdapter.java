@@ -15,7 +15,7 @@ import com.mytian.lb.bean.user.CommentResult;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -83,11 +83,11 @@ public class CommentPagerAdapter extends BaseAdapter {
      * @author ButterKnifeZelezny, plugin for Android Studio by Avast Developers (http://github.com/avast)
      */
     static class ViewHolder {
-        @Bind(R.id.head_comment)
+        @BindView(R.id.head_comment)
         RoundedImageView head;
-        @Bind(R.id.name_comment)
+        @BindView(R.id.name_comment)
         TextView name;
-        @Bind(R.id.content_comment)
+        @BindView(R.id.content_comment)
         TextView content;
 
         ViewHolder(View view) {

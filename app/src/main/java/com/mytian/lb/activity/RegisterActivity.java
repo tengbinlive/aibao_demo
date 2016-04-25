@@ -30,8 +30,8 @@ import com.rey.material.widget.CheckBox;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import butterknife.Bind;
 import butterknife.BindString;
+import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
@@ -66,15 +66,15 @@ public class RegisterActivity extends AbsActivity {
     String login_verification_title;
     @BindString(R.string.reget_verification)
     String reget_verification;
-    @Bind(R.id.password_et)
+    @BindView(R.id.password_et)
     EditTextWithDelete password_et;
-    @Bind(R.id.verification_et)
+    @BindView(R.id.verification_et)
     EditTextWithDelete verification_et;
-    @Bind(R.id.phone_et)
+    @BindView(R.id.phone_et)
     EditTextWithDelete phone_et;
-    @Bind(R.id.verification_bt)
+    @BindView(R.id.verification_bt)
     Button verification_bt;
-    @Bind(R.id.agree_cb)
+    @BindView(R.id.agree_cb)
     CheckBox agree_cb;
 
     private String phone;
@@ -267,10 +267,10 @@ public class RegisterActivity extends AbsActivity {
     @Override
     public void finish() {
         super.finish();
-        if(null!=timer){
+        if (null != timer) {
             timer.cancel();
         }
-        if(null!=myHander){
+        if (null != myHander) {
             myHander.removeMessages(0);
         }
         if (smsContentObserver != null) {

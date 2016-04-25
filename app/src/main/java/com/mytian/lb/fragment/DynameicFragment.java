@@ -18,16 +18,16 @@ import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationA
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * 动态界面
  */
 public class DynameicFragment extends AbsFragment {
 
-    @Bind(R.id.listview_pr)
+    @BindView(R.id.listview_pr)
     PullToRefreshListView listview;
-    @Bind(R.id.ll_listEmpty)
+    @BindView(R.id.ll_listEmpty)
     View llListEmpty;
 
     private ListView mActualListView;

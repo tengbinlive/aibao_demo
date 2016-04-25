@@ -18,16 +18,16 @@ import com.mytian.lb.R;
 import com.mytian.lb.helper.MWebChromeClient;
 import com.pnikosis.materialishprogress.ProgressWheel;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * web 界面
  */
 public class WebViewActivity extends AbsActivity {
 
-    @Bind(R.id.webview)
+    @BindView(R.id.webview)
     WebView webview;
-    @Bind(R.id.progress)
+    @BindView(R.id.progress)
     ProgressWheel progress;
 
     private MWebChromeClient mWebChromeClient;

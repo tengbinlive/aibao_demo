@@ -27,7 +27,7 @@ import com.mytian.lb.manager.FollowManager;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class FriendslistAdapter extends BaseSwipeAdapter {
@@ -132,7 +132,7 @@ public class FriendslistAdapter extends BaseSwipeAdapter {
             public void onClick(View view) {
                 ArrayList<Object> imgs = new ArrayList<>();
                 imgs.add(bean.getHead_thumb());
-                ShowPictureActivity.toShowPicture(mContext, imgs,bean.getAlias());
+                ShowPictureActivity.toShowPicture(mContext, imgs, bean.getAlias());
             }
         });
         viewHolder.name.setText(bean.getAlias());
@@ -176,17 +176,17 @@ public class FriendslistAdapter extends BaseSwipeAdapter {
      * @author ButterKnifeZelezny, plugin for Android Studio by Avast Developers (http://github.com/avast)
      */
     static class ViewHolder {
-        @Bind(R.id.head)
+        @BindView(R.id.head)
         RoundedImageView head;
-        @Bind(R.id.name)
+        @BindView(R.id.name)
         TextView name;
-        @Bind(R.id.state_tv)
+        @BindView(R.id.state_tv)
         TextView stateTv;
-        @Bind(R.id.state_iv)
+        @BindView(R.id.state_iv)
         ImageView stateIv;
-        @Bind(R.id.delete_layout)
+        @BindView(R.id.delete_layout)
         RelativeLayout deleteLayout;
-        @Bind(R.id.swipe)
+        @BindView(R.id.swipe)
         SwipeLayout swipeLayout;
 
         ViewHolder(View view) {

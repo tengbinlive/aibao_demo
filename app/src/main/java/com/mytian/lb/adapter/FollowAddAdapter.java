@@ -23,7 +23,7 @@ import com.mytian.lb.manager.FollowManager;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class FollowAddAdapter extends BaseAdapter {
@@ -151,13 +151,13 @@ public class FollowAddAdapter extends BaseAdapter {
      * @author ButterKnifeZelezny, plugin for Android Studio by Avast Developers (http://github.com/avast)
      */
     static class ViewHolder {
-        @Bind(R.id.head)
+        @BindView(R.id.head)
         RoundedImageView head;
-        @Bind(R.id.name)
+        @BindView(R.id.name)
         TextView name;
-        @Bind(R.id.title)
+        @BindView(R.id.title)
         TextView title;
-        @Bind(R.id.accept_bt)
+        @BindView(R.id.accept_bt)
         Button accept_bt;
 
         ViewHolder(View view) {

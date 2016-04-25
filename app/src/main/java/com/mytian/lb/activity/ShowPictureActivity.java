@@ -25,14 +25,14 @@ import com.pnikosis.materialishprogress.ProgressWheel;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 
 public class ShowPictureActivity extends AbsActivity {
 
-    @Bind(R.id.viewPager)
+    @BindView(R.id.viewPager)
     ViewPager viewPager;
-    @Bind(R.id.dot)
+    @BindView(R.id.dot)
     TextView dot;
     private ArrayList<Object> mImages;
     private ArrayList<ViewGroup> mViews;
