@@ -74,7 +74,7 @@ public class CommonUtil {
      * @return 所在地
      */
     public static String getLocation(String provinceCode, String provinceName, String cityName, String countyName) {
-        String location = "";
+        String location;
         if ("110000".equals(provinceCode) || "310000".equals(provinceCode) || "120000".equals(provinceCode)
                 || "500000".equals(provinceCode)) {
             location = cityName + " " + countyName;
@@ -124,7 +124,7 @@ public class CommonUtil {
         StringBuilder sb = new StringBuilder();
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"), 8 * 1024);
-            String line = null;
+            String line;
             while ((line = reader.readLine()) != null) {
                 sb.append(line);
             }
@@ -173,7 +173,7 @@ public class CommonUtil {
     }
 
     public static byte[] drawableToByteArray(Drawable drawable) {
-        ByteArrayOutputStream output = null;
+        ByteArrayOutputStream output;
         try {
             // 取 drawable 的长宽
             int w = drawable.getIntrinsicWidth();
@@ -201,7 +201,7 @@ public class CommonUtil {
     }
 
     public static byte[] getHtmlByteArray(final String url) {
-        URL htmlUrl = null;
+        URL htmlUrl;
         InputStream inStream = null;
         try {
             htmlUrl = new URL(url);

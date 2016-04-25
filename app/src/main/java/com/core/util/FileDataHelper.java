@@ -121,7 +121,7 @@ public final class FileDataHelper {
      * @return 目录删除成功返回true，否则返回false
      */
     public static boolean deleteDirectory(String filePath) {
-        boolean flag = false;
+        boolean flag;
         //如果filePath不以文件分隔符结尾，自动添加文件分隔符
         if (!filePath.endsWith(File.separator)) {
             filePath = filePath + File.separator;
@@ -157,7 +157,7 @@ public final class FileDataHelper {
      * @return 目录删除成功返回true，否则返回false
      */
     public static boolean deleteFiles(String filePath) {
-        boolean flag = false;
+        boolean flag;
         //如果filePath不以文件分隔符结尾，自动添加文件分隔符
         if (!filePath.endsWith(File.separator)) {
             filePath = filePath + File.separator;

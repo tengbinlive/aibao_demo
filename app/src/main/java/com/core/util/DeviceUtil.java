@@ -178,7 +178,7 @@ public class DeviceUtil {
 		DisplayMetrics dm = new DisplayMetrics();
 		display.getMetrics(dm);
 
-		boolean largeScreen = true;
+		boolean largeScreen;
 		int densityDpi = dm.densityDpi; // 屏幕密度DPI（120 / 160 / 240）
 		if (densityDpi <= 240) {
 			largeScreen = false;
