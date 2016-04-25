@@ -4,6 +4,7 @@ import com.core.openapi.OpenApiBaseRequestAdapter;
 import com.core.util.StringUtil;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class updateRemarkNameParam extends OpenApiBaseRequestAdapter {
 
@@ -78,7 +79,7 @@ public class updateRemarkNameParam extends OpenApiBaseRequestAdapter {
     }
 
     @Override
-    public void fill2Map(HashMap<String, Object> param, boolean includeEmptyAttr) {
+    public void fill2Map(Map<String, Object> param, boolean includeEmptyAttr) {
         if (includeEmptyAttr || (!includeEmptyAttr && StringUtil.isNotBlank(uid)))
             param.put("uid", uid);
         if (includeEmptyAttr || (!includeEmptyAttr && StringUtil.isNotBlank(token)))

@@ -17,6 +17,7 @@ import com.mytian.lb.manager.DynamicManager;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -115,7 +116,7 @@ public class DynameicFragment extends AbsFragment {
         listview.onRefreshComplete();
         if (resposne.isSuccess()) {
             DynamicResult result = (DynamicResult) resposne.getData();
-            ArrayList<Dynamic> list = result.getList();
+            List<Dynamic> list = result.getList();
             int size = list == null ? 0 : list.size();
             if (arrayList == null) {
                 arrayList = new ArrayList<>();

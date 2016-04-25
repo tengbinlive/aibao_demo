@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -66,7 +67,7 @@ public class HabitFragment extends AbsFragment {
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    public ArrayList deepCopy(ArrayList src) throws IOException, ClassNotFoundException {
+    public ArrayList deepCopy(List src) throws IOException, ClassNotFoundException {
         ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
         ObjectOutputStream out = new ObjectOutputStream(byteOut);
         out.writeObject(src);

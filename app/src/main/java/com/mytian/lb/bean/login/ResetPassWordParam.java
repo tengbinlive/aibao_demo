@@ -4,6 +4,7 @@ import com.core.openapi.OpenApiBaseRequestAdapter;
 import com.core.util.StringUtil;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class ResetPassWordParam extends OpenApiBaseRequestAdapter {
 
@@ -46,7 +47,7 @@ public class ResetPassWordParam extends OpenApiBaseRequestAdapter {
     }
 
     @Override
-    public void fill2Map(HashMap<String, Object> param, boolean includeEmptyAttr) {
+    public void fill2Map(Map<String, Object> param, boolean includeEmptyAttr) {
         if (includeEmptyAttr || (!includeEmptyAttr && StringUtil.isNotBlank(password)))
             param.put("parent.password", password);
         if (includeEmptyAttr || (!includeEmptyAttr && StringUtil.isNotBlank(phone)))

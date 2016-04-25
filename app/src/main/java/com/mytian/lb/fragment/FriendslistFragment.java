@@ -30,6 +30,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -183,7 +184,7 @@ public class FriendslistFragment extends AbsFragment {
         listview.onRefreshComplete();
         if (resposne.isSuccess()) {
             FollowListResult result = (FollowListResult) resposne.getData();
-            ArrayList<FollowUser> list = result.getList();
+            List<FollowUser> list = result.getList();
             int size = list == null ? 0 : list.size();
             if (arrayList == null) {
                 arrayList = new ArrayMap<>();
