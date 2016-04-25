@@ -25,6 +25,9 @@ public class OpenApiParser {
     private static final String JSON_VALUE_SUCCESS_CODE = "1";
     private static final String JSON_VALUE_OUT_CODE = "-1";// 账号退出
 
+    private OpenApiParser() {
+    }
+
     /**
      * 从JSON数据中解析为指定对象.
      *

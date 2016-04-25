@@ -11,6 +11,9 @@ import java.util.Map;
  */
 public class OpenApiParamHelper {
 
+    private OpenApiParamHelper() {
+    }
+
     /**
      * 调用前进行参数处理
      *

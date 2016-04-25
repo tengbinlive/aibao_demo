@@ -48,6 +48,9 @@ public class CommonUtil {
 
     private static final int MAX_DECODE_PICTURE_SIZE = 1920 * 1440;
 
+    private CommonUtil() {
+    }
+
     /**
      * 根据生日字符串返回数字数组,分别表示年月日
      *

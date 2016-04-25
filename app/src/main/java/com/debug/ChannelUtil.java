@@ -22,6 +22,9 @@ public class ChannelUtil {
     private static final String CHANNEL_VERSION_KEY = "cztchannel_version";
     private static String mChannel;
 
+    private ChannelUtil() {
+    }
+
     /**
      * 返回市场。  如果获取失败返回""
      *

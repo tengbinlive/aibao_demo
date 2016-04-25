@@ -30,6 +30,10 @@ import de.greenrobot.daogenerator.ToMany;
 public class ExampleDaoGenerator {
 
     private final static int verison = 7;
+
+    private ExampleDaoGenerator() {
+    }
+
     public static void main(String[] args) throws Exception {
         Schema schema = new Schema(verison, "com.example");
         addConfig(schema);
