@@ -15,6 +15,9 @@
 
 ![](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo5.gif)                      ![](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo6.gif)
 
+![](https://github.com/tengbinlive/aibao_demo/blob/master/image/demo7.gif)
+
+
 ###build
 
     debug 调试版
