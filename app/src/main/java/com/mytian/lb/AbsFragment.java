@@ -43,9 +43,10 @@ public abstract class AbsFragment extends Fragment implements EInitFragmentDate 
     @Override
     public void onResume() {
         super.onResume();
-        mTracker.setScreenName("TAG - "+this.getClass().getSimpleName());
+        mTracker.setScreenName("TAG - " + this.getClass().getSimpleName());
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
+
 
     @Override
     public void onPause() {

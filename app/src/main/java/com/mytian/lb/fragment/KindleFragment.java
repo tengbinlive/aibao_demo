@@ -1,31 +1,27 @@
 package com.mytian.lb.fragment;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 
-import com.bm.library.PhotoView;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 import com.mytian.lb.AbsFragment;
 import com.mytian.lb.R;
 import com.pnikosis.materialishprogress.ProgressWheel;
+
+import org.xwalk.core.XWalkNavigationHistory;
+import org.xwalk.core.XWalkPreferences;
+import org.xwalk.core.XWalkUIClient;
+import org.xwalk.core.XWalkView;
 
 import butterknife.BindView;
 
 public class KindleFragment extends AbsFragment {
 
-    @BindView(R.id.photoview)
-    PhotoView photoview;
+    @BindView(R.id.webview)
+    XWalkView xWalkView;
 
     @BindView(R.id.progress)
     ProgressWheel progress;
-
-    @Override
-    public boolean onBackPressed() {
-        return false;
-    }
 
     @Override
     public int getContentView() {
@@ -35,19 +31,86 @@ public class KindleFragment extends AbsFragment {
     @Override
     public void EInit() {
         super.EInit();
-        photoview.enable();
-        progress.setVisibility(View.VISIBLE);
-        Glide.with(mContext).load(R.drawable.test).listener(new RequestListener<Object, GlideDrawable>() {
+        webviewSetInit("http://mrdoob.com/lab/javascript/threejs/css3d/periodictable/");
+    }
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        // ANIMATABLE_XWALK_VIEW preference key MUST be set before XWalkView creation.
+        XWalkPreferences.setValue(XWalkPreferences.ANIMATABLE_XWALK_VIEW, true);
+        super.onCreate(savedInstanceState);
+    }
+
+    //webview 属性 设置
+    private void webviewSetInit(String url) {
+        xWalkView.setUIClient(new XWalkUIClient(xWalkView) {
             @Override
-            public boolean onException(Exception e, Object model, Target<GlideDrawable> target, boolean isFirstResource) {
-                return false;
+            public void onPageLoadStarted(XWalkView view, String url) {
+                super.onPageLoadStarted(view, url);
+                progress.setVisibility(View.VISIBLE);
             }
 
             @Override
-            public boolean onResourceReady(GlideDrawable resource, Object model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+            public void onPageLoadStopped(XWalkView view, String url, LoadStatus status) {
+                super.onPageLoadStopped(view, url, status);
                 progress.setVisibility(View.GONE);
-                return false;
             }
-        }).diskCacheStrategy(DiskCacheStrategy.SOURCE).fitCenter().into(photoview);
+        });
+        xWalkView.load(url, null);
     }
+
+    /**
+     * 返回文件选择
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode,
+                                 Intent intent) {
+        if (xWalkView != null) {
+            xWalkView.onActivityResult(requestCode, resultCode, intent);
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (xWalkView != null) {
+            xWalkView.onDestroy();
+        }
+        // Reset the preference for animatable XWalkView.
+        XWalkPreferences.setValue(XWalkPreferences.ANIMATABLE_XWALK_VIEW, false);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (xWalkView != null) {
+            xWalkView.pauseTimers();
+            xWalkView.onHide();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (xWalkView != null) {
+            xWalkView.resumeTimers();
+            xWalkView.onShow();
+        }
+    }
+
+
+    @Override
+    public boolean onBackPressed() {
+        // Go backward
+        if (xWalkView != null && xWalkView.getNavigationHistory().canGoBack()) {
+            xWalkView.getNavigationHistory().navigate(
+                    XWalkNavigationHistory.Direction.BACKWARD, 1);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
 }

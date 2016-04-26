@@ -172,6 +172,7 @@ dependencies {
     compile 'com.bigkoo:alertview:1.0.2'
 
     compile 'com.google.android.gms:play-services-analytics:8.4.0'//google analytics
+    compile 'org.xwalk:xwalk_core_library:10.39.235.15'
 
     compile(name: 'niftymodaldialog-release', ext: 'aar')
     compile(name: 'pulltorefresh-release', ext: 'aar')
@@ -179,6 +180,7 @@ dependencies {
     compile(name: 'swipeLayout-release', ext: 'aar')
     compile(name: 'circularprogressbar-release', ext: 'aar')
 
+    testCompile 'junit:junit:4.12'
 }
 
 apply plugin: 'com.google.gms.google-services'

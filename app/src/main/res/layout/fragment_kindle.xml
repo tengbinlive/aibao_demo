@@ -3,11 +3,11 @@
     android:background="@color/theme_bg_layout"
     android:layout_height="match_parent">
 
-    <com.bm.library.PhotoView
-        android:id="@+id/photoview"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_centerInParent="true" />
+    <org.xwalk.core.XWalkView
+        android:id="@+id/webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/theme_bg_layout" />
 
     <com.pnikosis.materialishprogress.ProgressWheel
         xmlns:wheel="http://schemas.android.com/apk/res-auto"

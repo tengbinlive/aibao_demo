@@ -21,6 +21,7 @@ allprojects {
         maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
         maven { url "http://maven.bughd.com/public" }
         maven { url "http://mvn.gt.igexin.com/nexus/content/repositories/releases/" }
+        maven { url 'https://download.01.org/crosswalk/releases/crosswalk/android/maven2'}
         jcenter()
     }
 }
