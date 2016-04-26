@@ -79,6 +79,7 @@ public class MainActivity extends AbsActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+
     /**
      * 按两次退出键才退出.
      */
@@ -107,6 +108,9 @@ public class MainActivity extends AbsActivity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         String NOTICE_TYPE = intent.getStringExtra(PushCode.NOTICE_TYPE);
+        if(null!=fragments){
+            fragments.get(currentPosition).onNewIntent(intent);
+        }
         toNOTICE_TYPE(NOTICE_TYPE);
     }
 

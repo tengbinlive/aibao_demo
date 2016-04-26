@@ -45,12 +45,6 @@ public class WebViewActivity extends AbsActivity {
         return R.layout.activity_webview;
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        // ANIMATABLE_XWALK_VIEW preference key MUST be set before XWalkView creation.
-        XWalkPreferences.setValue(XWalkPreferences.ANIMATABLE_XWALK_VIEW, true);
-        super.onCreate(savedInstanceState);
-    }
 
     //webview 属性 设置
     private void webviewSetInit(String url) {
@@ -88,8 +82,6 @@ public class WebViewActivity extends AbsActivity {
         if (xWalkView != null) {
             xWalkView.onDestroy();
         }
-        // Reset the preference for animatable XWalkView.
-        XWalkPreferences.setValue(XWalkPreferences.ANIMATABLE_XWALK_VIEW, false);
     }
 
     @Override

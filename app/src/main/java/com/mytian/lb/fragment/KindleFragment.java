@@ -2,6 +2,7 @@ package com.mytian.lb.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.mytian.lb.AbsFragment;
@@ -34,12 +35,11 @@ public class KindleFragment extends AbsFragment {
         webviewSetInit("http://mrdoob.com/lab/javascript/threejs/css3d/periodictable/");
     }
 
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        // ANIMATABLE_XWALK_VIEW preference key MUST be set before XWalkView creation.
-        XWalkPreferences.setValue(XWalkPreferences.ANIMATABLE_XWALK_VIEW, true);
-        super.onCreate(savedInstanceState);
+    public void onNewIntent(Intent intent) {
+        if (xWalkView != null) {
+            xWalkView.onNewIntent(intent);
+        }
     }
 
     //webview 属性 设置
@@ -77,8 +77,6 @@ public class KindleFragment extends AbsFragment {
         if (xWalkView != null) {
             xWalkView.onDestroy();
         }
-        // Reset the preference for animatable XWalkView.
-        XWalkPreferences.setValue(XWalkPreferences.ANIMATABLE_XWALK_VIEW, false);
     }
 
     @Override
