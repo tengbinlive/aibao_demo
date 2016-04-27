@@ -5,6 +5,7 @@ import com.core.openapi.OpenApiRequestInterface;
 import com.core.util.StringUtil;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class FollowAddParam extends OpenApiBaseRequestAdapter{
 
@@ -89,7 +90,7 @@ public class FollowAddParam extends OpenApiBaseRequestAdapter{
     }
 
     @Override
-    public void fill2Map(HashMap<String, Object> param, boolean includeEmptyAttr) {
+    public void fill2Map(Map<String, Object> param, boolean includeEmptyAttr) {
         if (includeEmptyAttr || (!includeEmptyAttr && StringUtil.isNotBlank(token)))
             param.put("token", token);
         if (includeEmptyAttr || (!includeEmptyAttr && StringUtil.isNotBlank(uid)))

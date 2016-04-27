@@ -304,7 +304,7 @@ public class CommonRequest extends Request<CommonResponse> {
         }
     }
 
-    private void buildMultipartEntity(HashMap<String, String> mParam, HashMap<String, File> mFileParts) {
+    private void buildMultipartEntity(Map<String, String> mParam, Map<String, File> mFileParts) {
         //添加字符串参数
         if (mParam != null) {
             for (Map.Entry entry : mParam.entrySet()) {

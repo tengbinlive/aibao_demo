@@ -57,6 +57,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import butterknife.BindColor;
 import butterknife.BindView;
@@ -212,7 +213,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
             return;
         }
         isChangeButton = true;
-        ArrayList<Animator> animList = new ArrayList<>();
+        List<Animator> animList = new ArrayList<>();
         Animator revealAnim;
         if (is) {
             revealAnim = createViewScale1(change_bt);

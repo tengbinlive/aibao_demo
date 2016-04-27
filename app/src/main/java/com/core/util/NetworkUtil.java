@@ -4,6 +4,7 @@ import android.content.Context;
 import android.telephony.TelephonyManager;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -152,7 +153,7 @@ public class NetworkUtil {
 		if (context == null) return;
 		int dbm = -112;
 
-		ArrayList<CellIDInfo> CellID = null;
+		List<CellIDInfo> CellID = null;
 		CellIDInfoUtil manager = new CellIDInfoUtil();
 		try {
 			CellID = manager.getCellIDInfo(context, true);

@@ -9,6 +9,7 @@ import com.mytian.lb.R;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import de.greenrobot.dao.query.WhereCondition;
 
@@ -63,7 +64,7 @@ public class UserActionDOManager {
         String [] argeementTitle = context.getResources().getStringArray(R.array.argeement);
         String [] habitTitle = context.getResources().getStringArray(R.array.habit);
         int startIndex = 2000;
-        ArrayList<UserAction> arrayList = new ArrayList<>();
+        List<UserAction> arrayList = new ArrayList<>();
         int length = argeementTitle.length;
         /**
          * 约定

@@ -6,6 +6,7 @@ import com.core.util.StringUtil;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * OpenApi基本请求类.
@@ -42,7 +43,7 @@ public abstract class OpenApiBaseRequestAdapter implements OpenApiRequestInterfa
 	 * @param param 属性HashMap对象
 	 * @param includeEmptyAttr 包含空值的属性
 	 */
-	public abstract void fill2Map(HashMap<String, Object> param, boolean includeEmptyAttr);
+	public abstract void fill2Map(Map<String, Object> param, boolean includeEmptyAttr);
 
 	/**
 	 * 需要重写的把属性填充到Map中 Flie
@@ -50,7 +51,7 @@ public abstract class OpenApiBaseRequestAdapter implements OpenApiRequestInterfa
 	 * @param param 属性HashMap对象
 	 * @param includeEmptyAttr 包含空值的属性
 	 */
-	public void fill2FileMap(HashMap<String, File> param, boolean includeEmptyAttr){
+	public void fill2FileMap(Map<String, File> param, boolean includeEmptyAttr){
 	}
 
 
