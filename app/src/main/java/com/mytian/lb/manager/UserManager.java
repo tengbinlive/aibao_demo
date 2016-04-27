@@ -24,7 +24,6 @@ import java.io.File;
  */
 public class UserManager {
 
-    private static final String TAG = UserManager.class.getSimpleName();
 
     /**
      * 信息补全

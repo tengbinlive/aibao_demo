@@ -26,7 +26,6 @@ import com.mytian.lb.bean.follow.FollowListResult;
  */
 public class FollowManager {
 
-    private static final String TAG = FollowManager.class.getSimpleName();
 
     /**
      * 获取关注列表

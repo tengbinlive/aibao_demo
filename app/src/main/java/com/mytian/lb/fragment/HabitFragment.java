@@ -32,7 +32,7 @@ public class HabitFragment extends AbsFragment {
 
     private FollowUser cureentParent;
 
-    private ArrayList<UserAction> arrayList;
+    private ArrayList arrayList;
 
     @Override
     public boolean onBackPressed() {
@@ -49,9 +49,7 @@ public class HabitFragment extends AbsFragment {
         cureentParent = (FollowUser) getArguments().getSerializable(UserDetailActivity.USER);
         try {
             arrayList = deepCopy(UserActionDOManager.getInstance().getArrayListHabit());
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         initListViewData(arrayList);
@@ -74,8 +72,7 @@ public class HabitFragment extends AbsFragment {
 
         ByteArrayInputStream byteIn = new ByteArrayInputStream(byteOut.toByteArray());
         ObjectInputStream in = new ObjectInputStream(byteIn);
-        ArrayList dest = (ArrayList) in.readObject();
-        return dest;
+        return (ArrayList) in.readObject();
     }
 
     private void initListViewData(ArrayList<UserAction> _arrayList) {

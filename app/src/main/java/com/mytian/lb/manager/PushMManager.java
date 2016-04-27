@@ -19,8 +19,6 @@ import com.mytian.lb.bean.push.UpdateChannelidParam;
  */
 public class PushMManager {
 
-    private static final String TAG = PushMManager.class.getSimpleName();
-
     /**
      * 上传channelId
      *

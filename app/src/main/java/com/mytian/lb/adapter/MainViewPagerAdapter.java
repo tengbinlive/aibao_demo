@@ -20,8 +20,7 @@ public class MainViewPagerAdapter extends FragmentPagerAdapter {
     }
 
     public Fragment getItem(int num) {
-        AbsFragment fragment = fragments.get(num);
-        return fragment;
+        return fragments.get(num);
     }
 
     @Override

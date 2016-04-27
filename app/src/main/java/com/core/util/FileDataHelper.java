@@ -61,32 +61,28 @@ public final class FileDataHelper {
                 }
             }
 
-            if (rootFile != null) {
-                File rootDir = new File(rootFile + Constant.Dir.ROOT_DIR);
-                File downloadDir = new File(rootFile + Constant.Dir.DOWNLOAD_DIR);
-                File imageDir = new File(rootFile + Constant.Dir.IMAGE_DIR);
-                File cacheDir = new File(rootFile + Constant.Dir.CACHE_DIR);
+            File rootDir = new File(rootFile + Constant.Dir.ROOT_DIR);
+            File downloadDir = new File(rootFile + Constant.Dir.DOWNLOAD_DIR);
+            File imageDir = new File(rootFile + Constant.Dir.IMAGE_DIR);
+            File cacheDir = new File(rootFile + Constant.Dir.CACHE_DIR);
 
-                if (!rootDir.exists()) {
-                    rootDir.mkdirs();
-                    Logger.d(rootDir + IS_NOT_EXIST_CREATED_SUCCEED);
-                }
-                if (!downloadDir.exists()) {
-                    downloadDir.mkdirs();
-                    Logger.d(downloadDir + IS_NOT_EXIST_CREATED_SUCCEED);
-                }
-                if (!imageDir.exists()) {
-                    imageDir.mkdirs();
-                    Logger.d(imageDir + IS_NOT_EXIST_CREATED_SUCCEED);
-                }
-                if (!cacheDir.exists()) {
-                    cacheDir.mkdirs();
-                    Logger.d(cacheDir + IS_NOT_EXIST_CREATED_SUCCEED);
-                }
-                result = true;
-            } else {
-                Logger.e("rootFile is null, created failed");
+            if (!rootDir.exists()) {
+                rootDir.mkdirs();
+                Logger.d(rootDir + IS_NOT_EXIST_CREATED_SUCCEED);
             }
+            if (!downloadDir.exists()) {
+                downloadDir.mkdirs();
+                Logger.d(downloadDir + IS_NOT_EXIST_CREATED_SUCCEED);
+            }
+            if (!imageDir.exists()) {
+                imageDir.mkdirs();
+                Logger.d(imageDir + IS_NOT_EXIST_CREATED_SUCCEED);
+            }
+            if (!cacheDir.exists()) {
+                cacheDir.mkdirs();
+                Logger.d(cacheDir + IS_NOT_EXIST_CREATED_SUCCEED);
+            }
+            result = true;
         } catch (Exception e) {
             Logger.e("create directory Exception, " + e);
         }
@@ -108,11 +104,7 @@ public final class FileDataHelper {
      */
     public static boolean hasSdcard() {
         String state = Environment.getExternalStorageState();
-        if (state.equals(Environment.MEDIA_MOUNTED)) {
-            return true;
-        } else {
-            return false;
-        }
+        return state.equals(Environment.MEDIA_MOUNTED);
     }
 
     /**
@@ -194,9 +186,6 @@ public final class FileDataHelper {
      */
     public static boolean deleteFile(String filePath) {
         File file = new File(filePath);
-        if (file.isFile() && file.exists()) {
-            return file.delete();
-        }
-        return false;
+        return file.isFile() && file.exists() && file.delete();
     }
 }

@@ -68,7 +68,7 @@ public class MainActivity extends AbsActivity {
      */
     private long exitClickTimestamp = 0L;
 
-    private int selectPager = 0 ;
+    private int selectPager = 0;
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -108,7 +108,7 @@ public class MainActivity extends AbsActivity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         String NOTICE_TYPE = intent.getStringExtra(PushCode.NOTICE_TYPE);
-        if(null!=fragments){
+        if (null != fragments) {
             fragments.get(currentPosition).onNewIntent(intent);
         }
         toNOTICE_TYPE(NOTICE_TYPE);

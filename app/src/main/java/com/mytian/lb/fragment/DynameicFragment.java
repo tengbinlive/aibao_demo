@@ -31,7 +31,6 @@ public class DynameicFragment extends AbsFragment {
     @BindView(R.id.ll_listEmpty)
     View llListEmpty;
 
-    private ListView mActualListView;
     private DynamicAdapter mAdapter;
 
     private ArrayList<Dynamic> arrayList;
@@ -54,7 +53,7 @@ public class DynameicFragment extends AbsFragment {
             }
         });
 
-        mActualListView = listview.getRefreshableView();
+        ListView mActualListView = listview.getRefreshableView();
 
         // Need to use the Actual ListView when registering for Context Menu
         registerForContextMenu(mActualListView);
@@ -130,8 +129,6 @@ public class DynameicFragment extends AbsFragment {
             } else {
                 listview.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
             }
-        } else {
-            //避免第一次应用启动时 创建fragment加载数据多次提示
         }
         if (arrayList == null || arrayList.size() <= 0) {
             llListEmpty.setVisibility(View.VISIBLE);

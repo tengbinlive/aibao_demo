@@ -200,8 +200,6 @@ public class FriendslistFragment extends AbsFragment {
             } else {
                 listview.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
             }
-        } else {
-            //避免第一次应用启动时 创建fragment加载数据多次提示
         }
         if (arrayList == null || arrayList.size() <= 0) {
             llListEmpty.setVisibility(View.VISIBLE);

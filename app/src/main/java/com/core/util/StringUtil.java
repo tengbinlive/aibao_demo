@@ -30,7 +30,7 @@ public class StringUtil {
         if ("null".equalsIgnoreCase(str))
             return true;
         for (int i = 0; i < strLen; i++) {
-            if ((Character.isWhitespace(str.charAt(i)) == false)) {
+            if (!Character.isWhitespace(str.charAt(i))) {
                 return false;
             }
         }
@@ -143,12 +143,7 @@ public class StringUtil {
         String check = "^([a-z0-9A-Z]+[-|._]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?.)+[a-zA-Z]{2,}$";
         Pattern regex = Pattern.compile(check);
         Matcher matcher = regex.matcher(emailStr.trim());
-        boolean isMatched = matcher.matches();
-        if (isMatched) {
-            return true;
-        } else {
-            return false;
-        }
+        return matcher.matches();
     }
 
     /**

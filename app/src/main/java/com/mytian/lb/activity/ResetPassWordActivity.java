@@ -195,20 +195,18 @@ public class ResetPassWordActivity extends AbsActivity {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                myHander.sendEmptyMessage(0);
+                mHander.sendEmptyMessage(0);
             }
         }, 0, 1000);
     }
 
-    Handler myHander = new Handler() {
+    Handler mHander = new Handler() {
         public void handleMessage(Message msg) {
             if (msg.what == 0) {
                 long TimeUsed = System.currentTimeMillis() - DKEY_START_TIME;
                 setDKeyBtnText(TimeUsed);
             }
         }
-
-        ;
     };
 
     private void setDKeyBtnText(long TimeUsed) {
@@ -246,11 +244,9 @@ public class ResetPassWordActivity extends AbsActivity {
     @Override
     public void finish() {
         super.finish();
-        if(null!=timer){
-            timer.cancel();
-        }
-        if(null!=myHander){
-            myHander.removeMessages(0);
+        timer.cancel();
+        if(null!= mHander){
+            mHander.removeMessages(0);
         }
         if (smsContentObserver != null) {
             this.getContentResolver().unregisterContentObserver(smsContentObserver);

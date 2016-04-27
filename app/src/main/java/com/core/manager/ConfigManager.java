@@ -23,9 +23,7 @@ import java.util.List;
  */
 public class ConfigManager {
 
-    private static final String TAG = ConfigManager.class.getSimpleName();
-
-    private static HashMap<String, Object> map = new HashMap<String, Object>();
+    private static HashMap<String, Object> map = new HashMap<>();
 
     private ConfigManager() {
     }

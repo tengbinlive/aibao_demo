@@ -29,8 +29,6 @@ import butterknife.ButterKnife;
 
 public abstract class AbsFragment extends Fragment implements EInitFragmentDate {
 
-    protected final String TAG = AbsFragment.class.getSimpleName();
-
     public NiftyDialogBuilder dialogBuilder;
 
     public LayoutInflater mInflater;
@@ -71,7 +69,7 @@ public abstract class AbsFragment extends Fragment implements EInitFragmentDate 
         dialogDismiss();
         super.onDestroy();
         if (BuildConfig.CANARY_DEBUG) {
-            RefWatcher refWatcher = App.getInstance().getRefWatcher(getActivity());
+            RefWatcher refWatcher = App.getRefWatcher(getActivity());
             refWatcher.watch(this);
         }
     }

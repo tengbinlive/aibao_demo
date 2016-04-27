@@ -34,8 +34,6 @@ public class ShowPictureActivity extends AbsActivity {
     ViewPager viewPager;
     @BindView(R.id.dot)
     TextView dot;
-    private ArrayList<Object> mImages;
-    private ArrayList<ViewGroup> mViews;
 
     public final static String IMAGES = "DATA";
     public final static String TITLE = "TITLE";
@@ -71,9 +69,9 @@ public class ShowPictureActivity extends AbsActivity {
     }
 
     private void initView() {
-        mImages = (ArrayList<Object>) getIntent().getExtras().getSerializable(IMAGES);
+        ArrayList<Object> mImages = (ArrayList<Object>) getIntent().getExtras().getSerializable(IMAGES);
         int index = getIntent().getExtras().getInt(INDEX, 0);
-        mViews = new ArrayList<>();
+        ArrayList<ViewGroup> mViews = new ArrayList<>();
         if (mImages != null && mImages.size() > 0) {
             item_size = mImages.size();
             setDot(index, item_size);

@@ -9,16 +9,16 @@ public interface CommonCallback {
     /**
      * 开始操作
      */
-    public void begin();
+    void begin();
 
     /**
      * 结束操作
      */
-    public void end();
+    void end();
 
     /**
      * 数据回调
      */
-    public void resp(CommonResponse response);
+    void resp(CommonResponse response);
 
 }

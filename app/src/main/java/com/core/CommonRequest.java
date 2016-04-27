@@ -36,7 +36,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.UnknownHostException;
 import java.nio.charset.Charset;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.TimeoutException;
 
@@ -47,7 +46,6 @@ import java.util.concurrent.TimeoutException;
  */
 public class CommonRequest extends Request<CommonResponse> {
 
-    private static final String TAG = CommonRequest.class.getSimpleName();
 
     private MultipartEntity entity = new MultipartEntity();
 
@@ -115,8 +113,6 @@ public class CommonRequest extends Request<CommonResponse> {
         }
         if (cause instanceof TimeoutException) {
             response = new CommonResponse(CodeEnum._404);
-        } else if (cause instanceof TimeoutException) {
-            response = new CommonResponse(CodeEnum.CONNECT_TIMEOUT);
         } else if (cause instanceof ConnectTimeoutException) {
             response = new CommonResponse(CodeEnum.CONNECT_TIMEOUT);
         } else if (cause instanceof TimeoutError) {
@@ -312,7 +308,7 @@ public class CommonRequest extends Request<CommonResponse> {
                 String val = entry.getValue().toString();
                 try {
                     entity.addPart(key, new StringBody(val, Charset.forName(OpenApi.CHARSET_UTF8)));
-                } catch (UnsupportedEncodingException e) {
+                } catch (UnsupportedEncodingException ignored) {
                 }
             }
         }
@@ -351,8 +347,7 @@ public class CommonRequest extends Request<CommonResponse> {
 
     @Override
     public RetryPolicy getRetryPolicy() {
-        RetryPolicy retryPolicy = new DefaultRetryPolicy(Constant.SOCKET_TIMEOUT, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
-        return retryPolicy;
+        return new DefaultRetryPolicy(Constant.SOCKET_TIMEOUT, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
     }
 
     private static final String SET_COOKIE_KEY = "Set-Cookie";
@@ -365,9 +360,7 @@ public class CommonRequest extends Request<CommonResponse> {
         }
         String sessionId = App.getInstance().getCookie();
         if (sessionId != null && !sessionId.equals("") && sessionId.length() > 0) {
-            Iterator<Map.Entry<String, String>> it = headers.entrySet().iterator();
-            while (it.hasNext()) {
-                Map.Entry<String, String> pairs = it.next();
+            for (Map.Entry<String, String> pairs : headers.entrySet()) {
                 if (pairs.getValue() == null) {
                     headers.put(SET_COOKIE_KEY, sessionId);
                 }

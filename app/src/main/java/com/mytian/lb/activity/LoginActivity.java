@@ -53,9 +53,6 @@ public class LoginActivity extends AnimatedRectActivity {
     @BindView(R.id.isnoaccount)
     CheckBox isNoAccount;
 
-    private String phone;
-    private String password;
-
     private boolean isCancle;
 
     @Override
@@ -90,11 +87,11 @@ public class LoginActivity extends AnimatedRectActivity {
 
     @OnClick(R.id.login_bt)
     void login() {
-        phone = phoneEt.getText().toString();
-        password = passwordEt.getText().toString();
+        String phone = phoneEt.getText().toString();
+        String password = passwordEt.getText().toString();
         if (App.getInstance().isNoAccount()) {
             phone = "13120979267";
-            password ="123456";
+            password = "123456";
         }
         if (StringUtil.isBlank(phone) || !StringUtil.checkMobile(phone)) {
             AnimationHelper.getInstance().viewAnimationQuiver(phoneEt);
@@ -116,7 +113,7 @@ public class LoginActivity extends AnimatedRectActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        isCancle = getIntent().getBooleanExtra("login",false);
+        isCancle = getIntent().getBooleanExtra("login", false);
         mInflater = LayoutInflater.from(this);
         ButterKnife.bind(this);
         setStatusBar();
@@ -140,7 +137,7 @@ public class LoginActivity extends AnimatedRectActivity {
 
     @Override
     public void onBackPressed() {
-        if(isCancle){
+        if (isCancle) {
             App.getInstance().exit();
         }
         super.onBackPressed();

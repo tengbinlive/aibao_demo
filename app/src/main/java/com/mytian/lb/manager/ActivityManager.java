@@ -5,7 +5,8 @@ import android.app.Activity;
 import java.util.Stack;
 
 /**
- * Created by Administrator on 2015/10/30.
+ *
+ * Created by bin.teng on 2015/10/30.
  */
 public class ActivityManager {
 

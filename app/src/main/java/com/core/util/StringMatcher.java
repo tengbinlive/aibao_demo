@@ -54,13 +54,11 @@ public class StringMatcher {
 			}
 		} while (i < value.length() && j < keyword.length());
 		
-		return (j == keyword.length())? true : false;
+		return j == keyword.length();
 	}
 	
 	private static boolean isKorean(char c) {
-		if (c >= KOREAN_UNICODE_START && c <= KOREAN_UNICODE_END)
-			return true;
-		return false;
+		return c >= KOREAN_UNICODE_START && c <= KOREAN_UNICODE_END;
 	}
 	
 	private static boolean isInitialSound(char c) {

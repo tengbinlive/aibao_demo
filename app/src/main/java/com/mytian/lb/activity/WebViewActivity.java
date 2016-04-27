@@ -2,7 +2,6 @@ package com.mytian.lb.activity;
 
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 
 import com.core.util.StringUtil;
@@ -11,7 +10,6 @@ import com.mytian.lb.R;
 import com.pnikosis.materialishprogress.ProgressWheel;
 
 import org.xwalk.core.XWalkNavigationHistory;
-import org.xwalk.core.XWalkPreferences;
 import org.xwalk.core.XWalkUIClient;
 import org.xwalk.core.XWalkView;
 

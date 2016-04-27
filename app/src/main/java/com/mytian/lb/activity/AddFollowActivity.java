@@ -38,7 +38,6 @@ import com.nineoldandroids.animation.ValueAnimator;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindDimen;

@@ -23,7 +23,6 @@ import com.mytian.lb.bean.user.UserResult;
  */
 public class LoginManager {
 
-    private static final String TAG = LoginManager.class.getSimpleName();
 
     /**
      * 获取验证码

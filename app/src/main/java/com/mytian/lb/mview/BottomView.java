@@ -37,7 +37,7 @@ public class BottomView {
             WindowManager m = wm.getWindowManager();
             Display d = m.getDefaultDisplay();
             WindowManager.LayoutParams p = wm.getAttributes();
-            p.width = (d.getWidth() * 1);
+            p.width = d.getWidth();
             if (this.isTop)
                 p.gravity = 48;
             else

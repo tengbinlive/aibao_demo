@@ -1,6 +1,5 @@
 package com.mytian.lb;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -36,7 +35,6 @@ import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
 public abstract class AbsActivity extends SwipeBackActivity implements EInitDate {
 
-    private final static String TAG = AbsActivity.class.getSimpleName();
     public final static int TOP = 0;
     public final static int BOTTOM = TOP + 1;
     public final static int LEFT = BOTTOM + 1;
@@ -226,7 +224,7 @@ public abstract class AbsActivity extends SwipeBackActivity implements EInitDate
     public void onResume() {
         activityFinish = false;
         super.onResume();
-        mTracker.setScreenName("TAG - "+this.getClass().getSimpleName());
+        mTracker.setScreenName("TAG - " + this.getClass().getSimpleName());
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         App.getInstance().setCurrentActivity(this);
         if (Constant.DEBUG) {
@@ -303,10 +301,7 @@ public abstract class AbsActivity extends SwipeBackActivity implements EInitDate
         dialogBuilder.setOnKeyListener(new DialogInterface.OnKeyListener() {
             @Override
             public boolean onKey(DialogInterface dialogInterface, int keyCode, KeyEvent keyEvent) {
-                if (keyCode == KeyEvent.KEYCODE_BACK && keyEvent.getRepeatCount() == 0) {
-                    return true;
-                }
-                return false;
+                return keyCode == KeyEvent.KEYCODE_BACK && keyEvent.getRepeatCount() == 0;
             }
         });
         activityHandler.sendEmptyMessage(DIALOGSHOW);
@@ -325,10 +320,7 @@ public abstract class AbsActivity extends SwipeBackActivity implements EInitDate
         dialogBuilder.setOnKeyListener(new DialogInterface.OnKeyListener() {
             @Override
             public boolean onKey(DialogInterface dialogInterface, int keyCode, KeyEvent keyEvent) {
-                if (keyCode == KeyEvent.KEYCODE_BACK && keyEvent.getRepeatCount() == 0) {
-                    return true;
-                }
-                return false;
+                return keyCode == KeyEvent.KEYCODE_BACK && keyEvent.getRepeatCount() == 0;
             }
         });
         dialogBuilder.withDuration(700) // def
@@ -358,17 +350,7 @@ public abstract class AbsActivity extends SwipeBackActivity implements EInitDate
     }
 
     protected boolean enableSwipe() {
-        if (Build.VERSION.SDK_INT >= 11) return true;
-        return false;
-    }
-
-    @TargetApi(17)
-    public boolean isFinished() {
-        if (Build.VERSION.SDK_INT >= 17) {
-            return isDestroyed() || isFinishing() || activityFinish;
-        } else {
-            return isFinishing() || activityFinish;
-        }
+        return Build.VERSION.SDK_INT >= 11;
     }
 
     @Override

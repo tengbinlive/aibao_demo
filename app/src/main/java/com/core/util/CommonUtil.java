@@ -44,8 +44,6 @@ import java.util.regex.Pattern;
  */
 public class CommonUtil {
 
-    private static final String TAG = CommonUtil.class.getSimpleName();
-
     private static final int MAX_DECODE_PICTURE_SIZE = 1920 * 1440;
 
     private CommonUtil() {
@@ -197,8 +195,7 @@ public class CommonUtil {
             byte[] result = output.toByteArray();
             output.close();
             return result;
-        } catch (Exception e) {
-        } finally {
+        } catch (Exception ignored) {
         }
         return null;
     }
@@ -214,8 +211,6 @@ public class CommonUtil {
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 inStream = httpConnection.getInputStream();
             }
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -365,7 +360,6 @@ public class CommonUtil {
 
     private static void showToast(Context context, String msg, int time) {
         Toast mToast = Toast.makeText(context, msg, time);
-//		toast.setGravity(Gravity.CENTER, 0, 0);
         mToast.show();
     }
 
@@ -385,26 +379,6 @@ public class CommonUtil {
         showToast(context, context.getResources().getString(resId), Toast.LENGTH_SHORT);
     }
 
-    /**
-     * 获取包名
-     *
-     * @param c
-     * @return
-     * @author andy.fang
-     * @createDate 2014-4-21
-     */
-    public static String getPackageName(Context c) {
-        String str = "";
-        PackageManager manager = c.getPackageManager();
-        try {
-            PackageInfo info = manager.getPackageInfo(c.getPackageName(), 0);
-            str = info.packageName; // 包名
-        } catch (NameNotFoundException e) {
-            e.printStackTrace();
-        }
-        return str;
-    }
-
     public static String getMetaData(Context context, String key) {
         try {
             ApplicationInfo ai = context.getPackageManager().getApplicationInfo(context.getPackageName(),
@@ -413,7 +387,7 @@ public class CommonUtil {
             if (value != null) {
                 return value.toString();
             }
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         return null;
     }

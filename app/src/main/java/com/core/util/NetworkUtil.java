@@ -3,7 +3,6 @@ package com.core.util;
 import android.content.Context;
 import android.telephony.TelephonyManager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -26,201 +25,211 @@ import java.util.List;
  */
 public class NetworkUtil {
 
-	/**
-	 * 网络类型枚举类
-	 * 
-	 * @author bin.teng
-	 */
-	public enum NetworkClassEnum {
-		/** 未知网络 */
-		UNKNOWN(1, "未知"),
-		/** 2G网络 */
-		G2(2, "2G"),
-		/** 3G网络 */
-		G3(3, "3G"),
-		/** 4G网络 */
-		G4(4, "4G"),
-		/** Wifi */
-		WIFI(5, "wifi");//
+    /**
+     * 网络类型枚举类
+     *
+     * @author bin.teng
+     */
+    public enum NetworkClassEnum {
+        /**
+         * 未知网络
+         */
+        UNKNOWN(1, "未知"),
+        /**
+         * 2G网络
+         */
+        G2(2, "2G"),
+        /**
+         * 3G网络
+         */
+        G3(3, "3G"),
+        /**
+         * 4G网络
+         */
+        G4(4, "4G"),
+        /**
+         * Wifi
+         */
+        WIFI(5, "wifi");//
 
-		private int code;
-		private String desc;
+        private int code;
+        private String desc;
 
-		private NetworkClassEnum(int code, String desc) {
-			this.code = code;
-			this.desc = desc;
-		}
+        NetworkClassEnum(int code, String desc) {
+            this.code = code;
+            this.desc = desc;
+        }
 
-		public int getCode() {
-			return code;
-		}
+        public int getCode() {
+            return code;
+        }
 
-		public void setCode(int code) {
-			this.code = code;
-		}
+        public void setCode(int code) {
+            this.code = code;
+        }
 
-		public String getDesc() {
-			return desc;
-		}
+        public String getDesc() {
+            return desc;
+        }
 
-		public void setDesc(String desc) {
-			this.desc = desc;
-		}
+        public void setDesc(String desc) {
+            this.desc = desc;
+        }
 
-		/**
-		 * 根据编号值获得对应枚举对象.
-		 * 
-		 * @param code 编号值
-		 * @return 对应枚举对象
-		 */
-		public static NetworkClassEnum getEnumByCode(int code) {
-			for (NetworkClassEnum item : values()) {
-				if (item.code == code) return item;
-			}
-			return null;
-		}
+        /**
+         * 根据编号值获得对应枚举对象.
+         *
+         * @param code 编号值
+         * @return 对应枚举对象
+         */
+        public static NetworkClassEnum getEnumByCode(int code) {
+            for (NetworkClassEnum item : values()) {
+                if (item.code == code) return item;
+            }
+            return null;
+        }
 
-		/**
-		 * 根据描述获得对应枚举对象.
-		 * 
-		 * @param desc 描述
-		 * @return 对应枚举对象
-		 */
-		public static NetworkClassEnum getEnumByDesc(String desc) {
-			for (NetworkClassEnum item : values()) {
-				if (item.desc.equals(desc)) return item;
-			}
-			return null;
-		}
+        /**
+         * 根据描述获得对应枚举对象.
+         *
+         * @param desc 描述
+         * @return 对应枚举对象
+         */
+        public static NetworkClassEnum getEnumByDesc(String desc) {
+            for (NetworkClassEnum item : values()) {
+                if (item.desc.equals(desc)) return item;
+            }
+            return null;
+        }
 
-		@Override
-		public String toString() {
-			return super.toString() + "{code:" + this.getCode() + ",desc:" + this.desc + "}";
-		}
-	}
+        @Override
+        public String toString() {
+            return super.toString() + "{code:" + this.getCode() + ",desc:" + this.desc + "}";
+        }
+    }
 
-	private NetworkUtil() {
-	}
+    private NetworkUtil() {
+    }
 
-	private static NetworkUtil instance;
+    private static NetworkUtil instance;
 
-	public static synchronized NetworkUtil getInstance() {
-		if (instance == null) instance = new NetworkUtil();
-		return instance;
-	}
+    public static synchronized NetworkUtil getInstance() {
+        if (instance == null) instance = new NetworkUtil();
+        return instance;
+    }
 
-	/**
-	 * 是否是较差的网络模式
-	 * 
-	 * @return 如果不是WIFI, 不是3G, 不是4G则认为是较差的网络模式返回true, 否则返回false
-	 */
-	public static boolean isLowMode(NetworkClassEnum networkState) {
-		return networkState != NetworkClassEnum.WIFI && networkState != NetworkClassEnum.G3 && networkState != NetworkClassEnum.G4;
-	}
+    /**
+     * 是否是较差的网络模式
+     *
+     * @return 如果不是WIFI, 不是3G, 不是4G则认为是较差的网络模式返回true, 否则返回false
+     */
+    public static boolean isLowMode(NetworkClassEnum networkState) {
+        return networkState != NetworkClassEnum.WIFI && networkState != NetworkClassEnum.G3 && networkState != NetworkClassEnum.G4;
+    }
 
-	/**
-	 * 是否是2G网络.
-	 * 
-	 * @param networkState 网络类型编号, 参考NetworkClassEnum的code值
-	 * @return 是则返回true, 否则返回false
-	 */
-	public static boolean is2GNet(int networkState) {
-		return networkState == NetworkClassEnum.G2.getCode();
-	}
+    /**
+     * 是否是2G网络.
+     *
+     * @param networkState 网络类型编号, 参考NetworkClassEnum的code值
+     * @return 是则返回true, 否则返回false
+     */
+    public static boolean is2GNet(int networkState) {
+        return networkState == NetworkClassEnum.G2.getCode();
+    }
 
-	/**
-	 * 获得当前网络状态.
-	 * 
-	 * @param context
-	 * @return 返回当前使用的网络枚举对象, 是wifi or 2G or 3G or 4G
-	 */
-	public static NetworkClassEnum getCurrentNextworkState(Context context) {
-		if (DeviceUtil.isWifiContected(context)) {
-			return NetworkClassEnum.WIFI;
-		} else {
-			CellIDInfoUtil manager = new CellIDInfoUtil();
-			int networkType = manager.getNetworkType(context);
-			return getNetworkName(networkType);
-		}
-	}
+    /**
+     * 获得当前网络状态.
+     *
+     * @param context
+     * @return 返回当前使用的网络枚举对象, 是wifi or 2G or 3G or 4G
+     */
+    public static NetworkClassEnum getCurrentNextworkState(Context context) {
+        if (DeviceUtil.isWifiContected(context)) {
+            return NetworkClassEnum.WIFI;
+        } else {
+            CellIDInfoUtil manager = new CellIDInfoUtil();
+            int networkType = manager.getNetworkType(context);
+            return getNetworkName(networkType);
+        }
+    }
 
-	/**
-	 * 获得当前信号强度.
-	 * 
-	 * @param context 上下文
-	 */
-	public static void getSignalStrength(Context context) {
-		if (context == null) return;
-		int dbm = -112;
+    /**
+     * 获得当前信号强度.
+     *
+     * @param context 上下文
+     */
+    public static int getSignalStrength(Context context) {
+        int dbm = -112;
+        if (context == null) return dbm;
+        List<CellIDInfo> CellID = null;
+        CellIDInfoUtil manager = new CellIDInfoUtil();
+        try {
+            CellID = manager.getCellIDInfo(context, true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (CellID != null && CellID.size() > 0) {
+            dbm = CellID.get(0).signal_strength;
+        }
+        return dbm;
+    }
 
-		List<CellIDInfo> CellID = null;
-		CellIDInfoUtil manager = new CellIDInfoUtil();
-		try {
-			CellID = manager.getCellIDInfo(context, true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		if (CellID != null && CellID.size() > 0) {
-			dbm = CellID.get(0).signal_strength;
-		}
+    /**
+     * 获取手机网络类型名称
+     *
+     * @param networkType
+     * @param mnc         Mobile NetworkCode，移动网络码，共2位
+     * @return
+     */
+    public static String getNetworkName(int networkType, String mnc) {
+        if (networkType == TelephonyManager.NETWORK_TYPE_UNKNOWN) {
+            return "Network type is unknown";
+        } else if (networkType == TelephonyManager.NETWORK_TYPE_CDMA) {
+            return "电信2G";
+        } else if (networkType == TelephonyManager.NETWORK_TYPE_EVDO_0) {
+            return "电信3G";
+        } else if (networkType == TelephonyManager.NETWORK_TYPE_GPRS || networkType == TelephonyManager.NETWORK_TYPE_EDGE) {
+            if ("00".equals(mnc) || "02".equals(mnc)) {
+                return "移动2G";
+            } else if ("01".equals(mnc)) {
+                return "联通2G";
+            }
+        } else if (networkType == TelephonyManager.NETWORK_TYPE_UMTS || networkType == TelephonyManager.NETWORK_TYPE_HSDPA) {
+            return "联通3G";
+        }
+        return null;
+    }
 
-		if (dbm <= -112) {
-			//showToast("当前信号差");
-		}
-	}
+    /**
+     * 根据网络类型编号获得对应的枚举类.
+     *
+     * @param networkType
+     * @return 网络类型枚举类
+     */
+    public static NetworkClassEnum getNetworkName(int networkType) {
+        switch (networkType) {
+            case TelephonyManager.NETWORK_TYPE_GPRS:
+            case TelephonyManager.NETWORK_TYPE_EDGE:
+            case TelephonyManager.NETWORK_TYPE_CDMA:
+            case TelephonyManager.NETWORK_TYPE_1xRTT:
+            case TelephonyManager.NETWORK_TYPE_IDEN:
+                return NetworkClassEnum.G2;
+            case TelephonyManager.NETWORK_TYPE_UMTS:
+            case TelephonyManager.NETWORK_TYPE_EVDO_0:
+            case TelephonyManager.NETWORK_TYPE_EVDO_A:
+            case TelephonyManager.NETWORK_TYPE_HSDPA:
+            case TelephonyManager.NETWORK_TYPE_HSUPA:
+            case TelephonyManager.NETWORK_TYPE_HSPA:
+            case TelephonyManager.NETWORK_TYPE_EVDO_B:
+            case TelephonyManager.NETWORK_TYPE_EHRPD:
+            case TelephonyManager.NETWORK_TYPE_HSPAP:
+                return NetworkClassEnum.G3;
+            case TelephonyManager.NETWORK_TYPE_LTE:
+                return NetworkClassEnum.G4;
+            default:
+                return NetworkClassEnum.UNKNOWN;
 
-	/**
-	 * 获取手机网络类型名称
-	 * 
-	 * @param networkType
-	 * @param mnc Mobile NetworkCode，移动网络码，共2位
-	 * @return
-	 */
-	public static String getNetworkName(int networkType, String mnc) {
-		if (networkType == TelephonyManager.NETWORK_TYPE_UNKNOWN) {
-			return "Network type is unknown";
-		} else if (networkType == TelephonyManager.NETWORK_TYPE_CDMA) {
-			return "电信2G";
-		} else if (networkType == TelephonyManager.NETWORK_TYPE_EVDO_0) {
-			return "电信3G";
-		} else if (networkType == TelephonyManager.NETWORK_TYPE_GPRS || networkType == TelephonyManager.NETWORK_TYPE_EDGE) {
-			if ("00".equals(mnc) || "02".equals(mnc)) {
-				return "移动2G";
-			} else if ("01".equals(mnc)) { return "联通2G"; }
-		} else if (networkType == TelephonyManager.NETWORK_TYPE_UMTS || networkType == TelephonyManager.NETWORK_TYPE_HSDPA) { return "联通3G"; }
-		return null;
-	}
-
-	/**
-	 * 根据网络类型编号获得对应的枚举类.
-	 * 
-	 * @param networkType
-	 * @return 网络类型枚举类
-	 */
-	public static NetworkClassEnum getNetworkName(int networkType) {
-		switch (networkType) {
-		case TelephonyManager.NETWORK_TYPE_GPRS:
-		case TelephonyManager.NETWORK_TYPE_EDGE:
-		case TelephonyManager.NETWORK_TYPE_CDMA:
-		case TelephonyManager.NETWORK_TYPE_1xRTT:
-		case TelephonyManager.NETWORK_TYPE_IDEN:
-			return NetworkClassEnum.G2;
-		case TelephonyManager.NETWORK_TYPE_UMTS:
-		case TelephonyManager.NETWORK_TYPE_EVDO_0:
-		case TelephonyManager.NETWORK_TYPE_EVDO_A:
-		case TelephonyManager.NETWORK_TYPE_HSDPA:
-		case TelephonyManager.NETWORK_TYPE_HSUPA:
-		case TelephonyManager.NETWORK_TYPE_HSPA:
-		case TelephonyManager.NETWORK_TYPE_EVDO_B:
-		case TelephonyManager.NETWORK_TYPE_EHRPD:
-		case TelephonyManager.NETWORK_TYPE_HSPAP:
-			return NetworkClassEnum.G3;
-		case TelephonyManager.NETWORK_TYPE_LTE:
-			return NetworkClassEnum.G4;
-		default:
-			return NetworkClassEnum.UNKNOWN;
-
-		}
-	}
+        }
+    }
 
 }

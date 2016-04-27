@@ -24,7 +24,7 @@ public class OpenApiParamHelper {
         // 将参数对象转换为MAP
         HashMap<String, Object> param = paramObj.getParamMap();
 
-        HashMap<String, String> returnMap = new HashMap<String, String>();
+        HashMap<String, String> returnMap = new HashMap<>();
 
         // 遍历传入的参数, 去掉空值的参数
         for (Map.Entry<String, Object> item : param.entrySet()) {

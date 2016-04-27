@@ -1,8 +1,6 @@
 package com.mytian.lb.fragment;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.mytian.lb.AbsFragment;
@@ -10,7 +8,6 @@ import com.mytian.lb.R;
 import com.pnikosis.materialishprogress.ProgressWheel;
 
 import org.xwalk.core.XWalkNavigationHistory;
-import org.xwalk.core.XWalkPreferences;
 import org.xwalk.core.XWalkUIClient;
 import org.xwalk.core.XWalkView;
 

@@ -221,7 +221,6 @@ public class RegisterActivity extends AbsActivity {
             }
         }
 
-        ;
     };
 
     private void setDKeyBtnText(long TimeUsed) {
@@ -267,9 +266,7 @@ public class RegisterActivity extends AbsActivity {
     @Override
     public void finish() {
         super.finish();
-        if (null != timer) {
-            timer.cancel();
-        }
+        timer.cancel();
         if (null != myHander) {
             myHander.removeMessages(0);
         }

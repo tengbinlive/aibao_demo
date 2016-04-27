@@ -19,8 +19,6 @@ import com.mytian.lb.bean.dymic.DynamicResult;
  */
 public class DynamicManager {
 
-    private static final String TAG = DynamicManager.class.getSimpleName();
-
     /**
      * 获取最新动态
      *
