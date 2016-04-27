@@ -197,7 +197,7 @@ public class DateUtil {
     }
 
     public static Date parseStringToDate(String date) throws ParseException {
-        Date result = null;
+        Date result;
         String parse = date;
         parse = parse.replaceFirst("^[0-9]{4}([^0-9]?)", "yyyy$1");
         parse = parse.replaceFirst("^[0-9]{2}([^0-9]?)", "yy$1");

@@ -108,7 +108,7 @@ public class CommonRequest extends Request<CommonResponse> {
      * @return 返回CommonResponse对象并写入错误信息s
      */
     private static CommonResponse getErrorCommonResponse(VolleyError error) {
-        CommonResponse response = null;
+        CommonResponse response;
         Throwable cause = error.getCause();
         if (cause == null) {
             cause = error;

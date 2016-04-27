@@ -20,7 +20,7 @@ public class StringUtil {
      * @return 空字符串和null字符串返回true, 否则返回false
      */
     public static boolean isBlank(String str) {
-        int strLen = 0;
+        int strLen;
         if (str == null || (strLen = str.length()) == 0) {
             return true;
         }
