@@ -1,7 +1,6 @@
 package com.mytian.lb;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -37,16 +36,19 @@ public abstract class AbsFragment extends Fragment implements EInitFragmentDate 
 
     public Context mContext;
 
+    private ViewGroup mRootView;
+
     public abstract boolean onBackPressed();
+
+    public ViewGroup getRootView() {
+        return mRootView;
+    }
 
     @Override
     public void onResume() {
         super.onResume();
         mTracker.setScreenName("TAG - " + this.getClass().getSimpleName());
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-    }
-
-    public void onNewIntent(Intent intent) {
     }
 
     @Override
@@ -102,11 +104,11 @@ public abstract class AbsFragment extends Fragment implements EInitFragmentDate 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mContext = this.getContext();
         mInflater = inflater;
-        View rootView = inflater.inflate(getContentView(), container, false);
+        mRootView = (ViewGroup) inflater.inflate(getContentView(), container, false);
         mTracker = App.getInstance().getDefaultTracker();
-        ButterKnife.bind(this, rootView);
+        ButterKnife.bind(this, mRootView);
         EInit();
-        return rootView;
+        return mRootView;
     }
 
     public abstract int getContentView();

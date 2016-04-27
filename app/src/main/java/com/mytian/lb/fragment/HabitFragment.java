@@ -46,6 +46,7 @@ public class HabitFragment extends AbsFragment {
 
     @Override
     public void EInit() {
+        super.EInit();
         cureentParent = (FollowUser) getArguments().getSerializable(UserDetailActivity.USER);
         try {
             arrayList = deepCopy(UserActionDOManager.getInstance().getArrayListHabit());

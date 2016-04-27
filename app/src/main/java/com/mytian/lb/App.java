@@ -36,6 +36,8 @@ import com.orhanobut.logger.Logger;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
+import org.chromium.base.ApplicationStatus;
+
 import java.util.List;
 
 import im.fir.sdk.FIR;
@@ -301,6 +303,8 @@ public class App extends Application {
 
             //初始分享
             ShareManager.getInstance().initShare();
+
+            ApplicationStatus.initialize(this);
 
         }
     }

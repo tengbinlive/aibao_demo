@@ -1,6 +1,5 @@
 package com.mytian.lb.fragment;
 
-import android.content.Intent;
 import android.view.View;
 
 import com.mytian.lb.AbsFragment;
@@ -32,13 +31,6 @@ public class KindleFragment extends AbsFragment {
         webviewSetInit("http://mrdoob.com/lab/javascript/threejs/css3d/periodictable/");
     }
 
-    @Override
-    public void onNewIntent(Intent intent) {
-        if (xWalkView != null) {
-            xWalkView.onNewIntent(intent);
-        }
-    }
-
     //webview 属性 设置
     private void webviewSetInit(String url) {
         xWalkView.setUIClient(new XWalkUIClient(xWalkView) {
@@ -55,17 +47,6 @@ public class KindleFragment extends AbsFragment {
             }
         });
         xWalkView.load(url, null);
-    }
-
-    /**
-     * 返回文件选择
-     */
-    @Override
-    public void onActivityResult(int requestCode, int resultCode,
-                                 Intent intent) {
-        if (xWalkView != null) {
-            xWalkView.onActivityResult(requestCode, resultCode, intent);
-        }
     }
 
     @Override
@@ -106,6 +87,5 @@ public class KindleFragment extends AbsFragment {
             return false;
         }
     }
-
 
 }

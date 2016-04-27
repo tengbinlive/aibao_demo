@@ -89,6 +89,7 @@ public class DynameicFragment extends AbsFragment {
 
     @Override
     public void EInit() {
+        super.EInit();
         initListView();
         getListData(INIT_LIST);
     }

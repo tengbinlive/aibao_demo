@@ -128,6 +128,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
 
     @Override
     public void EInit() {
+        super.EInit();
         setUserInfo();
         birthdayDate = Calendar.getInstance();
         CompoundButton.OnCheckedChangeListener listener = new CompoundButton.OnCheckedChangeListener() {

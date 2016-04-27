@@ -172,7 +172,7 @@ dependencies {
     compile 'com.bigkoo:alertview:1.0.2'
 
     compile 'com.google.android.gms:play-services-analytics:8.4.0'//google analytics
-    compile 'org.xwalk:xwalk_core_library:10.39.235.15'
+    compile 'org.xwalk:xwalk_core_library:17.46.448.10'
 
     compile(name: 'niftymodaldialog-release', ext: 'aar')
     compile(name: 'pulltorefresh-release', ext: 'aar')

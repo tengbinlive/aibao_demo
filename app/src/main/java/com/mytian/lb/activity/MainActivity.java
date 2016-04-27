@@ -27,6 +27,7 @@ import com.mytian.lb.push.PushCode;
 import com.mytian.lb.push.PushHelper;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
+import org.chromium.base.ApplicationStatus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -79,11 +80,14 @@ public class MainActivity extends AbsActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-
     /**
      * 按两次退出键才退出.
      */
     public void doubleTouchToExit() {
+        boolean isConsumption = null != fragments && fragments.get(currentPosition).onBackPressed();
+        if (isConsumption) {
+            return;
+        }
         long clickTime = System.currentTimeMillis();
         // 如果双击时间在规定时间范围内,则退出
         if (clickTime - exitClickTimestamp < EXIT_DOUBLE_CLICK_DIFF_TIME) {
@@ -108,9 +112,6 @@ public class MainActivity extends AbsActivity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         String NOTICE_TYPE = intent.getStringExtra(PushCode.NOTICE_TYPE);
-        if (null != fragments) {
-            fragments.get(currentPosition).onNewIntent(intent);
-        }
         toNOTICE_TYPE(NOTICE_TYPE);
     }
 

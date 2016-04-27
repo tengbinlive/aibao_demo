@@ -259,6 +259,7 @@ public class AgreementFragment extends AbsFragment {
 
     @Override
     public void EInit() {
+        super.EInit();
         cureentParent = (FollowUser) getArguments().getSerializable(UserDetailActivity.USER);
         isSettingShow = false;
         initGridView();
