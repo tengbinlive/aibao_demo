@@ -22,7 +22,7 @@ public class Utils {
     }
 
     public static String byte2hex(byte[] b) {
-        StringBuffer sb = new StringBuffer(b.length * 2);
+        StringBuilder sb = new StringBuilder(b.length * 2);
         String tmp;
         for (int n = 0; n < b.length; n++) {
             tmp = (Integer.toHexString(b[n] & 0XFF));

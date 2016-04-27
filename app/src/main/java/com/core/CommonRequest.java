@@ -171,7 +171,7 @@ public class CommonRequest extends Request<CommonResponse> {
 
         if (Constant.DEBUG) {
             long l = entity.getContentLength();
-            StringBuffer buf = new StringBuffer();
+            StringBuilder buf = new StringBuilder();
             for (Map.Entry<String, String> entry : mParam.entrySet()) {
                 buf.append(entry.getKey()).append("=").append(entry.getValue()).append("\n");
             }
@@ -231,7 +231,7 @@ public class CommonRequest extends Request<CommonResponse> {
 
         if (Constant.DEBUG) {
             long l = entity.getContentLength();
-            StringBuffer buf = new StringBuffer();
+            StringBuilder buf = new StringBuilder();
             for (Map.Entry<String, String> entry : mParam.entrySet()) {
                 buf.append(entry.getKey()).append("=").append(entry.getValue()).append("\n");
             }

@@ -134,7 +134,7 @@ public class AppManager {
     };
 
     private void dialogDownload() {
-        StringBuffer versionInfo = new StringBuffer();
+        StringBuilder versionInfo = new StringBuilder();
         String timeStr = sysAppUpgradeResult.getUpdated_at();
         if (timeStr.length() < 13) {
             timeStr = timeStr + "000";
