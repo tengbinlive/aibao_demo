@@ -13,6 +13,9 @@ import java.util.regex.Pattern;
 public class StringUtil {
     public static final int INDEX_NOT_FOUND = -1;
 
+    private StringUtil() {
+    }
+
     /**
      * 检查是否为空字符串, null字符串也算空字符串.
      *

@@ -27,6 +27,9 @@ public class ConfigManager {
 
     private static HashMap<String, Object> map = new HashMap<String, Object>();
 
+    private ConfigManager() {
+    }
+
     public static Object getConfig(ConfigKeyEnum keyEnum) {
         return map.get(keyEnum.name());
     }

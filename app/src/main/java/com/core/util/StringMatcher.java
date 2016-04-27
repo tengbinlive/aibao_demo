@@ -23,7 +23,10 @@ public class StringMatcher {
 	private final static char KOREAN_UNIT = '까' - '가';
 	private final static char[] KOREAN_INITIAL = {'ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅃ', 'ㅅ'
 		, 'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'};
-	
+
+	private StringMatcher() {
+	}
+
 	public static boolean match(String value, String keyword) {
 		if (value == null || keyword == null)
 			return false;

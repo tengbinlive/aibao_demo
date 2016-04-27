@@ -25,6 +25,9 @@ public class DeviceUtil {
 
 	public static final String SPECIAL_IMEI = "000000000000000";
 
+	private DeviceUtil() {
+	}
+
 	/**
 	 * 判断Network是否开启(包括移动网络和wifi)
 	 * 

@@ -14,6 +14,9 @@ public class StrictModeWrapper {
         }
     }
 
+    private StrictModeWrapper() {
+    }
+
     public static void checkAvailable() {
     }
 
