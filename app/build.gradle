@@ -137,8 +137,8 @@ dependencies {
     alphaCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta1'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta1'
 
-    compile 'com.jakewharton:butterknife:8.0.0-SNAPSHOT'
-    apt 'com.jakewharton:butterknife-compiler:8.0.0-SNAPSHOT'
+    compile 'com.jakewharton:butterknife:8.0.0'
+    apt 'com.jakewharton:butterknife-compiler:8.0.0'
     compile 'im.fir:fir-sdk:latest.integration@aar'// fir相关
     compile 'org.greenrobot:eventbus:3.0.0'//事件派发
     compile 'com.squareup.okhttp3:okhttp:3.2.0'// okhttp 网络处理
