@@ -12,6 +12,7 @@ import java.util.Date;
 public final class FileDataHelper {
 
     private static final String TAG = FileDataHelper.class.getSimpleName();
+    public static final String IS_NOT_EXIST_CREATED_SUCCEED = " is not exist, created succeed!";
 
     private FileDataHelper() {
 
@@ -68,19 +69,19 @@ public final class FileDataHelper {
 
                 if (!rootDir.exists()) {
                     rootDir.mkdirs();
-                    Logger.d(rootDir + " is not exist, created succeed!");
+                    Logger.d(rootDir + IS_NOT_EXIST_CREATED_SUCCEED);
                 }
                 if (!downloadDir.exists()) {
                     downloadDir.mkdirs();
-                    Logger.d(downloadDir + " is not exist, created succeed!");
+                    Logger.d(downloadDir + IS_NOT_EXIST_CREATED_SUCCEED);
                 }
                 if (!imageDir.exists()) {
                     imageDir.mkdirs();
-                    Logger.d(imageDir + " is not exist, created succeed!");
+                    Logger.d(imageDir + IS_NOT_EXIST_CREATED_SUCCEED);
                 }
                 if (!cacheDir.exists()) {
                     cacheDir.mkdirs();
-                    Logger.d(cacheDir + " is not exist, created succeed!");
+                    Logger.d(cacheDir + IS_NOT_EXIST_CREATED_SUCCEED);
                 }
                 result = true;
             } else {
