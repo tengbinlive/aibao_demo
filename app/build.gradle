@@ -32,10 +32,10 @@ android {
 
     signingConfigs {
         aibao {
-            storeFile file("../aibao.jks");
-            storePassword "aibaoaibao"
-            keyAlias "aibao"
-            keyPassword "aibaoaibao"
+            storeFile file("../aibao_demo.jks");
+            storePassword "aibao_demo"
+            keyAlias "aibao_demo"
+            keyPassword "aibao_demo"
         }
     }
 
@@ -137,8 +137,8 @@ dependencies {
     alphaCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta1'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta1'
 
-    compile 'com.jakewharton:butterknife:8.0.0'
-    apt 'com.jakewharton:butterknife-compiler:8.0.0'
+    compile 'com.jakewharton:butterknife:8.0.1'
+    apt 'com.jakewharton:butterknife-compiler:8.0.1'
     compile 'im.fir:fir-sdk:latest.integration@aar'// fir相关
     compile 'org.greenrobot:eventbus:3.0.0'//事件派发
     compile 'com.squareup.okhttp3:okhttp:3.2.0'// okhttp 网络处理
@@ -147,7 +147,7 @@ dependencies {
     compile 'com.makeramen:roundedimageview:2.2.1' //圆角 imageview
     compile 'com.pnikosis:materialish-progress:1.5'//material进度条
     compile 'com.mcxiaoke.volley:library:1.0.19'//volley
-    compile 'com.alibaba:fastjson:1.1.46.android'//fastjson
+    compile 'com.alibaba:fastjson:1.1.50.android'//fastjson
     compile 'com.bm.photoview:library:1.3.6'
     compile 'com.wdullaer:materialdatetimepicker:2.0.1'
     compile 'com.ogaclejapan.smarttablayout:library:1.4.2@aar'
