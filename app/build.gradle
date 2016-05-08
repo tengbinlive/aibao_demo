@@ -156,10 +156,10 @@ dependencies {
     compile 'com.github.cdflynn:crossview:v1.0.1'
     compile 'com.wang.avi:library:1.0.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile ('com.github.bumptech.glide:okhttp3-integration:1.4.0') {//glide 使用okhttp3
+    compile('com.github.bumptech.glide:okhttp3-integration:1.4.0') {//glide 使用okhttp3
         exclude group: 'glide-parent'
     }
-    compile (group: 'org.apache.httpcomponents' , name: 'httpmime' , version: '4.2.5') {
+    compile(group: 'org.apache.httpcomponents', name: 'httpmime', version: '4.2.5') {
         exclude module: 'org.apache.httpcomponents:httpclient'
     }
     compile 'com.nhaarman.listviewanimations:lib-core:3.1.0@aar'
