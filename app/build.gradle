@@ -167,7 +167,7 @@ dependencies {
     compile 'com.github.elevenetc:textsurface:0.9.1'
     compile 'com.igexin:sdk:+'//    个推
     compile 'com.igexin:getuiext:2.0.3'
-    compile 'com.yalantis:ucrop:1.4.1'
+    compile 'com.yalantis:ucrop:1.5.0'
     compile 'com.github.orhanobut:logger:1.12' //日志
     compile 'com.bigkoo:alertview:1.0.2'
 
