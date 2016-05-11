@@ -111,7 +111,9 @@ public class AgreementFragment extends AbsFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 AnimationHelper.getInstance().viewAnimationScal(view);
-                int resid = isSendEffect();
+                // TODO: 16/5/11  TEST
+//                int resid = isSendEffect();
+                int resid = -1;//test
                 if (resid != -1) {
                     CommonUtil.showToast(resid);
                     return;
@@ -595,15 +597,18 @@ public class AgreementFragment extends AbsFragment {
      */
     private void loadAgreement(CommonResponse resposne) {
         dialogDismiss();
-        if (resposne.isSuccess()) {
+
+        // TODO: 16/5/11  TEST
+//        if (resposne.isSuccess()) {
             AgreementResult result = (AgreementResult) resposne.getData();
-            App.getInstance().setAppoint_time(result.getAppoint_time());
-            AgreementStateEventType eventType = new AgreementStateEventType(cureentParent.getUid(), AgreementStateEventType.AGREEMENT_ING, null, result.getAppoint_time());
+            String testTime = "1447296641255";
+            App.getInstance().setAppoint_time(testTime);
+            AgreementStateEventType eventType = new AgreementStateEventType(cureentParent.getUid(), AgreementStateEventType.AGREEMENT_ING, null, testTime);
             EventBus.getDefault().postSticky(eventType);
-        } else {
-            sendCount = 0;
-            CommonUtil.showToast(resposne.getMsg());
-        }
+//        } else {
+//            sendCount = 0;
+//            CommonUtil.showToast(resposne.getMsg());
+//        }
     }
 
     /**

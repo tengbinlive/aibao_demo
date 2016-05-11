@@ -28,7 +28,7 @@ public class KindleFragment extends AbsFragment {
     @Override
     public void EInit() {
         super.EInit();
-        webviewSetInit("http://mrdoob.com/lab/javascript/threejs/css3d/periodictable/");
+        webviewSetInit("https://en.wikipedia.org/wiki/Android_(operating_system)");
     }
 
     //webview 属性 设置
