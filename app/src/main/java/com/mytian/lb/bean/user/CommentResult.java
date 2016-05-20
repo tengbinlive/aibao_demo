@@ -51,7 +51,7 @@ public class CommentResult extends OpenApiSimpleResult {
     public static CommentResult testData(int i) {
         CommentResult commentResult = new CommentResult();
         commentResult.headUrl = "https://raw.githubusercontent.com/tengbinlive/aibao_demo/master/app/src/main/res/mipmap/ic_launcher.png";
-        commentResult.name = i==0?"newest ":"bin.teng " + i;
+        commentResult.name = i==0?"new test ":"bin.teng " + i;
         commentResult.content = "this is a comment ";
         return commentResult;
     }

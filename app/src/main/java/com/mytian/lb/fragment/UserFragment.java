@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -168,6 +169,8 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         if (StringUtil.isNotBlank(name)) {
             nameValue.setText("");
             nameValue.setHint(name);
+        } else {
+            nameValue.setHint(R.string.no_setting);
         }
         String phone = parent.getPhone();
         String head = parent.getHeadThumb();
@@ -261,9 +264,10 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         boolean isName = StringUtil.isNotBlank(name);
         boolean isBirthday = StringUtil.isNotBlank(birthday);
         boolean isHeadPath = headUri != null;
-
-        if (StringUtil.isBlank(name) && StringUtil.isBlank(nameHint)) {
+        String l_nameHint = getResources().getString(R.string.no_setting);
+        if (!isName && l_nameHint.equals(nameHint) ) {
             AnimationHelper.getInstance().viewAnimationQuiver(nameValue);
+            CommonUtil.showToast(R.string.no_name);
             return;
         }
 
