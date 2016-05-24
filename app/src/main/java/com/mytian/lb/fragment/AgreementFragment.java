@@ -164,7 +164,7 @@ public class AgreementFragment extends AbsFragment {
         if (cureentAction == null) {
             return;
         }
-        manager.cancleAgreement(getActivity(), cureentParent.getUid(), cureentAction.getAppointId(), activityHandler, AGREEMENT_CANCLE);
+        manager.cancleAgreement(getActivity(), cureentParent.getUid(), cureentAction.getAppointId(), mHandler, AGREEMENT_CANCLE);
     }
 
     private void startThread() {
@@ -327,7 +327,7 @@ public class AgreementFragment extends AbsFragment {
                 }
                 dialogDismiss();
                 DKEY_TIME = MINUTE_TIME * sliderValue;
-                manager.sendAgreement(getActivity(), cureentParent.getUid(), DKEY_TIME, cureentAction.getAppointId(), activityHandler, AGREEMENT);
+                manager.sendAgreement(getActivity(), cureentParent.getUid(), DKEY_TIME, cureentAction.getAppointId(), mHandler, AGREEMENT);
             }
         });
         dialogBuilder = NiftyDialogBuilder.getInstance(getActivity());
@@ -529,21 +529,22 @@ public class AgreementFragment extends AbsFragment {
 
     private static final int AGREEMENT = 0x01;//约定
     private static final int AGREEMENT_CANCLE = 0x02;//取消约定
-    private Handler activityHandler = new Handler() {
-        public void handleMessage(Message msg) {
-            int what = msg.what;
-            switch (what) {
-                case AGREEMENT:
-                    loadAgreement((CommonResponse) msg.obj);
-                    break;
-                case AGREEMENT_CANCLE:
-                    loadAgreementCancle((CommonResponse) msg.obj);
-                    break;
-                default:
-                    break;
-            }
+
+    @Override
+    public void handlerCallBack(Message msg) {
+        super.handlerCallBack(msg);
+        int what = msg.what;
+        switch (what) {
+            case AGREEMENT:
+                loadAgreement((CommonResponse) msg.obj);
+                break;
+            case AGREEMENT_CANCLE:
+                loadAgreementCancle((CommonResponse) msg.obj);
+                break;
+            default:
+                break;
         }
-    };
+    }
 
     /**
      * 开始约定 带动画
@@ -600,11 +601,11 @@ public class AgreementFragment extends AbsFragment {
 
         // TODO: 16/5/11  TEST
 //        if (resposne.isSuccess()) {
-            AgreementResult result = (AgreementResult) resposne.getData();
-            String testTime = "1447296641255";
-            App.getInstance().setAppoint_time(testTime);
-            AgreementStateEventType eventType = new AgreementStateEventType(cureentParent.getUid(), AgreementStateEventType.AGREEMENT_ING, null, testTime);
-            EventBus.getDefault().postSticky(eventType);
+        AgreementResult result = (AgreementResult) resposne.getData();
+        String testTime = "1447296641255";
+        App.getInstance().setAppoint_time(testTime);
+        AgreementStateEventType eventType = new AgreementStateEventType(cureentParent.getUid(), AgreementStateEventType.AGREEMENT_ING, null, testTime);
+        EventBus.getDefault().postSticky(eventType);
 //        } else {
 //            sendCount = 0;
 //            CommonUtil.showToast(resposne.getMsg());

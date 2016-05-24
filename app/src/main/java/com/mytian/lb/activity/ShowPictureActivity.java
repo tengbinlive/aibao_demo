@@ -1,6 +1,7 @@
 package com.mytian.lb.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -56,7 +57,7 @@ public class ShowPictureActivity extends AbsActivity {
         activity.startActivity(intent);
     }
 
-    public static void toShowPicture(Activity activity, ArrayList<Object> imgs, String title) {
+    public static void toShowPicture(Context activity, ArrayList<Object> imgs, String title) {
         Intent intent = new Intent(activity, ShowPictureActivity.class);
         intent.putExtra(ShowPictureActivity.IMAGES, imgs);
         intent.putExtra(ShowPictureActivity.TITLE, title);

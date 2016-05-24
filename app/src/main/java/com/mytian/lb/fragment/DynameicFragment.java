@@ -1,6 +1,5 @@
 package com.mytian.lb.fragment;
 
-import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.widget.ListView;
@@ -74,7 +73,7 @@ public class DynameicFragment extends AbsFragment {
             arrayList = null;
             listview.setMode(PullToRefreshBase.Mode.BOTH);
         }
-        manager.dymicList(getActivity(), "" + currentPager, activityHandler, state);
+        manager.dymicList(getActivity(), "" + currentPager, mHandler, state);
     }
 
     @Override
@@ -97,19 +96,20 @@ public class DynameicFragment extends AbsFragment {
     private static final int INIT_LIST = 0x01;//初始化数据处理
     private static final int LOAD_DATA = 0x02;//加载数据处理
     private static final int COUNT_MAX = 12;//加载数据最大值
-    private Handler activityHandler = new Handler() {
-        public void handleMessage(Message msg) {
-            int what = msg.what;
-            switch (what) {
-                case INIT_LIST:
-                case LOAD_DATA:
-                    loadData((CommonResponse) msg.obj);
-                    break;
-                default:
-                    break;
-            }
+
+    @Override
+    public void handlerCallBack(Message msg) {
+        super.handlerCallBack(msg);
+        int what = msg.what;
+        switch (what) {
+            case INIT_LIST:
+            case LOAD_DATA:
+                loadData((CommonResponse) msg.obj);
+                break;
+            default:
+                break;
         }
-    };
+    }
 
     private void loadData(CommonResponse resposne) {
         dialogDismiss();

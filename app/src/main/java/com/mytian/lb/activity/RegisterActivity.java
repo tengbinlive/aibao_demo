@@ -80,29 +80,29 @@ public class RegisterActivity extends AbsActivity {
     private String phone;
     private String password;
 
-    private Handler activityHandler = new Handler() {
-        public void handleMessage(Message msg) {
-            dialogDismiss();
-            switch (msg.what) {
-                case AUTH_CODE:
-                    loadAuthCode((CommonResponse) msg.obj);
-                    break;
-                case REGISTER:
-                    loadRegister((CommonResponse) msg.obj);
-                    break;
-                case LOGIN_DATA:
-                    loadLogin((CommonResponse) msg.obj);
-                    break;
-                case LOAD_AUTHCODE_FILL:
-                    String securityCode = msg.obj.toString();
-                    verification_et.setText(securityCode);
-                    verification_et.setSelection(securityCode.length());
-                    break;
-                default:
-                    break;
-            }
+    @Override
+    public void handlerCallBack(Message msg) {
+        super.handlerCallBack(msg);
+        dialogDismiss();
+        switch (msg.what) {
+            case AUTH_CODE:
+                loadAuthCode((CommonResponse) msg.obj);
+                break;
+            case REGISTER:
+                loadRegister((CommonResponse) msg.obj);
+                break;
+            case LOGIN_DATA:
+                loadLogin((CommonResponse) msg.obj);
+                break;
+            case LOAD_AUTHCODE_FILL:
+                String securityCode = msg.obj.toString();
+                verification_et.setText(securityCode);
+                verification_et.setSelection(securityCode.length());
+                break;
+            default:
+                break;
         }
-    };
+    }
 
     private void loadAuthCode(CommonResponse resposne) {
         if (resposne.isSuccess()) {
@@ -146,7 +146,7 @@ public class RegisterActivity extends AbsActivity {
      */
     private void Login(String phone, String password) {
         dialogShow(R.string.logining);
-        loginManager.login(this, phone, password, activityHandler, LOGIN_DATA);
+        loginManager.login(this, phone, password, mHandler, LOGIN_DATA);
     }
 
     @OnClick(R.id.register_bt)
@@ -174,7 +174,7 @@ public class RegisterActivity extends AbsActivity {
             return;
         }
         dialogShow(R.string.register_ing);
-        loginManager.register(this, phone, verificationCode, password, activityHandler, REGISTER);
+        loginManager.register(this, phone, verificationCode, password, mHandler, REGISTER);
     }
 
     private void toMainActivity() {
@@ -192,14 +192,14 @@ public class RegisterActivity extends AbsActivity {
         }
         if (!isVer && System.currentTimeMillis() - DKEY_START_TIME > DKEY_TIME) {
             isVer = true;
-            loginManager.authCode(this, phone, activityHandler, AUTH_CODE);
+            loginManager.authCode(this, phone, mHandler, AUTH_CODE);
             DKEY_START_TIME = System.currentTimeMillis();
         }
     }
 
 
     private void initSMSContentObserver() {
-        smsContentObserver = new SMSContentObserver(this, activityHandler);
+        smsContentObserver = new SMSContentObserver(this, mHandler);
         //注册短信变化监听
         this.getContentResolver().registerContentObserver(Uri.parse("content://sms/"), true, smsContentObserver);
     }

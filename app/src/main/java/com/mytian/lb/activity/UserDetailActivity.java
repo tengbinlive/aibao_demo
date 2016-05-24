@@ -1,7 +1,6 @@
 package com.mytian.lb.activity;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -259,7 +258,7 @@ public class UserDetailActivity extends AbsActivity {
                 remarkName = remark.getText().toString();
                 dialogShow(R.string.update_remark);
                 UserManager manager = new UserManager();
-                manager.updateRemarkName(mContext, cureentParent.getUid(), remarkName, activityHandler, UPDATE_REMARKNAME);
+                manager.updateRemarkName(mContext, cureentParent.getUid(), remarkName, mHandler, UPDATE_REMARKNAME);
             }
         });
         dialogBuilder = NiftyDialogBuilder.getInstance(this);
@@ -271,18 +270,19 @@ public class UserDetailActivity extends AbsActivity {
     }
 
     private static final int UPDATE_REMARKNAME = 0x01;//更新备注
-    private Handler activityHandler = new Handler() {
-        public void handleMessage(Message msg) {
-            int what = msg.what;
-            switch (what) {
-                case UPDATE_REMARKNAME:
-                    loadData((CommonResponse) msg.obj);
-                    break;
-                default:
-                    break;
-            }
+
+    @Override
+    public void handlerCallBack(Message msg) {
+        super.handlerCallBack(msg);
+        int what = msg.what;
+        switch (what) {
+            case UPDATE_REMARKNAME:
+                loadData((CommonResponse) msg.obj);
+                break;
+            default:
+                break;
         }
-    };
+    }
 
     /**
      * 数据返回

@@ -24,9 +24,13 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.lang.ref.WeakReference;
+
 import butterknife.ButterKnife;
 
 public abstract class AbsFragment extends Fragment implements EInitFragmentDate {
+
+    public final MFragmentHandler mHandler = new MFragmentHandler(this);
 
     public NiftyDialogBuilder dialogBuilder;
 
@@ -175,5 +179,30 @@ public abstract class AbsFragment extends Fragment implements EInitFragmentDate 
             }
         }
     };
+
+
+    /**
+     * handler回调
+     * @param msg  message
+     */
+    public void handlerCallBack(Message msg) {
+
+    }
+
+    public static class MFragmentHandler extends Handler {
+        private final WeakReference<AbsFragment> activityWeakReference;
+
+        public MFragmentHandler(AbsFragment fragment) {
+            activityWeakReference = new WeakReference<>(fragment);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            AbsFragment fragment = activityWeakReference.get();
+            if (fragment != null) {
+                fragment.handlerCallBack(msg);
+            }
+        }
+    }
 
 }

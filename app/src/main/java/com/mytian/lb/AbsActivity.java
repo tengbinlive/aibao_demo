@@ -29,6 +29,8 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.lang.ref.WeakReference;
+
 import butterknife.ButterKnife;
 import me.imid.swipebacklayout.lib.SwipeBackLayout;
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
@@ -42,9 +44,15 @@ public abstract class AbsActivity extends SwipeBackActivity implements EInitDate
 
     public final static String STATUSBAR_COLOS = "STATUSBAR_COLOS";
 
+    public final MActivityHandler mHandler = new MActivityHandler(this);
+
     public SwipeBackLayout mSwipeBackLayout;
     public boolean activityFinish;
     public LayoutInflater mInflater;
+
+    public NiftyDialogBuilder dialogBuilder;
+
+    public Context mContext;
 
     //actionbar
     private ViewGroup viewTitleBar;
@@ -52,9 +60,7 @@ public abstract class AbsActivity extends SwipeBackActivity implements EInitDate
     private TextView toolbar_intermediate_tv;
     private TextView toolbar_right_tv;
 
-    public NiftyDialogBuilder dialogBuilder;
-
-    public Context mContext;
+    private Tracker mTracker;
 
     private boolean isBackAnim = false;
 
@@ -69,8 +75,6 @@ public abstract class AbsActivity extends SwipeBackActivity implements EInitDate
     public ViewGroup getToolbar() {
         return viewTitleBar;
     }
-
-    private Tracker mTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -379,4 +383,28 @@ public abstract class AbsActivity extends SwipeBackActivity implements EInitDate
             }
         }
     };
+
+    /**
+     * handler回调
+     * @param msg  message
+     */
+    public void handlerCallBack(Message msg) {
+
+    }
+
+    public static class MActivityHandler extends Handler {
+        private final WeakReference<AbsActivity> activityWeakReference;
+
+        public MActivityHandler(AbsActivity activity) {
+            activityWeakReference = new WeakReference<>(activity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            AbsActivity activity = activityWeakReference.get();
+            if (activity != null) {
+                activity.handlerCallBack(msg);
+            }
+        }
+    }
 }

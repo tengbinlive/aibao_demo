@@ -8,7 +8,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -18,7 +17,6 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -265,7 +263,7 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
         boolean isBirthday = StringUtil.isNotBlank(birthday);
         boolean isHeadPath = headUri != null;
         String l_nameHint = getResources().getString(R.string.no_setting);
-        if (!isName && l_nameHint.equals(nameHint) ) {
+        if (!isName && l_nameHint.equals(nameHint)) {
             AnimationHelper.getInstance().viewAnimationQuiver(nameValue);
             CommonUtil.showToast(R.string.no_name);
             return;
@@ -298,9 +296,9 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
             param.setBirthday(birthdayDate.getTimeInMillis());
         }
         if (isHeadPath) {
-            manager.updateParentPortrait(mContext, new File(headUri.getPath()), activityHandler, UPDATE_PARENTPORTRAIT);
+            manager.updateParentPortrait(mContext, new File(headUri.getPath()), mHandler, UPDATE_PARENTPORTRAIT);
         }
-        manager.updateParent(mContext, param, activityHandler, UPDATE_PARENT);
+        manager.updateParent(mContext, param, mHandler, UPDATE_PARENT);
     }
 
     @OnClick(R.id.cancel_bt)
@@ -314,21 +312,22 @@ public class UserFragment extends AbsFragment implements DatePickerDialog.OnDate
 
     private static final int UPDATE_PARENT = 0x04;//信息补全
     private static final int UPDATE_PARENTPORTRAIT = 0x05;//更新头像
-    private Handler activityHandler = new Handler() {
-        public void handleMessage(Message msg) {
-            int what = msg.what;
-            switch (what) {
-                case UPDATE_PARENT:
-                    loadUpdate((CommonResponse) msg.obj);
-                    break;
-                case UPDATE_PARENTPORTRAIT:
-                    loadUpdateParentPortrait((CommonResponse) msg.obj);
-                    break;
-                default:
-                    break;
-            }
+
+    @Override
+    public void handlerCallBack(Message msg) {
+        super.handlerCallBack(msg);
+        int what = msg.what;
+        switch (what) {
+            case UPDATE_PARENT:
+                loadUpdate((CommonResponse) msg.obj);
+                break;
+            case UPDATE_PARENTPORTRAIT:
+                loadUpdateParentPortrait((CommonResponse) msg.obj);
+                break;
+            default:
+                break;
         }
-    };
+    }
 
     private void resetData() {
         deleteImageFile();

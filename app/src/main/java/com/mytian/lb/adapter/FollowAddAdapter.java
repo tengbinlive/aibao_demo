@@ -1,7 +1,6 @@
 package com.mytian.lb.adapter;
 
-import android.os.Handler;
-import android.os.Message;
+import android.content.Context;
 import android.support.v4.util.ArrayMap;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,14 +11,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.core.CommonResponse;
-import com.core.util.CommonUtil;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mytian.lb.AbsActivity;
 import com.mytian.lb.R;
 import com.mytian.lb.activity.ShowPictureActivity;
 import com.mytian.lb.bean.follow.FollowUser;
-import com.mytian.lb.manager.FollowManager;
+import com.mytian.lb.imp.EItemCallOnClick;
 
 import java.util.ArrayList;
 
@@ -32,9 +29,13 @@ public class FollowAddAdapter extends BaseAdapter {
 
     private ArrayMap<String, FollowUser> list;
 
-    private AbsActivity mContext;
+    private Context mContext;
 
-    private FollowManager manager = new FollowManager();
+    private EItemCallOnClick itemCallOnClick;
+
+    public void setItemCallOnClick(EItemCallOnClick itemCallOnClick) {
+        this.itemCallOnClick = itemCallOnClick;
+    }
 
     public FollowAddAdapter(AbsActivity context, ArrayMap<String, FollowUser> _list) {
         this.list = _list;
@@ -87,7 +88,7 @@ public class FollowAddAdapter extends BaseAdapter {
         }
 
         final FollowUser bean = list.valueAt(position);
-        Glide.with(mContext).load(bean.getHead_thumb())
+        Glide.with(mContext.getApplicationContext()).load(bean.getHead_thumb())
                 .asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .centerCrop()
@@ -120,12 +121,13 @@ public class FollowAddAdapter extends BaseAdapter {
                     public void onClick(View view) {
                         int index = (Integer) view.getTag();
                         FollowUser user = list.valueAt(index);
-                        mContext.dialogShow(R.string.accepat_ing);
                         ((Button) view).setText(R.string.already_attention);
                         list.valueAt(index).setFocus(true);
                         setAccepatView((Button) view, false);
                         view.setEnabled(false);
-                        manager.followAgree(mContext, user.getUid(), handler, ACCEPAT);
+                        if (null != itemCallOnClick) {
+                            itemCallOnClick.callOnClick(user.getUid());
+                        }
                     }
                 });
             }
@@ -165,19 +167,4 @@ public class FollowAddAdapter extends BaseAdapter {
         }
     }
 
-    private static final int ACCEPAT = 1;//同意关注
-    private Handler handler = new Handler() {
-        public void handleMessage(Message msg) {
-            int what = msg.what;
-            switch (what) {
-                case ACCEPAT:
-                    mContext.dialogDismiss();
-                    CommonResponse resposne = (CommonResponse) msg.obj;
-                    CommonUtil.showToast(resposne.getMsg());
-                    break;
-                default:
-                    break;
-            }
-        }
-    };
 }

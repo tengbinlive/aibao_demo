@@ -1,7 +1,6 @@
 package com.mytian.lb.activity;
 
 
-import android.os.Handler;
 import android.os.Message;
 import android.support.v4.util.ArrayMap;
 import android.text.Editable;
@@ -31,6 +30,7 @@ import com.mytian.lb.bean.follow.FollowListResult;
 import com.mytian.lb.bean.follow.FollowUser;
 import com.mytian.lb.event.PushStateEventType;
 import com.mytian.lb.helper.AnimationHelper;
+import com.mytian.lb.imp.EItemCallOnClick;
 import com.mytian.lb.manager.FollowManager;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
 import com.nineoldandroids.animation.ValueAnimator;
@@ -142,7 +142,7 @@ public class AddFollowActivity extends AbsActivity {
                     return;
                 }
                 dialogShow();
-                manager.followgetbaby(AddFollowActivity.this, phone, activityHandler, FOLLOW_GETBABY);
+                manager.followgetbaby(AddFollowActivity.this, phone, mHandler, FOLLOW_GETBABY);
             }
         });
         search_layout_maibao.setOnClickListener(new View.OnClickListener() {
@@ -160,7 +160,7 @@ public class AddFollowActivity extends AbsActivity {
                     return;
                 }
                 dialogShow();
-                manager.followgetbaby(AddFollowActivity.this, phone, activityHandler, FOLLOW_GETBABY);
+                manager.followgetbaby(AddFollowActivity.this, phone, mHandler, FOLLOW_GETBABY);
             }
         });
     }
@@ -186,6 +186,14 @@ public class AddFollowActivity extends AbsActivity {
 
         mAdapter = new FollowAddAdapter(this, arrayList);
 
+        mAdapter.setItemCallOnClick(new EItemCallOnClick() {
+            @Override
+            public void callOnClick(String id) {
+                dialogShow(R.string.accepat_ing);
+                manager.followAgree(mContext, id, mHandler, ACCEPAT);
+            }
+        });
+
         SwingBottomInAnimationAdapter animationAdapter = new SwingBottomInAnimationAdapter(mAdapter);
 
         animationAdapter.setAbsListView(mActualListView);
@@ -202,7 +210,7 @@ public class AddFollowActivity extends AbsActivity {
             arrayList = null;
             listview.setMode(PullToRefreshBase.Mode.BOTH);
         }
-        manager.followList(this, "" + currentPager, "0", activityHandler, state);
+        manager.followList(this, "" + currentPager, "0", mHandler, state);
     }
 
     @Override
@@ -266,7 +274,7 @@ public class AddFollowActivity extends AbsActivity {
             @Override
             public void onClick(View v) {
                 dialogShow(R.string.hint_add);
-                manager.followAdd(AddFollowActivity.this, "" + followUser.getBaby().getUid(), "" + followUser.getBaby().getRelationId(), desc_et.getText().toString(), activityHandler, FOLLOW_ADD);
+                manager.followAdd(AddFollowActivity.this, "" + followUser.getBaby().getUid(), "" + followUser.getBaby().getRelationId(), desc_et.getText().toString(), mHandler, FOLLOW_ADD);
             }
         });
         dialogBuilder = NiftyDialogBuilder.getInstance(this);
@@ -308,28 +316,35 @@ public class AddFollowActivity extends AbsActivity {
     private static final int LOAD_DATA = 0x02;//加载数据处理
     private static final int COUNT_MAX = 12;//加载数据最大值
     private static final int SHOW_DIALOG = 0X05;//添加dialog显示
-    private Handler activityHandler = new Handler() {
-        public void handleMessage(Message msg) {
-            int what = msg.what;
-            switch (what) {
-                case INIT_LIST:
-                case LOAD_DATA:
-                    loadData((CommonResponse) msg.obj);
-                    break;
-                case FOLLOW_GETBABY:
-                    loadBabyInfo((CommonResponse) msg.obj);
-                    break;
-                case FOLLOW_ADD:
-                    loadAdd((CommonResponse) msg.obj);
-                    break;
-                case SHOW_DIALOG:
-                    dialogAddFollow((FollowBabyResult) msg.obj);
-                    break;
-                default:
-                    break;
-            }
+    private static final int ACCEPAT = 0X06;//同意关注
+
+    @Override
+    public void handlerCallBack(Message msg) {
+        super.handlerCallBack(msg);
+        int what = msg.what;
+        switch (what) {
+            case INIT_LIST:
+            case LOAD_DATA:
+                loadData((CommonResponse) msg.obj);
+                break;
+            case FOLLOW_GETBABY:
+                loadBabyInfo((CommonResponse) msg.obj);
+                break;
+            case FOLLOW_ADD:
+                loadAdd((CommonResponse) msg.obj);
+                break;
+            case SHOW_DIALOG:
+                dialogAddFollow((FollowBabyResult) msg.obj);
+                break;
+            case ACCEPAT:
+                dialogDismiss();
+                CommonResponse resposne = (CommonResponse) msg.obj;
+                CommonUtil.showToast(resposne.getMsg());
+                break;
+            default:
+                break;
         }
-    };
+    }
 
     private void loadData(CommonResponse resposne) {
         dialogDismiss();
@@ -379,7 +394,7 @@ public class AddFollowActivity extends AbsActivity {
             Message message = new Message();
             message.what = SHOW_DIALOG;
             message.obj = result;
-            activityHandler.sendMessage(message);
+            mHandler.sendMessage(message);
         } else {
             CommonUtil.showToast(resposne.getMsg());
         }

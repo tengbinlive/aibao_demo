@@ -2,7 +2,6 @@ package com.mytian.lb.activity;
 
 
 import android.content.Intent;
-import android.os.Handler;
 import android.os.Message;
 import android.widget.RelativeLayout;
 
@@ -53,7 +52,7 @@ public class LauncherActivity extends AbsActivity {
         setSwipeBackEnable(false);
         statue = TO_GUIDE;
         long time = 2000;
-        activityHandler.sendEmptyMessageDelayed(statue, time);
+        mHandler.sendEmptyMessageDelayed(statue, time);
     }
 
     private void showGuideText() {
@@ -76,14 +75,14 @@ public class LauncherActivity extends AbsActivity {
     void OnClickActivity() {
         launcherLy.setEnabled(false);
         textSurface.clearAnimation();
-        activityHandler.removeMessages(statue);
+        mHandler.removeMessages(statue);
         statue = TO_LOGIN;
-        activityHandler.sendEmptyMessage(statue);
+        mHandler.sendEmptyMessage(statue);
     }
 
     @Override
     public void onBackPressed() {
-        activityHandler.removeMessages(statue);
+        mHandler.removeMessages(statue);
         App.getInstance().exit();
     }
 
@@ -128,19 +127,14 @@ public class LauncherActivity extends AbsActivity {
     @Override
     public void EDestroy() {
         super.EDestroy();
-        activityHandler.removeMessages(statue);
-        activityHandler = null;
+        mHandler.removeMessages(statue);
         textSurface.clearAnimation();
         textSurface = null;
     }
 
-    private Handler activityHandler = new Handler() {
-        public void handleMessage(Message msg) {
-            toActivity(msg);
-        }
-    };
-
-    private void toActivity(Message msg) {
+    @Override
+    public void handlerCallBack(Message msg) {
+        super.handlerCallBack(msg);
         int statue = msg.what;
         switch (statue) {
             case TO_LOGIN:

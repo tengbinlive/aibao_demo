@@ -220,6 +220,7 @@ public class LoginActivity extends AnimatedRectActivity {
     private final static int DIALOGSHOW = 1;
     private final static int DIALOGDISMISS = 0;
 
+
     private Handler activityHandler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {

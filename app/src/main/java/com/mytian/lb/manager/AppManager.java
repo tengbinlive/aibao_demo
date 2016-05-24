@@ -149,7 +149,7 @@ public class AppManager {
     private void dialogOUT() {
         dialogDismiss();
         Activity activity = App.getInstance().getCurrentActivity();
-        if(null==activity){
+        if (null == activity) {
             return;
         }
         LinearLayout convertView = (LinearLayout) LayoutInflater.from(activity).inflate(R.layout.dialog_out, null);
@@ -183,7 +183,7 @@ public class AppManager {
             return;
         }
         final Activity activity = App.getInstance().getCurrentActivity();
-        if(null==activity){
+        if (null == activity) {
             return;
         }
         LinearLayout convertView = (LinearLayout) LayoutInflater.from(activity).inflate(R.layout.dialog_prompt, null);

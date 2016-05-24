@@ -83,7 +83,7 @@ public class KindleFragment extends AbsFragment {
             xWalkView.getNavigationHistory().navigate(
                     XWalkNavigationHistory.Direction.BACKWARD, 1);
             return true;
-        } else{
+        } else {
             return false;
         }
     }
