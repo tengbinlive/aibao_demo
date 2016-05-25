@@ -6,6 +6,10 @@
 
 [download  apk](http://fir.im/5xv5)
 
+<a href="https://play.google.com/store/apps/details?id=com.mytian.lb">
+    <img src="https://raw.github.com/jpardogo/ListBuddies/master/art/google_play%20badge.png"/>
+ </a>
+
 ![download](https://github.com/tengbinlive/aibao_demo/blob/master/image/download.png)
 
 
