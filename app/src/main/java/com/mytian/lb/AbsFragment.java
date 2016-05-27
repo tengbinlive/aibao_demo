@@ -42,6 +42,11 @@ public abstract class AbsFragment extends Fragment implements EInitFragmentDate 
 
     private ViewGroup mRootView;
 
+    /**
+     * 返回 true 表示当前fragment处理back事件 不继续派发
+     * 返回 false 表示当前fragment不处理back事件 继续派发
+     * @return
+     */
     public abstract boolean onBackPressed();
 
     public ViewGroup getRootView() {
