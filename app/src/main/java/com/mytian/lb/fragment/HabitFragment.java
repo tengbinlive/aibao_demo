@@ -17,7 +17,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -32,7 +31,7 @@ public class HabitFragment extends AbsFragment {
 
     private FollowUser cureentParent;
 
-    private ArrayList arrayList;
+    private List arrayList;
 
     @Override
     public boolean onBackPressed() {
@@ -66,17 +65,17 @@ public class HabitFragment extends AbsFragment {
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    public ArrayList deepCopy(List src) throws IOException, ClassNotFoundException {
+    public List deepCopy(List src) throws IOException, ClassNotFoundException {
         ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
         ObjectOutputStream out = new ObjectOutputStream(byteOut);
         out.writeObject(src);
 
         ByteArrayInputStream byteIn = new ByteArrayInputStream(byteOut.toByteArray());
         ObjectInputStream in = new ObjectInputStream(byteIn);
-        return (ArrayList) in.readObject();
+        return (List) in.readObject();
     }
 
-    private void initListViewData(ArrayList<UserAction> _arrayList) {
+    private void initListViewData(List<UserAction> _arrayList) {
 
         HabitAdapter mAdapter = new HabitAdapter((AbsActivity) getActivity(), cureentParent, _arrayList);
 

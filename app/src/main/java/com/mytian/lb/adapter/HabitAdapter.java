@@ -22,7 +22,7 @@ import com.mytian.lb.helper.AnimationHelper;
 import com.mytian.lb.helper.Utils;
 import com.mytian.lb.manager.UserActionManager;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,7 +31,7 @@ public class HabitAdapter extends BaseAdapter {
 
     private LayoutInflater mInflater;
 
-    private ArrayList<UserAction> list;
+    private List<UserAction> list;
 
     private AbsActivity mContext;
 
@@ -41,7 +41,7 @@ public class HabitAdapter extends BaseAdapter {
 
     private FollowUser followUser;
 
-    public HabitAdapter(AbsActivity context, FollowUser cureentParent, ArrayList<UserAction> _list) {
+    public HabitAdapter(AbsActivity context, FollowUser cureentParent, List<UserAction> _list) {
         this.list = _list;
         mContext = context;
         followUser = cureentParent;
