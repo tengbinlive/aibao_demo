@@ -27,7 +27,6 @@ import com.mytian.lb.push.PushCode;
 import com.mytian.lb.push.PushHelper;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
-import org.chromium.base.ApplicationStatus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 

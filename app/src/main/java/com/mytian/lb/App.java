@@ -36,8 +36,6 @@ import com.orhanobut.logger.Logger;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
-import org.chromium.base.ApplicationStatus;
-
 import java.util.List;
 
 import im.fir.sdk.FIR;
@@ -238,6 +236,7 @@ public class App extends Application {
     }
 
     private static boolean strictModeAvailable;
+
     static {
         try {
             StrictModeWrapper.checkAvailable();
@@ -260,12 +259,12 @@ public class App extends Application {
 
             if (strictModeAvailable) {
                 int applicationFlags = getApplicationInfo().flags;
-                if (BuildConfig.DEBUG&&((applicationFlags & ApplicationInfo.FLAG_DEBUGGABLE) != 0)) {
+                if (BuildConfig.DEBUG && ((applicationFlags & ApplicationInfo.FLAG_DEBUGGABLE) != 0)) {
                     StrictModeWrapper.enableDefaults();
                 }
             }
 
-            if(BuildConfig.CANARY_DEBUG) {
+            if (BuildConfig.CANARY_DEBUG) {
                 refWatcher = LeakCanary.install(this);
             }
 
@@ -303,8 +302,6 @@ public class App extends Application {
 
             //初始分享
             ShareManager.getInstance().initShare();
-
-            ApplicationStatus.initialize(this);
 
         }
     }
@@ -387,6 +384,7 @@ public class App extends Application {
 
     /**
      * Gets the default {@link Tracker} for this {@link Application}.
+     *
      * @return tracker
      */
     synchronized public Tracker getDefaultTracker() {

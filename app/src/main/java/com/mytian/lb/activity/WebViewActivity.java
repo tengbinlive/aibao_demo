@@ -2,18 +2,24 @@ package com.mytian.lb.activity;
 
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.http.SslError;
+import android.os.Build;
+import android.os.Bundle;
 import android.view.View;
+import android.webkit.SslErrorHandler;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.core.util.StringUtil;
 import com.mytian.lb.AbsActivity;
 import com.mytian.lb.R;
+import com.mytian.lb.helper.MWebChromeClient;
 import com.pnikosis.materialishprogress.ProgressWheel;
 
-import org.xwalk.core.XWalkNavigationHistory;
-import org.xwalk.core.XWalkUIClient;
-import org.xwalk.core.XWalkView;
-
 import butterknife.BindView;
+
 
 /**
  * web 界面
@@ -21,9 +27,13 @@ import butterknife.BindView;
 public class WebViewActivity extends AbsActivity {
 
     @BindView(R.id.webview)
-    XWalkView xWalkView;
+    WebView webview;
     @BindView(R.id.progress)
     ProgressWheel progress;
+
+    private MWebChromeClient mWebChromeClient;
+
+    private Bundle mSavedInstanceState;
 
     public final static String URL = "URL";
     public final static String TITLE = "TITLE";
@@ -46,22 +56,74 @@ public class WebViewActivity extends AbsActivity {
 
     //webview 属性 设置
     private void webviewSetInit(String url) {
-        xWalkView.setUIClient(new XWalkUIClient(xWalkView) {
-            @Override
-            public void onPageLoadStarted(XWalkView view, String url) {
-                super.onPageLoadStarted(view, url);
-                progress.setVisibility(View.VISIBLE);
-            }
+        WebSettings websettings = webview.getSettings();
+        websettings.setBuiltInZoomControls(false);
+        websettings.setSupportZoom(false);
+        websettings.setDisplayZoomControls(false);
+        websettings.setUseWideViewPort(true);
+        websettings.setDefaultTextEncodingName("UTF-8");
+        // for localStorage
+        websettings.setDomStorageEnabled(true);
+        String appCachePath = getApplicationContext().getCacheDir().getAbsolutePath();
+        websettings.setAppCachePath(appCachePath);
+        websettings.setAllowFileAccess(true);
+        websettings.setAppCacheEnabled(true);
+
+        //先不要自动加载图片，等页面finish后再发起图片加载
+        //同时在WebView的WebViewClient实例中的onPageFinished()方法添加如下代码：#001
+        if (Build.VERSION.SDK_INT >= 19) {
+            websettings.setLoadsImagesAutomatically(true);
+        } else {
+            websettings.setLoadsImagesAutomatically(false);
+        }
+
+        //加速临时关闭，过渡期后再开启
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            webview.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        }
+        websettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+        webview.setWebViewClient(mWebViewClient);
+        mWebChromeClient = new MWebChromeClient(this);
+        webview.setWebChromeClient(mWebChromeClient);
+        webview.setOnLongClickListener(new View.OnLongClickListener() {
 
             @Override
-            public void onPageLoadStopped(XWalkView view, String url, LoadStatus status) {
-                super.onPageLoadStopped(view, url, status);
-                progress.setVisibility(View.GONE);
+            public boolean onLongClick(View v) {
+                return true;
             }
         });
-        xWalkView.load(url, null);
+        if (null != mSavedInstanceState) {
+            webview.restoreState(mSavedInstanceState);
+        } else {
+            webview.loadUrl(url);
+        }
     }
 
+
+    private WebViewClient mWebViewClient = new WebViewClient() {
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+            //#001
+            if (!webview.getSettings().getLoadsImagesAutomatically()) {
+                webview.getSettings().setLoadsImagesAutomatically(true);
+            }
+            progress.setVisibility(View.GONE);
+        }
+
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            super.onPageStarted(view, url, favicon);
+            progress.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+            super.onReceivedSslError(view, handler, error);
+            handler.proceed();
+        }
+    };
 
     /**
      * 返回文件选择
@@ -69,53 +131,40 @@ public class WebViewActivity extends AbsActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode,
                                     Intent intent) {
-        if (xWalkView != null) {
-            xWalkView.onActivityResult(requestCode, resultCode, intent);
+        mWebChromeClient.onActivityResult(requestCode, resultCode, intent);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        mSavedInstanceState = savedInstanceState;
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (webview != null) {
+            webview.saveState(outState);
         }
     }
 
     @Override
     public void onDestroy() {
+        if (webview != null) {
+            webview.stopLoading();
+            webview.removeAllViews();
+            webview.destroy();
+            webview = null;
+        }
         super.onDestroy();
-        if (xWalkView != null) {
-            xWalkView.onDestroy();
-        }
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        if (xWalkView != null) {
-            xWalkView.pauseTimers();
-            xWalkView.onHide();
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (xWalkView != null) {
-            xWalkView.resumeTimers();
-            xWalkView.onShow();
-        }
     }
 
     @Override
     public void onBackPressed() {
-
-        // Go backward
-        if (xWalkView != null && xWalkView.getNavigationHistory().canGoBack()) {
-            xWalkView.getNavigationHistory().navigate(
-                    XWalkNavigationHistory.Direction.BACKWARD, 1);
+        if (webview != null && webview.canGoBack()) {
+            webview.goBack();
         } else {
             super.onBackPressed();
-        }
-    }
-
-    @Override
-    public void onNewIntent(Intent intent) {
-        if (xWalkView != null) {
-            xWalkView.onNewIntent(intent);
         }
     }
 

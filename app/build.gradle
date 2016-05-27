@@ -6,12 +6,12 @@ apply plugin: 'com.neenbedankt.android-apt'
 def versionMajor = 3
 def versionMinor = 0
 def versionPatch = 2
-def versionBuild = 79// bump for dogfood builds, public betas, etc.
+def versionBuild = 80// bump for dogfood builds, public betas, etc.
 
 android {
 
     compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    buildToolsVersion "23.0.3"
 
     defaultConfig {
         applicationId "com.mytian.lb"
@@ -61,9 +61,9 @@ android {
             buildConfigField "boolean", "LOG_DEBUG", "false"// log info
             buildConfigField "boolean", "CANARY_DEBUG", "false"// canary info
             buildConfigField "boolean", "CHANNEL_DEBUG", "false"// channel info
-            debuggable true
+            debuggable false
             minifyEnabled false
-            zipAlignEnabled false
+            zipAlignEnabled true
             shrinkResources false
             proguardFiles 'proguard-rules.pro'
             signingConfig signingConfigs.aibao
@@ -131,7 +131,7 @@ lintCleaner {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile fileTree(dir: 'libs_share', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.android.support:appcompat-v7:23.4.0'
     // 仅在debug包启用leakcanary进行内存监控和提示
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta1'
     alphaCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta1'
@@ -172,7 +172,7 @@ dependencies {
     compile 'com.bigkoo:alertview:1.0.2'
 
     compile 'com.google.android.gms:play-services-analytics:8.4.0'//google analytics
-    compile 'org.xwalk:xwalk_core_library:17.46.448.10'
+    compile 'com.bin:animationseachview:1.0.4'//带动画的搜索框
 
     compile(name: 'niftymodaldialog-release', ext: 'aar')
     compile(name: 'pulltorefresh-release', ext: 'aar')
