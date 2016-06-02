@@ -6,7 +6,7 @@ apply plugin: 'com.neenbedankt.android-apt'
 def versionMajor = 3
 def versionMinor = 0
 def versionPatch = 2
-def versionBuild = 80// bump for dogfood builds, public betas, etc.
+def versionBuild = 81// bump for dogfood builds, public betas, etc.
 
 android {
 
@@ -172,7 +172,7 @@ dependencies {
     compile 'com.bigkoo:alertview:1.0.2'
 
     compile 'com.google.android.gms:play-services-analytics:8.4.0'//google analytics
-    compile 'com.bin:animationseachview:1.0.4'//带动画的搜索框
+    compile 'com.bin:animationseachview:1.0.7'//带动画的搜索框
 
     compile(name: 'niftymodaldialog-release', ext: 'aar')
     compile(name: 'pulltorefresh-release', ext: 'aar')
