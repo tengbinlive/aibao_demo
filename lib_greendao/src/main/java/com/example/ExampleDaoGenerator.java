@@ -35,11 +35,11 @@ public class ExampleDaoGenerator {
     }
 
     public static void main(String[] args) throws Exception {
-        Schema schema = new Schema(verison, "com.example");
+        Schema schema = new Schema(verison, "com.dao");
         addConfig(schema);
         addUserAction(schema);
         addParent(schema);
-        new DaoGenerator().generateAll(schema, "D:\\tengbin\\project\\kndle\\lib_greendao\\src\\main\\java\\dao");
+        new DaoGenerator().generateAll(schema, "../aibao_demo/lib_greendao");
     }
 
     private static void addConfig(Schema schema) {
