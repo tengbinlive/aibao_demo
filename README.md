@@ -91,15 +91,12 @@ lib_greendao为本地数据库dao-生成项目
         this.record = record;
     }
 
-3.生成class写的是绝对路径需要自行修改
-
-    new DaoGenerator().generateAll(schema, "D:\\tengbin\\project\\kndle\\lib_greendao\\src\\main\\java\\dao");
     
-4.WXEntryActivity 必须在包名+wxapi目录下 且必须
+3.WXEntryActivity 必须在包名+wxapi目录下 且必须
 
     android:exported="true"
     
-5.三星系列APP需要
+4.三星系列APP需要
 
     debuggable false
 
