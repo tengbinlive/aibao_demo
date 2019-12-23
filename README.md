@@ -29,7 +29,7 @@
     release 发布版
     
     配置api
-    buildConfigField "String", "API_HOST", "\"http://www.mytian.com.cn/\""//API Host 
+    buildConfigField "String", "API_HOST", "\"http://www.xxxx.com.cn/\""//API Host 
     配置debug
     buildConfigField "boolean", "CONFIG_DEBUG", "false"// config
     配置日志输出
@@ -42,7 +42,7 @@
 
 ###服务器 url:
 
-    "http://www.mytian.com.cn/"
+    "http://www.xxxx.com.cn/"
     
 ###Wechat share:
 
